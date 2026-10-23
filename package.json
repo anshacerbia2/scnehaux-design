@@ -1,0 +1,15 @@
+{
+  "name": "scnehaux-design",
+  "private": true,
+  "type": "module",
+  "description": "Design reference for the Scnehaux platform (ADR-UIP-VIS-002).",
+  "scripts": {
+    "render:cards": "node scripts/render-cards.mjs",
+    "check:cards": "node scripts/render-cards.mjs --check",
+    "serve": "npx --yes serve@14.2.4 ."
+  },
+  "devDependencies": {
+    "playwright": "1.55.0",
+    "pngjs": "7.0.0"
+  }
+}
