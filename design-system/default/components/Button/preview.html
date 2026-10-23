@@ -1,0 +1,25 @@
+<!-- @dsCard group="Actions" height=250 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+.sep{inline-size:1px;block-size:1.5rem;background:var(--ds-color-neutral-border-subtle-default);margin-inline:var(--ds-dimension-spacing-inline-default)}
+</style>
+</head>
+<body>
+<div class="pv">
+  <div class="row"><button class="scnx-btn" data-variant="primary" data-size="medium">Deploy</button><button class="scnx-btn" data-variant="secondary" data-size="medium">Preview</button><button class="scnx-btn" data-variant="ghost" data-size="medium">Cancel</button><button class="scnx-btn" data-variant="danger" data-size="medium">Delete project</button></div>
+  <div class="row"><button class="scnx-btn" data-variant="primary" data-size="small">Small</button><button class="scnx-btn" data-variant="primary" data-size="medium">Medium</button><button class="scnx-btn" data-variant="primary" data-size="large">Large</button><span class="sep"></span><button class="scnx-btn" data-variant="primary" data-size="medium"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>New project</button><button class="scnx-btn" data-variant="secondary" data-size="medium">Continue<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+  <div class="row"><button class="scnx-btn" data-variant="primary" data-size="medium" disabled>Disabled</button><button class="scnx-btn" data-variant="secondary" data-size="medium" disabled>Disabled</button><button class="scnx-btn" data-variant="ghost" data-size="medium" disabled>Disabled</button><button class="scnx-btn" data-variant="danger" data-size="medium" disabled>Disabled</button></div>
+</div>
+</body>
+</html>

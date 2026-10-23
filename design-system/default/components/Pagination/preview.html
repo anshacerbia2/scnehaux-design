@@ -1,0 +1,21 @@
+<!-- @dsCard group="Navigation" height=90 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pagination</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><nav aria-label="Pagination" class="row" style="justify-content:space-between"><span class="muted">Showing 21–40 of 128</span><ul class="scnx-pagination"><li><button class="scnx-icon-btn" data-variant="ghost" data-size="small" aria-label="Previous page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button></li><li><a data-part="page" href="#">1</a></li><li><a data-part="page" href="#">2</a></li><li><a data-part="page" href="#" aria-current="page">3</a></li><li><a data-part="page" href="#">4</a></li><li><span data-part="ellipsis">…</span></li><li><a data-part="page" href="#">7</a></li><li><button class="scnx-icon-btn" data-variant="ghost" data-size="small" aria-label="Next page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></li></ul></nav></div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Internal Control Plane — Stratum</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0C0E12}
+a{color:#ECEEF2}a:hover{color:#FFFFFF}
+button{font:inherit;cursor:pointer}
+input::placeholder{color:#8E95A2}
+.nav:hover{color:#ECEEF2 !important}
+.press{transition:transform .12s ease, box-shadow .12s ease}
+.press:active{transform:translateY(3px)}
+@keyframes beam{0%{transform:translateY(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(300px);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.beam{animation:beam 2.4s cubic-bezier(.5,0,.5,1) infinite}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.beam,.pulse{animation:none}.press{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0C0E12; color: #ECEEF2; font-family: 'Space Grotesk', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 28px 44px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3l11 5-11 5-11-5z" fill="{{accent}}"></path><path d="M4 14l11 5 11-5" fill="none" stroke="#ECEEF2" stroke-width="1.6" stroke-linejoin="round"></path><path d="M4 20l11 5 11-5" fill="none" stroke="#5A6170" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+    <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em">Control Plane</span>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{accent}}; border: 1px solid {{accent}}; border-radius: 6px; padding: 3px 8px; box-shadow: 0 3px 0 #050608">INTERNAL</span>
+  </div>
+  <nav aria-label="Layers" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto; justify-content: center">
+    <a href="#" class="press" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: #1B1F27; border: 1px solid #2A2F39; color: #ECEEF2; text-decoration: none; font-size: 14px; box-shadow: 0 3px 0 #050608">Overview</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Tenants</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Fleet</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Identity</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Models</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Incidents<span style="width: 7px; height: 7px; border-radius: 50%; background: #FFB020"></span></a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Audit</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px">
+    <button type="button" class="press" style="display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 14px; border-radius: 12px; border: 1px solid #2A2F39; background: #14171D; color: #8E95A2; font-size: 13px; box-shadow: 0 3px 0 #050608">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ECEEF2" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+      Tenant, key, trace…
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; border: 1px solid #2A2F39; border-radius: 5px; padding: 1px 6px">⌘K</span>
+    </button>
+    <button type="button" aria-label="Account menu" class="press" style="width: 42px; height: 42px; border-radius: 12px; border: 1px solid #2A2F39; background: #1B1F27; color: #ECEEF2; font-size: 13px; font-weight: 600; box-shadow: 0 3px 0 #050608">AK</button>
+  </div>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 999 1 700px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="margin: 0; font-size: 34px; font-weight: 400; letter-spacing: -0.03em; line-height: 1.05">The whole platform, <span style="color: {{accent}}">in layers.</span></h1>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8E95A2">exploded view · live · all regions · click a layer to isolate it</span>
+      </div>
+      <div role="group" aria-label="View" style="display: flex; background: #0C0E12; border: 1px solid #232832; border-radius: 12px; padding: 3px">
+        <button type="button" aria-pressed="true" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: #232832; color: #ECEEF2; font-size: 13px">Stack</button>
+        <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #8E95A2; font-size: 13px">Flat</button>
+        <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #8E95A2; font-size: 13px">Diff 13:00</button>
+      </div>
+    </div>
+
+    <div style="overflow-x: auto">
+      <div style="position: relative; width: 720px; height: 520px; margin: 0 auto">
+        <sc-for list="{{layers}}" as="l" hint-placeholder-count="5">
+          <div style="position: absolute; left: 40px; top: {{l.top}}px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid {{l.bc}}; background-color: {{l.bg}}; background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 24px 24px; box-shadow: -10px 10px 0 #050608, -10px 10px 0 1.5px {{l.edge}}; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 10px; padding: 30px">
+            <sc-for list="{{l.tiles}}" as="t" hint-placeholder-count="9">
+              <span style="width: 40px; height: 40px; border-radius: 8px; background: {{t}}; box-shadow: -3px 3px 0 #050608"></span>
+            </sc-for>
+          </div>
+        </sc-for>
+
+        <div style="position: absolute; left: 159px; top: 100px; width: 2px; height: 300px; background: {{accent}}; opacity: 0.55"></div>
+        <span class="beam" style="position: absolute; left: 155px; top: 96px; width: 10px; height: 10px; border-radius: 50%; background: {{accent}}; box-shadow: 0 0 0 4px {{accent}}33"></span>
+
+        <sc-for list="{{layers}}" as="l" hint-placeholder-count="5">
+          <div style="position: absolute; left: 330px; top: {{l.cy}}px; width: 46px; height: 1px; background: #3A404C"></div>
+          <span style="position: absolute; left: 327px; top: {{l.dy}}px; width: 7px; height: 7px; border-radius: 50%; background: {{l.bc}}"></span>
+          <div style="position: absolute; left: 388px; top: {{l.ly}}px; width: 320px; display: flex; flex-direction: column; gap: 3px">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: {{l.tc}}">{{l.tag}}</span>
+            <span style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em">{{l.value}}</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">{{l.meta}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+    <div style="background: #1A1710; border: 1px solid #5C4517; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #3A2C10; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; background: #FFB020; color: #0C0E12; border-radius: 6px; padding: 3px 8px; font-weight: 500">SEV-2 · INC-0412</span>
+        <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E9D3A6"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: #FFB020"></span>OPEN 2h 46m</span>
+      </div>
+      <span style="font-size: 19px; font-weight: 500; line-height: 1.3">search_kb latency regression after support-agent 2.4 canary</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #C9B48A">commander r.santoso · 38 tenants · ap-se-1</span>
+      <div style="display: flex; align-items: center; gap: 0">
+        <span style="width: 12px; height: 12px; border-radius: 4px; background: #ECEEF2"></span><span style="flex: 1; height: 2px; background: #ECEEF2"></span>
+        <span style="width: 12px; height: 12px; border-radius: 4px; background: #ECEEF2"></span><span style="flex: 1; height: 2px; background: #FFB020"></span>
+        <span style="width: 12px; height: 12px; border-radius: 4px; background: #FFB020; box-shadow: 0 0 0 4px rgba(255,176,32,0.2)"></span><span style="flex: 1; height: 2px; background: #3A3320"></span>
+        <span style="width: 12px; height: 12px; border-radius: 4px; border: 2px solid #5C4517; box-sizing: border-box"></span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #C9B48A">
+        <span>detect 14:02</span><span style="text-align: center">triage 14:09</span><span style="text-align: center; color: #FFB020">mitigate</span><span style="text-align: right">resolve</span>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <a href="#" class="press" style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 12px; background: #FFB020; color: #0C0E12; text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: 0 4px 0 #7A5410">War room</a>
+        <button type="button" class="press" style="flex: 1; min-height: 44px; border-radius: 12px; border: 1px solid #5C4517; background: transparent; color: #ECEEF2; font-size: 14px; box-shadow: 0 4px 0 #050608">Page owner</button>
+      </div>
+    </div>
+
+    <div style="flex: 1; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8E95A2">PULSE · GLOBAL</span><span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>LIVE</span></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{pulse}}" as="p" hint-placeholder-count="4">
+          <div style="background: #0F1216; border: 1px solid #1E222A; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #8E95A2">{{p.label}}</span>
+            <span style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: {{p.c}}">{{p.value}}</span>
+            <div style="height: 4px; border-radius: 2px; background: #232832"><div style="height: 100%; width: {{p.w}}%; border-radius: 2px; background: {{p.c}}"></div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 999 1 520px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Tenants · top by load</h2><a href="#" style="font-size: 13px; color: #8E95A2; text-decoration: none">1,906 active →</a></div>
+    <div style="display: flex; flex-direction: column">
+      <sc-for list="{{tenants}}" as="t" hint-placeholder-count="6">
+        <a href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0; border-top: 1px solid #1E222A; color: #ECEEF2; text-decoration: none">
+          <span style="width: 34px; height: 34px; border-radius: 10px; background: #232832; box-shadow: 0 3px 0 #050608; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">{{t.i}}</span>
+          <div style="flex: 1 1 160px; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 14px; font-weight: 500">{{t.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">{{t.id}} · {{t.plan}}</span></div>
+          <div style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 6px; border-radius: 3px; background: #232832"><div style="height: 100%; width: {{t.bar}}%; border-radius: 3px; background: {{accent}}"></div></div><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; width: 30px; text-align: right">{{t.share}}%</span></div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 70px; text-align: right">{{t.spend}}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: {{t.fc}}">{{t.flag}}</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 360px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 500">GPU strata</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">400 GPU · +8 queued</span></div>
+    <div style="display: flex; gap: 14px; align-items: flex-end; flex: 1">
+      <sc-for list="{{pools}}" as="p" hint-placeholder-count="4">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: stretch">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; text-align: center; color: {{p.tc}}">{{p.used}}%</span>
+          <div style="display: flex; flex-direction: column-reverse; gap: 4px">
+            <sc-for list="{{p.cells}}" as="c" hint-placeholder-count="10">
+              <span style="height: 12px; border-radius: 4px; background: {{c}}"></span>
+            </sc-for>
+          </div>
+          <span style="font-size: 12px; text-align: center">{{p.name}}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-align: center; color: #8E95A2">{{p.hw}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 380px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Privileged access</h2><a href="#" style="font-size: 13px; color: #8E95A2; text-decoration: none">Audit →</a></div>
+    <div style="display: flex; flex-direction: column">
+      <sc-for list="{{audit}}" as="a" hint-placeholder-count="5">
+        <div style="display: flex; gap: 12px; padding: 11px 0; border-top: 1px solid #1E222A">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2; width: 42px; padding-top: 2px">{{a.t}}</span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+            <span style="font-size: 13px"><span style="font-weight: 500">{{a.who}}</span> <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{a.c}}">{{a.act}}</span></span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">{{a.target}} · {{a.why}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 999 1 600px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Rollouts &amp; flags</h2><span style="display: flex; gap: 22px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2"><span>1%</span><span>10%</span><span>50%</span><span>100%</span></span></div>
+    <sc-for list="{{rollouts}}" as="r" hint-placeholder-count="4">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 52px; border-top: 1px solid #1E222A">
+        <span style="flex: 1 1 220px; font-family: 'JetBrains Mono', monospace; font-size: 13px">{{r.name}}</span>
+        <div style="flex: 2 1 260px; display: flex; gap: 4px">
+          <sc-for list="{{r.seg}}" as="s" hint-placeholder-count="4">
+            <span style="flex: 1; height: 14px; border-radius: 4px; background: {{s}}; box-shadow: 0 3px 0 #050608"></span>
+          </sc-for>
+        </div>
+        <span style="flex: 0 0 110px; text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{r.c}}">{{r.state}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1 1 400px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Regions</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">scale-out at 80%</span></div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{regions}}" as="g" hint-placeholder-count="6">
+        <button type="button" class="press" style="text-align: left; background: #0F1216; border: 1px solid {{g.bc}}; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: #ECEEF2; box-shadow: 0 4px 0 #050608">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500">{{g.code}}</span>
+          <span style="font-size: 24px; font-weight: 300; color: {{g.c}}">{{g.cap}}%</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2">{{g.rps}}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#8F7BFF","options":["#8F7BFF","#3DDCFF","#C6F432","#FF7A59"]},"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#8F7BFF';
+    const AMB = '#FFB020';
+    const tiles = (n, lit, litColor) => Array.from({ length: n }, (_, i) => (i < lit ? litColor : '#262B34'));
+    const mk = (i, tag, value, meta, kind, n, lit) => {
+      const cy = 100 + i * 75;
+      const base = { top: cy - 120, cy: cy, dy: cy - 3, ly: cy - 30, tag: tag, value: value, meta: meta };
+      if (kind === 'focus') return Object.assign(base, { bc: accent, edge: accent + '66', bg: '#1A1830', tc: accent, tiles: tiles(n, lit, accent) });
+      if (kind === 'warn') return Object.assign(base, { bc: AMB, edge: '#7A5410', bg: '#221C10', tc: AMB, tiles: tiles(n, lit, AMB) });
+      return Object.assign(base, { bc: '#3A404C', edge: '#232832', bg: '#161A21', tc: '#8E95A2', tiles: tiles(n, lit, '#5A6170') });
+    };
+    const ordered = [
+      mk(0, 'L1 · EDGE', '12.4k rps · 0 drops', '6 regions · waf 142 blocks/1h', '', 9, 6),
+      mk(1, 'L2 · IDENTITY', '3.1 ms policy eval', '1,906 orgs · 1 drift · 1 break-glass', '', 9, 4),
+      mk(2, 'L3 · MODELS', '142 ms · 3 pools', 'frontier-l 58% · fast-s 34% · embed 8%', 'focus', 9, 7),
+      mk(3, 'L4 · TOOLS', 'search_kb 412 ms ↑', 'degraded since 14:02 · INC-0412', 'warn', 9, 3),
+      mk(4, 'L5 · MEMORY', '71% cache hit', '48M vectors · 9 ms read', '', 9, 5)
+    ];
+    const layers = ordered.slice().reverse();
+    const cells = (used, color) => Array.from({ length: 10 }, (_, i) => (i < Math.round(used / 10) ? color : '#232832'));
+    const seg = (n, held) => [0, 1, 2, 3].map((i) => (i < n ? (held && i === n - 1 ? AMB : accent) : '#232832'));
+    return {
+      accent: accent,
+      layers: layers,
+      labels: ordered,
+      pulse: [
+        { label: 'REQ / S', value: '48,210', c: '#ECEEF2', w: 62 },
+        { label: 'P95', value: '182 ms', c: AMB, w: 73 },
+        { label: 'ERROR RATE', value: '0.07%', c: '#ECEEF2', w: 14 },
+        { label: 'TOKENS / MIN', value: '17.6M', c: accent, w: 70 }
+      ],
+      tenants: [
+        { i: 'SL', name: 'Sinar Logistics', id: 'org_7h2k', plan: 'ENT', share: 14, bar: 100, spend: '$41.2k', flag: '—', fc: '#8E95A2' },
+        { i: 'PE', name: 'Pelita Energi', id: 'org_3m9q', plan: 'ENT', share: 11, bar: 79, spend: '$33.8k', flag: 'QUOTA 92%', fc: AMB },
+        { i: 'BA', name: 'Bahari Analytics', id: 'org_x81c', plan: 'SCALE', share: 8, bar: 57, spend: '$19.4k', flag: '—', fc: '#8E95A2' },
+        { i: 'KG', name: 'Kirana Group', id: 'org_p04d', plan: 'ENT', share: 6, bar: 43, spend: '$12.1k', flag: 'INC-0412', fc: AMB },
+        { i: 'TF', name: 'Tirta Foods', id: 'org_5ttz', plan: 'SCALE', share: 5, bar: 36, spend: '$9.7k', flag: '—', fc: '#8E95A2' },
+        { i: '??', name: 'unknown-trial-88', id: 'org_trl88', plan: 'TRIAL', share: 4, bar: 29, spend: '$0', flag: 'ABUSE?', fc: AMB }
+      ],
+      pools: [
+        { name: 'frontier-l', hw: 'H100 · 96', used: 84, tc: AMB, cells: cells(84, AMB) },
+        { name: 'fast-s', hw: 'L4 · 240', used: 61, tc: '#ECEEF2', cells: cells(61, accent) },
+        { name: 'embed-v3', hw: 'L4 · 64', used: 38, tc: '#ECEEF2', cells: cells(38, accent) },
+        { name: 'burst', hw: 'spot · 0–128', used: 12, tc: '#ECEEF2', cells: cells(12, '#5A6170') }
+      ],
+      audit: [
+        { t: '16:41', who: 'dina.p', act: 'BREAK-GLASS', target: 'kms/prod', why: 'INC-0412', c: AMB },
+        { t: '16:22', who: 'r.santoso', act: 'jit.grant', target: 'prod-db rw', why: '60 min', c: accent },
+        { t: '15:58', who: 'svc/deployer', act: 'release.hold', target: 'support-agent 2.4', why: 'p95 guard', c: accent },
+        { t: '15:31', who: 'm.wijaya', act: 'tenant.quota', target: 'org_3m9q +20%', why: '#8812', c: accent },
+        { t: '13:05', who: 'a.kurnia', act: 'tenant.suspend', target: 'org_trl91', why: 'card testing', c: accent }
+      ],
+      rollouts: [
+        { name: 'support-agent 2.4.0', seg: seg(2, true), state: 'HELD · 10%', c: AMB },
+        { name: 'router-policy r118', seg: seg(4, false), state: '100% · DONE', c: '#8E95A2' },
+        { name: 'flag: streaming-tools-v2', seg: seg(3, false), state: '50% · AUTO', c: '#ECEEF2' },
+        { name: 'flag: tenant-byok', seg: seg(1, false), state: '1% · ENT', c: '#ECEEF2' }
+      ],
+      regions: [
+        { code: 'ap-se-1', cap: 86, rps: '14.2k rps', c: AMB, bc: '#5C4517' },
+        { code: 'ap-se-2', cap: 64, rps: '11.8k rps', c: '#ECEEF2', bc: '#232832' },
+        { code: 'ap-ne-1', cap: 58, rps: '8.9k rps', c: '#ECEEF2', bc: '#232832' },
+        { code: 'eu-w-1', cap: 41, rps: '6.1k rps', c: '#ECEEF2', bc: '#232832' },
+        { code: 'us-e-1', cap: 52, rps: '5.7k rps', c: '#ECEEF2', bc: '#232832' },
+        { code: 'us-w-2', cap: 23, rps: '1.5k rps', c: '#ECEEF2', bc: '#232832' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

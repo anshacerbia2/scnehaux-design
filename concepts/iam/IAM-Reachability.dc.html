@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Identity — Reachability</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0C0E12}
+a{color:#ECEEF2}a:hover{color:#FFFFFF}
+button{font:inherit;cursor:pointer}
+.nav:hover{color:#ECEEF2 !important}
+.tab:hover{color:#ECEEF2 !important}
+.press{transition:transform .12s ease}
+.press:active{transform:translateY(3px)}
+.dot{transition:transform .18s ease}
+.dot:hover{transform:scale(1.5)}
+@keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sweep{animation:sweep 14s linear infinite}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.sweep,.pulse{animation:none}.press,.dot{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0C0E12; color: #ECEEF2; font-family: 'Space Grotesk', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 28px 44px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3l11 5-11 5-11-5z" fill="{{accent}}"></path><path d="M4 14l11 5 11-5" fill="none" stroke="#ECEEF2" stroke-width="1.6" stroke-linejoin="round"></path><path d="M4 20l11 5 11-5" fill="none" stroke="#5A6170" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+    <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em">Control Plane</span>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{accent}}; border: 1px solid {{accent}}; border-radius: 6px; padding: 3px 8px; box-shadow: 0 3px 0 #050608">INTERNAL</span>
+  </div>
+  <nav aria-label="Layers" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto; justify-content: center">
+    <a class="nav" href="D-Internal.dc.html" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Overview</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Tenants</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Fleet</a>
+    <a href="#" class="press" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: #1B1F27; border: 1px solid #2A2F39; color: #ECEEF2; text-decoration: none; font-size: 14px; box-shadow: 0 3px 0 #050608">Identity</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Models</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Incidents</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; color: #8E95A2; text-decoration: none; font-size: 14px">Audit</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px">
+    <span style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>GRAPH LIVE</span>
+    <button type="button" aria-label="Account menu" class="press" style="width: 42px; height: 42px; border-radius: 12px; border: 1px solid #2A2F39; background: #1B1F27; color: #ECEEF2; font-size: 13px; font-weight: 600; box-shadow: 0 3px 0 #050608">AK</button>
+  </div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding-bottom: 4px; border-bottom: 1px solid #1E222A">
+  <div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 16px">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8E95A2">IDENTITY · 1,284 PRINCIPALS · 342 ROLES · 1.9M DECISIONS / H</span>
+    <h1 style="margin: 0; font-size: 44px; font-weight: 400; letter-spacing: -0.035em; line-height: 1.02">Who can reach what <span style="color: #8E95A2">— and through which door.</span></h1>
+  </div>
+  <nav aria-label="Identity views" style="display: flex; flex-wrap: wrap; gap: 2px">
+    <a href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: #ECEEF2; text-decoration: none; font-size: 14px; box-shadow: inset 0 -2px 0 {{accent}}">Reachability</a>
+    <a class="tab" href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: #8E95A2; text-decoration: none; font-size: 14px">Principals</a>
+    <a class="tab" href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: #8E95A2; text-decoration: none; font-size: 14px">Roles &amp; policies</a>
+    <a class="tab" href="#" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; color: #8E95A2; text-decoration: none; font-size: 14px">Drift<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #0C0E12; background: #FFB020; border-radius: 5px; padding: 1px 5px">1</span></a>
+    <a class="tab" href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: #8E95A2; text-decoration: none; font-size: 14px">Sessions</a>
+    <a class="tab" href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: #8E95A2; text-decoration: none; font-size: 14px">Keys</a>
+  </nav>
+</div>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 999 1 820px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 22px; display: flex; flex-wrap: wrap; gap: 24px">
+
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8E95A2">REACHABILITY LENS</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">distance = indirections to the resource</span>
+      </div>
+      <div style="overflow-x: auto">
+        <div style="position: relative; width: 560px; height: 560px; margin: 0 auto">
+          <div style="position: absolute; left: 0; right: 0; top: 280px; height: 1px; background: #1C2028"></div>
+          <div style="position: absolute; top: 0; bottom: 0; left: 280px; width: 1px; background: #1C2028"></div>
+          <sc-for list="{{rings}}" as="r" hint-placeholder-count="4">
+            <div style="position: absolute; left: {{r.o}}px; top: {{r.o}}px; width: {{r.d}}px; height: {{r.d}}px; border-radius: 50%; border: 1px solid {{r.bc}}; box-sizing: border-box"></div>
+            <span style="position: absolute; left: 286px; top: {{r.ly}}px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5F6775">{{r.label}}</span>
+          </sc-for>
+          <sc-for list="{{ticks}}" as="t" hint-placeholder-count="72">
+            <span style="position: absolute; left: 280px; top: 280px; width: {{t.w}}px; height: 1px; background: {{t.c}}; transform-origin: 0 50%; transform: rotate({{t.a}}deg) translateX(266px)"></span>
+          </sc-for>
+          <div class="sweep" style="position: absolute; left: 18px; top: 18px; width: 524px; height: 524px; border-radius: 50%; pointer-events: none">
+            <span style="position: absolute; left: 262px; top: 0; width: 1px; height: 262px; background: {{accent}}; opacity: 0.35"></span>
+          </div>
+          <sc-for list="{{lines}}" as="l" hint-placeholder-count="6">
+            <span style="position: absolute; left: 280px; top: {{l.top}}px; width: {{l.len}}px; height: {{l.w}}px; background: {{l.c}}; transform-origin: 0 50%; transform: rotate({{l.a}}deg)"></span>
+          </sc-for>
+          <sc-for list="{{dots}}" as="d" hint-placeholder-count="37">
+            <button class="dot" type="button" aria-label="{{d.label}}" style="position: absolute; left: {{d.x}}px; top: {{d.y}}px; width: {{d.s}}px; height: {{d.s}}px; padding: 0; border: 0; border-radius: {{d.br}}; background: {{d.c}}; box-shadow: {{d.halo}}; rotate: {{d.rot}}"></button>
+          </sc-for>
+          <sc-for list="{{flagLabels}}" as="f" hint-placeholder-count="2">
+            <span style="position: absolute; left: {{f.x}}px; top: {{f.y}}px; display: flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 8px; background: #0C0E12; border: 1px solid {{f.c}}; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #ECEEF2; white-space: nowrap; box-shadow: 0 3px 0 #050608">{{f.text}}</span>
+          </sc-for>
+          <div style="position: absolute; left: 228px; top: 228px; width: 104px; height: 104px; box-sizing: border-box; border-radius: 26px; background: #1A1830; border: 1.5px solid {{accent}}; box-shadow: 0 0 0 10px {{accent}}14, 0 8px 0 #050608; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"></path><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500">{{j.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8E95A2">CROWN JEWEL</span>
+        <div role="group" aria-label="Crown jewel" style="display: flex; flex-wrap: wrap; gap: 6px">
+          <sc-for list="{{jewels}}" as="x" hint-placeholder-count="3">
+            <button type="button" class="press" aria-pressed="{{x.pressed}}" onClick="{{x.pick}}" style="min-height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid {{x.bc}}; background: {{x.bg}}; color: {{x.c}}; font-family: 'JetBrains Mono', monospace; font-size: 12px; box-shadow: 0 3px 0 #050608">{{x.name}}</button>
+          </sc-for>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">{{j.kind}}</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 72px; font-weight: 300; letter-spacing: -0.05em; line-height: 0.95">{{j.total}}</span>
+        <span style="font-size: 15px; color: #8E95A2">principals can reach <span style="color: #ECEEF2">{{j.name}}</span></span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{hopRows}}" as="h" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2; width: 54px">{{h.label}}</span>
+            <div style="flex: 1; height: 8px; border-radius: 4px; background: #1E222A"><div style="height: 100%; width: {{h.w}}%; border-radius: 4px; background: {{h.c}}"></div></div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; width: 24px; text-align: right">{{h.n}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; padding-top: 14px; border-top: 1px solid #1E222A; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 50%; background: #ECEEF2"></span>human {{j.humans}}</span>
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 9px; height: 9px; border-radius: 2px; background: #6F7A8C"></span>service {{j.services}}</span>
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 9px; height: 9px; border-radius: 2px; background: {{accent}}; rotate: 45deg"></span>agent {{j.agents}}</span>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; background: #22140F; border: 1px solid #5A2A1C; border-radius: 14px; padding: 14px">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: 0 0 auto; margin-top: 2px"><path d="M8 1l7 7-7 7-7-7z" fill="#FF6B4A"></path></svg>
+        <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 500">{{j.unexpected}} unexpected {{j.pathWord}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D9A796">not explained by any approved access request</span></div>
+      </div>
+    </div>
+  </div>
+
+  <aside aria-label="Shortest unexpected path" style="flex: 1 1 380px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF8A6E">SHORTEST UNEXPECTED PATH</span>
+      <h2 style="margin: 0; font-size: 22px; font-weight: 500; letter-spacing: -0.02em">{{p.title}}</h2>
+    </div>
+    <div style="display: flex; gap: 14px">
+      <div aria-hidden="true" style="flex: 0 0 22px; display: flex; flex-direction: column; align-items: center; padding: 22px 0">
+        <span style="width: 10px; height: 1px; background: #5F6775"></span>
+        <span style="flex: 1; width: 1px; background: #5F6775"></span>
+        <span style="writing-mode: vertical-rl; transform: rotate(180deg); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8E95A2; padding: 8px 0">{{p.hops}}</span>
+        <span style="flex: 1; width: 1px; background: #5F6775"></span>
+        <span style="width: 10px; height: 1px; background: #5F6775"></span>
+      </div>
+      <ol style="flex: 1; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+        <sc-for list="{{p.nodes}}" as="n" hint-placeholder-count="5">
+          <li style="display: flex; flex-direction: column; align-items: stretch">
+            <sc-if value="{{n.notFirst}}" hint-placeholder-val="{{true}}">
+              <span style="align-self: center; width: 1px; height: 14px; background: {{n.lc}}"></span>
+            </sc-if>
+            <div style="border-radius: 14px; border: 1px solid {{n.bc}}; background: {{n.bg}}; padding: 12px 14px; display: flex; flex-direction: column; gap: 3px; box-shadow: 0 4px 0 #050608">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: {{n.kc}}">{{n.kind}}</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">{{n.name}}</span>
+              <span style="font-size: 12px; color: #8E95A2">{{n.meta}}</span>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+    <div style="background: #0F1216; border: 1px solid #1E222A; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: {{accent}}">SIMULATED · CUT {{p.cut}}</span>
+      <sc-for list="{{p.sim}}" as="s" hint-placeholder-count="3">
+        <div style="display: flex; gap: 10px; font-size: 13px; line-height: 1.4"><span style="font-family: 'JetBrains Mono', monospace; color: {{s.c}}; width: 18px">{{s.n}}</span><span style="color: #C3C8D1">{{s.t}}</span></div>
+      </sc-for>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2">replayed against 30 days of real authorization decisions</span>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: auto">
+      <button type="button" class="press" style="flex: 1; min-height: 46px; border: 0; border-radius: 12px; background: {{accent}}; color: #0C0E12; font-size: 14px; font-weight: 600; box-shadow: 0 4px 0 #050608">Cut path</button>
+      <button type="button" class="press" style="flex: 1; min-height: 46px; border: 1px solid #2A2F39; border-radius: 12px; background: transparent; color: #ECEEF2; font-size: 14px; box-shadow: 0 4px 0 #050608">Open request trail</button>
+    </div>
+  </aside>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 1 1 380px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 19px; font-weight: 500">Permission debt</h2>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">granted vs exercised · last 90 days</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 40px; font-weight: 300; letter-spacing: -0.04em">77%</span><span style="font-size: 13px; color: #8E95A2">of granted actions never used — 620 of 802</span></div>
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{debt}}" as="d" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 5px">
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-family: 'JetBrains Mono', monospace">{{d.role}}</span><span style="font-family: 'JetBrains Mono', monospace; color: #8E95A2"><span style="color: #ECEEF2">{{d.used}}</span> / {{d.granted}}</span></div>
+          <div style="position: relative; height: 10px">
+            <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{d.gw}}%; border: 1px solid #3A404C; border-radius: 4px; box-sizing: border-box"></div>
+            <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{d.uw}}%; background: {{accent}}; border-radius: 4px"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" class="press" style="margin-top: auto; min-height: 44px; border-radius: 12px; border: 1px solid #2A2F39; background: #1B1F27; color: #ECEEF2; font-size: 14px; box-shadow: 0 4px 0 #050608">Generate right-sized roles</button>
+  </div>
+
+  <div style="flex: 1 1 420px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Policy drift</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">role/ml-engineer · vs signed baseline</span></div>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #0C0E12; background: #FFB020; border-radius: 6px; padding: 3px 8px">SINCE 14:20</span>
+    </div>
+    <div style="background: #0B0D10; border: 1px solid #1E222A; border-radius: 12px; overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9">
+      <sc-for list="{{diff}}" as="l" hint-placeholder-count="7">
+        <div style="display: flex; background: {{l.bg}}">
+          <span style="width: 34px; flex: 0 0 34px; text-align: right; padding-right: 8px; color: #4A5260">{{l.n}}</span>
+          <span style="width: 18px; flex: 0 0 18px; color: {{l.c}}">{{l.m}}</span>
+          <span style="flex: 1; min-width: 0; white-space: pre; overflow: hidden; text-overflow: ellipsis; color: {{l.c}}; text-decoration: {{l.td}}">{{l.t}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <span style="font-size: 13px; color: #8E95A2; line-height: 1.45">Widened through <span style="color: #ECEEF2; font-family: 'JetBrains Mono', monospace">group/data-platform</span>, attached by m.wijaya without a linked request. Reaches 3 buckets holding PII.</span>
+    <div style="display: flex; gap: 8px; margin-top: auto">
+      <button type="button" class="press" style="flex: 1; min-height: 44px; border: 0; border-radius: 12px; background: #ECEEF2; color: #0C0E12; font-size: 14px; font-weight: 600; box-shadow: 0 4px 0 #050608">Revert to baseline</button>
+      <button type="button" class="press" style="flex: 1; min-height: 44px; border: 1px solid #2A2F39; border-radius: 12px; background: transparent; color: #ECEEF2; font-size: 14px; box-shadow: 0 4px 0 #050608">Accept &amp; re-sign</button>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 420px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Elevation, today</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">every privileged minute is borrowed, not owned</span></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span style="font-size: 26px; font-weight: 300; letter-spacing: -0.03em">94%</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2">ZERO STANDING</span></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{jit}}" as="r" hint-placeholder-count="5">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div style="flex: 0 0 116px; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.who}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.scope}}</span></div>
+          <div style="flex: 1; position: relative; height: 18px; border-radius: 4px; background: #0F1216">
+            <span style="position: absolute; left: {{r.l}}%; width: {{r.w}}%; top: 3px; bottom: 3px; min-width: 4px; border-radius: 3px; background: {{r.c}}"></span>
+            <span style="position: absolute; left: 72.2%; top: -4px; bottom: -4px; width: 1px; background: #ECEEF2"></span>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display: flex; gap: 12px">
+        <span style="flex: 0 0 116px"></span>
+        <div style="flex: 1; position: relative; height: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8E95A2">
+          <span style="position: absolute; left: 0">00</span><span style="position: absolute; left: 25%; transform: translateX(-50%)">06</span><span style="position: absolute; left: 50%; transform: translateX(-50%)">12</span><span style="position: absolute; left: 72.2%; transform: translateX(-50%); color: #ECEEF2">now</span><span style="position: absolute; right: 0">24</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2; margin-top: auto; padding-top: 12px; border-top: 1px solid #1E222A">
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 6px; border-radius: 2px; background: {{accent}}"></span>active JIT</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 6px; border-radius: 2px; background: #FFB020"></span>break-glass</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 6px; border-radius: 2px; background: #3A404C"></span>expired</span>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+  <div style="flex: 999 1 620px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Posture controls</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">evaluated continuously · not a quarterly checkbox</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px">
+      <sc-for list="{{posture}}" as="c" hint-placeholder-count="6">
+        <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-top: 1px solid #1E222A">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px"><span style="font-size: 14px">{{c.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{c.c}}">{{c.v}}</span></div>
+          <div style="display: flex; gap: 3px">
+            <sc-for list="{{c.cells}}" as="k" hint-placeholder-count="20">
+              <span style="flex: 1; height: 8px; border-radius: 2px; background: {{k}}"></span>
+            </sc-for>
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">{{c.note}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 400px; min-width: 0; background: #14171D; border: 1px solid #232832; border-radius: 22px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 0 #050608, 0 8px 0 1px #1A1E25; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 500">Credential age</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">412 keys &amp; secrets</span></div>
+    <div style="display: flex; gap: 12px; align-items: flex-end; flex: 1; min-height: 200px">
+      <sc-for list="{{ages}}" as="g" hint-placeholder-count="5">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: center; color: {{g.tc}}">{{g.n}}</span>
+          <div style="display: flex; flex-direction: column-reverse; gap: 3px">
+            <sc-for list="{{g.cells}}" as="k" hint-placeholder-count="8">
+              <span style="height: 12px; border-radius: 3px; background: {{k}}"></span>
+            </sc-for>
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-align: center; color: #8E95A2">{{g.label}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" class="press" style="min-height: 44px; border-radius: 12px; border: 1px solid #5C4517; background: #1A1710; color: #ECEEF2; font-size: 14px; box-shadow: 0 4px 0 #050608">Rotate 4 keys older than 90 days</button>
+  </div>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; gap: 8px 28px; padding-top: 14px; border-top: 1px solid #1E222A; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2">
+  <span>POLICY ENGINE <span style="color: #ECEEF2">r2026.10.20</span></span>
+  <span>eval p95 <span style="color: #ECEEF2">3.1 ms</span></span>
+  <span>graph scan <span style="color: #ECEEF2">16:40</span> · 1,284 nodes · 9,812 edges</span>
+  <span>baseline <span style="color: #ECEEF2">signed</span> · sha256:9f2c…41ab</span>
+  <span>break-glass vault <span style="color: #ECEEF2">sealed 1/2</span></span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#8F7BFF","options":["#8F7BFF","#3DDCFF","#C6F432","#FF7A59"]},"$preview":{"width":1440,"height":1960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { jewel: 'prod' };
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#8F7BFF';
+    const CRIT = '#FF6B4A', AMB = '#FFB020', SVC = '#6F7A8C', HUM = '#ECEEF2';
+    const C = 280, R = [70, 135, 200, 255];
+    const rnd = (n) => Math.abs(Math.sin(n * 12.9898 + 78.233) * 43758.5453) % 1;
+    const rad = (a) => (a * Math.PI) / 180;
+
+    const data = {
+      prod: {
+        id: 'prod', name: 'prod-db', kind: 'postgres · ap-se-1 · holds PII · tier-0', seed: 3,
+        hops: [4, 11, 14, 6], humans: 9, services: 22, agents: 6,
+        flags: [
+          { h: 2, a: 200, type: 'svc', sev: 'crit', text: 'svc/ci-runner · via Action:*', lx: 14, ly: -11 },
+          { h: 1, a: 320, type: 'agent', sev: 'amb', text: 'research-agent · read', lx: 14, ly: -11 }
+        ],
+        path: {
+          title: 'svc/ci-runner → prod-db', hops: '3 HOPS', cut: 'HOP 3',
+          nodes: [
+            { kind: 'PRINCIPAL', name: 'svc/ci-runner', meta: 'CI pipeline · OIDC federated', s: '' },
+            { kind: 'GROUP', name: 'group/deployers', meta: '14 members · membership inherited', s: '' },
+            { kind: 'ROLE', name: 'role/platform-admin', meta: 'assumable by group · no MFA condition', s: '' },
+            { kind: 'POLICY', name: 'AdminAccess-legacy', meta: 'inline · Action: *  Resource: *', s: 'crit' },
+            { kind: 'RESOURCE', name: 'prod-db', meta: 'tier-0 · PII', s: 'res' }
+          ],
+          sim: [
+            { n: '0', t: 'pipelines break — ci-runner never called prod-db', c: accent },
+            { n: '6', t: 'principals lose access they have never used', c: accent },
+            { n: '2', t: 'lose access used this week → scoped grant drafted', c: AMB }
+          ]
+        }
+      },
+      kms: {
+        id: 'kms', name: 'kms/prod', kind: 'key management · signs tenant data keys · tier-0', seed: 11,
+        hops: [3, 4, 2, 1], humans: 4, services: 5, agents: 2,
+        flags: [{ h: 1, a: 300, type: 'agent', sev: 'amb', text: 'research-agent · decrypt', lx: 14, ly: -11 }],
+        path: {
+          title: 'research-agent → kms/prod', hops: '2 HOPS', cut: 'HOP 2',
+          nodes: [
+            { kind: 'PRINCIPAL', name: 'agent/research', meta: 'AI agent · v1.9 · tool: export_report', s: '' },
+            { kind: 'ROLE', name: 'role/ai-runtime', meta: 'shared by all agents', s: '' },
+            { kind: 'POLICY', name: 'kms-decrypt-wide', meta: 'kms:Decrypt on key/*', s: 'crit' },
+            { kind: 'RESOURCE', name: 'kms/prod', meta: 'tier-0 · signs data keys', s: 'res' }
+          ],
+          sim: [
+            { n: '0', t: 'agent runs fail — decrypt was never invoked', c: accent },
+            { n: '1', t: 'agent (support) needs key/tenant-tickets only → scoped', c: AMB },
+            { n: '−', t: 'recommend: one role per agent, not a shared runtime role', c: '#8E95A2' }
+          ]
+        }
+      },
+      lake: {
+        id: 'lake', name: 'lake-raw', kind: 'object storage · raw events · contains PII', seed: 23,
+        hops: [6, 18, 21, 12], humans: 21, services: 31, agents: 6,
+        flags: [{ h: 2, a: 150, type: 'human', sev: 'crit', text: 'contractor/ext-17 · s3:*', lx: 14, ly: -11 }],
+        path: {
+          title: 'contractor/ext-17 → lake-raw', hops: '3 HOPS', cut: 'HOP 3',
+          nodes: [
+            { kind: 'PRINCIPAL', name: 'contractor/ext-17', meta: 'external · access expires 31 Oct', s: '' },
+            { kind: 'GROUP', name: 'group/data-platform', meta: 'attached 14:20 · no linked request', s: '' },
+            { kind: 'ROLE', name: 'role/ml-engineer', meta: 'drifted from signed baseline', s: '' },
+            { kind: 'POLICY', name: 's3:* on lake-raw/*', meta: 'was GetObject + ListBucket', s: 'crit' },
+            { kind: 'RESOURCE', name: 'lake-raw', meta: 'PII · 3 buckets', s: 'res' }
+          ],
+          sim: [
+            { n: '0', t: 'jobs break — no write calls in 30 days', c: accent },
+            { n: '5', t: 'principals lose delete/put they never used', c: accent },
+            { n: '1', t: 'contractor removed from group (outside scope)', c: AMB }
+          ]
+        }
+      }
+    };
+
+    const ds = data[this.state.jewel] || data.prod;
+    const dots = [], lines = [], flagLabels = [];
+    const mkDot = (a, r, type, sev, label) => {
+      const s = sev ? 16 : (type === 'svc' ? 9 : 11);
+      let c = type === 'human' ? HUM : (type === 'svc' ? SVC : accent);
+      let halo = 'none';
+      if (sev === 'crit') { c = CRIT; halo = '0 0 0 6px rgba(255,107,74,0.22)'; }
+      if (sev === 'amb') { c = AMB; halo = '0 0 0 6px rgba(255,176,32,0.2)'; }
+      const x = C + r * Math.cos(rad(a));
+      const y = C + r * Math.sin(rad(a));
+      dots.push({ x: Math.round(x - s / 2), y: Math.round(y - s / 2), s: s, c: c, halo: halo,
+        br: type === 'human' ? '50%' : '2px', rot: type === 'agent' ? '45deg' : '0deg', label: label });
+      return { x: x, y: y };
+    };
+    const typeFor = (k) => (k % 5 === 0 ? 'agent' : (k % 3 === 0 ? 'human' : 'svc'));
+    ds.hops.forEach((n, h) => {
+      for (let i = 0; i < n; i++) {
+        const a = (360 / n) * i + h * 23 + rnd(h * 100 + i + ds.seed) * 14;
+        const r = R[h] + (rnd(h * 50 + i + ds.seed * 3) - 0.5) * 16;
+        const t = typeFor(i + h * 7 + ds.seed);
+        mkDot(a, r, t, '', t + ' principal, ' + (h + 1) + (h === 3 ? '+' : '') + ' hops');
+        if (h === 0) lines.push({ a: Math.round(a), len: Math.round(r), w: 1, top: C, c: '#2E3440' });
+      }
+    });
+    ds.flags.forEach((f) => {
+      const col = f.sev === 'crit' ? CRIT : AMB;
+      lines.push({ a: f.a, len: R[f.h], w: 2, top: C - 1, c: col });
+      const pt = mkDot(f.a, R[f.h], f.type, f.sev, 'Unexpected path: ' + f.text);
+      flagLabels.push({ x: Math.round(pt.x + f.lx), y: Math.round(pt.y + f.ly), text: f.text, c: col });
+    });
+
+    const extra = [0, 0, 0, 0];
+    ds.flags.forEach((f) => { extra[f.h] += 1; });
+    const hc = ds.hops.map((n, i) => n + extra[i]);
+    const total = hc.reduce((a, b) => a + b, 0);
+    const maxH = Math.max.apply(null, hc);
+    const hopLabels = ['1 hop', '2 hops', '3 hops', '4+ hops'];
+    const hopRows = hc.map((n, i) => ({ label: hopLabels[i], n: n, w: Math.round((n / maxH) * 100), c: extra[i] ? (ds.flags.some((f) => f.h === i && f.sev === 'crit') ? CRIT : AMB) : '#5A6170' }));
+
+    const rings = R.map((r, i) => ({ o: C - r, d: r * 2, ly: C - r - 15, label: i === 3 ? '4+ HOPS' : (i + 1) + (i === 0 ? ' HOP' : ' HOPS'), bc: i === 3 ? '#2A2F39' : '#20242C' }));
+    const ticks = Array.from({ length: 72 }, (_, i) => ({ a: i * 5, w: i % 6 === 0 ? 10 : 5, c: i % 6 === 0 ? '#4A5260' : '#2A2F39' }));
+
+    const jewels = ['prod', 'kms', 'lake'].map((id) => {
+      const on = id === ds.id;
+      return { name: data[id].name, pressed: on ? 'true' : 'false', bc: on ? accent : '#2A2F39', bg: on ? '#1A1830' : '#14171D', c: on ? '#ECEEF2' : '#8E95A2', pick: () => this.setState({ jewel: id }) };
+    });
+
+    const nodes = ds.path.nodes.map((n, i) => {
+      if (n.s === 'crit') return Object.assign({}, n, { notFirst: i > 0, bc: CRIT, bg: '#22140F', kc: '#FF8A6E', lc: CRIT });
+      if (n.s === 'res') return Object.assign({}, n, { notFirst: i > 0, bc: accent, bg: '#1A1830', kc: accent, lc: CRIT });
+      return Object.assign({}, n, { notFirst: i > 0, bc: '#2A2F39', bg: '#181B22', kc: '#8E95A2', lc: '#3A404C' });
+    });
+
+    const cells20 = (pct, color) => Array.from({ length: 20 }, (_, i) => (i < Math.round(pct / 5) ? color : '#232832'));
+    const stack = (n, max, color) => Array.from({ length: 8 }, (_, i) => (i < Math.max(1, Math.round((n / max) * 8)) ? color : '#1E222A'));
+
+    return {
+      accent: accent,
+      j: { name: ds.name, kind: ds.kind, total: total, humans: ds.humans, services: ds.services, agents: ds.agents, unexpected: ds.flags.length, pathWord: ds.flags.length === 1 ? 'path' : 'paths' },
+      jewels: jewels,
+      rings: rings,
+      ticks: ticks,
+      dots: dots,
+      lines: lines,
+      flagLabels: flagLabels,
+      hopRows: hopRows,
+      p: { title: ds.path.title, hops: ds.path.hops, cut: ds.path.cut, nodes: nodes, sim: ds.path.sim },
+      debt: [
+        { role: 'role/platform-admin', granted: 412, used: 38, gw: 100, uw: 9 },
+        { role: 'role/ml-engineer', granted: 186, used: 52, gw: 45, uw: 13 },
+        { role: 'role/data-analyst', granted: 92, used: 40, gw: 22, uw: 10 },
+        { role: 'role/ai-runtime', granted: 64, used: 21, gw: 16, uw: 5 },
+        { role: 'role/billing-ops', granted: 48, used: 31, gw: 12, uw: 8 }
+      ],
+      diff: [
+        { n: '12', m: ' ', t: '{ "Effect": "Allow",', c: '#8E95A2', bg: 'transparent', td: 'none' },
+        { n: '13', m: '−', t: '  "Action": ["s3:GetObject", "s3:ListBucket"],', c: '#6F7A8C', bg: 'rgba(111,122,140,0.08)', td: 'line-through' },
+        { n: '13', m: '+', t: '  "Action": ["s3:*"],', c: AMB, bg: 'rgba(255,176,32,0.09)', td: 'none' },
+        { n: '14', m: ' ', t: '  "Resource": "lake-raw/*",', c: '#8E95A2', bg: 'transparent', td: 'none' },
+        { n: '15', m: '+', t: '  "Principal": "group/data-platform",', c: AMB, bg: 'rgba(255,176,32,0.09)', td: 'none' },
+        { n: '16', m: '−', t: '  "Condition": { "mfa": true }', c: '#6F7A8C', bg: 'rgba(111,122,140,0.08)', td: 'line-through' },
+        { n: '17', m: ' ', t: '}', c: '#8E95A2', bg: 'transparent', td: 'none' }
+      ],
+      jit: [
+        { who: 'r.santoso', scope: 'prod-db · rw', l: 68.2, w: 4.2, c: accent },
+        { who: 'dina.p', scope: 'kms/prod · break-glass', l: 69.5, w: 4.2, c: AMB },
+        { who: 'a.kurnia', scope: 'tenant admin', l: 54.2, w: 2.1, c: '#3A404C' },
+        { who: 'm.wijaya', scope: 'quota override', l: 41.7, w: 4.1, c: '#3A404C' },
+        { who: 'svc/etl-nightly', scope: 'lake-raw · write', l: 4.2, w: 8.3, c: '#3A404C' }
+      ],
+      posture: [
+        { name: 'MFA enforced', v: '100%', c: '#ECEEF2', cells: cells20(100, accent), note: 'all 312 humans' },
+        { name: 'Phishing-resistant factors', v: '71%', c: AMB, cells: cells20(71, AMB), note: '90 still on TOTP · deadline 30 Nov' },
+        { name: 'SSO coverage', v: '98%', c: '#ECEEF2', cells: cells20(98, accent), note: '6 local accounts remain' },
+        { name: 'Q4 access review', v: '62%', c: AMB, cells: cells20(62, AMB), note: 'due 31 Oct · 118 decisions left' },
+        { name: 'Keys rotated < 90d', v: '99%', c: '#ECEEF2', cells: cells20(99, accent), note: '4 keys overdue' },
+        { name: 'Agents with own identity', v: '86%', c: '#ECEEF2', cells: cells20(86, accent), note: '2 agents share role/ai-runtime' }
+      ],
+      ages: [
+        { label: '< 7d', n: 148, tc: '#ECEEF2', cells: stack(148, 148, accent) },
+        { label: '7–30d', n: 131, tc: '#ECEEF2', cells: stack(131, 148, accent) },
+        { label: '30–60d', n: 84, tc: '#ECEEF2', cells: stack(84, 148, '#5A6170') },
+        { label: '60–90d', n: 45, tc: '#ECEEF2', cells: stack(45, 148, '#5A6170') },
+        { label: '> 90d', n: 4, tc: AMB, cells: stack(4, 148, AMB) }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

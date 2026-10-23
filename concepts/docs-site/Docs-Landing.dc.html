@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scnehaux UI — Build interfaces you can prove</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9ECF1}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+.hov{transition:filter .15s ease, opacity .15s ease}
+.hov:hover{filter:brightness(0.94)}
+.lift{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.lift:hover{transform:translateY(-4px)}
+.sw{transition:transform .18s ease}
+input.hue{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:6px;margin:0;outline:none;cursor:pointer}
+input.hue::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px rgba(0,0,0,0.35),0 4px 10px rgba(0,0,0,0.4)}
+input.hue::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px rgba(0,0,0,0.35),0 4px 10px rgba(0,0,0,0.4)}
+input.hue:focus-visible{outline:2px solid #FFFFFF;outline-offset:3px}
+.sw:hover{transform:scale(1.1)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ringOn{0%,30%{opacity:1}34%,100%{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glide{0%{transform:translateX(0)}50%{transform:translateX(150px)}100%{transform:translateX(0)}}
+@keyframes keyTap{0%,28%,100%{transform:translateY(0)}2%,6%{transform:translateY(2px)}}
+.marquee{animation:marquee 38s linear infinite}
+.ring{animation:ringOn 4.2s linear infinite}
+.rise{animation:rise .5s ease both}
+.caret{animation:blink 1s steps(1) infinite}
+.tap{animation:keyTap 1.4s ease infinite}
+@media (prefers-reduced-motion: reduce){.marquee,.ring,.rise,.caret,.tap{animation:none !important}.lift,.sw,.hov{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background-color: {{S.bg}}; background-image: radial-gradient({{S.dot}} 1px, transparent 1px); background-size: 22px 22px; color: {{S.text}}; font-family: 'Inter', system-ui, sans-serif; font-feature-settings: 'tnum' 1, 'cv11' 1; transition: background-color .3s ease, color .3s ease">
+
+<a href="#" class="hov" style="display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 40px; padding: 0 16px; background: {{S.inv}}; color: {{S.invText}}; text-decoration: none; font-size: 13px">
+  <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.inv}}; background: {{S.invText}}; border-radius: 6px; padding: 2px 7px">NEW</span>Tabs now verified in right-to-left layouts<span aria-hidden="true">→</span>
+</a>
+
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 24px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; background: {{S.card}}; border-radius: 20px; padding: 10px 10px 10px 18px; box-shadow: {{S.sh}}">
+  <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: {{S.text}}">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="8" fill="{{S.btnBg}}"></rect><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" stroke="{{S.btnFg}}" stroke-width="1.4"></rect><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" fill="{{S.btnFg}}"></rect><circle cx="10.5" cy="17.5" r="3" fill="none" stroke="{{S.btnFg}}" stroke-width="1.4"></circle><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="{{accent}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <span style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Scnehaux UI</span>
+  </a>
+  <nav aria-label="Documentation" style="display: flex; flex-wrap: wrap; gap: 2px; margin: 0 auto">
+    <sc-for list="{{pillars}}" as="p" hint-placeholder-count="4">
+      <a class="hov" href="#" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 10px; color: {{S.muted}}; text-decoration: none; font-size: 14px">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><sc-if value="{{p.isPrim}}" hint-placeholder-val="{{false}}"><path d="M4 9V6.5A2.5 2.5 0 016.5 4H9M15 4h2.5A2.5 2.5 0 0120 6.5V9M20 15v2.5a2.5 2.5 0 01-2.5 2.5H15M9 20H6.5A2.5 2.5 0 014 17.5V15" fill="none" stroke="{{S.text}}" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="2.6" fill="{{accent}}"></circle></sc-if><sc-if value="{{p.isComp}}" hint-placeholder-val="{{false}}"><rect x="3" y="3" width="12.5" height="12.5" rx="3.2" fill="none" stroke="{{S.text}}" stroke-width="1.6"></rect><rect x="8.5" y="8.5" width="12.5" height="12.5" rx="3.2" fill="{{accent}}"></rect></sc-if><sc-if value="{{p.isTok}}" hint-placeholder-val="{{false}}"><g fill="none" stroke="{{S.text}}" stroke-width="1.6"><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(-32 12 18)"></rect><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(32 12 18)"></rect></g><rect x="9" y="4.5" width="6" height="15" rx="3" fill="{{accent}}"></rect></sc-if><sc-if value="{{p.isRel}}" hint-placeholder-val="{{false}}"><path d="M12.00 2.00 L14.30 3.40 L17.00 3.34 L18.29 5.71 L20.66 7.00 L20.60 9.70 L22.00 12.00 L20.60 14.30 L20.66 17.00 L18.29 18.29 L17.00 20.66 L14.30 20.60 L12.00 22.00 L9.70 20.60 L7.00 20.66 L5.71 18.29 L3.34 17.00 L3.40 14.30 L2.00 12.00 L3.40 9.70 L3.34 7.00 L5.71 5.71 L7.00 3.34 L9.70 3.40Z" fill="none" stroke="{{S.text}}" stroke-width="1.6" stroke-linejoin="round"></path><path d="M8.2 12.3l2.6 2.6 5-5.4" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></sc-if></svg>
+        {{p.name}}
+      </a>
+    </sc-for>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 6px">
+    <div role="group" aria-label="Color mode" style="display: flex; background: {{S.chip}}; border-radius: 12px; padding: 3px">
+      <sc-for list="{{siteModes}}" as="m" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{m.on}}" aria-label="{{m.label}}" onClick="{{m.pick}}" style="width: 38px; height: 38px; border: 0; border-radius: 9px; background: {{m.bg}}; box-shadow: {{m.sh}}; display: flex; align-items: center; justify-content: center">
+          <sc-if value="{{m.isLight}}" hint-placeholder-val="{{true}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{m.ic}}" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+          <sc-if value="{{m.isDark}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{m.ic}}" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"></path></svg></sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <a class="hov" href="#" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-radius: 12px; color: {{S.text}}; text-decoration: none; font-size: 14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{S.text}}" stroke-width="1.7" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"></path></svg>GitHub</a>
+    <a class="hov" href="Docs-Home.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 12px; background: {{S.chip}}; color: {{S.text}}; text-decoration: none; font-size: 14px; font-weight: 500">Team sign in</a>
+    <a class="hov" href="#" style="display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px; background: {{S.btnBg}}; color: {{S.btnFg}}; text-decoration: none; font-size: 14px; font-weight: 600">Get started</a>
+  </div>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding: 10px 0 0">
+  <div style="flex: 999 1 500px; min-width: 0; display: flex; flex-direction: column; gap: 26px; padding: 0 8px">
+    <span style="align-self: flex-start; display: flex; align-items: center; gap: 8px; font-size: 13px; color: {{S.text}}; background: {{S.card}}; border-radius: 999px; padding: 6px 12px 6px 6px; box-shadow: {{S.sh}}"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.btnFg}}; background: {{S.btnBg}}; border-radius: 999px; padding: 2px 8px">2.0 BETA</span>Open source · Apache-2.0</span>
+    <h1 style="margin: 0; font-size: 80px; line-height: 0.95; font-weight: 600; letter-spacing: -0.055em; color: {{S.text}}">Build interfaces<br>you can <span style="color: {{S.accentText}}">prove.</span></h1>
+    <p style="margin: 0; font-size: 20px; line-height: 1.55; color: {{S.muted}}; max-width: 560px">An accessible React design system with perceptual color, isolated multi-brand theming and zero runtime CSS. Every release ships with the evidence that it works.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px">
+      <a class="hov" href="#" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 14px; background: {{S.btnBg}}; color: {{S.btnFg}}; text-decoration: none; font-size: 15px; font-weight: 600">Get started<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{S.btnFg}}" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      <div style="display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 7px 0 16px; border-radius: 14px; background: {{S.card}}; box-shadow: {{S.sh}}; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{S.text}}">
+        <span style="color: {{S.accentText}}">$</span><span>npm i @scnx/system @scnx/core-ui</span>
+        <button class="hov" type="button" aria-label="Copy install command" style="width: 38px; height: 38px; border-radius: 10px; border: 0; background: {{S.chip}}; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{S.text}}" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M4 16V6a2 2 0 012-2h10"></path></svg></button>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{S.muted}}">
+      <span>React 19</span><span>SSR · RSC</span><span>strict CSP</span><span>WCAG 2.2</span><span>OKLCH · P3</span>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 640px; min-width: 0">
+    <div style="position: relative; height: 620px; border-radius: 28px; overflow: hidden; background: {{stage.bg}}; box-shadow: {{stage.sh}}">
+      <canvas ref="{{glRef}}" role="img" aria-label="A component exploded into its four contracts: tokens, primitive, component and release. Drag to rotate." style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab"></canvas>
+      <sc-if value="{{glFail}}" hint-placeholder-val="{{false}}">
+        <div style="position: absolute; inset: 40px; border-radius: 24px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: #C3C8D1; font-size: 14px">3D preview needs WebGL</div>
+      </sc-if>
+      <span style="position: absolute; left: 18px; top: 18px; display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #C3C8D1; background: rgba(255,255,255,0.08); border-radius: 8px; padding: 6px 10px; pointer-events: none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C3C8D1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M18 3v4h-4M6 21v-4h4"></path></svg>DRAG TO ORBIT · HOVER YOUR BRAND</span>
+      <span style="position: absolute; right: 18px; top: 18px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; pointer-events: none">
+        <span style="font-size: 13px; font-weight: 600; color: #FFFFFF">12 steps × every hue</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9AA2AE">12 steps × 360° · OKLCH · sRGB-safe</span>
+      </span>
+      <div style="position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px; pointer-events: none">
+          <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E6E8EC; background: rgba(255,255,255,0.08); border-radius: 9px; padding: 7px 10px; backdrop-filter: blur(8px)"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9AA2AE">↕</span>12 lightness steps, light to dark</span>
+          <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E6E8EC; background: rgba(255,255,255,0.08); border-radius: 9px; padding: 7px 10px; backdrop-filter: blur(8px)"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9AA2AE">↔</span>width = chroma · around = hue</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="display: flex; flex-direction: column; gap: 8px; background: rgba(255,255,255,0.08); border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(8px); min-width: 250px">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+              <label for="hue-dial" style="font-size: 12px; color: #C3C8D1">Your brand hue</label>
+              <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFFFFF"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{hueSwatch}}"></span>{{towerHue}}°</span>
+            </div>
+            <input id="hue-dial" class="hue" type="range" min="0" max="359" step="1" value="{{towerHue}}" onInput="{{onHue}}" style="background: {{hueTrack}}">
+            <div role="radiogroup" aria-label="Brand presets" style="display: flex; align-items: center; gap: 8px">
+              <span style="font-size: 11px; color: #9AA2AE">Presets</span>
+              <sc-for list="{{hues}}" as="h" hint-placeholder-count="4">
+                <button class="sw" type="button" role="radio" aria-checked="{{h.on}}" aria-label="{{h.name}}" onClick="{{h.pick}}" style="width: 20px; height: 20px; border-radius: 50%; border: 0; padding: 0; background: {{h.hex}}; box-shadow: {{h.stageRing}}"></button>
+              </sc-for>
+            </div>
+          </div>
+          <button type="button" onClick="{{resetView}}" aria-label="Reset view" style="width: 42px; height: 42px; border-radius: 12px; border: 0; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E6E8EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg></button>
+        </div>
+      </div>
+      <sc-if value="{{hasTip}}" hint-placeholder-val="{{false}}">
+        <div ref="{{tipRef}}" role="status" style="position: absolute; left: 0; top: 0; pointer-events: none; display: flex; gap: 10px; align-items: center; background: rgba(9,12,18,0.92); border-radius: 12px; padding: 10px 12px; box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 16px 32px rgba(0,0,0,0.5)">
+          <span style="width: 30px; height: 30px; border-radius: 8px; background: {{tip.sw}}; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2)"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9AA2AE; white-space: nowrap"><span style="font-size: 12px; color: #FFFFFF">{{tip.token}}</span><span>{{tip.oklch}} · {{tip.hex}}</span><span>best on {{tip.best}}</span></span>
+        </div>
+      </sc-if>
+      <!-- DO NOT DELETE: controls of the previous "Exploded stack" hero (legend 01-04, Reset view, Explode/Assemble). Restore together with initGL(). See the DO-NOT-DELETE block in the script.
+      <div style="position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <sc-for list="{{legend}}" as="l" hint-placeholder-count="4">
+            <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E6E8EC; background: rgba(255,255,255,0.08); border-radius: 9px; padding: 7px 10px; backdrop-filter: blur(8px)"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9AA2AE">{{l.n}}</span>{{l.t}}</span>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 8px">
+        <button type="button" onClick="{{resetView}}" style="display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 14px; border-radius: 12px; border: 0; background: rgba(255,255,255,0.1); color: #E6E8EC; font-size: 13px; font-weight: 500; backdrop-filter: blur(8px)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E6E8EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>Reset view</button>
+        <button type="button" aria-pressed="{{explodePressed}}" onClick="{{toggleExplode}}" style="display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; border-radius: 12px; border: 0; background: #FFFFFF; color: #0D1117; font-size: 13px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,0.35)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"></path><path d="M3 13l9 5 9-5"></path></svg>{{explodeLabel}}</button>
+        </div>
+      </div>
+      END DO NOT DELETE -->
+
+    </div>
+  </div>
+</section>
+
+<section aria-label="Built for" style="display: flex; flex-direction: column; gap: 14px; padding: 4px 0">
+  <span style="text-align: center; font-size: 13px; color: {{S.muted}}">Built to power every Scnehaux product, from identity to agents</span>
+  <div style="overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)">
+    <div class="marquee" style="display: flex; width: max-content; gap: 48px">
+      <sc-for list="{{marquee}}" as="m" hint-placeholder-count="16">
+        <span style="display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: {{S.faint}}; white-space: nowrap"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{S.faint}}; opacity: 0.6"></span>{{m}}</span>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Light and dark" style="display: flex; flex-direction: column; gap: 18px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; padding: 0 4px">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.muted}}">ONE ROOT · EVERY MODE</span>
+      <h2 style="margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.04em; color: {{S.text}}">Drag to switch the lights.</h2>
+    </div>
+    <span style="font-size: 15px; color: {{S.muted}}; max-width: 440px; line-height: 1.5">Same markup, same components. One attribute on the root resolves every token for light or dark, with contrast verified in both.</span>
+  </div>
+  <div onPointerDown="{{sl.down}}" style="position: relative; height: 560px; border-radius: 28px; overflow: hidden; touch-action: none; user-select: none; cursor: ew-resize; box-shadow: {{S.shBig}}">
+    <sc-for list="{{panes}}" as="u" hint-placeholder-count="2">
+      <div style="position: absolute; inset: 0; background: {{u.canvas}}; clip-path: {{u.clip}}; display: flex; gap: 16px; padding: 20px; box-sizing: border-box; color: {{u.text}}">
+        <div style="flex: 0 0 60px; background: {{u.surface}}; border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 12px 0; box-shadow: {{u.sh}}">
+          <span style="width: 34px; height: 34px; border-radius: 10px; background: {{u.text}}"></span>
+          <sc-for list="{{u.rail}}" as="r" hint-placeholder-count="5"><span style="width: 34px; height: 34px; border-radius: 10px; background: {{r}}"></span></sc-for>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+            <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: {{u.text}}">Revenue</span><span style="font-size: 13px; color: {{u.muted}}">Northwind · last 30 days</span></div>
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="display: flex; background: {{u.chip}}; border-radius: 10px; padding: 3px; font-size: 12px"><span style="padding: 6px 10px; color: {{u.muted}}">7d</span><span style="padding: 6px 10px; border-radius: 8px; background: {{u.surface}}; color: {{u.text}}; font-weight: 600">30d</span><span style="padding: 6px 10px; color: {{u.muted}}">90d</span></span>
+              <span style="padding: 8px 14px; border-radius: 10px; background: {{u.solid}}; color: {{u.onSolid}}; font-size: 13px; font-weight: 600">Export</span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+            <sc-for list="{{u.kpis}}" as="k" hint-placeholder-count="3">
+              <div style="background: {{u.surface}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: {{u.sh}}">
+                <span style="font-size: 12px; color: {{u.muted}}">{{k.l}}</span>
+                <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; color: {{u.text}}">{{k.v}}</span>
+                <span style="align-self: flex-start; font-size: 11px; font-weight: 600; color: {{k.fg}}; background: {{k.bg}}; border-radius: 6px; padding: 2px 7px">{{k.d}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex: 1; min-height: 0; display: flex; gap: 12px">
+            <div style="flex: 3; background: {{u.surface}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: {{u.sh}}">
+              <span style="font-size: 13px; font-weight: 600; color: {{u.text}}">Monthly recurring revenue</span>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 6px">
+                <sc-for list="{{u.bars}}" as="b" hint-placeholder-count="14"><span style="flex: 1; height: {{b.h}}%; border-radius: 5px 5px 2px 2px; background: {{b.c}}"></span></sc-for>
+              </div>
+            </div>
+            <div style="flex: 2; background: {{u.surface}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: {{u.sh}}">
+              <span style="font-size: 13px; font-weight: 600; color: {{u.text}}; padding-bottom: 6px">Recent invoices</span>
+              <sc-for list="{{u.rows}}" as="r" hint-placeholder-count="4">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid {{u.line}}">
+                  <span style="flex: 1; font-size: 13px; color: {{u.text}}">{{r.n}}</span>
+                  <span style="font-size: 11px; font-weight: 600; color: {{r.fg}}; background: {{r.bg}}; border-radius: 6px; padding: 2px 7px">{{r.s}}</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{u.text}}; width: 58px; text-align: right">{{r.a}}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+    <span style="position: absolute; left: 22px; bottom: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #0D1117; background: rgba(255,255,255,0.9); border-radius: 7px; padding: 4px 8px">LIGHT</span>
+    <span style="position: absolute; right: 22px; bottom: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #ECEEF2; background: rgba(13,17,23,0.9); border-radius: 7px; padding: 4px 8px">DARK</span>
+    <div style="position: absolute; top: 0; bottom: 0; left: {{split}}%; width: 2px; transform: translateX(-1px); opacity: {{lineOpacity}}; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(13,17,23,0.18), 0 0 24px rgba(0,0,0,0.25); pointer-events: none"></div>
+    <button type="button" role="slider" aria-label="Light and dark split" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{splitRound}}" aria-valuetext="{{splitText}}" onKeyDown="{{sl.key}}" style="position: absolute; top: 50%; left: {{knobLeft}}; width: 48px; height: 48px; transform: translate(-50%, -50%); border-radius: 50%; border: 0; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(13,17,23,0.18), 0 10px 24px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; cursor: ew-resize">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path></svg>
+    </button>
+  </div>
+</section>
+
+<section aria-label="Brand lab" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+  <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 0 8px">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.muted}}">BRING YOUR BRAND</span>
+    <h2 style="margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02; color: {{S.text}}">One hue in.<br>A verified theme out.</h2>
+    <span style="font-size: 16px; line-height: 1.6; color: {{S.muted}}">Pick a color. Twelve perceptual steps are generated in OKLCH, mapped to semantic intent, and every foreground and background pair is contrast-checked live, right here in your browser.</span>
+  </div>
+  <aside style="flex: 999 1 640px; min-width: 0; background: {{S.card}}; border-radius: 28px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: {{S.shBig}}">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 2px 4px 0">
+      <div role="radiogroup" aria-label="Brand hue" style="display: flex; gap: 8px">
+        <sc-for list="{{hues}}" as="h" hint-placeholder-count="4">
+          <button class="sw" type="button" role="radio" aria-checked="{{h.on}}" aria-label="{{h.name}}" onClick="{{h.pick}}" style="width: 32px; height: 32px; border-radius: 50%; border: 0; padding: 0; background: {{h.hex}}; box-shadow: {{h.ring}}"></button>
+        </sc-for>
+      </div>
+      <div role="group" aria-label="Preview mode" style="display: flex; background: {{S.chip}}; border-radius: 10px; padding: 3px">
+        <sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
+          <button type="button" aria-pressed="{{m.on}}" onClick="{{m.pick}}" style="min-height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: {{m.bg}}; color: {{m.c}}; font-weight: {{m.fw}}; box-shadow: {{m.sh}}; font-size: 12px">{{m.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 14px">
+      <div style="flex: 3 1 340px; background: {{t.canvas}}; border-radius: 20px; padding: 24px; display: flex; justify-content: center">
+        <div style="width: 100%; max-width: 420px; background: {{t.surface}}; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 16px; color: {{t.text}}; box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 20px 40px -24px rgba(0,0,0,0.35)">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span style="font-size: 17px; font-weight: 600; color: {{t.text}}">Invite teammate</span><span style="font-size: 12px; font-weight: 600; color: {{t.badgeFg}}; background: {{t.badgeBg}}; border-radius: 999px; padding: 4px 10px">Admin seat</span></div>
+          <div style="display: flex; gap: 18px; border-bottom: 1px solid {{t.line}}"><span style="padding-bottom: 10px; font-size: 13px; font-weight: 600; color: {{t.text}}; box-shadow: inset 0 -2px 0 {{t.solid}}">Members</span><span style="padding-bottom: 10px; font-size: 13px; color: {{t.muted}}">Roles</span><span style="padding-bottom: 10px; font-size: 13px; color: {{t.muted}}">Audit</span></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 500; color: {{t.text}}">Work email</span><span style="display: flex; align-items: center; height: 40px; padding: 0 12px; border-radius: 10px; background: {{t.field}}; box-shadow: inset 0 0 0 1.5px {{t.solid}}, 0 0 0 3px {{t.ring}}; font-size: 14px; color: {{t.text}}">ayu@northwind.co</span><span style="font-size: 12px; color: {{t.muted}}">They will get access to 3 workspaces.</span></div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px"><span style="display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 10px; background: {{t.tonal}}; font-size: 14px; font-weight: 600; color: {{t.text}}">Cancel</span><span style="display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 10px; background: {{t.solid}}; font-size: 14px; font-weight: 600; color: {{t.onSolid}}">Send invite</span></div>
+        </div>
+      </div>
+      <div style="flex: 2 1 220px; display: flex; flex-direction: column; gap: 8px">
+        <sc-for list="{{checks}}" as="k" hint-placeholder-count="4">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; background: {{S.card2}}; border-radius: 12px; padding: 10px 12px">
+            <span style="font-size: 12px; color: {{S.muted}}">{{k.label}}</span>
+            <span style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: {{S.text}}">{{k.ratio}}<span style="font-size: 10px; letter-spacing: 0.06em; color: #FFFFFF; background: {{k.bg}}; border-radius: 6px; padding: 2px 6px">{{k.verdict}}</span></span>
+          </div>
+        </sc-for>
+        <div style="display: flex; gap: 3px; margin-top: auto; padding-top: 6px">
+          <sc-for list="{{ramp}}" as="c" hint-placeholder-count="12"><span title="{{c.title}}" style="flex: 1; height: 30px; border-radius: 6px; background: {{c.hex}}"></span></sc-for>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.muted}}">12 OKLCH steps · generated live</span>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section aria-label="Details" style="display: flex; flex-direction: column; gap: 18px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; padding: 0 4px">
+    <h2 style="margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02; color: {{S.text}}">The details you would<br>otherwise build yourself.</h2>
+    <span style="font-size: 15px; color: {{S.muted}}; max-width: 420px; line-height: 1.5">Every one of these is part of the public contract, tested from the packed package, and kept across minor versions.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px">
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.card2}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 0 18px; overflow: hidden">
+        <div style="width: 100%; max-width: 330px; display: flex; gap: 10px">
+          <span style="flex: 1; position: relative; height: 38px; border-radius: 10px; background: {{S.btnBg}}; color: {{S.btnFg}}; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">Save<span class="ring" style="position: absolute; inset: -4px; border-radius: 13px; box-shadow: 0 0 0 2px {{accent}}; animation-delay: 0s"></span></span>
+          <span style="flex: 1; position: relative; height: 38px; border-radius: 10px; background: {{S.chip}}; color: {{S.text}}; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center">Preview<span class="ring" style="position: absolute; inset: -4px; border-radius: 13px; box-shadow: 0 0 0 2px {{accent}}; opacity: 0; animation-delay: 1.4s"></span></span>
+          <span style="flex: 1; position: relative; height: 38px; border-radius: 10px; color: {{S.text}}; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center">Cancel<span class="ring" style="position: absolute; inset: -4px; border-radius: 13px; box-shadow: 0 0 0 2px {{accent}}; opacity: 0; animation-delay: 2.8s"></span></span>
+        </div>
+        <span class="tap" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.text}}; background: {{S.chip}}; border-radius: 7px; padding: 4px 10px; box-shadow: 0 2px 0 {{S.keyShadow}}">Tab</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Keyboard first</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Visible focus outline on every part, APG keyboard maps per widget, focus restored when overlays close.</span></div>
+    </div>
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.card2}}; padding: 14px 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 12px">
+        <sc-for list="{{percept}}" as="r" hint-placeholder-count="2">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <span style="flex: 0 0 44px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: {{S.muted}}">{{r.name}}</span>
+            <div style="flex: 1; display: flex; gap: 3px; align-items: flex-end">
+              <sc-for list="{{r.cells}}" as="c" hint-placeholder-count="8">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><span style="height: 26px; border-radius: 5px; background: {{c.hex}}"></span><span style="height: 3px; width: {{c.w}}%; border-radius: 2px; background: {{S.text}}; opacity: 0.55"></span></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: {{S.muted}}; text-align: right">bar = measured luminance</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Perceptual color</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Same HSL lightness, wildly different brightness. OKLCH keeps every hue on the same visual step.</span></div>
+    </div>
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.card2}}; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 14px">
+        <div dir="{{rtl.dir}}" style="display: flex; gap: 20px; border-bottom: 1px solid {{S.line}}; font-size: 14px">
+          <span style="padding-bottom: 10px; font-weight: 600; color: {{S.text}}; box-shadow: inset 0 -2px 0 {{accent}}">{{rtl.a}}</span><span style="padding-bottom: 10px; color: {{S.muted}}">{{rtl.b}}</span><span style="padding-bottom: 10px; color: {{S.muted}}">{{rtl.c}}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.muted}}">{{rtl.hint}}</span>
+          <button class="hov" type="button" onClick="{{rtl.toggle}}" style="min-height: 34px; padding: 0 12px; border-radius: 9px; border: 0; background: {{S.chip}}; color: {{S.text}}; font-family: 'JetBrains Mono', monospace; font-size: 12px">dir="{{rtl.dir}}"</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Right-to-left, verified</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Layout and arrow keys mirror together. Tested as its own scenario, not assumed.</span></div>
+    </div>
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.inv}}; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; overflow: hidden">
+        <span style="color: {{S.invMuted}}">Content-Security-Policy:</span>
+        <span style="color: #9EE6B8">style-src 'self'; script-src 'self'</span>
+        <span style="color: {{S.invText}}">✓ no unsafe-inline   ✓ no unsafe-eval</span>
+        <span style="color: {{S.invText}}">✓ 0 violations across fixtures</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Strict CSP, no exceptions</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Static CSS and zero runtime injection, so your security team never has to loosen the policy for us.</span></div>
+    </div>
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.card2}}; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 18px; overflow: hidden">
+        <div style="position: relative; height: 24px; border-radius: 12px; background: {{S.chip}}">
+          <span style="position: absolute; left: 4px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: {{accent}}; animation: {{rm.anim}}"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.muted}}">prefers-reduced-motion: {{rm.v}}</span>
+          <button type="button" role="switch" aria-checked="{{rm.on}}" aria-label="Reduce motion" onClick="{{rm.toggle}}" style="width: 44px; height: 26px; border-radius: 13px; border: 0; padding: 3px; background: {{rm.bg}}; display: flex; justify-content: {{rm.j}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.3)"></span></button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Motion with manners</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Five semantic motion tokens. Reduced motion stops movement but never hides state changes.</span></div>
+    </div>
+
+    <div class="lift" style="background: {{S.card}}; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: {{S.sh}}; min-width: 0">
+      <div style="height: 150px; border-radius: 16px; background: {{S.card2}}; padding: 12px; box-sizing: border-box; display: flex; gap: 10px">
+        <sc-for list="{{roots}}" as="r" hint-placeholder-count="2">
+          <div style="flex: 1; min-width: 0; background: {{r.canvas}}; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 7px; box-shadow: 0 8px 20px -14px rgba(0,0,0,0.5)">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: {{r.muted}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.attr}}</span>
+            <span style="font-size: 13px; font-weight: 600; color: {{r.text}}">{{r.name}}</span>
+            <span style="height: 6px; width: 80%; border-radius: 3px; background: {{r.line}}"></span>
+            <span style="margin-top: auto; align-self: flex-start; padding: 5px 10px; border-radius: 7px; background: {{r.solid}}; color: {{r.onSolid}}; font-size: 11px; font-weight: 600">Continue</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 17px; font-weight: 600; color: {{S.text}}">Brands that never collide</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">Scoped theme roots let micro-frontends with different brands share one page. Portals inherit their origin.</span></div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Typed tokens" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+  <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 0 8px">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.muted}}">TOKENS THAT KNOW THE RULES</span>
+    <h2 style="margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02; color: {{S.text}}">Impossible states<br>don't compile.</h2>
+    <span style="font-size: 16px; line-height: 1.6; color: {{S.muted}}">Every token name reads as scheme, role, emphasis, state. A surface can be hovered or pressed, but it can never be "focused". That combination is rejected at build time, so it never reaches your users.</span>
+  </div>
+  <div style="flex: 999 1 620px; min-width: 0; background: {{S.inv}}; border-radius: 24px; overflow: hidden; box-shadow: {{S.shBig}}">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid {{S.invLine}}">
+      <span style="width: 10px; height: 10px; border-radius: 50%; background: #3A404C"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #3A404C"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #3A404C"></span>
+      <span style="margin-left: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{S.invMuted}}">checkout.css</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap">
+      <div style="flex: 3 1 380px; min-width: 0; padding: 18px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9">
+        <div style="display: flex; padding: 0 16px"><span style="width: 28px; color: #4A5260">1</span><span style="color: #7AA2FF">.cta</span><span style="color: #8E95A2">&nbsp;{</span></div>
+        <div style="display: flex; padding: 0 16px; background: rgba(255,255,255,0.04); overflow: hidden"><span style="width: 28px; flex: 0 0 28px; color: #4A5260">2</span><span style="white-space: pre; color: #F5C26B">  background</span><span style="color: #8E95A2">: </span><span style="color: #C3A6FF">var</span><span style="color: #8E95A2">(</span><span style="color: #9EE6B8; white-space: nowrap">--ds-color-primary-surface-solid-{{tok.sel}}</span><span class="caret" style="display: inline-block; width: 2px; height: 16px; margin-top: 5px; background: #FFFFFF"></span><span style="color: #8E95A2">);</span></div>
+        <div style="display: flex; padding: 0 16px"><span style="width: 28px; color: #4A5260">3</span><span style="color: #8E95A2">}</span></div>
+        <div role="listbox" aria-label="Token states" style="margin: 8px 16px 0 60px; max-width: 300px; background: #161B23; border-radius: 12px; padding: 6px; box-shadow: 0 0 0 1px #262D39, 0 20px 40px rgba(0,0,0,0.45)">
+          <sc-for list="{{tok.opts}}" as="o" hint-placeholder-count="6">
+            <button type="button" role="option" aria-selected="{{o.on}}" aria-disabled="{{o.dis}}" onClick="{{o.pick}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 34px; padding: 0 10px; border: 0; border-radius: 8px; background: {{o.bg}}; color: {{o.c}}; text-decoration: {{o.td}}; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: left; cursor: {{o.cur}}">{{o.name}}<span style="font-size: 10px; color: {{o.nc}}">{{o.note}}</span></button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex: 2 1 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; border-left: 1px solid {{S.invLine}}">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.invMuted}}">rendered</span>
+        <span style="display: inline-flex; align-items: center; height: 46px; padding: 0 22px; border-radius: 12px; background: {{tok.bg}}; color: {{tok.fg}}; box-shadow: {{tok.sh}}; font-size: 15px; font-weight: 600">Pay now</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{S.invMuted}}; text-align: center">{{tok.ref}}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); background: {{S.card}}; border-radius: 24px; overflow: hidden; box-shadow: {{S.sh}}">
+  <sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+    <div style="padding: 26px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset -1px 0 0 {{S.line2}}">
+      <span style="font-size: 44px; font-weight: 600; letter-spacing: -0.045em; color: {{S.text}}">{{s.v}}</span>
+      <span style="font-size: 14px; color: {{S.muted}}; line-height: 1.45">{{s.l}}</span>
+    </div>
+  </sc-for>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+  <div style="flex: 999 1 620px; min-width: 0; background: {{S.inv}}; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; box-shadow: {{S.shBig}}">
+    <div style="padding: 26px 26px 10px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.invMuted}}">DON'T TRUST US</span>
+      <h2 style="margin: 0; font-size: 36px; font-weight: 600; letter-spacing: -0.03em; color: {{S.invText}}">Verify it yourself, in ten seconds.</h2>
+      <span style="font-size: 15px; line-height: 1.55; color: {{S.invMuted}}; max-width: 560px">Every tarball is built in public CI, signed through Sigstore and logged in a public transparency ledger.</span>
+    </div>
+    <div style="margin: 14px 18px 18px; background: #06080B; border-radius: 16px; padding: 16px 0; overflow-x: auto">
+      <sc-for list="{{term}}" as="ln" hint-placeholder-count="8">
+        <div class="rise" style="display: flex; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.85; padding: 0 18px; white-space: pre; animation-delay: {{ln.d}}"><span style="color: {{ln.c}}">{{ln.t}}</span></div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+    <div class="lift" style="flex: 1; background: {{S.card}}; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 12px; box-shadow: {{S.sh}}">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.muted}}">ACCESSIBILITY, PER COMPONENT</span>
+      <span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: {{S.text}}">A conformance report for every complex widget, not a badge on the homepage.</span>
+      <a class="hov" href="#" style="margin-top: auto; font-size: 14px; font-weight: 600; color: {{S.accentText}}; text-decoration: none">Read a sample report →</a>
+    </div>
+    <div class="lift" style="flex: 1; background: {{S.card}}; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 12px; box-shadow: {{S.sh}}">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: {{S.muted}}">AGENT-READY</span>
+      <span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: {{S.text}}">Your coding agent builds with the real components.</span>
+      <span style="margin-top: auto; align-self: flex-start; font-family: 'JetBrains Mono', monospace; font-size: 12px; background: {{S.chip}}; color: {{S.text}}; border-radius: 10px; padding: 8px 10px">llms.txt · MCP</span>
+    </div>
+  </div>
+</section>
+
+<section aria-label="The four pillars" style="display: flex; flex-direction: column; gap: 16px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; padding: 0 4px">
+    <h2 style="margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.04em; color: {{S.text}}">Four contracts. One system.</h2>
+    <span style="font-size: 15px; color: {{S.muted}}; max-width: 440px; line-height: 1.5">Adopt behavior alone, or the full look. Every page links its primitive, its tokens and its release evidence.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
+    <sc-for list="{{pillars}}" as="p" hint-placeholder-count="4">
+      <a class="lift" href="#" style="display: flex; flex-direction: column; gap: 16px; background: {{S.card}}; color: {{S.text}}; border-radius: 22px; padding: 22px; text-decoration: none; box-shadow: {{S.sh}}">
+        <span style="width: 52px; height: 52px; border-radius: 16px; background: {{S.card2}}; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><sc-if value="{{p.isPrim}}" hint-placeholder-val="{{false}}"><path d="M4 9V6.5A2.5 2.5 0 016.5 4H9M15 4h2.5A2.5 2.5 0 0120 6.5V9M20 15v2.5a2.5 2.5 0 01-2.5 2.5H15M9 20H6.5A2.5 2.5 0 014 17.5V15" fill="none" stroke="{{S.text}}" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="2.6" fill="{{accent}}"></circle></sc-if><sc-if value="{{p.isComp}}" hint-placeholder-val="{{false}}"><rect x="3" y="3" width="12.5" height="12.5" rx="3.2" fill="none" stroke="{{S.text}}" stroke-width="1.6"></rect><rect x="8.5" y="8.5" width="12.5" height="12.5" rx="3.2" fill="{{accent}}"></rect></sc-if><sc-if value="{{p.isTok}}" hint-placeholder-val="{{false}}"><g fill="none" stroke="{{S.text}}" stroke-width="1.6"><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(-32 12 18)"></rect><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(32 12 18)"></rect></g><rect x="9" y="4.5" width="6" height="15" rx="3" fill="{{accent}}"></rect></sc-if><sc-if value="{{p.isRel}}" hint-placeholder-val="{{false}}"><path d="M12.00 2.00 L14.30 3.40 L17.00 3.34 L18.29 5.71 L20.66 7.00 L20.60 9.70 L22.00 12.00 L20.60 14.30 L20.66 17.00 L18.29 18.29 L17.00 20.66 L14.30 20.60 L12.00 22.00 L9.70 20.60 L7.00 20.66 L5.71 18.29 L3.34 17.00 L3.40 14.30 L2.00 12.00 L3.40 9.70 L3.34 7.00 L5.71 5.71 L7.00 3.34 L9.70 3.40Z" fill="none" stroke="{{S.text}}" stroke-width="1.6" stroke-linejoin="round"></path><path d="M8.2 12.3l2.6 2.6 5-5.4" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></sc-if></svg></span>
+        <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: {{S.text}}">{{p.name}}</span><span style="font-size: 14px; line-height: 1.5; color: {{S.muted}}">{{p.desc}}</span></div>
+        <span style="margin-top: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{S.muted}}">{{p.pkg}}</span>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section style="background: {{S.card}}; border-radius: 28px; padding: 64px 32px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; box-shadow: {{S.shBig}}">
+  <h2 style="margin: 0; font-size: 60px; font-weight: 600; letter-spacing: -0.05em; line-height: 0.98; color: {{S.text}}">Ship the interface.<br>Keep the receipts.</h2>
+  <span style="font-size: 17px; color: {{S.muted}}; max-width: 520px">Free and open source. Bring your brand, keep your stack, and verify every release you install.</span>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+    <a class="hov" href="#" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 14px; background: {{S.btnBg}}; color: {{S.btnFg}}; text-decoration: none; font-size: 15px; font-weight: 600">Get started</a>
+    <a class="hov" href="#" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 14px; background: {{S.chip}}; color: {{S.text}}; text-decoration: none; font-size: 15px; font-weight: 600">Star on GitHub</a>
+  </div>
+</section>
+
+</div>
+
+<footer style="margin-top: 44px; background: {{S.inv}}; color: {{S.invMuted}}">
+  <div style="max-width: 1440px; margin: 0 auto; padding: 44px 32px 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 36px">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 48px">
+      <div style="flex: 2 1 260px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 16px; font-weight: 600; color: {{S.invText}}">Scnehaux UI</span>
+        <span style="font-size: 14px; line-height: 1.55; color: {{S.invMuted}}; max-width: 320px">The design system you can verify. Built in public, released with evidence.</span>
+        <a class="hov" href="Docs-Home.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: {{S.invChip}}; color: {{S.invText}}; text-decoration: none; font-size: 13px">Team workspace · sign in →</a>
+      </div>
+      <sc-for list="{{footer}}" as="f" hint-placeholder-count="3">
+        <div style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: {{S.invMuted}}">{{f.title}}</span>
+          <sc-for list="{{f.items}}" as="i" hint-placeholder-count="4"><a class="hov" href="#" style="font-size: 14px; color: {{S.invText}}; text-decoration: none">{{i}}</a></sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-top: 20px; box-shadow: inset 0 1px 0 {{S.invLine}}; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{S.invMuted}}">
+      <span>Apache-2.0 · © 2026 Scnehaux</span><span>SAD-003 · public architecture</span>
+    </div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#0A6CF2","options":["#0A6CF2","#6D4AFF","#0E7C66","#C2410C"]},"$preview":{"width":1440,"height":5600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { site: 'light', hue: 'ocean', mode: 'light', explode: true, split: 50, rtl: false, reduce: false, tok: 'default', glFail: false, tip: null, towerHue: 257 };
+    this.dragging = false;
+    this.sliderEl = null;
+    this.gl3 = null;
+    this.setSplitX = (x) => {
+      if (!this.sliderEl) { return; }
+      const r = this.sliderEl.getBoundingClientRect();
+      let pct = ((x - r.left) / r.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      if (pct < 1) { pct = 0; }
+      if (pct > 99) { pct = 100; }
+      this.setState({ split: pct });
+    };
+    this.winMove = (ev) => {
+      if (!this.dragging) { return; }
+      if (ev.buttons === 0) { this.winUp(); return; }
+      ev.preventDefault();
+      this.setSplitX(ev.clientX);
+    };
+    this.winUp = () => {
+      this.dragging = false;
+      window.removeEventListener('pointermove', this.winMove);
+      window.removeEventListener('pointerup', this.winUp);
+      window.removeEventListener('pointercancel', this.winUp);
+      window.removeEventListener('blur', this.winUp);
+    };
+    this.glRef = (el) => {
+      if (el && !this.gl3) { this.gl3 = this.initSolid(el); }
+    };
+    this.tipEl = null;
+    this.tipRef = (el) => { this.tipEl = el; };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.gl3 && this.gl3.retexture && prevProps && prevProps.accent !== this.props.accent) { this.gl3.retexture(); }
+  }
+
+  componentWillUnmount() {
+    this.winUp();
+    if (this.gl3) { this.gl3.dispose(); this.gl3 = null; }
+  }
+
+  // ==========================================================================================
+  // DO NOT DELETE: previous hero concept, "Exploded stack" (Tokens > Primitive > Component > Release).
+  // Kept on purpose while the "Color solid" hero is evaluated. To restore it:
+  //   1. remove the comment markers around palette() / drawTexture() / initGL() below,
+  //   2. in the constructor, call this.initGL(el) instead of this.initSolid(el),
+  //   3. restore the stack controls markup that is commented out in the hero section (HTML comment).
+  // ==========================================================================================
+/*
+  palette(site) {
+    const dark = (site || this.state.site) === 'dark';
+    const accent = this.props.accent ?? '#0A6CF2';
+    return dark ? {
+      dark: true, accent: accent, accentSoft: 'rgba(110,168,255,0.22)', text: '#EEF0F3', muted: '#A9B0BC', faint: '#8A93A3',
+      tokBg: '#232A36', tokSide: [0.3, 0.35, 0.44], primBg: '#152645', primGrid: 'rgba(125,180,255,0.18)', primLine: '#8DBEFF', primSide: [0.2, 0.32, 0.56],
+      compBg: '#262D3A', compSide: [0.32, 0.37, 0.46], field: '#1A2029', tonal: '#343C4B', relBg: accent, relSide: [0.1, 0.4, 0.9],
+      rim: [0.82, 0.9, 1.0], rimA: 0.9, line: [0.6, 0.76, 1.0], cast: 0.6, glow: 0.5, ground: 0.85
+    } : {
+      dark: false, accent: accent, accentSoft: 'rgba(10,108,242,0.16)', text: '#0D1117', muted: '#3D4452', faint: '#6B7280',
+      tokBg: '#F4F6F9', tokSide: [0.6, 0.64, 0.7], primBg: '#EAF1FF', primGrid: 'rgba(10,108,242,0.10)', primLine: accent, primSide: [0.45, 0.58, 0.82],
+      compBg: '#FFFFFF', compSide: [0.68, 0.71, 0.77], field: '#FFFFFF', tonal: '#EEF1F5', relBg: accent, relSide: [0.02, 0.26, 0.66],
+      rim: [1.0, 1.0, 1.0], rimA: 0.95, line: [0.62, 0.77, 1.0], cast: 0.32, glow: 0.32, ground: 0.8
+    };
+  }
+
+  drawTexture(kind, P) {
+    const isRel = kind === 'rel';
+    const W = 1024, H = isRel ? 512 : 1024, LH = isRel ? 410 : 720;
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const c = cv.getContext('2d');
+    c.setTransform(1, 0, 0, H / LH, 0, 0);
+    const rr = (x, y, w, h, r) => { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+    const mono = (s, w) => (w || 500) + ' ' + s + 'px "JetBrains Mono", monospace';
+    const sans = (s, w) => (w || 500) + ' ' + s + 'px Inter, system-ui, sans-serif';
+    c.textBaseline = 'alphabetic';
+    if (kind === 'tok') {
+      c.fillStyle = P.tokBg; c.fillRect(0, 0, W, LH);
+      c.fillStyle = P.faint; c.font = mono(24); c.fillText('01   TOKENS', 56, 84);
+      const ramp = P.dark
+        ? ['#121721', '#161D2A', '#1B2537', '#213049', '#263B5C', '#2C4870', '#335A8C', '#3A6EB3', '#4D8DFF', '#6A9DFF', '#A9C6FF', '#DDE8FF']
+        : ['#FCFCFC', '#F3F4F6', '#E5E9EF', '#D1DBEB', '#B7CBEA', '#97BAEF', '#71A7F5', '#408FFE', '#0073FF', '#006CFB', '#2262B3', '#28466F'];
+      const sw = (W - 112 - 11 * 10) / 12;
+      const rows = [['color.primary.surface.solid.default', 'oklch(0.59 0.237 257)'], ['dimension.radius.control', '10px'], ['motion.feedback.duration', '120ms']];
+      rows.forEach((r, i) => { const y = 168 + i * 70; c.fillStyle = P.dark ? '#1D232D' : '#ECEFF3'; rr(56, y - 44, W - 112, 58, 14); c.fill(); c.fillStyle = P.text; c.font = mono(25); c.fillText(r[0], 80, y - 6); c.fillStyle = P.muted; c.textAlign = 'right'; c.fillText(r[1], W - 80, y - 6); c.textAlign = 'left'; });
+      ramp.forEach((h, i) => { c.fillStyle = h; rr(56 + i * (sw + 10), 420, sw, 190, 16); c.fill(); if (i === 8) { c.lineWidth = 5; c.strokeStyle = P.text; rr(56 + i * (sw + 10) - 7, 413, sw + 14, 204, 20); c.stroke(); } });
+      c.fillStyle = P.faint; c.font = mono(22); c.fillText('color.blue.light.1 → 12', 56, 664); c.textAlign = 'right'; c.fillText('OKLCH · P3', W - 56, 664); c.textAlign = 'left';
+    } else if (kind === 'prim') {
+      c.fillStyle = P.primBg; c.fillRect(0, 0, W, LH);
+      c.strokeStyle = P.primGrid; c.lineWidth = 1.5;
+      for (let x = 0; x <= W; x += 32) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, LH); c.stroke(); }
+      for (let y = 0; y <= LH; y += 32) { c.beginPath(); c.moveTo(0, y); c.lineTo(W, y); c.stroke(); }
+      c.fillStyle = P.faint; c.font = mono(24); c.fillText('02   PRIMITIVE', 56, 84);
+      c.setLineDash([14, 10]); c.lineWidth = 3.5; c.strokeStyle = P.primLine;
+      const box = (x, y, w, h, label, r) => { rr(x, y, w, h, r || 12); c.stroke(); c.fillStyle = P.primLine; c.font = mono(24); c.fillText(label, x + 22, y + h / 2 + 9); };
+      box(56, 130, 560, 80, 'data-part="title"');
+      box(56, 250, W - 112, 96, '<label> + <input aria-describedby>');
+      box(56, 380, 520, 60, 'data-part="description"');
+      box(W - 56 - 330, LH - 56 - 96, 330, 96, '<button type="button">', 18);
+      c.setLineDash([]);
+      c.fillStyle = P.muted; c.font = mono(22); c.fillText('keyboard · focus · ARIA · no styles', 56, LH - 92);
+    } else if (kind === 'comp') {
+      c.fillStyle = P.compBg; c.fillRect(0, 0, W, LH);
+      c.fillStyle = P.faint; c.font = mono(24); c.fillText('03   COMPONENT', 56, 84);
+      c.fillStyle = P.text; c.font = sans(58, 600); c.fillText('Invite teammate', 56, 176);
+      c.fillStyle = P.accentSoft; rr(W - 56 - 230, 126, 230, 62, 31); c.fill();
+      c.fillStyle = P.dark ? '#A9C6FF' : '#1D4FA8'; c.font = sans(28, 600); c.textAlign = 'center'; c.fillText('Admin seat', W - 56 - 115, 167); c.textAlign = 'left';
+      c.fillStyle = P.text; c.font = sans(30, 500); c.fillText('Work email', 56, 262);
+      c.fillStyle = P.accentSoft; rr(50, 284, W - 100, 116, 26); c.fill();
+      c.fillStyle = P.field; rr(56, 290, W - 112, 104, 22); c.fill();
+      c.lineWidth = 4; c.strokeStyle = P.accent; rr(56, 290, W - 112, 104, 22); c.stroke();
+      c.fillStyle = P.text; c.font = sans(34, 400); c.fillText('ayu@northwind.co', 88, 354);
+      c.fillStyle = P.muted; c.font = sans(26, 400); c.fillText('They will get access to 3 workspaces.', 56, 446);
+      c.fillStyle = P.tonal; rr(W - 56 - 520, LH - 56 - 100, 220, 100, 22); c.fill();
+      c.fillStyle = P.text; c.font = sans(32, 600); c.textAlign = 'center'; c.fillText('Cancel', W - 56 - 410, LH - 56 - 38);
+      c.fillStyle = P.accent; rr(W - 56 - 280, LH - 56 - 100, 280, 100, 22); c.fill();
+      c.fillStyle = '#FFFFFF'; c.fillText('Send invite', W - 56 - 140, LH - 56 - 38); c.textAlign = 'left';
+    } else {
+      c.fillStyle = P.relBg; c.fillRect(0, 0, W, LH);
+      const cx = 140, cy = LH / 2, R1 = 92, R2 = 80;
+      c.beginPath();
+      for (let i = 0; i < 24; i++) { const a = -Math.PI / 2 + i * Math.PI / 12; const r = i % 2 === 0 ? R1 : R2; const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a); if (i === 0) { c.moveTo(x, y); } else { c.lineTo(x, y); } }
+      c.closePath(); c.lineWidth = 8; c.lineJoin = 'round'; c.strokeStyle = '#FFFFFF'; c.stroke();
+      c.beginPath(); c.moveTo(cx - 34, cy + 2); c.lineTo(cx - 8, cy + 28); c.lineTo(cx + 38, cy - 24); c.lineWidth = 13; c.lineCap = 'round'; c.strokeStyle = '#FFFFFF'; c.stroke();
+      c.fillStyle = '#FFFFFF'; c.font = sans(80, 700); c.fillText('Verified', 290, cy - 4);
+      c.fillStyle = 'rgba(255,255,255,0.82)'; c.font = mono(30); c.fillText('04 · 7 gates · signed', 292, cy + 58);
+    }
+    return cv;
+  }
+
+  initGL(canvas) {
+    const gl = canvas.getContext('webgl', { antialias: true, alpha: true, premultipliedAlpha: true });
+    if (!gl) { this.setState({ glFail: true }); return null; }
+    const self = this;
+    const VS = 'attribute vec3 aP; attribute vec3 aN; attribute vec2 aU; uniform mat4 uPr; uniform mat4 uV; uniform mat4 uM; uniform vec2 uQS; uniform vec2 uOff;' +
+      ' varying vec3 vN; varying vec2 vU; varying vec3 vW; varying vec2 vL;' +
+      ' void main(){ vec4 w = uM * vec4(aP, 1.0); vW = w.xyz; vN = (uM * vec4(aN, 0.0)).xyz; vU = aU; vL = aP.xz * uQS + uOff; gl_Position = uPr * uV * w; }';
+    const FS = 'precision highp float; uniform sampler2D uT; uniform float uMode; uniform vec3 uCol; uniform vec3 uL; uniform vec3 uE; uniform float uA;' +
+      ' uniform vec2 uHalf; uniform float uR; uniform vec2 uShC; uniform vec2 uShH; uniform float uSoft; uniform vec3 uRim; uniform float uRimA;' +
+      ' varying vec3 vN; varying vec2 vU; varying vec3 vW; varying vec2 vL;' +
+      ' float sdr(vec2 p, vec2 h, float r){ vec2 q = abs(p) - (h - vec2(r)); return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r; }' +
+      ' void main(){' +
+      '  if (uMode > 4.5) { float r = length((vU - 0.5) * 2.0); float a = 1.0 - smoothstep(0.0, 1.0, r); a = a * a * uA; gl_FragColor = vec4(uCol * a, a); return; }' +
+      '  if (uMode > 3.5) { float r = length((vU - 0.5) * 2.0); float a = 1.0 - smoothstep(0.0, 1.0, r); gl_FragColor = vec4(0.0, 0.0, 0.0, a * a * uA); return; }' +
+      '  if (uMode > 2.5) { if (mod(vU.x * 14.0, 1.0) > 0.5) discard; gl_FragColor = vec4(uCol * uA, uA); return; }' +
+      '  if (uMode > 1.5) { if (sdr(vL, uHalf, uR) > -0.006) discard; float s = sdr(vL - uShC, uShH, uR); float a = 1.0 - smoothstep(-uSoft, uSoft, s); gl_FragColor = vec4(0.0, 0.0, 0.0, a * uA); return; }' +
+      '  vec3 N = normalize(vN); vec3 L = normalize(uL); vec3 V = normalize(uE - vW);' +
+      '  bool side = vU.x < -0.5;' +
+      '  vec3 base = side ? uCol : texture2D(uT, vU).rgb;' +
+      '  float d = max(dot(N, L), 0.0);' +
+      '  vec3 H = normalize(L + V);' +
+      '  float sp = pow(max(dot(N, H), 0.0), side ? 20.0 : 120.0) * (side ? 0.22 : 0.06);' +
+      '  float fill = max(dot(N, normalize(vec3(-0.25, -1.0, 0.45))), 0.0);' +
+      '  vec3 col = base * (side ? (0.55 + 0.65 * d + 0.75 * fill) : (0.88 + 0.12 * d)) + vec3(sp) + uRim * fill * 0.08;' +
+      '  if (!side && N.y > 0.5) { float e = 1.0 - smoothstep(0.0, 0.035, -sdr(vL, uHalf, uR)); col = mix(col, uRim, e * uRimA); }' +
+      '  gl_FragColor = vec4(min(col, vec3(1.0)), 1.0);' +
+      ' }';
+    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { this.setState({ glFail: true }); return null; }
+    gl.useProgram(prog);
+    const loc = { aP: gl.getAttribLocation(prog, 'aP'), aN: gl.getAttribLocation(prog, 'aN'), aU: gl.getAttribLocation(prog, 'aU') };
+    const U = {};
+    ['uPr', 'uV', 'uM', 'uQS', 'uOff', 'uT', 'uMode', 'uCol', 'uL', 'uE', 'uA', 'uHalf', 'uR', 'uShC', 'uShH', 'uSoft', 'uRim', 'uRimA'].forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
+
+    const slab = (w, h, t, r, seg) => {
+      const pts = [];
+      const cs = [[w / 2 - r, h / 2 - r, 0], [-(w / 2 - r), h / 2 - r, Math.PI / 2], [-(w / 2 - r), -(h / 2 - r), Math.PI], [w / 2 - r, -(h / 2 - r), 1.5 * Math.PI]];
+      cs.forEach((q) => { for (let i = 0; i <= seg; i++) { const a = q[2] + (i / seg) * (Math.PI / 2); const nx = Math.cos(a), nz = Math.sin(a); pts.push([q[0] + nx * r, q[1] + nz * r, nx, nz]); } });
+      const v = [];
+      const P = (x, y, z, nx, ny, nz, u, vv) => { v.push(x, y, z, nx, ny, nz, u, vv); };
+      const uv = (x, z) => [(x + w / 2) / w, (z + h / 2) / h];
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[i], b = pts[(i + 1) % pts.length];
+        const ua = uv(a[0], a[1]), ub = uv(b[0], b[1]);
+        P(0, t, 0, 0, 1, 0, 0.5, 0.5); P(b[0], t, b[1], 0, 1, 0, ub[0], ub[1]); P(a[0], t, a[1], 0, 1, 0, ua[0], ua[1]);
+        P(0, 0, 0, 0, -1, 0, -1, -1); P(a[0], 0, a[1], 0, -1, 0, -1, -1); P(b[0], 0, b[1], 0, -1, 0, -1, -1);
+        P(a[0], 0, a[1], a[2], 0, a[3], -1, -1); P(b[0], 0, b[1], b[2], 0, b[3], -1, -1); P(b[0], t, b[1], b[2], 0, b[3], -1, -1);
+        P(a[0], 0, a[1], a[2], 0, a[3], -1, -1); P(b[0], t, b[1], b[2], 0, b[3], -1, -1); P(a[0], t, a[1], a[2], 0, a[3], -1, -1);
+      }
+      return new Float32Array(v);
+    };
+    const mkBuf = (arr) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW); return { b: b, n: arr.length / 8 }; };
+    const BW = 3.2, BH = 2.25, T = 0.018, BR = 0.16, SW = 1.9, SH = 0.76, SR = 0.16;
+    const big = mkBuf(slab(BW, BH, T, BR, 10));
+    const small = mkBuf(slab(SW, SH, T, SR, 8));
+    const quad = mkBuf(new Float32Array([-0.5, 0, -0.5, 0, 1, 0, 0, 0, 0.5, 0, -0.5, 0, 1, 0, 1, 0, 0.5, 0, 0.5, 0, 1, 0, 1, 1, -0.5, 0, -0.5, 0, 1, 0, 0, 0, 0.5, 0, 0.5, 0, 1, 0, 1, 1, -0.5, 0, 0.5, 0, 1, 0, 0, 1]));
+    const lineBuf = gl.createBuffer();
+    const bind = (buf) => {
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(loc.aP); gl.vertexAttribPointer(loc.aP, 3, gl.FLOAT, false, 32, 0);
+      gl.enableVertexAttribArray(loc.aN); gl.vertexAttribPointer(loc.aN, 3, gl.FLOAT, false, 32, 12);
+      gl.enableVertexAttribArray(loc.aU); gl.vertexAttribPointer(loc.aU, 2, gl.FLOAT, false, 32, 24);
+    };
+
+    const aniso = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
+    let tex = {};
+    let pal = this.palette();
+    const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+    const upload = (cv) => {
+      const tx = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tx);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      if (aniso) { gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT))); }
+      return tx;
+    };
+    const retexture = (site) => {
+      pal = self.palette(site);
+      Object.keys(tex).forEach((k) => gl.deleteTexture(tex[k]));
+      tex = { tok: upload(self.drawTexture('tok', pal)), prim: upload(self.drawTexture('prim', pal)), comp: upload(self.drawTexture('comp', pal)), rel: upload(self.drawTexture('rel', pal)) };
+    };
+    retexture();
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load('600 40px Inter'), document.fonts.load('400 40px Inter'), document.fonts.load('500 24px "JetBrains Mono"')]).then(() => { if (self.gl3) { retexture(); } }).catch(() => {});
+    }
+
+    const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const norm = (a) => { const l = Math.hypot(a[0], a[1], a[2]); return [a[0] / l, a[1] / l, a[2] / l]; };
+    const persp = (f, asp, n, fa) => { const t = 1 / Math.tan(f / 2); return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (fa + n) / (n - fa), -1, 0, 0, (2 * fa * n) / (n - fa), 0]; };
+    const look = (e, c, up) => { const z = norm(sub(e, c)); const x = norm(cross(up, z)); const y = cross(z, x); return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1]; };
+    const mul = (a, b) => { const o = new Array(16); for (let i = 0; i < 4; i++) { for (let j = 0; j < 4; j++) { let s = 0; for (let k = 0; k < 4; k++) { s += a[k * 4 + j] * b[i * 4 + k]; } o[i * 4 + j] = s; } } return o; };
+    const ry = (a) => { const c = Math.cos(a), s = Math.sin(a); return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]; };
+    const tr = (x, y, z) => [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1];
+    const scl = (x, y, z) => [x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1];
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const YAW0 = -0.3, PITCH0 = 0.6;
+    const S3 = { target: this.state.explode ? 1 : 0, e: reduce ? (this.state.explode ? 1 : 0) : 0, yaw: YAW0, pitch: PITCH0, vx: 0, vy: 0, drag: false, lastX: 0, lastY: 0, raf: 0, t0: performance.now(), resetting: false, idleSince: performance.now() };
+
+    const onMove = (ev) => {
+      if (!S3.drag) { return; }
+      const dx = ev.clientX - S3.lastX, dy = ev.clientY - S3.lastY;
+      S3.lastX = ev.clientX; S3.lastY = ev.clientY;
+      S3.yaw += dx * 0.008; S3.pitch += dy * 0.008;
+      S3.vx = dx * 0.008; S3.vy = dy * 0.008;
+    };
+    const onDown = (ev) => { S3.drag = true; S3.resetting = false; S3.lastX = ev.clientX; S3.lastY = ev.clientY; S3.vx = 0; S3.vy = 0; canvas.style.cursor = 'grabbing'; if (canvas.setPointerCapture) { try { canvas.setPointerCapture(ev.pointerId); } catch (x) {} } };
+    const onUp = () => { if (S3.drag) { S3.idleSince = performance.now(); } S3.drag = false; canvas.style.cursor = 'grab'; };
+    const onLeave = () => {};
+    const onDbl = () => { S3.resetting = true; S3.vx = 0; S3.vy = 0; };
+    canvas.addEventListener('dblclick', onDbl);
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerdown', onDown);
+    canvas.addEventListener('pointerup', onUp);
+    canvas.addEventListener('pointercancel', onUp);
+    canvas.addEventListener('lostpointercapture', onUp);
+    canvas.addEventListener('pointerleave', onLeave);
+
+    gl.enable(gl.DEPTH_TEST);
+    const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+    const setSlab = (hw, hh, r) => { gl.uniform2f(U.uQS, 1, 1); gl.uniform2f(U.uOff, 0, 0); gl.uniform2f(U.uHalf, hw, hh); gl.uniform1f(U.uR, r); };
+
+    const frame = (now) => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const cw = Math.max(1, Math.round(canvas.clientWidth * dpr)), ch = Math.max(1, Math.round(canvas.clientHeight * dpr));
+      if (canvas.width !== cw || canvas.height !== ch) { canvas.width = cw; canvas.height = ch; }
+      gl.viewport(0, 0, cw, ch);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+      S3.e += (S3.target - S3.e) * (reduce ? 1 : 0.06);
+      if (!S3.drag) {
+        S3.yaw += S3.vx; S3.pitch += S3.vy; S3.vx *= 0.93; S3.vy *= 0.93;
+        if (S3.resetting) {
+          const twoPi = Math.PI * 2;
+          const wrap = (a, a0) => a0 + ((((a - a0) % twoPi) + 3 * Math.PI) % twoPi) - Math.PI;
+          S3.yaw = wrap(S3.yaw, YAW0); S3.pitch = wrap(S3.pitch, PITCH0);
+          S3.yaw += (YAW0 - S3.yaw) * 0.12; S3.pitch += (PITCH0 - S3.pitch) * 0.12;
+          if (Math.abs(S3.yaw - YAW0) < 0.002 && Math.abs(S3.pitch - PITCH0) < 0.002) { S3.yaw = YAW0; S3.pitch = PITCH0; S3.resetting = false; }
+        }
+      }
+      const time = (now - S3.t0) / 1000;
+      const e = ease(Math.max(0, Math.min(1, S3.e)));
+      const idle = reduce || S3.drag ? 0 : Math.sin(time * 0.45) * 0.035;
+      const yaw = S3.yaw + idle;
+      const pitch = S3.pitch;
+      const gap = 0.035 + e * 0.95;
+      const centerY = gap * 1.3 + 0.05;
+      const dist = 21.5 + e * 1.8;
+      const zs = (i) => (1.0 - i) * 0.45 * e;
+      const rxm = (a) => { const c = Math.cos(a), s = Math.sin(a); return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]; };
+      const Vm = mul(tr(0, 0, -dist), mul(rxm(pitch), mul(ry(yaw), tr(0, -centerY, 0))));
+      const inv = mul(ry(-yaw), rxm(-pitch));
+      const eye = [inv[8] * dist, inv[9] * dist + centerY, inv[10] * dist];
+      gl.uniformMatrix4fv(U.uPr, false, persp(0.25, cw / ch, 1.0, 120));
+      gl.uniformMatrix4fv(U.uV, false, Vm);
+      gl.uniform3fv(U.uL, [0.3, 1.0, 0.65]); gl.uniform3fv(U.uE, eye);
+      gl.uniform3fv(U.uRim, pal.rim); gl.uniform1f(U.uRimA, pal.rimA);
+      const R = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+      const acc = hexRgb(pal.accent);
+
+      const layers = [
+        { buf: big, tx: tex.tok, side: pal.tokSide, y: 0, x: -0.2 * e, z: zs(0), hw: BW / 2, hh: BH / 2, r: BR },
+        { buf: big, tx: tex.prim, side: pal.primSide, y: gap, x: 0, z: zs(1), hw: BW / 2, hh: BH / 2, r: BR },
+        { buf: big, tx: tex.comp, side: pal.compSide, y: gap * 2, x: 0.2 * e, z: zs(2), hw: BW / 2, hh: BH / 2, r: BR },
+        { buf: small, tx: tex.rel, side: pal.relSide, y: gap * 3, x: 1.3 - e * 0.25, z: zs(2) - 1.05 + e * 0.05, hw: SW / 2, hh: SH / 2, r: SR }
+      ];
+
+      gl.enable(gl.BLEND); gl.depthMask(false);
+      bind(quad.b); setSlab(1, 1, 0);
+      gl.blendFunc(gl.ONE, gl.ONE);
+      gl.uniform1f(U.uMode, 5); gl.uniform1f(U.uA, pal.glow * (0.6 + 0.4 * e)); gl.uniform3fv(U.uCol, acc);
+      gl.uniformMatrix4fv(U.uM, false, mul(R, mul(tr(0, -0.02, 0.1), scl(BW * 2.6, 1, BH * 3.2))));
+      gl.drawArrays(gl.TRIANGLES, 0, quad.n);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      gl.uniform1f(U.uMode, 4); gl.uniform1f(U.uA, pal.ground);
+      gl.uniformMatrix4fv(U.uM, false, mul(R, mul(tr(-0.1 * e, -0.01, 0.2 * e + 0.1), scl(BW * 1.45, 1, BH * (1.55 + 0.5 * e)))));
+      gl.drawArrays(gl.TRIANGLES, 0, quad.n);
+      gl.depthMask(true); gl.disable(gl.BLEND);
+
+      gl.activeTexture(gl.TEXTURE0); gl.uniform1i(U.uT, 0);
+      gl.uniform1f(U.uMode, 1); gl.uniform1f(U.uA, 1);
+      layers.forEach((L) => {
+        bind(L.buf.b); setSlab(L.hw, L.hh, L.r);
+        gl.bindTexture(gl.TEXTURE_2D, L.tx);
+        gl.uniform3fv(U.uCol, L.side);
+        gl.uniformMatrix4fv(U.uM, false, mul(R, tr(L.x, L.y, L.z)));
+        gl.drawArrays(gl.TRIANGLES, 0, L.buf.n);
+      });
+
+      gl.enable(gl.BLEND); gl.depthMask(false);
+      bind(quad.b);
+      gl.uniform1f(U.uMode, 2);
+      const casts = [[0, 1], [1, 2]];
+      casts.forEach((pr) => {
+        const lo = layers[pr[0]], up = layers[pr[1]];
+        const g = up.y - (lo.y + T);
+        gl.uniform2f(U.uQS, lo.hw * 2, lo.hh * 2); gl.uniform2f(U.uOff, 0, 0);
+        gl.uniform2f(U.uHalf, lo.hw, lo.hh); gl.uniform1f(U.uR, lo.r);
+        gl.uniform2f(U.uShC, up.x - lo.x + 0.08 * g, up.z - lo.z + 0.14 * g);
+        gl.uniform2f(U.uShH, up.hw * 0.96, up.hh * 0.96);
+        gl.uniform1f(U.uSoft, 0.03 + 0.1 * g);
+        gl.uniform1f(U.uA, pal.cast * (1.0 - Math.min(0.6, g * 0.45)));
+        gl.uniformMatrix4fv(U.uM, false, mul(R, mul(tr(lo.x, lo.y + T + 0.002, lo.z), scl(lo.hw * 2, 1, lo.hh * 2))));
+        gl.drawArrays(gl.TRIANGLES, 0, quad.n);
+      });
+
+      if (e > 0.02) {
+        const top = gap * 2;
+        const cx = BW / 2 - 0.02, cz = BH / 2 - 0.02;
+        const lv = [];
+        const a0 = layers[0], a2 = layers[2];
+        [[cx, cz], [-cx, cz], [cx, -cz], [-cx, -cz]].forEach((p) => { lv.push(p[0] + a0.x, T, p[1] + a0.z, 0, 1, 0, 0, 0, p[0] + a2.x, top, p[1] + a2.z, 0, 1, 0, top, 0); });
+        gl.bindBuffer(gl.ARRAY_BUFFER, lineBuf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lv), gl.DYNAMIC_DRAW); bind(lineBuf); setSlab(1, 1, 0);
+        gl.uniform1f(U.uMode, 3); gl.uniform1f(U.uA, 0.6 * e); gl.uniform3fv(U.uCol, pal.line);
+        gl.uniformMatrix4fv(U.uM, false, R);
+        gl.drawArrays(gl.LINES, 0, 8);
+      }
+      gl.depthMask(true); gl.disable(gl.BLEND);
+      S3.raf = requestAnimationFrame(frame);
+    };
+    S3.raf = requestAnimationFrame(frame);
+
+    return {
+      setTarget: (v) => { S3.target = v; if (reduce) { S3.e = v; } },
+      reset: () => { S3.resetting = true; S3.vx = 0; S3.vy = 0; },
+      retexture: retexture,
+      dispose: () => {
+        cancelAnimationFrame(S3.raf);
+        canvas.removeEventListener('dblclick', onDbl);
+        canvas.removeEventListener('pointermove', onMove); canvas.removeEventListener('pointerdown', onDown);
+        canvas.removeEventListener('pointerup', onUp); canvas.removeEventListener('pointercancel', onUp);
+        canvas.removeEventListener('lostpointercapture', onUp); canvas.removeEventListener('pointerleave', onLeave);
+        const lose = gl.getExtension('WEBGL_lose_context'); if (lose) { lose.loseContext(); }
+      }
+    };
+  }
+
+*/
+  // ==========================================================================================
+  // END OF DO-NOT-DELETE BLOCK (exploded stack hero)
+  // ==========================================================================================
+
+  // Hero: "12-step light tower". Twelve stacked glass rings, one per token step (1 = lightest, top).
+  // Each ring is a seamless hue gradient at that step's OKLCH lightness; ring width follows the
+  // chroma curve of the 12-step scale, clipped to the sRGB gamut per hue. Neon halos, glass floor
+  // reflection, a scanning light plane and a light-beam pillar for the brand hue.
+  initSolid(canvas) {
+    const gl = canvas.getContext('webgl', { antialias: true, alpha: true, premultipliedAlpha: true });
+    if (!gl) { this.setState({ glFail: true }); return null; }
+    const self = this;
+    const link = (vs, fs) => {
+      const p = gl.createProgram();
+      const mk = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); gl.attachShader(p, s); };
+      mk(gl.VERTEX_SHADER, vs); mk(gl.FRAGMENT_SHADER, fs); gl.linkProgram(p);
+      return gl.getProgramParameter(p, gl.LINK_STATUS) ? p : null;
+    };
+    const MV = 'attribute vec3 aP; attribute vec3 aN; attribute vec3 aC; attribute float aA; uniform mat4 uPr; uniform mat4 uV; uniform float uY; uniform float uMir; uniform float uFloor;' +
+      ' varying vec3 vN; varying vec3 vC; varying vec3 vW; varying float vA; varying float vF;' +
+      ' void main(){ vec3 p = aP + vec3(0.0, uY, 0.0); vec3 n = aN; vF = 1.0;' +
+      '  if (uMir > 0.5) { p.y = 2.0 * uFloor - p.y; n.y = -n.y; vF = clamp(1.0 - (uFloor - p.y) / 2.6, 0.0, 1.0); }' +
+      '  vW = p; vN = n; vC = aC; vA = aA; gl_Position = uPr * uV * vec4(p, 1.0); }';
+    const MF = 'precision highp float; uniform vec3 uE; uniform float uDim; uniform float uMode; uniform float uScan; uniform float uAlpha;' +
+      ' varying vec3 vN; varying vec3 vC; varying vec3 vW; varying float vA; varying float vF;' +
+      ' void main(){' +
+      '  if (uMode > 0.5) { float a = vA * uDim * vF * uAlpha; gl_FragColor = vec4(vC * a, a); return; }' +
+      '  vec3 N = normalize(vN); vec3 L = normalize(vec3(0.3, 1.0, 0.5)); vec3 V = normalize(uE - vW);' +
+      '  float d = max(dot(N, L), 0.0); float side = 1.0 - abs(N.y); float fr = pow(1.0 - max(dot(N, V), 0.0), 2.5);' +
+      '  vec3 H = normalize(L + V); float sp = pow(max(dot(N, H), 0.0), 80.0) * 0.35;' +
+      '  vec3 c = vC * mix(0.92 + 0.08 * d, 1.08 + 0.2 * fr, side) + vec3(sp) + vec3(fr * 0.12);' +
+      '  float sg = exp(-pow((vW.y - uScan) / 0.09, 2.0));' +
+      '  c += vC * sg * 0.55 + vec3(sg * 0.12);' +
+      '  float a = uAlpha * vF; gl_FragColor = vec4(min(c, vec3(1.0)) * uDim * a, a); }';
+    const PV = 'attribute vec3 aP; attribute vec3 aC; attribute float aS; uniform mat4 uPr; uniform mat4 uV; uniform float uPx; varying vec3 vC; void main(){ gl_Position = uPr * uV * vec4(aP, 1.0); gl_PointSize = aS * uPx; vC = aC; }';
+    const PF = 'precision mediump float; varying vec3 vC; void main(){ vec2 q = gl_PointCoord * 2.0 - 1.0; float r = length(q); if (r > 1.0) discard;' +
+      ' float core = 1.0 - smoothstep(0.3, 0.42, r); float ring = smoothstep(0.42, 0.5, r) * (1.0 - smoothstep(0.56, 0.64, r)); float glow = pow(1.0 - r, 2.0) * 0.8 + ring * 0.6; vec3 c = mix(vC * glow, vec3(1.0), core); float a = max(core, glow);' +
+      ' gl_FragColor = vec4(c, a); }';
+    const LV = 'attribute vec3 aP; uniform mat4 uPr; uniform mat4 uV; void main(){ gl_Position = uPr * uV * vec4(aP, 1.0); }';
+    const LF = 'precision mediump float; uniform vec4 uCol; void main(){ gl_FragColor = vec4(uCol.rgb * uCol.a, uCol.a); }';
+    const mp = link(MV, MF), pp = link(PV, PF), lp = link(LV, LF);
+    if (!mp || !pp || !lp) { this.setState({ glFail: true }); return null; }
+
+    const lin = (L, C, h) => {
+      const a = C * Math.cos(h * Math.PI / 180), b = C * Math.sin(h * Math.PI / 180);
+      const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+      const l = l_ * l_ * l_, m = m_ * m_ * m_, s = s_ * s_ * s_;
+      return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+    };
+    const enc = (x) => { const v = Math.max(0, Math.min(1, x)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const srgb = (L, C, h) => lin(L, C, h).map(enc);
+    const inGamut = (L, C, h) => lin(L, C, h).every((x) => x >= -0.0005 && x <= 1.0005);
+    const maxC = (L, h) => { let lo = 0, hi = 0.4; for (let i = 0; i < 16; i++) { const mid = (lo + hi) / 2; if (inGamut(L, mid, h)) { lo = mid; } else { hi = mid; } } return lo; };
+    const hex = (c) => '#' + c.map((x) => Math.round(x * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+    const lum = (c) => { const v = c.map((x) => (x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4))); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+
+    const CH = [0.0003, 0.0023, 0.0091, 0.0238, 0.0486, 0.0842, 0.1288, 0.1818, 0.2373, 0.2343, 0.1447, 0.0784];
+    const LL = [0.99, 0.968, 0.933, 0.889, 0.838, 0.783, 0.723, 0.658, 0.59, 0.565, 0.5, 0.392];
+    const SEG = 180, R0 = 0.7, TH = 0.045, SPACING = 0.56, HALO = 0.5;
+    const ringR = (i) => R0 + 0.5 + CH[i] * 9.0;
+
+    const mkVB = () => ({ b: gl.createBuffer(), n: 0 });
+    const solid = [], halo = [];
+    for (let i = 0; i < 12; i++) {
+      const L = LL[i], R = ringR(i), cols = [];
+      for (let j = 0; j <= SEG; j++) { const h = (j / SEG) * 360; cols.push(srgb(L, Math.min(CH[i], maxC(L, h)), h)); }
+      const v = [], hv = [];
+      const P = (arr, x, y, z, nx, ny, nz, c, a) => { arr.push(x, y, z, nx, ny, nz, c[0], c[1], c[2], a); };
+      for (let j = 0; j < SEG; j++) {
+        const a0 = (j / SEG) * Math.PI * 2, a1 = ((j + 1) / SEG) * Math.PI * 2, c0 = cols[j], c1 = cols[j + 1];
+        const x0 = Math.cos(a0), z0 = Math.sin(a0), x1 = Math.cos(a1), z1 = Math.sin(a1);
+        P(v, x0 * R0, TH, z0 * R0, 0, 1, 0, c0, 1); P(v, x0 * R, TH, z0 * R, 0, 1, 0, c0, 1); P(v, x1 * R, TH, z1 * R, 0, 1, 0, c1, 1);
+        P(v, x0 * R0, TH, z0 * R0, 0, 1, 0, c0, 1); P(v, x1 * R, TH, z1 * R, 0, 1, 0, c1, 1); P(v, x1 * R0, TH, z1 * R0, 0, 1, 0, c1, 1);
+        P(v, x0 * R, 0, z0 * R, x0, 0, z0, c0, 1); P(v, x1 * R, 0, z1 * R, x1, 0, z1, c1, 1); P(v, x1 * R, TH, z1 * R, x1, 0, z1, c1, 1);
+        P(v, x0 * R, 0, z0 * R, x0, 0, z0, c0, 1); P(v, x1 * R, TH, z1 * R, x1, 0, z1, c1, 1); P(v, x0 * R, TH, z0 * R, x0, 0, z0, c0, 1);
+        P(v, x0 * R0, 0, z0 * R0, -x0, 0, -z0, c0, 1); P(v, x1 * R0, TH, z1 * R0, -x1, 0, -z1, c1, 1); P(v, x1 * R0, 0, z1 * R0, -x1, 0, -z1, c1, 1);
+        P(v, x0 * R0, 0, z0 * R0, -x0, 0, -z0, c0, 1); P(v, x0 * R0, TH, z0 * R0, -x0, 0, -z0, c0, 1); P(v, x1 * R0, TH, z1 * R0, -x1, 0, -z1, c1, 1);
+        P(v, x0 * R0, 0, z0 * R0, 0, -1, 0, c0, 1); P(v, x1 * R, 0, z1 * R, 0, -1, 0, c1, 1); P(v, x0 * R, 0, z0 * R, 0, -1, 0, c0, 1);
+        P(v, x0 * R0, 0, z0 * R0, 0, -1, 0, c0, 1); P(v, x1 * R0, 0, z1 * R0, 0, -1, 0, c1, 1); P(v, x1 * R, 0, z1 * R, 0, -1, 0, c1, 1);
+        const RH = R + HALO, yh = TH * 0.5, ai = 0.06 + CH[i] * 1.5;
+        P(hv, x0 * R, yh, z0 * R, 0, 1, 0, c0, ai); P(hv, x0 * RH, yh, z0 * RH, 0, 1, 0, c0, 0); P(hv, x1 * RH, yh, z1 * RH, 0, 1, 0, c1, 0);
+        P(hv, x0 * R, yh, z0 * R, 0, 1, 0, c0, ai); P(hv, x1 * RH, yh, z1 * RH, 0, 1, 0, c1, 0); P(hv, x1 * R, yh, z1 * R, 0, 1, 0, c1, ai);
+      }
+      const s1 = mkVB(); gl.bindBuffer(gl.ARRAY_BUFFER, s1.b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(v), gl.STATIC_DRAW); s1.n = v.length / 10; solid.push(s1);
+      const h1 = mkVB(); gl.bindBuffer(gl.ARRAY_BUFFER, h1.b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(hv), gl.STATIC_DRAW); h1.n = hv.length / 10; halo.push(h1);
+    }
+
+    const HUEMAP = { ocean: [257, 1, 'blue'], iris: [292, 0.92, 'violet'], jade: [165, 0.62, 'teal'], ember: [42, 0.82, 'orange'] };
+    let brand = HUEMAP[this.state.hue] || HUEMAP.ocean;
+    let pillar = [];
+    const rebuild = () => {
+      pillar = LL.map((L, i) => {
+        const C = Math.min(CH[i] * brand[1], maxC(L, brand[0])), col = srgb(L, C, brand[0]);
+        const onWhite = 1.05 / (lum(col) + 0.05), onInk = (lum(col) + 0.05) / 0.05;
+        return { r: ringR(i) + HALO * 0.6, col: col, hex: hex(col), L: L, C: C, h: brand[0], step: i + 1, name: brand[2], best: onWhite >= onInk ? 'white text ' + onWhite.toFixed(1) + ':1' : 'ink text ' + onInk.toFixed(1) + ':1' };
+      });
+    };
+    rebuild();
+
+    const MU = {}; ['uPr', 'uV', 'uY', 'uMir', 'uFloor', 'uE', 'uDim', 'uMode', 'uScan', 'uAlpha'].forEach((n) => { MU[n] = gl.getUniformLocation(mp, n); });
+    const MA = { aP: gl.getAttribLocation(mp, 'aP'), aN: gl.getAttribLocation(mp, 'aN'), aC: gl.getAttribLocation(mp, 'aC'), aA: gl.getAttribLocation(mp, 'aA') };
+    const PU = { uPr: gl.getUniformLocation(pp, 'uPr'), uV: gl.getUniformLocation(pp, 'uV'), uPx: gl.getUniformLocation(pp, 'uPx') };
+    const PA = { aP: gl.getAttribLocation(pp, 'aP'), aC: gl.getAttribLocation(pp, 'aC'), aS: gl.getAttribLocation(pp, 'aS') };
+    const LU = { uPr: gl.getUniformLocation(lp, 'uPr'), uV: gl.getUniformLocation(lp, 'uV'), uCol: gl.getUniformLocation(lp, 'uCol') };
+    const LA = gl.getAttribLocation(lp, 'aP');
+    const dynBuf = gl.createBuffer();
+    const bindMesh = (vb) => {
+      gl.bindBuffer(gl.ARRAY_BUFFER, vb.b);
+      gl.enableVertexAttribArray(MA.aP); gl.vertexAttribPointer(MA.aP, 3, gl.FLOAT, false, 40, 0);
+      gl.enableVertexAttribArray(MA.aN); gl.vertexAttribPointer(MA.aN, 3, gl.FLOAT, false, 40, 12);
+      gl.enableVertexAttribArray(MA.aC); gl.vertexAttribPointer(MA.aC, 3, gl.FLOAT, false, 40, 24);
+      gl.enableVertexAttribArray(MA.aA); gl.vertexAttribPointer(MA.aA, 1, gl.FLOAT, false, 40, 36);
+    };
+    const unbindMesh = () => { gl.disableVertexAttribArray(MA.aN); gl.disableVertexAttribArray(MA.aC); gl.disableVertexAttribArray(MA.aA); };
+
+    const mul = (a, b) => { const o = new Array(16); for (let i = 0; i < 4; i++) { for (let j = 0; j < 4; j++) { let s = 0; for (let k2 = 0; k2 < 4; k2++) { s += a[k2 * 4 + j] * b[i * 4 + k2]; } o[i * 4 + j] = s; } } return o; };
+    const persp = (f, asp, n, fa) => { const t = 1 / Math.tan(f / 2); return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (fa + n) / (n - fa), -1, 0, 0, (2 * fa * n) / (n - fa), 0]; };
+    const ry = (a) => { const c = Math.cos(a), s = Math.sin(a); return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]; };
+    const rx = (a) => { const c = Math.cos(a), s = Math.sin(a); return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]; };
+    const tr = (x, y, z) => [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1];
+    const xf = (m, v) => [m[0] * v[0] + m[4] * v[1] + m[8] * v[2] + m[12], m[1] * v[0] + m[5] * v[1] + m[9] * v[2] + m[13], m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14], m[3] * v[0] + m[7] * v[1] + m[11] * v[2] + m[15]];
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const yawFor = (h) => -Math.PI / 2 - (h * Math.PI) / 180 + 0.55;
+    const PITCH0 = 0.42, PMIN = 0.08, PMAX = 1.25;
+    let YAW0 = yawFor(brand[0]);
+    const S = { yaw: YAW0, pitch: PITCH0, vx: 0, drag: false, lastX: 0, lastY: 0, upAt: 0, resetting: false, mx: -1, my: -1, hover: -1, raf: 0, last: performance.now(), grow: reduce ? 1 : 0, t0: performance.now() };
+    const onMove = (ev) => {
+      const r = canvas.getBoundingClientRect(); S.mx = ev.clientX - r.left; S.my = ev.clientY - r.top;
+      if (!S.drag) { return; }
+      const dx = ev.clientX - S.lastX, dy = ev.clientY - S.lastY; S.lastX = ev.clientX; S.lastY = ev.clientY;
+      S.yaw += dx * 0.008; S.pitch = Math.max(PMIN, Math.min(PMAX, S.pitch + dy * 0.006)); S.vx = dx * 0.008;
+    };
+    const onDown = (ev) => { S.drag = true; S.resetting = false; S.lastX = ev.clientX; S.lastY = ev.clientY; S.vx = 0; canvas.style.cursor = 'grabbing'; try { canvas.setPointerCapture(ev.pointerId); } catch (x) {} };
+    const onUp = () => { if (S.drag) { S.upAt = performance.now(); } S.drag = false; canvas.style.cursor = 'grab'; };
+    const onLeave = () => { S.mx = -1; S.my = -1; };
+    const onDbl = () => { S.resetting = true; };
+    canvas.addEventListener('pointermove', onMove); canvas.addEventListener('pointerdown', onDown);
+    canvas.addEventListener('pointerup', onUp); canvas.addEventListener('pointercancel', onUp);
+    canvas.addEventListener('lostpointercapture', onUp); canvas.addEventListener('pointerleave', onLeave);
+    canvas.addEventListener('dblclick', onDbl);
+    const wrap = (a, a0) => a0 + ((((a - a0) % (Math.PI * 2)) + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+
+    const frame = (now) => {
+      const dt = Math.min(50, now - S.last) / 16.7; S.last = now;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const cw = Math.max(1, Math.round(canvas.clientWidth * dpr)), ch = Math.max(1, Math.round(canvas.clientHeight * dpr));
+      if (canvas.width !== cw || canvas.height !== ch) { canvas.width = cw; canvas.height = ch; }
+      gl.viewport(0, 0, cw, ch); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+      S.grow += (1 - S.grow) * (reduce ? 1 : 0.03);
+      const g = 1 - Math.pow(1 - Math.min(1, S.grow), 3);
+      if (!S.drag) {
+        S.yaw += S.vx; S.vx *= 0.94;
+        if (!reduce && S.hover < 0) { S.yaw += 0.0016 * dt; }
+        if (S.resetting || now - S.upAt > 900) { S.pitch += (PITCH0 - S.pitch) * 0.04; }
+        if (S.resetting) { S.yaw = wrap(S.yaw, YAW0); S.yaw += (YAW0 - S.yaw) * 0.08; if (Math.abs(S.yaw - YAW0) < 0.003) { S.resetting = false; } }
+      }
+      const time = (now - S.t0) / 1000;
+      const sp = SPACING * g, ys = (i) => (5.5 - i) * sp + 0.25;
+      const floorY = ys(11) - 0.55;
+      const scanY = reduce ? -99 : ys(11) + ((Math.sin(time * 0.55) + 1) / 2) * (ys(0) - ys(11) + TH);
+
+      const dist = 29;
+      const inv = mul(ry(-S.yaw), rx(-S.pitch));
+      const eye = [inv[8] * dist, inv[9] * dist, inv[10] * dist];
+      const Pm = persp(0.3, cw / ch, 1, 120);
+      const Vm = mul(tr(0, -0.1, -dist), mul(rx(S.pitch), ry(S.yaw)));
+
+      gl.useProgram(mp);
+      gl.uniformMatrix4fv(MU.uPr, false, Pm); gl.uniformMatrix4fv(MU.uV, false, Vm); gl.uniform3fv(MU.uE, eye);
+      gl.uniform1f(MU.uFloor, floorY); gl.uniform1f(MU.uScan, scanY);
+
+      gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
+      gl.uniform1f(MU.uMir, 1); gl.uniform1f(MU.uMode, 0); gl.uniform1f(MU.uAlpha, 0.2); gl.uniform1f(MU.uDim, 1);
+      for (let i = 11; i >= 0; i--) { bindMesh(solid[i]); gl.uniform1f(MU.uY, ys(i)); gl.drawArrays(gl.TRIANGLES, 0, solid[i].n); }
+      gl.blendFunc(gl.ONE, gl.ONE); gl.uniform1f(MU.uMode, 1); gl.uniform1f(MU.uAlpha, 0.5);
+      for (let i = 11; i >= 0; i--) { bindMesh(halo[i]); gl.uniform1f(MU.uY, ys(i)); gl.drawArrays(gl.TRIANGLES, 0, halo[i].n); }
+      gl.enable(gl.DEPTH_TEST); gl.disable(gl.BLEND);
+
+      gl.uniform1f(MU.uMir, 0); gl.uniform1f(MU.uMode, 0); gl.uniform1f(MU.uAlpha, 1);
+      for (let i = 0; i < 12; i++) {
+        bindMesh(solid[i]); gl.uniform1f(MU.uY, ys(i)); gl.uniform1f(MU.uDim, S.hover >= 0 && S.hover !== i ? 0.42 : 1.0);
+        gl.drawArrays(gl.TRIANGLES, 0, solid[i].n);
+      }
+      gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.depthMask(false);
+      gl.uniform1f(MU.uMode, 1); gl.uniform1f(MU.uAlpha, 1);
+      for (let i = 0; i < 12; i++) {
+        bindMesh(halo[i]); gl.uniform1f(MU.uY, ys(i)); gl.uniform1f(MU.uDim, S.hover >= 0 ? (S.hover === i ? 1.8 : 0.3) : 0.85);
+        gl.drawArrays(gl.TRIANGLES, 0, halo[i].n);
+      }
+      unbindMesh();
+
+      const M = mul(Pm, Vm);
+      const a = (brand[0] * Math.PI) / 180, ca = Math.cos(a), sa = Math.sin(a);
+      const lines = [], pts = [], scr = [];
+      const cssW = canvas.clientWidth, cssH = canvas.clientHeight;
+      pillar.forEach((q, k) => {
+        const p = [ca * q.r, ys(k) + TH * 0.5, sa * q.r];
+        pts.push(p[0], p[1], p[2], q.col[0], q.col[1], q.col[2], (S.hover === k ? 40 : 28));
+        const c = xf(M, p); scr.push([(c[0] / c[3] * 0.5 + 0.5) * cssW, (1 - (c[1] / c[3] * 0.5 + 0.5)) * cssH]);
+        if (k < 11) { const q2 = pillar[k + 1]; lines.push(p[0], p[1], p[2], ca * q2.r, ys(k + 1) + TH * 0.5, sa * q2.r); }
+      });
+      gl.useProgram(lp);
+      gl.uniformMatrix4fv(LU.uPr, false, Pm); gl.uniformMatrix4fv(LU.uV, false, Vm);
+      gl.bindBuffer(gl.ARRAY_BUFFER, dynBuf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(LA); gl.vertexAttribPointer(LA, 3, gl.FLOAT, false, 12, 0);
+      gl.uniform4f(LU.uCol, 0.75, 0.88, 1.0, 0.55 * g); gl.drawArrays(gl.LINES, 0, lines.length / 3);
+      gl.useProgram(pp);
+      gl.uniformMatrix4fv(PU.uPr, false, Pm); gl.uniformMatrix4fv(PU.uV, false, Vm); gl.uniform1f(PU.uPx, ch / 640);
+      gl.bindBuffer(gl.ARRAY_BUFFER, dynBuf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pts), gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(PA.aP); gl.vertexAttribPointer(PA.aP, 3, gl.FLOAT, false, 28, 0);
+      gl.enableVertexAttribArray(PA.aC); gl.vertexAttribPointer(PA.aC, 3, gl.FLOAT, false, 28, 12);
+      gl.enableVertexAttribArray(PA.aS); gl.vertexAttribPointer(PA.aS, 1, gl.FLOAT, false, 28, 24);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
+      gl.drawArrays(gl.POINTS, 0, pillar.length);
+      gl.disableVertexAttribArray(PA.aC); gl.disableVertexAttribArray(PA.aS);
+      gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.disable(gl.BLEND);
+
+      let best = -1, bd = 22, bx = 0, by = 0;
+      if (S.mx >= 0 && !S.drag) { scr.forEach((s2, i) => { const d = Math.hypot(s2[0] - S.mx, s2[1] - S.my); if (d < bd) { bd = d; best = i; bx = s2[0]; by = s2[1]; } }); }
+      if (best !== S.hover) {
+        S.hover = best;
+        const q = best >= 0 ? pillar[best] : null;
+        self.setState({ tip: q ? { token: 'color.' + q.name + '.light.' + q.step, hex: q.hex, oklch: 'oklch(' + q.L.toFixed(2) + ' ' + q.C.toFixed(3) + ' ' + Math.round(q.h) + ')', best: q.best, sw: q.hex } : null });
+      }
+      if (best >= 0 && self.tipEl) { self.tipEl.style.transform = 'translate(' + Math.round(bx + 18) + 'px, ' + Math.round(by - 22) + 'px)'; }
+      S.raf = requestAnimationFrame(frame);
+    };
+    S.raf = requestAnimationFrame(frame);
+
+    return {
+      setHue: (key) => { const v = HUEMAP[key]; if (v) { brand = v; rebuild(); YAW0 = yawFor(brand[0]); } },
+      setHueDeg: (deg) => { brand = [deg, 1, 'brand']; rebuild(); YAW0 = yawFor(deg); },
+      setTarget: () => {},
+      reset: () => { S.resetting = true; S.vx = 0; },
+      count: 12,
+      dispose: () => {
+        cancelAnimationFrame(S.raf);
+        canvas.removeEventListener('pointermove', onMove); canvas.removeEventListener('pointerdown', onDown);
+        canvas.removeEventListener('pointerup', onUp); canvas.removeEventListener('pointercancel', onUp);
+        canvas.removeEventListener('lostpointercapture', onUp); canvas.removeEventListener('pointerleave', onLeave);
+        canvas.removeEventListener('dblclick', onDbl);
+        const lose = gl.getExtension('WEBGL_lose_context'); if (lose) { lose.loseContext(); }
+      }
+    };
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#0A6CF2';
+    const st = this.state;
+    const dark = st.site === 'dark';
+    const S = dark ? {
+      bg: '#08090C', dot: '#1A1E26', card: '#101319', card2: '#161A21', chip: '#1C2129', keyShadow: '#0A0C10', line: '#262C36', line2: '#1D222A',
+      text: '#EEF0F3', muted: '#A9B0BC', faint: '#7D8593', btnBg: '#EEF0F3', btnFg: '#0B0D11', accentText: '#6EA8FF',
+      inv: '#05070A', invLine: '#1C2129', invChip: '#161A21', invText: '#EEF0F3', invMuted: '#9AA2AE',
+      sh: '0 0 0 1px rgba(255,255,255,0.04), 0 20px 40px -26px rgba(0,0,0,0.9)', shBig: '0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px -40px rgba(0,0,0,0.95)'
+    } : {
+      bg: '#E9ECF1', dot: '#C9CED8', card: '#FFFFFF', card2: '#F6F7F9', chip: '#EEF1F5', keyShadow: '#D5DAE1', line: '#E1E5EB', line2: '#EEF0F3',
+      text: '#0D1117', muted: '#3D4452', faint: '#6B7280', btnBg: '#0D1117', btnFg: '#FFFFFF', accentText: accent,
+      inv: '#0D1117', invLine: '#1E232C', invChip: '#1A1F27', invText: '#ECEEF2', invMuted: '#A3AAB6',
+      sh: '0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)', shBig: '0 1px 2px rgba(13,17,23,0.06), 0 50px 80px -40px rgba(13,17,23,0.45)'
+    };
+
+    const toHex = (L, C, h) => {
+      const a = C * Math.cos(h * Math.PI / 180), b = C * Math.sin(h * Math.PI / 180);
+      const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+      const l = l_ * l_ * l_, m = m_ * m_ * m_, s = s_ * s_ * s_;
+      const lin = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+      const enc = (x) => { const v = Math.max(0, Math.min(1, x)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+      return '#' + lin.map((x) => Math.round(enc(x) * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+    };
+    const hslHex = (h, s, l) => {
+      const k = (n) => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+      const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+      return '#' + [f(0), f(8), f(4)].map((x) => Math.round(x * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+    };
+    const lum = (hex) => {
+      const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+      return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    };
+    const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+
+    const HUES = { ocean: { name: 'Ocean', h: 257, k: 1 }, iris: { name: 'Iris', h: 292, k: 0.92 }, jade: { name: 'Jade', h: 165, k: 0.62 }, ember: { name: 'Ember', h: 42, k: 0.82 } };
+    const CH = [0.0003, 0.0023, 0.0091, 0.0238, 0.0486, 0.0842, 0.1288, 0.1818, 0.2373, 0.2343, 0.1447, 0.0784];
+    const LL = [0.99, 0.968, 0.933, 0.889, 0.838, 0.783, 0.723, 0.658, 0.59, 0.565, 0.5, 0.392];
+    const LD = [0.17, 0.2, 0.245, 0.285, 0.33, 0.38, 0.45, 0.53, 0.62, 0.66, 0.8, 0.93];
+    const theme = (hueKey, mode) => {
+      const H = HUES[hueKey], dk = mode === 'dark';
+      const ramp = (dk ? LD : LL).map((L, i) => toHex(L, CH[i] * H.k, H.h));
+      const n = (L) => toHex(L, 0.006, H.h);
+      const solid = ramp[8], white = '#FFFFFF', ink = n(0.2);
+      const onSolid = ratio(white, solid) >= ratio(ink, solid) ? white : ink;
+      const t = dk
+        ? { canvas: n(0.14), surface: n(0.2), field: n(0.17), tonal: n(0.27), line: n(0.3), text: n(0.96), muted: n(0.74), border: n(0.56), solid: solid, onSolid: onSolid, badgeBg: toHex(0.32, 0.06 * H.k, H.h), badgeFg: toHex(0.88, 0.08 * H.k, H.h), ring: toHex(0.36, 0.09 * H.k, H.h) }
+        : { canvas: n(0.955), surface: n(0.995), field: n(0.995), tonal: n(0.93), line: n(0.91), text: n(0.22), muted: n(0.48), border: n(0.6), solid: solid, onSolid: onSolid, badgeBg: ramp[2], badgeFg: toHex(0.42, 0.13 * H.k, H.h), ring: ramp[3] };
+      return { t: t, ramp: ramp };
+    };
+
+    const cur = theme(st.hue, st.mode);
+    const t = cur.t;
+    const chk = (label, a, b, min) => { const r = ratio(a, b); const pass = r >= min; return { label: label, ratio: r.toFixed(1) + ' : 1', verdict: pass ? (min >= 4.5 ? 'AA' : '3:1') : 'FAIL', bg: pass ? '#15803D' : '#B42318' }; };
+    const checks = [chk('Label on brand fill', t.onSolid, t.solid, 4.5), chk('Body text', t.text, t.surface, 4.5), chk('Muted text', t.muted, t.surface, 4.5), chk('Input boundary', t.border, t.surface, 3)];
+    const hues = Object.keys(HUES).map((k) => { const on = st.hue === k; return { name: HUES[k].name, hex: toHex(0.6, 0.2373 * HUES[k].k, HUES[k].h), on: on ? 'true' : 'false', ring: on ? '0 0 0 2px ' + S.card + ', 0 0 0 3px ' + toHex(dark ? 0.74 : 0.7, 0.11, HUES[k].h) : 'none', stageRing: on ? '0 0 0 2px #0B0F17, 0 0 0 3px ' + toHex(0.8, 0.09, HUES[k].h) : 'none', pick: () => { this.setState({ hue: k, towerHue: HUES[k].h }); if (this.gl3 && this.gl3.setHue) { this.gl3.setHue(k); } } }; });
+    const seg = (key, vals, labels) => vals.map((v, i) => { const on = st[key] === v; const u = {}; u[key] = v; return { label: labels[i], on: on ? 'true' : 'false', bg: on ? S.card : 'transparent', c: on ? S.text : S.muted, fw: on ? '600' : '400', sh: on ? '0 1px 3px rgba(0,0,0,0.18)' : 'none', pick: () => this.setState(u) }; });
+    const siteModes = ['light', 'dark'].map((m) => { const on = st.site === m; return { label: m === 'light' ? 'Light mode' : 'Dark mode', isLight: m === 'light', isDark: m === 'dark', on: on ? 'true' : 'false', bg: on ? S.card : 'transparent', sh: on ? '0 1px 3px rgba(0,0,0,0.2)' : 'none', ic: on ? S.text : S.faint, pick: () => { this.setState({ site: m }); if (this.gl3 && this.gl3.retexture) { this.gl3.retexture(m); } } }; });
+
+    const P = (dk, clip) => {
+      const p = dk
+        ? { canvas: '#0B0E13', surface: '#141821', chip: '#1C222C', line: '#232A35', text: '#ECEEF2', muted: '#A3AAB6', solid: '#4D8DFF', onSolid: '#0B0E13', bar2: '#2C3442', okBg: '#12301F', okFg: '#8FD6A6', wBg: '#33240F', wFg: '#F3C27A', rail: '#1C222C', sh: '0 0 0 1px rgba(255,255,255,0.05)' }
+        : { canvas: '#F3F5F8', surface: '#FFFFFF', chip: '#EEF1F5', line: '#E3E7ED', text: '#0D1117', muted: '#5B6270', solid: accent, onSolid: '#FFFFFF', bar2: '#CBD5E4', okBg: '#E6F4EA', okFg: '#14532D', wBg: '#FDF0E1', wFg: '#8A4B0B', rail: '#EEF1F5', sh: '0 1px 2px rgba(13,17,23,0.06), 0 8px 20px -14px rgba(13,17,23,0.25)' };
+      const hs = [42, 48, 45, 55, 52, 60, 58, 66, 63, 72, 70, 80, 84, 92];
+      return Object.assign({}, p, {
+        clip: clip, rail: [p.rail, p.rail, p.rail, p.rail, p.rail],
+        kpis: [{ l: 'MRR', v: '$184.2k', d: '+12.4%', bg: p.okBg, fg: p.okFg }, { l: 'Net retention', v: '118%', d: '+3 pts', bg: p.okBg, fg: p.okFg }, { l: 'Churn', v: '1.4%', d: '+0.2 pts', bg: p.wBg, fg: p.wFg }],
+        bars: hs.map((h, i) => ({ h: h, c: i >= 12 ? p.solid : p.bar2 })),
+        rows: [{ n: 'Sinar Logistics', s: 'Paid', bg: p.okBg, fg: p.okFg, a: '$12.4k' }, { n: 'Pelita Energi', s: 'Paid', bg: p.okBg, fg: p.okFg, a: '$9.8k' }, { n: 'Kirana Group', s: 'Overdue', bg: p.wBg, fg: p.wFg, a: '$4.1k' }, { n: 'Tirta Foods', s: 'Paid', bg: p.okBg, fg: p.okFg, a: '$3.6k' }]
+      });
+    };
+    const split = st.split;
+    const panes = [P(false, 'inset(0 0 0 0)'), P(true, 'inset(0 0 0 ' + split + '%)')];
+    const sl = {
+      down: (e) => {
+        if (e.button !== undefined && e.button !== 0) { return; }
+        e.preventDefault();
+        this.sliderEl = e.currentTarget;
+        this.dragging = true;
+        this.setSplitX(e.clientX);
+        window.addEventListener('pointermove', this.winMove);
+        window.addEventListener('pointerup', this.winUp);
+        window.addEventListener('pointercancel', this.winUp);
+        window.addEventListener('blur', this.winUp);
+      },
+      key: (e) => {
+        const map = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5 };
+        if (map[e.key] !== undefined) { e.preventDefault(); this.setState({ split: Math.max(0, Math.min(100, split + map[e.key])) }); }
+        if (e.key === 'Home') { e.preventDefault(); this.setState({ split: 0 }); }
+        if (e.key === 'End') { e.preventDefault(); this.setState({ split: 100 }); }
+      }
+    };
+
+    const percept = [
+      { name: 'HSL', cells: [0, 45, 90, 135, 180, 225, 270, 315].map((h) => { const hex = hslHex(h, 0.85, 0.55); return { hex: hex, w: Math.round(lum(hex) * 100) }; }) },
+      { name: 'OKLCH', cells: [25, 70, 110, 150, 195, 240, 285, 330].map((h) => { const hex = toHex(0.72, 0.12, h); return { hex: hex, w: Math.round(lum(hex) * 100) }; }) }
+    ];
+    const rtl = st.rtl
+      ? { dir: 'rtl', a: 'نظرة عامة', b: 'الأعضاء', c: 'السجل', hint: '← next tab', toggle: () => this.setState({ rtl: false }) }
+      : { dir: 'ltr', a: 'Overview', b: 'Members', c: 'Audit', hint: '→ next tab', toggle: () => this.setState({ rtl: true }) };
+    const rm = st.reduce
+      ? { v: 'reduce', on: 'true', anim: 'none', bg: accent, j: 'flex-end', toggle: () => this.setState({ reduce: false }) }
+      : { v: 'no-preference', on: 'false', anim: 'glide 2.4s cubic-bezier(.6,0,.2,1) infinite', bg: dark ? '#3A404C' : '#C5CBD5', j: 'flex-start', toggle: () => this.setState({ reduce: true }) };
+    const ra = theme('ocean', 'light').t, rb = theme('ember', 'dark').t;
+    const roots = [Object.assign({ name: 'Northwind', attr: 'data-scnx-theme="northwind"' }, ra), Object.assign({ name: 'Kirana', attr: 'data-scnx-theme="kirana"' }, rb)];
+
+    const LT = { default: 0.59, hover: 0.54, pressed: 0.49, selected: 0.45 };
+    const opts = ['default', 'hover', 'pressed', 'selected', 'disabled'].map((k) => { const on = st.tok === k; return { name: k, note: on ? 'selected' : '', on: on ? 'true' : 'false', dis: 'false', bg: on ? '#243049' : 'transparent', c: '#E6E8EC', td: 'none', nc: '#7AA2FF', cur: 'pointer', pick: () => this.setState({ tok: k }) }; });
+    opts.push({ name: 'focus', note: 'not a surface state', on: 'false', dis: 'true', bg: 'transparent', c: '#6B7484', td: 'line-through', nc: '#F38B7A', cur: 'not-allowed', pick: () => null });
+    const tokBg = st.tok === 'default' ? accent : (st.tok === 'disabled' ? '#2A303A' : toHex(LT[st.tok], 0.21, 257));
+    const tok = { sel: st.tok, opts: opts, bg: tokBg, fg: st.tok === 'disabled' ? '#7D8593' : '#FFFFFF', sh: st.tok === 'pressed' ? 'inset 0 2px 4px rgba(0,0,0,0.35)' : (st.tok === 'disabled' ? 'none' : '0 10px 24px -10px rgba(10,108,242,0.6)'), ref: 'color.primary.surface.solid.' + st.tok };
+
+    const term = [
+      { t: '$ npm audit signatures', c: '#FFFFFF' },
+      { t: 'audited 2 packages', c: '#8E95A2' },
+      { t: '✓ 2 packages have verified registry signatures', c: '#9EE6B8' },
+      { t: '✓ 2 packages have verified attestations', c: '#9EE6B8' },
+      { t: ' ', c: '#8E95A2' },
+      { t: '$ gh attestation verify scnx-system-2.0.0.tgz --repo anshacerbia2/ui-platform', c: '#FFFFFF' },
+      { t: 'Loaded 1 attestation from GitHub API', c: '#8E95A2' },
+      { t: '✓ Verification succeeded!', c: '#9EE6B8' }
+    ].map((l, i) => Object.assign(l, { d: (i * 0.35).toFixed(2) + 's' }));
+    const products = ['Workspace', 'Identity', 'Organization', 'HCM', 'Travel Operations', 'Agent Runtime', 'Billing', 'Platform Admin'];
+
+    return {
+      accent: accent, S: S, t: t, hues: hues, checks: checks, glRef: this.glRef, glFail: st.glFail,
+      modes: seg('mode', ['light', 'dark'], ['Light', 'Dark']), siteModes: siteModes,
+      ramp: cur.ramp.map((hex, i) => ({ hex: hex, title: 'step ' + (i + 1) + ' · ' + hex })),
+      toggleExplode: () => { const v = !this.state.explode; this.setState({ explode: v }); if (this.gl3) { this.gl3.setTarget(v ? 1 : 0); } },
+      explodeLabel: st.explode ? 'Assemble' : 'Explode',
+      explodePressed: st.explode ? 'true' : 'false',
+      resetView: () => { if (this.gl3) { this.gl3.reset(); } },
+      onHue: (e) => { const v = Math.max(0, Math.min(359, parseInt(e.target.value, 10) || 0)); this.setState({ towerHue: v }); if (this.gl3 && this.gl3.setHueDeg) { this.gl3.setHueDeg(v); } },
+      hueTrack: 'linear-gradient(90deg, ' + [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 359].map((h) => toHex(0.68, 0.15, h) + ' ' + Math.round(h / 3.59) + '%').join(', ') + ')',
+      hueSwatch: toHex(0.6, 0.2, st.towerHue),
+      towerHue: st.towerHue,
+      hasTip: !!st.tip, tip: st.tip || { token: '', hex: '', oklch: '', best: '', sw: 'transparent' }, tipRef: this.tipRef,
+      lineOpacity: split <= 0 || split >= 100 ? '0' : '1',
+      stage: dark
+        ? { bg: 'radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 22px 22px, radial-gradient(120% 90% at 50% 40%, #0B111C 0%, #05070B 60%, #020305 100%)', sh: 'inset 0 0 0 1px rgba(255,255,255,0.07), 0 40px 80px -40px rgba(0,0,0,0.95)' }
+        : { bg: 'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 22px 22px, radial-gradient(120% 90% at 50% 32%, #1D2639 0%, #0D1119 58%, #080A0F 100%)', sh: '0 1px 2px rgba(13,17,23,0.1), 0 50px 90px -40px rgba(13,17,23,0.6)' },
+      legend: [{ n: '01', t: 'Tokens' }, { n: '02', t: 'Primitive' }, { n: '03', t: 'Component' }, { n: '04', t: 'Release' }],
+      marquee: products.concat(products),
+      panes: panes, split: split, splitRound: Math.round(split), splitText: Math.round(split) + '% light', knobLeft: 'clamp(28px, ' + split + '%, calc(100% - 28px))', sl: sl,
+      percept: percept, rtl: rtl, rm: rm, roots: roots, tok: tok, term: term,
+      stats: [
+        { v: '0', l: 'styles injected at runtime. Static CSS that passes strict CSP.' },
+        { v: '7', l: 'release gates every component clears before it ships.' },
+        { v: 'AA', l: 'contrast checked for every declared pair, in every theme and mode.' },
+        { v: 'L2', l: 'SLSA build provenance, signed and publicly logged.' }
+      ],
+      pillars: [
+        { isPrim: true, isComp: false, isTok: false, isRel: false, name: 'Primitives', desc: 'Headless, accessible behavior with semantic HTML and zero styling.', pkg: '@scnx/core-ui' },
+        { isPrim: false, isComp: true, isTok: false, isRel: false, name: 'Components', desc: 'Primitives dressed in static CSS, scoped themes and token-bound states.', pkg: '@scnx/system' },
+        { isPrim: false, isComp: false, isTok: true, isRel: false, name: 'Tokens', desc: 'OKLCH color, type, space, effect and motion in three tiers.', pkg: 'css · json · scss' },
+        { isPrim: false, isComp: false, isTok: false, isRel: true, name: 'Releases', desc: 'Lifecycle, support matrix, migrations and signed provenance.', pkg: 'evidence' }
+      ],
+      footer: [
+        { title: 'DOCS', items: ['Get started', 'Primitives', 'Components', 'Tokens'] },
+        { title: 'RELEASES', items: ['Status matrix', 'Changelog', 'Support matrix', 'Security'] },
+        { title: 'PROJECT', items: ['GitHub', 'Contributing', 'Code of conduct', 'License'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

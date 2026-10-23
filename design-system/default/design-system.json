@@ -1,0 +1,171 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-23T12:26:16Z"
+ },
+ "title": "Scnehaux UI",
+ "namespace": "Scnehaux",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Logos",
+  "Icons"
+ ],
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "l",
+   "order": [
+    "scnehaux-mark.svg",
+    "scnehaux-mark-inverse.svg"
+   ],
+   "files": {
+    "scnehaux-mark.svg": {
+     "name": "scnehaux-mark.svg",
+     "blob": "090ba89679a887cdc59531fdcb81ae4a",
+     "size": 563,
+     "type": "image/svg+xml"
+    },
+    "scnehaux-mark-inverse.svg": {
+     "name": "scnehaux-mark-inverse.svg",
+     "blob": "2c2deb6a3c5de6e43a1f59e269afaac9",
+     "size": 563,
+     "type": "image/svg+xml"
+    }
+   }
+  },
+  "Icons": {
+   "name": "Icons",
+   "tile": "s",
+   "order": [
+    "arrow-right.svg",
+    "arrow-left.svg",
+    "copy.svg",
+    "check.svg",
+    "code.svg",
+    "sun.svg",
+    "moon.svg",
+    "monitor.svg",
+    "orbit.svg",
+    "reset.svg",
+    "split.svg",
+    "external.svg",
+    "primitive-mark.svg",
+    "component-mark.svg",
+    "token-mark.svg",
+    "release-mark.svg"
+   ],
+   "files": {
+    "arrow-right.svg": {
+     "name": "arrow-right.svg",
+     "blob": "78de62b3ea72dd3366d5466b3b400893",
+     "size": 223,
+     "type": "image/svg+xml"
+    },
+    "arrow-left.svg": {
+     "name": "arrow-left.svg",
+     "blob": "3e3ee7d17fc043dae4b44f3cf77eaada",
+     "size": 224,
+     "type": "image/svg+xml"
+    },
+    "copy.svg": {
+     "name": "copy.svg",
+     "blob": "f1b113243bd719593cb1944cdd4e95d8",
+     "size": 281,
+     "type": "image/svg+xml"
+    },
+    "check.svg": {
+     "name": "check.svg",
+     "blob": "c07a893a5e58b241c387ab40e8392c81",
+     "size": 224,
+     "type": "image/svg+xml"
+    },
+    "code.svg": {
+     "name": "code.svg",
+     "blob": "b8763c896ee7c6fa6cb28971f4c374ca",
+     "size": 239,
+     "type": "image/svg+xml"
+    },
+    "sun.svg": {
+     "name": "sun.svg",
+     "blob": "472f6174876b5f61c88906ca9eb31b4e",
+     "size": 339,
+     "type": "image/svg+xml"
+    },
+    "moon.svg": {
+     "name": "moon.svg",
+     "blob": "b74fe571d57fabfa80309885f839e931",
+     "size": 247,
+     "type": "image/svg+xml"
+    },
+    "monitor.svg": {
+     "name": "monitor.svg",
+     "blob": "878d1a4cdf6df3142b70e1fdd92661ca",
+     "size": 272,
+     "type": "image/svg+xml"
+    },
+    "orbit.svg": {
+     "name": "orbit.svg",
+     "blob": "eab060d22f4617dce516878dd850ee79",
+     "size": 267,
+     "type": "image/svg+xml"
+    },
+    "reset.svg": {
+     "name": "reset.svg",
+     "blob": "84a1443aff326b1c24df095abc22f54e",
+     "size": 277,
+     "type": "image/svg+xml"
+    },
+    "split.svg": {
+     "name": "split.svg",
+     "blob": "57b565fd56e109f06ca570fd6b134dcb",
+     "size": 228,
+     "type": "image/svg+xml"
+    },
+    "external.svg": {
+     "name": "external.svg",
+     "blob": "1f32914cb7bcb7b3376d4d0ae7ae8c1a",
+     "size": 277,
+     "type": "image/svg+xml"
+    },
+    "primitive-mark.svg": {
+     "name": "primitive-mark.svg",
+     "blob": "b8c8d20efdf67c43fac8ef495137530e",
+     "size": 402,
+     "type": "image/svg+xml"
+    },
+    "component-mark.svg": {
+     "name": "component-mark.svg",
+     "blob": "1e0071037799a28ca99c7406021cfad9",
+     "size": 339,
+     "type": "image/svg+xml"
+    },
+    "token-mark.svg": {
+     "name": "token-mark.svg",
+     "blob": "98736b7cf8fed48061980d10fc91f0dc",
+     "size": 440,
+     "type": "image/svg+xml"
+    },
+    "release-mark.svg": {
+     "name": "release-mark.svg",
+     "blob": "1cb61c25dadf46ff5439ce34eb65aaa4",
+     "size": 469,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Claude",
+  "at": "2026-10-23T12:26:16Z",
+  "via": "Claude",
+  "note": "Spatial identity: materials, the 4·8·12·16·24 ladder, ink and Scnx Blue; 42 component cards"
+ }
+}

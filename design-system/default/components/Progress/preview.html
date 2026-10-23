@@ -1,0 +1,25 @@
+<!-- @dsCard group="Feedback" height=180 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Progress</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="max-inline-size:28rem">
+  <div class="scnx-progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="Build minutes"><div data-part="header"><span data-part="label">Build minutes</span><span data-part="value">3,200 / 5,000</span></div><div data-part="track"><div data-part="indicator" style="inline-size:64%"></div></div></div>
+  <div class="scnx-progress" data-scheme="success" role="progressbar" aria-valuenow="100" aria-label="Upload"><div data-part="header"><span data-part="label">Upload</span><span data-part="value">100%</span></div><div data-part="track"><div data-part="indicator" style="inline-size:100%"></div></div></div>
+  <div class="scnx-progress" data-scheme="danger" role="progressbar" aria-valuenow="96" aria-label="Storage"><div data-part="header"><span data-part="label">Storage</span><span data-part="value">96%</span></div><div data-part="track"><div data-part="indicator" style="inline-size:96%"></div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- @dsCard group="Data display" height=350 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CodeShowcase</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="scnx-code-showcase">
+  <div class="scnx-code-showcase__preview"><button class="scnx-btn" data-variant="primary" data-size="medium">Deploy</button><button class="scnx-btn" data-variant="secondary" data-size="medium">Preview</button></div>
+  <div class="scnx-code-showcase__nav"><div class="scnx-segmented" data-size="small" role="tablist" aria-label="View"><button data-part="item" role="tab" aria-selected="true">Preview</button><button data-part="item" role="tab" aria-selected="false">Code</button></div><div class="row"><button class="scnx-btn" data-variant="ghost" data-size="small"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>TSX<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></button><button class="scnx-icon-btn" data-variant="ghost" data-size="small" aria-label="Copy code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg></button></div></div>
+  <pre class="scnx-code-showcase__code-inner"><code><span data-token="kw">import</span> { Button } <span data-token="kw">from</span> <span data-token="str">"@scnx/system/components/button"</span>;
+
+<span data-token="mute">// One ink primary per view.</span>
+&lt;Button variant=<span data-token="str">"primary"</span>&gt;Deploy&lt;/Button&gt;</code></pre>
+</div></div>
+</body>
+</html>

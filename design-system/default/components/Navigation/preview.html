@@ -1,0 +1,31 @@
+<!-- @dsCard group="Navigation" height=380 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Navigation</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="max-inline-size:17.5rem"><nav class="scnx-navigation" aria-label="Workspace">
+<ul class="scnx-navigation__group">
+  <li class="scnx-navigation__group-header scnx-eyebrow">Workspace</li>
+  <li><a class="scnx-navigation__item" href="#overview"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg></span><span class="scnx-navigation__text">Overview</span></a></li>
+  <li><a class="scnx-navigation__item" href="#projects"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></span><span class="scnx-navigation__text">Projects</span><span class="scnx-navigation__badge">12</span></a></li>
+  <li><a class="scnx-navigation__item" href="#people" data-active="true" aria-current="page"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span><span class="scnx-navigation__text">People</span></a></li>
+  <li><a class="scnx-navigation__item" href="#deployments"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"/></svg></span><span class="scnx-navigation__text">Deployments</span></a></li>
+  <li><a class="scnx-navigation__item" href="#access" data-expanded="true"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5"/></svg></span><span class="scnx-navigation__text">Access</span><span class="scnx-navigation__trailing-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.5 6l6 6-6 6"/></svg></span></a><ul class="scnx-navigation__group"><li><a class="scnx-navigation__item" href="#roles"><span class="scnx-navigation__text">Roles</span></a></li><li><a class="scnx-navigation__item" href="#tokens"><span class="scnx-navigation__text">API tokens</span></a></li></ul></li>
+  <li class="scnx-navigation__group-header scnx-eyebrow">Settings</li>
+  <li><a class="scnx-navigation__item" href="#settings"><span class="scnx-navigation__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></svg></span><span class="scnx-navigation__text">General</span></a></li>
+</ul></nav></div>
+</body>
+</html>

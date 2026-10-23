@@ -1,0 +1,25 @@
+<!-- @dsCard group="Overlays" height=150 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tooltip</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+.anchor{display:flex;flex-direction:column;align-items:center;gap:var(--ds-dimension-spacing-inline-compact)}
+</style>
+</head>
+<body class="scnx-stage">
+<div class="pv" style="padding-block:var(--ds-dimension-spacing-section)"><div class="row" style="gap:var(--ds-dimension-spacing-section);justify-content:center">
+  <div class="anchor"><div class="scnx-tooltip" role="tooltip">Copy to clipboard</div><button class="scnx-icon-btn" data-variant="secondary" data-size="medium" aria-label="Copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg></button></div>
+  <div class="anchor"><div class="scnx-tooltip" role="tooltip">Search <kbd class="scnx-kbd">⌘</kbd><kbd class="scnx-kbd">K</kbd></div><button class="scnx-icon-btn" data-variant="secondary" data-size="medium" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button></div>
+  <div class="anchor"><div class="scnx-tooltip" role="tooltip" style="max-inline-size:14rem">Builds run in the region closest to your origin.</div><button class="scnx-icon-btn" data-variant="ghost" data-size="medium" aria-label="About regions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></button></div>
+</div></div>
+</body>
+</html>

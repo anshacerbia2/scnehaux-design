@@ -1,0 +1,24 @@
+<!-- @dsCard group="Data display" height=320 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Accordion</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="grid2">
+  <div class="scnx-accordion"><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="true" data-state="open">What is a material?<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button><div class="scnx-accordion__content"><div class="scnx-accordion__content-inner">Fill, radius, ring and shadow bound as one token set.</div></div></div><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="false" data-state="closed">Can I change the radius ladder?<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button></div><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="false" data-state="closed">Does dark mode change radii?<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button></div></div>
+  <div class="scnx-accordion" data-variant="stacked"><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="false" data-state="closed">Build<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button></div><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="true" data-state="open">Environment<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button><div class="scnx-accordion__content"><div class="scnx-accordion__content-inner">Node 22 · pnpm 10 · 14 variables.</div></div></div><div class="scnx-accordion__item"><button class="scnx-accordion__trigger" aria-expanded="false" data-state="closed">Domains<span class="scnx-accordion__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg></span></button></div></div>
+</div></div>
+</body>
+</html>

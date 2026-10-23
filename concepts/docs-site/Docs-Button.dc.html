@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button — acme/ui docs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9ECF1}
+a{color:#0D1117}a:hover{color:#2F5BFF}
+button{font:inherit;cursor:pointer}
+input::placeholder{color:#5B6270}
+.nl:hover{background:#F1F3F6 !important;color:#0D1117 !important}
+.toc:hover{color:#0D1117 !important}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .8s linear infinite}
+@media (prefers-reduced-motion: reduce){.spin{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background-color: #E9ECF1; background-image: radial-gradient(#C9CED8 1px, transparent 1px); background-size: 22px 22px; color: #0D1117; font-family: 'Instrument Sans', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 24px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; background: #FFFFFF; border-radius: 20px; padding: 10px 12px 10px 18px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -16px rgba(13,17,23,0.22)">
+  <div style="display: flex; align-items: center; gap: 10px">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="8" fill="#0D1117"></rect><rect x="8" y="8" width="7" height="7" rx="2" fill="{{accent}}"></rect><rect x="13" y="13" width="7" height="7" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1.5"></rect></svg>
+    <span style="font-size: 16px; font-weight: 600">acme/ui</span>
+    <button type="button" style="display: flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid #E1E5EB; background: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #0D1117">v2.4.0<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="2" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg></button>
+  </div>
+  <nav aria-label="Docs sections" style="display: flex; flex-wrap: wrap; gap: 2px; background: #F1F3F6; border-radius: 14px; padding: 4px; margin: 0 auto">
+    <a class="nl" href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; color: #5B6270; text-decoration: none; font-size: 14px">Get started</a>
+    <a class="nl" href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; color: #5B6270; text-decoration: none; font-size: 14px">Foundations</a>
+    <a href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; color: #0D1117; text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: 0 1px 3px rgba(13,17,23,0.12)">Components</a>
+    <a class="nl" href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; color: #5B6270; text-decoration: none; font-size: 14px">Tokens</a>
+    <a class="nl" href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; color: #5B6270; text-decoration: none; font-size: 14px">Playground</a>
+    <a class="nl" href="#" style="display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 10px; color: #5B6270; text-decoration: none; font-size: 14px">Changelog</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 8px">
+    <button type="button" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #E1E5EB; background: #FFFFFF; color: #5B6270; font-size: 14px; min-width: 240px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>
+      <span style="flex: 1; text-align: left">Search or ask the docs</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; border: 1px solid #E1E5EB; border-radius: 6px; padding: 2px 6px">⌘K</span>
+    </button>
+    <button type="button" aria-label="Source repository" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #E1E5EB; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="1.7" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"></path></svg></button>
+  </div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+
+  <nav aria-label="Components" style="flex: 0 0 248px; box-sizing: border-box; background: #FFFFFF; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.22)">
+    <div style="display: flex; align-items: center; gap: 8px; background: #F1F3F6; border-radius: 10px; padding: 0 10px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+      <label for="filter" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Filter components</label>
+      <input id="filter" type="text" placeholder="Filter" style="flex: 1; min-width: 0; height: 38px; border: 0; outline: none; background: transparent; font-family: inherit; font-size: 14px">
+    </div>
+    <sc-for list="{{nav}}" as="g" hint-placeholder-count="4">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #5B6270; padding: 0 10px 6px">{{g.title}}</span>
+        <sc-for list="{{g.items}}" as="i" hint-placeholder-count="5">
+          <a class="nl" href="#" style="display: flex; align-items: center; justify-content: space-between; min-height: 34px; padding: 0 10px; border-radius: 9px; background: {{i.bg}}; color: {{i.c}}; font-weight: {{i.fw}}; text-decoration: none; font-size: 14px">{{i.name}}<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: {{i.tc}}">{{i.tag}}</span></a>
+        </sc-for>
+      </div>
+    </sc-for>
+  </nav>
+
+  <main style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+    <div style="display: flex; flex-direction: column; gap: 14px; padding: 6px 4px 0">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: #5B6270">
+        <a href="#" style="color: #5B6270; text-decoration: none">Components</a><span>/</span><a href="#" style="color: #5B6270; text-decoration: none">Actions</a><span>/</span><span style="color: #0D1117">Button</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px">
+          <h1 style="margin: 0; font-size: 52px; font-weight: 500; letter-spacing: -0.04em; line-height: 1">Button</h1>
+          <p style="margin: 0; font-size: 17px; line-height: 1.55; color: #3D4452">Triggers an action. One primary per view, everything else steps back. Built on the native <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px">&lt;button&gt;</span>, so keyboard and screen readers work before you write a line.</p>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 12px; border: 1px solid #E1E5EB; background: #FFFFFF; color: #0D1117; font-size: 13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M4 16V6a2 2 0 012-2h10"></path></svg>Copy for agent</button>
+          <button type="button" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 12px; border: 1px solid #E1E5EB; background: #FFFFFF; color: #0D1117; font-size: 13px">Open in Figma</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+        <span style="display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px; background: #E6F4EA; color: #14532D"><span style="width: 6px; height: 6px; border-radius: 50%; background: #15803D"></span>Stable</span>
+        <span style="padding: 5px 10px; border-radius: 8px; background: #FFFFFF; color: #3D4452">since v1.0</span>
+        <span style="padding: 5px 10px; border-radius: 8px; background: #FFFFFF; color: #3D4452">2.1 kB gzip</span>
+        <span style="padding: 5px 10px; border-radius: 8px; background: #FFFFFF; color: #3D4452">0 dependencies</span>
+        <span style="padding: 5px 10px; border-radius: 8px; background: #FFFFFF; color: #3D4452">WCAG 2.2 AA</span>
+        <span style="padding: 5px 10px; border-radius: 8px; background: #FFFFFF; color: #3D4452">RSC-safe</span>
+      </div>
+    </div>
+
+    <section id="preview" aria-label="Live preview" style="background: #FFFFFF; border-radius: 24px; padding: 10px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 30px 60px -32px rgba(13,17,23,0.35)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 4px 4px 0">
+        <div role="tablist" aria-label="Stage view" style="display: flex; background: #F1F3F6; border-radius: 12px; padding: 3px">
+          <sc-for list="{{views}}" as="v" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{v.pressed}}" onClick="{{v.pick}}" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: {{v.bg}}; color: {{v.c}}; font-weight: {{v.fw}}; box-shadow: {{v.sh}}; font-size: 13px">{{v.label}}</button>
+          </sc-for>
+        </div>
+        <div role="group" aria-label="Stage theme" style="display: flex; background: #F1F3F6; border-radius: 12px; padding: 3px">
+          <sc-for list="{{themes}}" as="v" hint-placeholder-count="2">
+            <button type="button" aria-pressed="{{v.pressed}}" onClick="{{v.pick}}" style="min-height: 36px; padding: 0 12px; border: 0; border-radius: 9px; background: {{v.bg}}; color: {{v.c}}; font-weight: {{v.fw}}; box-shadow: {{v.sh}}; font-size: 13px">{{v.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <div style="flex: 999 1 420px; min-width: 0; min-height: 420px; border-radius: 18px; background-color: {{stage.bg}}; background-image: radial-gradient({{stage.dot}} 1px, transparent 1px); background-size: 18px 18px; border: 1px solid {{stage.bd}}; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden">
+          <span style="position: absolute; left: 16px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.mut}}">{{stage.caption}}</span>
+
+          <sc-if value="{{isPreview}}" hint-placeholder-val="{{true}}">
+            <button type="button" aria-busy="{{b.busy}}" style="display: inline-flex; align-items: center; justify-content: center; gap: {{b.gap}}px; height: {{b.h}}px; padding: 0 {{b.px}}px; border-radius: {{b.r}}px; background: {{b.bg}}; color: {{b.fg}}; border: {{b.bd}}; box-shadow: {{b.sh}}; opacity: {{b.op}}; cursor: {{b.cur}}; font-size: {{b.fs}}px; font-weight: 600; font-family: inherit">
+              <sc-if value="{{b.loading}}" hint-placeholder-val="{{false}}"><span class="spin" style="width: {{b.ic}}px; height: {{b.ic}}px; box-sizing: border-box; border-radius: 50%; border: 2px solid {{b.fg}}; border-top-color: transparent"></span></sc-if>
+              <span>{{b.label}}</span>
+              <sc-if value="{{b.showIcon}}" hint-placeholder-val="{{true}}"><svg width="{{b.ic}}" height="{{b.ic}}" viewBox="0 0 24 24" fill="none" stroke="{{b.fg}}" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></sc-if>
+            </button>
+          </sc-if>
+
+          <sc-if value="{{isAnatomy}}" hint-placeholder-val="{{false}}">
+            <div style="position: relative; display: inline-flex; margin: 60px 70px">
+              <div style="display: inline-flex; align-items: center; gap: 16px; height: 88px; padding: 0 40px; border-radius: 24px; background: {{accent}}; color: #FFFFFF; font-size: 28px; font-weight: 600">Deploy changes<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></div>
+              <span style="position: absolute; left: -10px; top: -10px; right: -10px; bottom: -10px; border: 1.5px dashed {{accent}}; border-radius: 32px"></span>
+              <div style="position: absolute; left: 0; right: 0; top: -44px; height: 10px; border-left: 1px solid {{stage.ink}}; border-right: 1px solid {{stage.ink}}"><span style="position: absolute; left: 0; right: 0; top: 4px; height: 1px; background: {{stage.ink}}"></span><span style="position: absolute; left: 50%; top: -16px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.ink}}; background: {{stage.bg}}; padding: 0 6px; white-space: nowrap">width: auto · min 44</span></div>
+              <div style="position: absolute; left: 0; width: 40px; bottom: -40px; height: 10px; border-left: 1px solid {{stage.ink}}; border-right: 1px solid {{stage.ink}}"><span style="position: absolute; left: 0; right: 0; top: 4px; height: 1px; background: {{stage.ink}}"></span><span style="position: absolute; left: 0; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.ink}}; white-space: nowrap">20 · space.5</span></div>
+              <div style="position: absolute; top: 0; bottom: 0; right: -56px; width: 10px; border-top: 1px solid {{stage.ink}}; border-bottom: 1px solid {{stage.ink}}"><span style="position: absolute; top: 0; bottom: 0; left: 4px; width: 1px; background: {{stage.ink}}"></span><span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.ink}}; white-space: nowrap">44 · size.md</span></div>
+              <span style="position: absolute; left: -6px; top: -6px; width: 22px; height: 22px; border-radius: 50%; background: {{stage.ink}}; color: {{stage.bg}}; font-family: 'JetBrains Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center">1</span>
+              <span style="position: absolute; left: 42%; top: -14px; width: 22px; height: 22px; border-radius: 50%; background: {{stage.ink}}; color: {{stage.bg}}; font-family: 'JetBrains Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center">2</span>
+              <span style="position: absolute; right: 30px; top: -14px; width: 22px; height: 22px; border-radius: 50%; background: {{stage.ink}}; color: {{stage.bg}}; font-family: 'JetBrains Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center">3</span>
+              <span style="position: absolute; right: -20px; bottom: -20px; width: 22px; height: 22px; border-radius: 50%; background: {{accent}}; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center">4</span>
+              <div style="position: absolute; left: -40px; right: -40px; top: 150px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.mut}}"><span>1 container · radius.md</span><span>2 label · text.label.md</span><span>3 icon slot · 16</span><span>4 focus ring · 2px offset</span></div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isStates}}" hint-placeholder-val="{{false}}">
+            <div style="overflow-x: auto; max-width: 100%; padding: 50px 20px 20px">
+              <div style="display: grid; grid-template-columns: 90px repeat(5, minmax(0, 1fr)); gap: 14px 16px; align-items: center; min-width: 620px">
+                <span></span>
+                <sc-for list="{{stateNames}}" as="n" hint-placeholder-count="5"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: {{stage.mut}}; text-align: center">{{n}}</span></sc-for>
+                <sc-for list="{{grid}}" as="row" hint-placeholder-count="3">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{stage.mut}}">{{row.name}}</span>
+                  <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="5">
+                    <div style="display: flex; justify-content: center">
+                      <span style="display: inline-flex; align-items: center; gap: 6px; height: {{c.h}}px; padding: 0 {{c.px}}px; border-radius: {{c.r}}px; background: {{c.bg}}; color: {{c.fg}}; border: {{c.bd}}; box-shadow: {{c.sh}}; opacity: {{c.op}}; font-size: {{c.fs}}px; font-weight: 600; box-sizing: border-box"><sc-if value="{{c.loading}}" hint-placeholder-val="{{false}}"><span class="spin" style="width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%; border: 2px solid {{c.fg}}; border-top-color: transparent"></span></sc-if>Button</span>
+                    </div>
+                  </sc-for>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="flex: 1 1 280px; min-width: 0; background: #F7F8FA; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 16px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5B6270">PROPS</span>
+          <sc-for list="{{controls}}" as="k" hint-placeholder-count="3">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">{{k.name}}</span>
+              <div role="group" aria-label="{{k.name}}" style="display: flex; flex-wrap: wrap; background: #E9ECF1; border-radius: 10px; padding: 3px; gap: 2px">
+                <sc-for list="{{k.opts}}" as="o" hint-placeholder-count="3">
+                  <button type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="flex: 1; min-height: 32px; padding: 0 8px; border: 0; border-radius: 8px; background: {{o.bg}}; color: {{o.c}}; font-weight: {{o.fw}}; box-shadow: {{o.sh}}; font-size: 12px">{{o.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">iconEnd</span>
+            <button type="button" role="switch" aria-checked="{{sw.on}}" aria-label="Toggle end icon" onClick="{{sw.toggle}}" style="width: 44px; height: 26px; border-radius: 13px; border: 0; padding: 3px; background: {{sw.bg}}; display: flex; justify-content: {{sw.j}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(13,17,23,0.25)"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid #E1E5EB">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5B6270">TOKEN LINEAGE</span>
+            <sc-for list="{{lineage}}" as="t" hint-placeholder-count="6">
+              <div style="display: flex; flex-direction: column; gap: 2px; padding: 6px 0; border-bottom: 1px solid #EEF0F3">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+                  <span style="font-size: 12px; color: #5B6270">{{t.part}}</span>
+                  <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px"><sc-if value="{{t.hasSw}}" hint-placeholder-val="{{true}}"><span style="width: 12px; height: 12px; border-radius: 4px; background: {{t.sw}}; border: 1px solid #D5DAE1; box-sizing: border-box"></span></sc-if>{{t.val}}</span>
+                </div>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #0D1117">{{t.token}} <span style="color: #5B6270">→ {{t.ref}}</span></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" aria-label="Install and code" style="background: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+        <h2 style="margin: 0; font-size: 22px; font-weight: 500; letter-spacing: -0.02em">Install &amp; use</h2>
+        <div role="group" aria-label="Package manager" style="display: flex; background: #F1F3F6; border-radius: 10px; padding: 3px">
+          <sc-for list="{{pms}}" as="v" hint-placeholder-count="4">
+            <button type="button" aria-pressed="{{v.pressed}}" onClick="{{v.pick}}" style="min-height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: {{v.bg}}; color: {{v.c}}; font-weight: {{v.fw}}; box-shadow: {{v.sh}}; font-family: 'JetBrains Mono', monospace; font-size: 12px">{{v.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; background: #F7F8FA; border: 1px solid #E1E5EB; border-radius: 14px; padding: 0 8px 0 16px; min-height: 52px; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+        <span style="color: {{accent}}">$</span><span style="flex: 1">{{install}}</span>
+        <button type="button" aria-label="Copy install command" style="width: 38px; height: 38px; border-radius: 10px; border: 1px solid #E1E5EB; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M4 16V6a2 2 0 012-2h10"></path></svg></button>
+      </div>
+      <div style="background: #0D1117; border-radius: 18px; overflow: hidden">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 12px; border-bottom: 1px solid #1E232C">
+          <div role="tablist" aria-label="Framework" style="display: flex; gap: 2px">
+            <sc-for list="{{codeTabs}}" as="v" hint-placeholder-count="4">
+              <button type="button" role="tab" aria-selected="{{v.pressed}}" onClick="{{v.pick}}" style="min-height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: {{v.dbg}}; color: {{v.dc}}; font-size: 13px">{{v.label}}</button>
+            </sc-for>
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8E95A2; padding-right: 6px">synced with the stage above</span>
+        </div>
+        <div style="overflow-x: auto; padding: 16px 0">
+          <sc-for list="{{codeLines}}" as="ln" hint-placeholder-count="10">
+            <div style="display: flex; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.75; background: {{ln.hl}}"><span style="flex: 0 0 44px; text-align: right; padding-right: 16px; color: #4A5260; user-select: none">{{ln.n}}</span><span style="white-space: pre; padding-right: 20px"><sc-for list="{{ln.segs}}" as="g"><span style="color: {{g.c}}">{{g.t}}</span></sc-for></span></div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="props" aria-label="Props" style="background: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)">
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 500; letter-spacing: -0.02em">Props</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14px">
+          <thead>
+            <tr style="text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5B6270">
+              <th style="padding: 10px 12px 10px 0; font-weight: 500; border-bottom: 1px solid #E1E5EB">PROP</th>
+              <th style="padding: 10px 12px; font-weight: 500; border-bottom: 1px solid #E1E5EB">TYPE</th>
+              <th style="padding: 10px 12px; font-weight: 500; border-bottom: 1px solid #E1E5EB">DEFAULT</th>
+              <th style="padding: 10px 0 10px 12px; font-weight: 500; border-bottom: 1px solid #E1E5EB">BEHAVIOUR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{props}}" as="p" hint-placeholder-count="7">
+              <tr style="border-bottom: 1px solid #EEF0F3; vertical-align: top">
+                <td style="padding: 14px 12px 14px 0; font-family: 'JetBrains Mono', monospace; font-weight: 500">{{p.name}}</td>
+                <td style="padding: 14px 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #F1F3F6; border-radius: 6px; padding: 3px 7px; white-space: nowrap">{{p.type}}</span></td>
+                <td style="padding: 14px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5B6270">{{p.def}}</td>
+                <td style="padding: 14px 0 14px 12px; color: #3D4452; line-height: 1.5">{{p.desc}}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="a11y" aria-label="Accessibility contract" style="background: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-wrap: wrap; gap: 28px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)">
+      <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 22px; font-weight: 500; letter-spacing: -0.02em">Accessibility contract</h2>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #3D4452">Guarantees the component keeps in every version. Break one and CI fails the release.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">
+          <div style="display: flex; align-items: center; gap: 12px"><span style="display: flex; gap: 4px"><span style="min-width: 34px; height: 30px; padding: 0 8px; box-sizing: border-box; border-radius: 7px; border: 1px solid #D5DAE1; box-shadow: 0 2px 0 #D5DAE1; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">Tab</span></span><span style="font-size: 14px; color: #3D4452">moves focus to the button</span></div>
+          <div style="display: flex; align-items: center; gap: 12px"><span style="display: flex; gap: 4px"><span style="min-width: 34px; height: 30px; padding: 0 8px; box-sizing: border-box; border-radius: 7px; border: 1px solid #D5DAE1; box-shadow: 0 2px 0 #D5DAE1; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">Enter</span><span style="min-width: 34px; height: 30px; padding: 0 8px; box-sizing: border-box; border-radius: 7px; border: 1px solid #D5DAE1; box-shadow: 0 2px 0 #D5DAE1; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">Space</span></span><span style="font-size: 14px; color: #3D4452">activates it</span></div>
+        </div>
+      </div>
+      <div style="flex: 999 1 420px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{a11y}}" as="a" hint-placeholder-count="6">
+          <div style="background: #F7F8FA; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-size: 14px; font-weight: 500">{{a.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{a.c}}">{{a.v}}</span></div>
+            <span style="font-size: 12px; color: #5B6270; line-height: 1.45">{{a.note}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="usage" aria-label="Do and don't" style="display: flex; flex-wrap: wrap; gap: 20px">
+      <div style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)">
+        <div style="background: #F7F8FA; border-radius: 16px; padding: 28px 22px; display: flex; flex-direction: column; gap: 16px">
+          <span style="font-size: 15px; font-weight: 600">Ship v2.4 to production?</span>
+          <span style="font-size: 13px; color: #5B6270">14 services will restart with zero downtime.</span>
+          <div style="display: flex; justify-content: flex-end; gap: 8px">
+            <span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 11px; color: #0D1117; font-size: 14px; font-weight: 600">Cancel</span>
+            <span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 11px; background: {{accent}}; color: #FFFFFF; font-size: 14px; font-weight: 600">Deploy</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start; padding: 4px 8px 8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.4" aria-hidden="true" style="flex: 0 0 auto"><path d="M5 12l5 5 9-10"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600; color: #14532D">Do</span><span style="font-size: 13px; color: #3D4452">One primary per view. Pair it with a ghost for the escape route.</span></div>
+        </div>
+      </div>
+      <div style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 16px 40px -24px rgba(13,17,23,0.28)">
+        <div style="background: #F7F8FA; border-radius: 16px; padding: 28px 22px; display: flex; flex-direction: column; gap: 16px">
+          <span style="font-size: 15px; font-weight: 600">Ship v2.4 to production?</span>
+          <span style="font-size: 13px; color: #5B6270">14 services will restart with zero downtime.</span>
+          <div style="display: flex; justify-content: flex-end; gap: 8px">
+            <span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 11px; background: {{accent}}; color: #FFFFFF; font-size: 14px; font-weight: 600">Cancel</span>
+            <span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 11px; background: {{accent}}; color: #FFFFFF; font-size: 14px; font-weight: 600">Deploy</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start; padding: 4px 8px 8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2.4" aria-hidden="true" style="flex: 0 0 auto"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600; color: #9A3412">Don't</span><span style="font-size: 13px; color: #3D4452">Two primaries compete. The user can't tell which one is safe.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="integrate" aria-label="Integrate in your stack" style="background: #0D1117; color: #ECEEF2; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 60px -30px rgba(13,17,23,0.55)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #A3AAB6">INTEGRATE</span>
+          <h2 style="margin: 0; font-size: 28px; font-weight: 500; letter-spacing: -0.02em">From zero to themed in four steps</h2>
+        </div>
+        <div role="group" aria-label="Stack" style="display: flex; flex-wrap: wrap; gap: 6px">
+          <button type="button" aria-pressed="true" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #ECEEF2; background: #ECEEF2; color: #0D1117; font-size: 13px; font-weight: 600">Next.js</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #2A2F39; background: transparent; color: #C3C8D1; font-size: 13px">Vite</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #2A2F39; background: transparent; color: #C3C8D1; font-size: 13px">Remix</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #2A2F39; background: transparent; color: #C3C8D1; font-size: 13px">Vue</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #2A2F39; background: transparent; color: #C3C8D1; font-size: 13px">Web Components</button>
+        </div>
+      </div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <li style="background: #151A22; border: 1px solid #222833; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px"><span style="width: 26px; height: 26px; border-radius: 8px; background: {{s.bg}}; color: {{s.fg}}; font-family: 'JetBrains Mono', monospace; font-size: 12px; display: flex; align-items: center; justify-content: center">{{s.n}}</span><span style="font-size: 15px; font-weight: 500">{{s.title}}</span></div>
+            <span style="font-size: 13px; color: #A3AAB6; line-height: 1.45">{{s.desc}}</span>
+            <span style="margin-top: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #0B0E13; border: 1px solid #222833; border-radius: 10px; padding: 9px 11px; color: #9EE6B8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{s.code}}</span>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 14px">
+      <a href="#" style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 4px; background: #FFFFFF; border-radius: 18px; padding: 16px 18px; text-decoration: none; color: #0D1117; box-shadow: 0 1px 2px rgba(13,17,23,0.06)"><span style="font-size: 12px; color: #5B6270">← Previous</span><span style="font-size: 16px; font-weight: 600">Badge</span></a>
+      <a href="#" style="flex: 1 1 240px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; background: #FFFFFF; border-radius: 18px; padding: 16px 18px; text-decoration: none; color: #0D1117; box-shadow: 0 1px 2px rgba(13,17,23,0.06)"><span style="font-size: 12px; color: #5B6270">Next →</span><span style="font-size: 16px; font-weight: 600">Icon button</span></a>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5B6270; padding: 0 4px">
+      <span>updated 18 Oct 2026 · generated from source + tokens</span>
+      <a href="#" style="color: #5B6270">Edit this page</a>
+    </div>
+  </main>
+
+  <aside aria-label="On this page" style="flex: 0 1 230px; min-width: 200px; display: flex; flex-direction: column; gap: 16px">
+    <nav aria-label="Table of contents" style="background: #FFFFFF; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.22)">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #5B6270; padding-bottom: 8px">ON THIS PAGE</span>
+      <sc-for list="{{toc}}" as="t" hint-placeholder-count="7">
+        <a class="toc" href="{{t.href}}" style="display: flex; align-items: center; gap: 10px; min-height: 32px; color: {{t.c}}; font-weight: {{t.fw}}; text-decoration: none; font-size: 13px"><span style="width: 2px; height: 18px; border-radius: 1px; background: {{t.bar}}"></span>{{t.label}}</a>
+      </sc-for>
+    </nav>
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.22)">
+      <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>Ask about Button</span>
+      <button type="button" style="text-align: left; min-height: 36px; padding: 6px 10px; border-radius: 10px; border: 0; background: #F1F3F6; color: #0D1117; font-size: 13px">How do I render it as a link?</button>
+      <button type="button" style="text-align: left; min-height: 36px; padding: 6px 10px; border-radius: 10px; border: 0; background: #F1F3F6; color: #0D1117; font-size: 13px">Theme it with my brand color</button>
+      <button type="button" style="text-align: left; min-height: 36px; padding: 6px 10px; border-radius: 10px; border: 0; background: #F1F3F6; color: #0D1117; font-size: 13px">Migrate from v1 Button</button>
+    </div>
+    <div style="background: #0D1117; color: #ECEEF2; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #A3AAB6">AGENT-READY</span>
+      <span style="font-size: 14px; line-height: 1.45">Your coding agents read these same docs through MCP, so they build with the real components.</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #151A22; border-radius: 10px; padding: 8px 10px; color: #9EE6B8">npx acme mcp</span>
+      <a href="#" style="font-size: 13px; color: #ECEEF2">llms.txt →</a>
+    </div>
+  </aside>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F5BFF","options":["#2F5BFF","#6D4AFF","#0E7C66","#0D1117"]},"$preview":{"width":1440,"height":2760}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { variant: 'primary', size: 'md', st: 'default', icon: true, view: 'preview', code: 'react', pm: 'pnpm', theme: 'light' };
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#2F5BFF';
+    const s = this.state;
+    const dark = s.theme === 'dark';
+    const stageBg = dark ? '#0D1117' : '#FFFFFF';
+    const SIZES = {
+      sm: { h: 36, px: 14, fs: 13, r: 10, ic: 14, gap: 6, rt: 'radius.sm', sp: 'space.3' },
+      md: { h: 44, px: 18, fs: 14, r: 12, ic: 16, gap: 8, rt: 'radius.md', sp: 'space.4' },
+      lg: { h: 52, px: 22, fs: 16, r: 14, ic: 18, gap: 10, rt: 'radius.lg', sp: 'space.5' }
+    };
+    const btn = (v, sz, st) => {
+      const z = SIZES[sz];
+      let bg, fg, bd = '0';
+      if (v === 'primary') {
+        bg = st === 'hover' ? 'color-mix(in srgb, ' + accent + ' 84%, #000000)' : accent; fg = '#FFFFFF';
+      } else if (v === 'secondary') {
+        bg = st === 'hover' ? (dark ? '#232832' : '#F1F3F6') : (dark ? '#1B1F27' : '#FFFFFF');
+        fg = dark ? '#ECEEF2' : '#0D1117'; bd = '1px solid ' + (dark ? '#2F3540' : '#D5DAE1');
+      } else {
+        bg = st === 'hover' ? (dark ? '#1B1F27' : '#F1F3F6') : 'transparent'; fg = dark ? '#ECEEF2' : '#0D1117';
+      }
+      return {
+        h: z.h, px: z.px, fs: z.fs, r: z.r, ic: z.ic, gap: z.gap, bg: bg, fg: fg, bd: bd,
+        op: st === 'disabled' ? '0.42' : '1',
+        sh: st === 'focus' ? '0 0 0 2px ' + stageBg + ', 0 0 0 4px ' + accent : 'none',
+        cur: st === 'disabled' ? 'not-allowed' : 'pointer',
+        loading: st === 'loading', busy: st === 'loading' ? 'true' : 'false'
+      };
+    };
+    const b = Object.assign(btn(s.variant, s.size, s.st), { label: s.st === 'loading' ? 'Deploying…' : 'Deploy changes' });
+    b.showIcon = s.icon && s.st !== 'loading';
+
+    const seg = (key, opts, labels) => opts.map((o, i) => {
+      const on = s[key] === o;
+      const upd = {}; upd[key] = o;
+      return {
+        label: labels ? labels[i] : o, pressed: on ? 'true' : 'false',
+        bg: on ? '#FFFFFF' : 'transparent', c: on ? '#0D1117' : '#5B6270', fw: on ? '600' : '400',
+        sh: on ? '0 1px 3px rgba(13,17,23,0.14)' : 'none',
+        dbg: on ? '#1E232C' : 'transparent', dc: on ? '#ECEEF2' : '#8E95A2',
+        pick: () => this.setState(upd)
+      };
+    });
+
+    const zs = SIZES[s.size];
+    const hov = s.st === 'hover';
+    const lineage = [
+      {
+        part: 'background', token: 'button.' + s.variant + '.bg' + (hov ? '.hover' : ''),
+        ref: s.variant === 'primary' ? (hov ? 'color.accent.700' : 'color.accent.600') : (s.variant === 'secondary' ? (hov ? 'surface.hover' : 'surface.raised') : (hov ? 'surface.hover' : 'none')),
+        val: s.variant === 'primary' ? (hov ? 'accent −16%' : accent.toUpperCase()) : (b.bg === 'transparent' ? 'transparent' : b.bg),
+        sw: b.bg, hasSw: b.bg !== 'transparent'
+      },
+      { part: 'label', token: 'button.' + s.variant + '.fg', ref: s.variant === 'primary' ? 'color.on-accent' : 'text.primary', val: b.fg, sw: b.fg, hasSw: true },
+      { part: 'radius', token: zs.rt, ref: 'radius scale', val: zs.r + 'px', sw: '', hasSw: false },
+      { part: 'padding-x', token: zs.sp, ref: 'space scale · 4pt', val: zs.px + 'px', sw: '', hasSw: false },
+      { part: 'height', token: 'size.control.' + s.size, ref: s.size === 'sm' ? 'hit area padded to 44' : 'meets 44px target', val: zs.h + 'px', sw: '', hasSw: false },
+      { part: 'focus ring', token: 'focus.ring', ref: 'color.accent.600 · 2px offset', val: '3.4 : 1', sw: accent, hasSw: true }
+    ];
+
+    const C = { kw: '#C3A6FF', tag: '#7AA2FF', attr: '#F5C26B', str: '#9EE6B8', pun: '#8E95A2', txt: '#E6E8EC' };
+    const t = (x, c) => ({ t: x, c: c });
+    const attr = (name, val) => [t('  ' + name, C.attr), t('=', C.pun), t('"' + val + '"', C.str)];
+    let lines = [];
+    if (s.code === 'react') {
+      lines.push([t('import', C.kw), t(' { ', C.pun), t('Button', C.txt), t(' } ', C.pun), t('from', C.kw), t(" '@acme/ui'", C.str), t(';', C.pun)]);
+      if (s.icon) lines.push([t('import', C.kw), t(' { ', C.pun), t('ArrowRight', C.txt), t(' } ', C.pun), t('from', C.kw), t(" '@acme/icons'", C.str), t(';', C.pun)]);
+      lines.push([t('', C.txt)]);
+      lines.push([t('<', C.pun), t('Button', C.tag)]);
+      lines.push(attr('variant', s.variant));
+      lines.push(attr('size', s.size));
+      if (s.icon) lines.push([t('  iconEnd', C.attr), t('={<', C.pun), t('ArrowRight', C.tag), t(' />}', C.pun)]);
+      if (s.st === 'loading') lines.push([t('  loading', C.attr)]);
+      if (s.st === 'disabled') lines.push([t('  disabled', C.attr)]);
+      lines.push([t('>', C.pun)]);
+      lines.push([t('  Deploy changes', C.txt)]);
+      lines.push([t('</', C.pun), t('Button', C.tag), t('>', C.pun)]);
+    } else if (s.code === 'vue') {
+      lines.push([t('<', C.pun), t('script', C.tag), t(' setup', C.attr), t('>', C.pun)]);
+      lines.push([t('import', C.kw), t(' { ', C.pun), t('AcmeButton', C.txt), t(' } ', C.pun), t('from', C.kw), t(" '@acme/ui/vue'", C.str)]);
+      lines.push([t('</', C.pun), t('script', C.tag), t('>', C.pun)]);
+      lines.push([t('', C.txt)]);
+      const extra = [];
+      if (s.st === 'loading') extra.push(t(' :loading', C.attr), t('="', C.pun), t('true', C.str), t('"', C.pun));
+      if (s.st === 'disabled') extra.push(t(' disabled', C.attr));
+      lines.push([t('<', C.pun), t('AcmeButton', C.tag), t(' variant', C.attr), t('=', C.pun), t('"' + s.variant + '"', C.str), t(' size', C.attr), t('=', C.pun), t('"' + s.size + '"', C.str)].concat(extra, [t('>', C.pun)]));
+      lines.push([t('  Deploy changes', C.txt)]);
+      if (s.icon) lines.push([t('  <', C.pun), t('template', C.tag), t(' #iconEnd', C.attr), t('><', C.pun), t('ArrowRight', C.tag), t(' /></', C.pun), t('template', C.tag), t('>', C.pun)]);
+      lines.push([t('</', C.pun), t('AcmeButton', C.tag), t('>', C.pun)]);
+    } else if (s.code === 'html') {
+      lines.push([t('<', C.pun), t('link', C.tag), t(' rel', C.attr), t('=', C.pun), t('"stylesheet"', C.str), t(' href', C.attr), t('=', C.pun), t('"@acme/ui/button.css"', C.str), t('>', C.pun)]);
+      lines.push([t('', C.txt)]);
+      lines.push([t('<', C.pun), t('button', C.tag)]);
+      lines.push(attr('class', 'acme-btn'));
+      lines.push(attr('data-variant', s.variant));
+      lines.push(attr('data-size', s.size));
+      if (s.st === 'loading') lines.push(attr('aria-busy', 'true'));
+      if (s.st === 'disabled') lines.push([t('  disabled', C.attr)]);
+      lines.push([t('>', C.pun)]);
+      lines.push([t('  Deploy changes', C.txt)]);
+      if (s.icon) lines.push([t('  <', C.pun), t('svg', C.tag), t(' class', C.attr), t('=', C.pun), t('"acme-btn__icon"', C.str), t(' aria-hidden', C.attr), t('=', C.pun), t('"true"', C.str), t('>…</', C.pun), t('svg', C.tag), t('>', C.pun)]);
+      lines.push([t('</', C.pun), t('button', C.tag), t('>', C.pun)]);
+    } else {
+      lines.push([t('{', C.pun)]);
+      lines.push([t('  "button"', C.attr), t(': {', C.pun)]);
+      lines.push([t('    "' + s.variant + '"', C.attr), t(': {', C.pun)]);
+      lines.push([t('      "bg"', C.attr), t(':    { ', C.pun), t('"$value"', C.attr), t(': ', C.pun), t('"{' + lineage[0].ref + '}"', C.str), t(' },', C.pun)]);
+      lines.push([t('      "fg"', C.attr), t(':    { ', C.pun), t('"$value"', C.attr), t(': ', C.pun), t('"{' + lineage[1].ref + '}"', C.str), t(' }', C.pun)]);
+      lines.push([t('    },', C.pun)]);
+      lines.push([t('    "radius"', C.attr), t(': { ', C.pun), t('"$value"', C.attr), t(': ', C.pun), t('"{' + zs.rt + '}"', C.str), t(' },', C.pun)]);
+      lines.push([t('    "height"', C.attr), t(': { ', C.pun), t('"$value"', C.attr), t(': ', C.pun), t('"{size.control.' + s.size + '}"', C.str), t(' }', C.pun)]);
+      lines.push([t('  }', C.pun)]);
+      lines.push([t('}', C.pun)]);
+    }
+    const codeLines = lines.map((segs, i) => ({ n: i + 1, segs: segs, hl: 'transparent' }));
+
+    const installs = { pnpm: 'pnpm add @acme/ui @acme/tokens', npm: 'npm install @acme/ui @acme/tokens', yarn: 'yarn add @acme/ui @acme/tokens', bun: 'bun add @acme/ui @acme/tokens' };
+
+    const states = ['default', 'hover', 'focus', 'disabled', 'loading'];
+    const grid = ['primary', 'secondary', 'ghost'].map((v) => ({ name: v, cells: states.map((st) => btn(v, 'sm', st)) }));
+
+    const activeNav = (n) => ({ name: n, bg: n === 'Button' ? '#EEF2FF' : 'transparent', c: n === 'Button' ? accent : '#3D4452', fw: n === 'Button' ? '600' : '400', tag: '', tc: '#5B6270' });
+    const tagged = (n, tag) => Object.assign(activeNav(n), { tag: tag, tc: tag === 'beta' ? '#9A3412' : '#5B6270' });
+
+    return {
+      accent: accent,
+      b: b,
+      isPreview: s.view === 'preview', isAnatomy: s.view === 'anatomy', isStates: s.view === 'states',
+      stage: {
+        bg: stageBg, dot: dark ? '#222833' : '#E3E7ED', bd: dark ? '#1E232C' : '#EEF0F3',
+        ink: dark ? '#ECEEF2' : '#0D1117', mut: dark ? '#A3AAB6' : '#5B6270',
+        caption: (s.view === 'states' ? 'all variants × states · size sm' : (s.view === 'anatomy' ? 'anatomy · size md · 2× scale' : 'live · rendered from tokens')) + ' · ' + s.theme
+      },
+      views: seg('view', ['preview', 'anatomy', 'states'], ['Preview', 'Anatomy', 'All states']),
+      themes: seg('theme', ['light', 'dark'], ['Light', 'Dark']),
+      controls: [
+        { name: 'variant', opts: seg('variant', ['primary', 'secondary', 'ghost']) },
+        { name: 'size', opts: seg('size', ['sm', 'md', 'lg']) },
+        { name: 'state', opts: seg('st', ['default', 'hover', 'focus', 'disabled', 'loading'], ['rest', 'hover', 'focus', 'off', 'busy']) }
+      ],
+      sw: { on: s.icon ? 'true' : 'false', bg: s.icon ? accent : '#C5CBD5', j: s.icon ? 'flex-end' : 'flex-start', toggle: () => this.setState({ icon: !s.icon }) },
+      lineage: lineage,
+      stateNames: states.map((x) => x.toUpperCase()),
+      grid: grid,
+      pms: seg('pm', ['pnpm', 'npm', 'yarn', 'bun']),
+      install: installs[s.pm],
+      codeTabs: seg('code', ['react', 'vue', 'html', 'tokens'], ['React', 'Vue', 'HTML + CSS', 'Tokens']),
+      codeLines: codeLines,
+      nav: [
+        { title: 'GET STARTED', items: [activeNav('Introduction'), activeNav('Installation'), activeNav('Theming'), tagged('Agents · MCP', 'new')] },
+        { title: 'FOUNDATIONS', items: [activeNav('Color'), activeNav('Typography'), activeNav('Space & size'), activeNav('Elevation'), activeNav('Motion')] },
+        { title: 'PRIMITIVES', items: [activeNav('Button'), activeNav('Icon button'), activeNav('Input'), activeNav('Select'), activeNav('Checkbox'), activeNav('Switch'), activeNav('Dialog'), activeNav('Popover'), tagged('Command', 'beta'), activeNav('Toast')] },
+        { title: 'PATTERNS', items: [activeNav('Forms'), activeNav('Data table'), tagged('Reachability lens', 'beta'), activeNav('Empty states')] }
+      ],
+      props: [
+        { name: 'variant', type: "'primary' | 'secondary' | 'ghost'", def: "'primary'", desc: 'Visual weight. Keep one primary per view.' },
+        { name: 'size', type: "'sm' | 'md' | 'lg'", def: "'md'", desc: 'Control height 36 / 44 / 52. sm pads its hit area to 44px.' },
+        { name: 'loading', type: 'boolean', def: 'false', desc: 'Shows a spinner, sets aria-busy, swallows clicks, keeps width stable.' },
+        { name: 'disabled', type: 'boolean', def: 'false', desc: 'Native disabled. Prefer explaining why nearby over silently disabling.' },
+        { name: 'iconStart · iconEnd', type: 'ReactNode', def: '—', desc: 'Decorative icon slots, auto aria-hidden and sized from the size token.' },
+        { name: 'asChild', type: 'boolean', def: 'false', desc: 'Render as your own element (e.g. a router link) while keeping styles and focus ring.' },
+        { name: 'fullWidth', type: 'boolean', def: 'false', desc: 'Stretches to its container. Useful in mobile sheets.' }
+      ],
+      a11y: [
+        { name: 'Native element', v: '<button>', c: '#14532D', note: 'Role, focus and activation come from the platform, not from JS.' },
+        { name: 'Label contrast', v: '5.7 : 1', c: '#14532D', note: 'on-accent text over accent.600, checked for every theme at build time.' },
+        { name: 'Focus visible', v: '3.4 : 1', c: '#14532D', note: '2px ring with offset, shown for keyboard only.' },
+        { name: 'Target size', v: '44 × 44', c: '#14532D', note: 'md and lg meet it by size, sm through padded hit area.' },
+        { name: 'Busy state', v: 'aria-busy', c: '#14532D', note: 'Loading announces once through a polite live region.' },
+        { name: 'Reduced motion', v: 'respected', c: '#14532D', note: 'Spinner stops; state still announced.' }
+      ],
+      steps: [
+        { n: '1', title: 'Install', desc: 'Components and the token package, tree-shakable.', code: installs[s.pm], bg: accent, fg: '#FFFFFF' },
+        { n: '2', title: 'Wrap your app', desc: 'One provider loads tokens as CSS variables. No runtime CSS-in-JS.', code: '<AcmeProvider theme="system">', bg: '#232832', fg: '#ECEEF2' },
+        { name: '', n: '3', title: 'Bring your brand', desc: 'Pull tokens from Figma or override in code. Every component follows.', code: 'npx acme tokens pull', bg: '#232832', fg: '#ECEEF2' },
+        { n: '4', title: 'Connect your agents', desc: 'Coding agents read this documentation and build with real components.', code: 'npx acme mcp add', bg: '#232832', fg: '#ECEEF2' }
+      ],
+      toc: [
+        { label: 'Preview', href: '#preview', c: '#0D1117', fw: '600', bar: accent },
+        { label: 'Install & use', href: '#install', c: '#5B6270', fw: '400', bar: '#E1E5EB' },
+        { label: 'Props', href: '#props', c: '#5B6270', fw: '400', bar: '#E1E5EB' },
+        { label: 'Accessibility', href: '#a11y', c: '#5B6270', fw: '400', bar: '#E1E5EB' },
+        { label: 'Do & don’t', href: '#usage', c: '#5B6270', fw: '400', bar: '#E1E5EB' },
+        { label: 'Integrate', href: '#integrate', c: '#5B6270', fw: '400', bar: '#E1E5EB' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

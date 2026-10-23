@@ -1,0 +1,55 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scnehaux UI</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--ds-color-neutral-surface-canvas-default); color: var(--ds-color-neutral-text-default-default); font-family: var(--font-sans); font-feature-settings: "cv11" 1; overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; overflow: hidden; }
+  .ink { fill: var(--ds-color-neutral-surface-solid-default); rx: var(--ds-dimension-radius-panel); }
+  .blue { fill: var(--ds-color-primary-surface-solid-default); stroke: var(--ds-color-neutral-surface-solid-hover); stroke-width: 2; rx: var(--ds-dimension-radius-container); }
+  .raised { fill: var(--ds-color-neutral-surface-raised-default); rx: var(--ds-dimension-radius-element); }
+  .stage { fill: var(--ds-color-neutral-surface-default-default); rx: var(--ds-dimension-radius-container); }
+  .dot { fill: var(--ds-color-neutral-border-strong-default); }
+  .words { position: absolute; left: var(--ds-dimension-spacing-inset-comfortable); bottom: var(--ds-dimension-spacing-inset-comfortable); max-width: 440px; }
+  .name { margin: 0; font-size: 88px; line-height: 0.95; font-weight: 600; letter-spacing: -0.05em; color: var(--ds-color-neutral-text-default-default); }
+  .tag { margin: var(--ds-dimension-spacing-stack-default) 0 0 2px; font-size: 14px; line-height: 20px; color: var(--ds-color-neutral-text-subtle-default); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      ink (neutral-surface-solid) 320×264 bled off the top and right · Scnx Blue (primary-surface-solid) 168×256 nested in it · raised (neutral-surface-raised) 152×56 nested in the blue · stage tint (neutral-surface-default) 160×216 — ≈40% of 960×288
+  arrangement one ink slab holding the blue holding a raised card, each inset 8 from its parent at the visible bottom-left corner: the concentric ladder 24 → 16 → 8; the stage stands beside it
+  pattern     a dot grid, from "the stage: a 1px dot every 22px" (README signature 4): 6 × 8 dots at the 22px pitch on the stage tint, border-strong ink
+  scales      insets spacing-inset-compact (8); gutter spacing-inset-default (16); dot pitch 22 (the stage); corners radius-panel 24, radius-container 16, radius-element 8
+-->
+<rect class="stage" x="8" y="48" width="160" height="216" rx="16"/>
+<g class="dots">
+<circle class="dot" cx="25" cy="67" r="1.5"/><circle class="dot" cx="47" cy="67" r="1.5"/><circle class="dot" cx="69" cy="67" r="1.5"/><circle class="dot" cx="91" cy="67" r="1.5"/><circle class="dot" cx="113" cy="67" r="1.5"/><circle class="dot" cx="135" cy="67" r="1.5"/>
+<circle class="dot" cx="25" cy="89" r="1.5"/><circle class="dot" cx="47" cy="89" r="1.5"/><circle class="dot" cx="69" cy="89" r="1.5"/><circle class="dot" cx="91" cy="89" r="1.5"/><circle class="dot" cx="113" cy="89" r="1.5"/><circle class="dot" cx="135" cy="89" r="1.5"/>
+<circle class="dot" cx="25" cy="111" r="1.5"/><circle class="dot" cx="47" cy="111" r="1.5"/><circle class="dot" cx="69" cy="111" r="1.5"/><circle class="dot" cx="91" cy="111" r="1.5"/><circle class="dot" cx="113" cy="111" r="1.5"/><circle class="dot" cx="135" cy="111" r="1.5"/>
+<circle class="dot" cx="25" cy="133" r="1.5"/><circle class="dot" cx="47" cy="133" r="1.5"/><circle class="dot" cx="69" cy="133" r="1.5"/><circle class="dot" cx="91" cy="133" r="1.5"/><circle class="dot" cx="113" cy="133" r="1.5"/><circle class="dot" cx="135" cy="133" r="1.5"/>
+<circle class="dot" cx="25" cy="155" r="1.5"/><circle class="dot" cx="47" cy="155" r="1.5"/><circle class="dot" cx="69" cy="155" r="1.5"/><circle class="dot" cx="91" cy="155" r="1.5"/><circle class="dot" cx="113" cy="155" r="1.5"/><circle class="dot" cx="135" cy="155" r="1.5"/>
+<circle class="dot" cx="25" cy="177" r="1.5"/><circle class="dot" cx="47" cy="177" r="1.5"/><circle class="dot" cx="69" cy="177" r="1.5"/><circle class="dot" cx="91" cy="177" r="1.5"/><circle class="dot" cx="113" cy="177" r="1.5"/><circle class="dot" cx="135" cy="177" r="1.5"/>
+<circle class="dot" cx="25" cy="199" r="1.5"/><circle class="dot" cx="47" cy="199" r="1.5"/><circle class="dot" cx="69" cy="199" r="1.5"/><circle class="dot" cx="91" cy="199" r="1.5"/><circle class="dot" cx="113" cy="199" r="1.5"/><circle class="dot" cx="135" cy="199" r="1.5"/>
+<circle class="dot" cx="25" cy="221" r="1.5"/><circle class="dot" cx="47" cy="221" r="1.5"/><circle class="dot" cx="69" cy="221" r="1.5"/><circle class="dot" cx="91" cy="221" r="1.5"/><circle class="dot" cx="113" cy="221" r="1.5"/><circle class="dot" cx="135" cy="221" r="1.5"/>
+</g>
+<rect class="ink" x="184" y="-24" width="320" height="264" rx="24"/>
+<rect class="blue" x="192" y="-24" width="168" height="256" rx="16"/>
+<rect class="raised" x="200" y="168" width="152" height="56" rx="8"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Scnehaux<br>UI</h1>
+<p class="tag">Every release ships with the evidence that it works.</p>
+</div>
+</div>
+</body>
+</html>

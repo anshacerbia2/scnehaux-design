@@ -1,0 +1,40 @@
+<!-- @dsCard group="Materials" height=560 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Surface</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-default);align-items:stretch}
+.tile{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-compact);min-block-size:7.5rem;font-size:var(--ds-typography-body-small-font-size);line-height:1.4}
+.tile b{font-size:var(--ds-typography-label-default-font-size);font-weight:600}
+.tile.inner{min-block-size:0;block-size:100%;border-radius:var(--ds-dimension-radius-container)}
+.slot{display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body class="scnx-stage">
+<div class="pv">
+  <div class="scnx-eyebrow">On the page</div>
+  <div class="tiles">
+    <div class="scnx-surface tile" data-material="flat" data-padding="default"><b>Flat</b><span>radius container · material-flat</span><span class="muted">Tables, code, inline cards</span></div>
+    <div class="scnx-surface tile" data-material="raised" data-padding="default"><b>Raised</b><span>radius container · material-raised</span><span class="muted">Cards, tiles</span></div>
+    <div class="scnx-surface tile" data-material="panel" data-padding="compact"><div class="scnx-surface tile inner" data-material="well" data-padding="default"><b>Panel</b><span>radius panel · material-panel</span><span class="muted">Inner well: 24 − 8 = 16</span></div></div>
+    <div class="scnx-surface tile" data-material="flat" data-padding="compact"><div class="scnx-surface tile inner" data-material="well" data-padding="default" style="border-radius:var(--ds-dimension-radius-element)"><b>Well</b><span>sunken fill · no shadow</span><span class="muted">In flat: 16 − 8 = 8</span></div></div>
+  </div>
+  <div class="scnx-eyebrow">Above the page</div>
+  <div class="tiles">
+    <div class="slot"><div class="scnx-floating" data-material="tooltip" style="padding:var(--ds-dimension-spacing-inline-compact) var(--ds-dimension-spacing-inline-default);font-size:var(--ds-typography-label-small-font-size);font-weight:500">Tooltip · radius element</div></div>
+    <div class="scnx-floating tile" data-material="menu" style="padding:var(--ds-dimension-spacing-inset-default)"><b>Menu</b><span>radius container · material-menu</span><span class="muted">Menus, popovers, toasts</span></div>
+    <div class="scnx-floating tile" data-material="modal" style="padding:var(--ds-dimension-spacing-inset-comfortable)"><b>Modal</b><span>radius panel · material-modal</span><span class="muted">Dialogs</span></div>
+    <div class="scnx-floating tile" data-material="sheet" style="padding:var(--ds-dimension-spacing-inset-comfortable)"><b>Sheet</b><span>radius panel · material-sheet</span><span class="muted">Drawers, sheets</span></div>
+  </div>
+</div>
+</body>
+</html>

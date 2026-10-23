@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SaaS Home — Command Surface</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#EDEEF0}a:hover{color:#FFFFFF}
+button{font:inherit;cursor:pointer}
+input::placeholder{color:#8B909A}
+.nav:hover{color:#EDEEF0 !important}
+.cell:hover{outline:1px solid #EDEEF0;outline-offset:1px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.pulse{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0A0B0D; color: #EDEEF0; font-family: 'Geist', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 28px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid #1C1F25">
+  <div style="display: flex; align-items: center; gap: 14px">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="9" cy="13" r="8" fill="none" stroke="#EDEEF0" stroke-width="1.5"></circle><circle cx="17" cy="13" r="8" fill="{{accent}}"></circle></svg>
+    <button type="button" style="display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid #23262D; border-radius: 10px; padding: 0 12px; min-height: 40px; color: #EDEEF0; font-size: 14px">Northwind
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B909A" stroke-width="2" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg>
+    </button>
+  </div>
+  <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 2px">
+    <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 0 14px; min-height: 40px; border-radius: 10px; background: #16191E; color: #EDEEF0; text-decoration: none; font-size: 14px"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>Today</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Customers</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Pipeline</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Revenue</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Automations</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Reports</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px">
+    <button type="button" aria-label="Notifications" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid #23262D; border-radius: 10px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EDEEF0" stroke-width="1.6" aria-hidden="true"><path d="M6 8a6 6 0 1112 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg>
+    </button>
+    <button type="button" aria-label="Account menu" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: #23262D; color: #EDEEF0; font-size: 13px; font-weight: 500">AK</button>
+  </div>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+  <div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 24px; padding-top: 18px">
+    <div style="display: flex; align-items: center; gap: 10px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8B909A"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>DAILY BRIEF · COMPOSED 16:45 FROM 1,204 EVENTS</div>
+    <p style="margin: 0; font-size: 38px; line-height: 1.28; font-weight: 300; letter-spacing: -0.025em; max-width: 880px">
+      Since yesterday, <span style="display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; background: #16191E; border: 1px solid #2E323A; font-weight: 400">3 accounts</span> expanded for <span style="color: {{accent}}; font-weight: 400">+$42k ARR</span>, <span style="display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; background: #16191E; border: 1px solid #5A4520; font-weight: 400"><span style="width: 8px; height: 8px; border-radius: 2px; background: #FFB020; transform: rotate(45deg)"></span>Kirana Group</span> is showing churn signals, and Q4 pipeline sits <span style="color: {{accent}}; font-weight: 400">$1.2M</span> ahead of plan.
+    </p>
+    <div style="display: flex; align-items: center; gap: 14px; background: #111317; border: 1px solid #2E323A; border-radius: 18px; padding: 0 10px 0 22px; min-height: 66px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>
+      <label for="ask" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Ask Northwind</label>
+      <input id="ask" type="text" placeholder="Which enterprise accounts haven't heard from us in 30 days?" style="flex: 1; min-width: 0; height: 62px; background: transparent; border: 0; outline: none; color: #EDEEF0; font-family: inherit; font-size: 17px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A; border: 1px solid #2E323A; border-radius: 6px; padding: 3px 7px">⌘K</span>
+      <button type="button" style="height: 46px; padding: 0 20px; border: 0; border-radius: 12px; background: {{accent}}; color: #0A0B0D; font-size: 14px; font-weight: 600">Ask</button>
+    </div>
+  </div>
+
+  <aside aria-label="North star" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8B909A">NORTH STAR · ARR</span>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">12 MO</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 12px"><span style="font-size: 60px; font-weight: 300; letter-spacing: -0.045em; line-height: 1">$8.42M</span><span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: {{accent}}">+31% YoY</span></div>
+    <div style="position: relative; height: 150px; display: flex; align-items: flex-end; gap: 6px; padding-top: 10px">
+      <div style="position: absolute; left: 0; right: 0; bottom: 104px; border-top: 1px dashed #4A4F59"></div>
+      <span style="position: absolute; right: 0; bottom: 108px; font-family: 'Geist Mono', monospace; font-size: 10px; color: #8B909A">PLAN $8.0M</span>
+      <sc-for list="{{arr}}" as="a" hint-placeholder-count="12">
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px">
+          <div style="width: 100%; height: {{a.h}}px; border-radius: 4px 4px 1px 1px; background: {{a.c}}"></div>
+          <span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #8B909A">{{a.m}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #23262D; border-radius: 12px; overflow: hidden">
+      <div style="background: #111317; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #8B909A">NRR</span><span style="font-size: 20px; font-weight: 300">118%</span></div>
+      <div style="background: #111317; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #8B909A">GROSS CHURN</span><span style="font-size: 20px; font-weight: 300">1.4%</span></div>
+      <div style="background: #111317; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #8B909A">CAC PAYBACK</span><span style="font-size: 20px; font-weight: 300">11 mo</span></div>
+    </div>
+  </aside>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px">
+  <div style="flex: 999 1 620px; min-width: 0; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -0.02em">Focus queue</h2>
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">ranked by revenue impact · one decision each</span>
+      </div>
+      <a href="#" style="font-size: 13px; color: #8B909A; text-decoration: none">All 17 →</a>
+    </div>
+    <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+      <sc-for list="{{queue}}" as="q" hint-placeholder-count="5">
+        <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 16px 0; border-top: 1px solid #1C1F25">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #8B909A; width: 24px">{{q.rank}}</span>
+          <div style="flex: 999 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 15px">{{q.title}}</span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">{{q.why}}</span>
+          </div>
+          <span style="flex: 0 0 auto; font-family: 'Geist Mono', monospace; font-size: 13px; color: {{q.c}}; min-width: 120px; text-align: right">{{q.impact}}</span>
+          <button type="button" style="flex: 0 0 auto; min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid #2E323A; background: #16191E; color: #EDEEF0; font-size: 13px">{{q.action}}</button>
+        </li>
+      </sc-for>
+    </ol>
+  </div>
+
+  <div style="flex: 1 1 380px; min-width: 0; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 500">Pipeline flow</h2>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">Q4 · $3.9M</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{stages}}" as="s" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span>{{s.name}}</span><span style="font-family: 'Geist Mono', monospace; color: #8B909A">{{s.count}} · <span style="color: #EDEEF0">{{s.value}}</span></span></div>
+          <div style="height: 22px; border-radius: 6px; background: #16191E; overflow: hidden"><div style="height: 100%; width: {{s.w}}%; background: {{s.c}}; border-radius: 6px"></div></div>
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A; padding-left: 2px">{{s.conv}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px">
+  <div style="flex: 999 1 620px; min-width: 0; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -0.02em">Customer field</h2>
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">every account, one cell · brightness = health · size of risk at a glance</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{accent}}"></span>healthy</span>
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #4A4F59"></span>neutral</span>
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #FFB020"></span>at risk</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 5px">
+      <sc-for list="{{cells}}" as="c" hint-placeholder-count="144">
+        <button class="cell" type="button" aria-label="{{c.label}}" style="aspect-ratio: 1; border: 0; padding: 0; border-radius: 4px; background: {{c.c}}; opacity: {{c.o}}"></button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px 28px; padding-top: 14px; border-top: 1px solid #1C1F25; font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">
+      <span><span style="color: #EDEEF0">144</span> accounts</span>
+      <span><span style="color: #EDEEF0">112</span> healthy</span>
+      <span><span style="color: #FFB020">9</span> at risk · $310k ARR</span>
+      <span>median health <span style="color: #EDEEF0">78</span></span>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 380px; min-width: 0; background: #0D0E10; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 500">Automations</h2>
+      <span style="display: flex; align-items: center; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>6 RUNNING</span>
+    </div>
+    <div style="display: flex; flex-direction: column">
+      <sc-for list="{{autos}}" as="a" hint-placeholder-count="5">
+        <div style="display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid #1C1F25">
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px">{{a.name}}</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">{{a.meta}}</span></div>
+          <button type="button" role="switch" aria-checked="{{a.on}}" aria-label="Toggle {{a.name}}" style="width: 44px; height: 26px; border-radius: 13px; border: 0; padding: 3px; background: {{a.bg}}; display: flex; justify-content: {{a.j}}">
+            <span style="width: 20px; height: 20px; border-radius: 50%; background: {{a.k}}"></span>
+          </button>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" style="margin-top: auto; min-height: 44px; border-radius: 12px; border: 1px dashed #2E323A; background: transparent; color: #EDEEF0; font-size: 14px">Describe a new automation…</button>
+  </div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#D4FF3A","options":["#D4FF3A","#7CF7FF","#FF7A3D","#B9A6FF"]},"$preview":{"width":1440,"height":1680}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#D4FF3A';
+    const months = ['N', 'D', 'J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O'];
+    const vals = [6.4, 6.6, 6.7, 6.9, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0, 8.2, 8.42];
+    const arr = vals.map((v, i) => ({ m: months[i], h: Math.round((v - 5.5) * 38), c: i === 11 ? accent : '#2E323A' }));
+    const cells = Array.from({ length: 144 }, (_, i) => {
+      const r = Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
+      if (r > 0.94) return { c: '#FFB020', o: 1, label: 'Account at risk' };
+      if (r > 0.8) return { c: '#4A4F59', o: 1, label: 'Account neutral' };
+      return { c: accent, o: (0.35 + r * 0.7).toFixed(2), label: 'Account healthy' };
+    });
+    const on = (v) => ({ on: v ? 'true' : 'false', bg: v ? accent : '#23262D', k: v ? '#0A0B0D' : '#8B909A', j: v ? 'flex-end' : 'flex-start' });
+    return {
+      accent: accent,
+      arr: arr,
+      cells: cells,
+      queue: [
+        { rank: '01', title: 'Kirana Group renewal at risk', why: 'usage −42% in 21 days · champion left · renews in 34 days', impact: '$128k at risk', c: '#FFB020', action: 'Draft save plan' },
+        { rank: '02', title: 'Expand Sinar Logistics to 3 more regions', why: 'hit seat limit 4× this week · admin asked about SSO', impact: '+$64k upside', c: accent, action: 'Send proposal' },
+        { rank: '03', title: 'Approve 15% discount for Halcyon', why: 'deal in commit · competitor in final round', impact: '$92k deal', c: '#EDEEF0', action: 'Review terms' },
+        { rank: '04', title: '7 trials activated but no owner', why: 'all from fintech segment · avg 18 seats', impact: '+$40k pipeline', c: accent, action: 'Auto-assign' },
+        { rank: '05', title: 'Invoice dispute · Meridian Health', why: 'billing mismatch since plan change on 2 Oct', impact: '$18k overdue', c: '#FFB020', action: 'Resolve' }
+      ],
+      stages: [
+        { name: 'Lead', count: '412', value: '$9.8M', w: 100, c: '#2E323A', conv: '↓ 41% qualify' },
+        { name: 'Qualified', count: '168', value: '$5.6M', w: 62, c: '#3A3F48', conv: '↓ 38% to proposal' },
+        { name: 'Proposal', count: '64', value: '$3.1M', w: 38, c: '#4A4F59', conv: '↓ 34% to commit' },
+        { name: 'Commit', count: '22', value: '$1.4M', w: 22, c: '#8B909A', conv: '↓ 41% close' },
+        { name: 'Won (QTD)', count: '9', value: '$0.6M', w: 12, c: accent, conv: 'cycle 46 days' }
+      ],
+      autos: [
+        Object.assign({ name: 'Churn signal → CSM alert', meta: 'fired 3× today' }, on(true)),
+        Object.assign({ name: 'Trial day 3 nudge', meta: '41 sent · 38% opened' }, on(true)),
+        Object.assign({ name: 'Seat limit → upsell draft', meta: 'fired 4× this week' }, on(true)),
+        Object.assign({ name: 'Overdue invoice escalation', meta: 'next run 18:00' }, on(true)),
+        Object.assign({ name: 'Weekly exec digest', meta: 'paused by you · 2 Oct' }, on(false))
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

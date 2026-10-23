@@ -1,0 +1,33 @@
+<!-- @dsCard group="Forms" height=330 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Select</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="row" style="align-items:flex-start;gap:var(--ds-dimension-spacing-inset-comfortable)">
+  <div class="scnx-select"><span class="scnx-text" data-variant="label-default" style="font-weight:500">Framework</span><button data-part="trigger" aria-haspopup="listbox"><span data-part="value">Next.js</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg></button></div>
+  <div class="scnx-select" data-state="open"><span class="scnx-text" data-variant="label-default" style="font-weight:500">Region</span><button data-part="trigger" aria-haspopup="listbox" aria-expanded="true"><span data-part="value">Jakarta</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg></button>
+    <ul class="scnx-listbox" role="listbox" style="margin-top:var(--ds-dimension-spacing-stack-compact)">
+      <li data-part="label" class="scnx-eyebrow">Asia Pacific</li>
+      <li data-part="item" role="option" aria-selected="true" data-highlighted>Jakarta<span data-part="check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></li>
+      <li data-part="item" role="option">Singapore</li>
+      <li data-part="item" role="option">Tokyo</li>
+      <li data-part="separator" role="separator"></li>
+      <li data-part="item" role="option" aria-disabled="true">Frankfurt (at capacity)</li>
+    </ul>
+  </div>
+</div></div>
+</body>
+</html>

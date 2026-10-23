@@ -1,0 +1,21 @@
+<!-- @dsCard group="Typography" height=250 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Text</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="gap:var(--ds-dimension-spacing-stack-default)"><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">body-large</span><span class="scnx-text" data-variant="body-large">Perceptual color, scoped theming, zero runtime CSS.</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">body-default</span><span class="scnx-text" data-variant="body-default">Every release ships with the evidence that it works.</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">body-small</span><span class="scnx-text" data-variant="body-small">Alerts, menus, tables and descriptions use body-small.</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">label-default</span><span class="scnx-text" data-variant="label-default">Project name</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">label-small</span><span class="scnx-text" data-variant="label-small">Region</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:7.5rem;flex:none">dimmed</span><span class="scnx-text" data-variant="body-small" data-dimmed>Last deployed 41 seconds ago</span></div></div>
+</body>
+</html>

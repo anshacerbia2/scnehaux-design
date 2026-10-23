@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Platform Console — Spatial Canvas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9ECF1}
+a{color:#0D1117}a:hover{color:#2F5BFF}
+button{font:inherit;cursor:pointer}
+.rail:hover{background:#F1F3F6 !important}
+.node:hover{transform:translateY(-2px)}
+.node{transition:transform .2s ease}
+@keyframes pk{0%{transform:translateX(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(22px);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.pk{animation:pk 1.4s linear infinite}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.pk,.pulse{animation:none}.node{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background-color: #E9ECF1; background-image: radial-gradient(#C9CED8 1px, transparent 1px); background-size: 22px 22px; color: #0D1117; font-family: 'Instrument Sans', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 24px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; background: #FFFFFF; border-radius: 20px; padding: 10px 12px 10px 18px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -16px rgba(13,17,23,0.22)">
+  <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="8" fill="#0D1117"></rect><circle cx="14" cy="14" r="5" fill="{{accent}}"></circle></svg>
+  <nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 14px; flex: 1 1 260px; min-width: 0">
+    <a href="#" style="color: #5B6270; text-decoration: none">acme</a><span style="color: #9AA1AD">/</span>
+    <a href="#" style="color: #5B6270; text-decoration: none">production</a><span style="color: #9AA1AD">/</span>
+    <span style="font-weight: 600">System map</span>
+  </nav>
+  <div role="group" aria-label="Environment" style="display: flex; background: #F1F3F6; border-radius: 12px; padding: 3px">
+    <button type="button" aria-pressed="false" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #5B6270; font-size: 13px">dev</button>
+    <button type="button" aria-pressed="false" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #5B6270; font-size: 13px">staging</button>
+    <button type="button" aria-pressed="true" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: #FFFFFF; color: #0D1117; font-size: 13px; font-weight: 600; box-shadow: 0 1px 3px rgba(13,17,23,0.12)">prod</button>
+  </div>
+  <button type="button" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #E1E5EB; background: #FFFFFF; color: #5B6270; font-size: 14px; min-width: 260px">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+    <span style="flex: 1; text-align: left">Search or ask the platform</span>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; border: 1px solid #E1E5EB; border-radius: 6px; padding: 2px 6px">⌘K</span>
+  </button>
+  <button type="button" aria-label="Account menu" style="width: 44px; height: 44px; border-radius: 14px; border: 0; background: #0D1117; color: #FFFFFF; font-size: 13px; font-weight: 600">AK</button>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+
+  <nav aria-label="Spaces" style="flex: 0 0 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: #FFFFFF; border-radius: 20px; padding: 10px 0; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -16px rgba(13,17,23,0.22)">
+    <a href="#" aria-label="System map" style="width: 44px; height: 44px; border-radius: 12px; background: #0D1117; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"></path></svg></a>
+    <a class="rail" href="#" aria-label="Runtime" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"></path></svg></a>
+    <a class="rail" href="#" aria-label="Models" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10"></path></svg></a>
+    <a class="rail" href="#" aria-label="Identity" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"></path></svg><span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #C2410C; border: 2px solid #FFFFFF"></span></a>
+    <a class="rail" href="#" aria-label="Keys" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l9-9M17 6l3 3"></path></svg></a>
+    <a class="rail" href="#" aria-label="Observe" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg></a>
+    <a class="rail" href="#" aria-label="Billing" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg></a>
+    <span style="width: 24px; height: 1px; background: #E1E5EB; margin: 6px 0"></span>
+    <a class="rail" href="#" aria-label="Settings" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></a>
+  </nav>
+
+  <main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+    <div style="position: relative; background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.9); border-radius: 24px; overflow: hidden">
+      <div style="position: absolute; left: 16px; top: 16px; right: 16px; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; pointer-events: none">
+        <div style="display: flex; align-items: center; gap: 12px; background: #FFFFFF; border-radius: 14px; padding: 8px 14px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.2); pointer-events: auto">
+          <span style="font-size: 15px; font-weight: 600">AI runtime</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: #15803D"></span>live · 8 services</span>
+        </div>
+        <div role="group" aria-label="Layer filter" style="display: flex; gap: 4px; background: #FFFFFF; border-radius: 14px; padding: 4px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.2); pointer-events: auto">
+          <button type="button" aria-pressed="true" style="min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: #0D1117; color: #FFFFFF; font-size: 13px">All</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #5B6270; font-size: 13px">Traffic</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #5B6270; font-size: 13px">Identity</button>
+          <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #5B6270; font-size: 13px">Cost</button>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto">
+        <div style="position: relative; width: 1040px; height: 600px">
+          <div style="position: absolute; left: 16px; top: 72px; width: 1004px; height: 500px">
+
+            <div style="position: absolute; left: 596px; top: 104px; width: 192px; height: 392px; border: 1.5px dashed {{accent}}; border-radius: 22px; background: {{accent}}0D"></div>
+            <span style="position: absolute; left: 610px; top: 112px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: {{accent}}">POLICY · agents-prod</span>
+
+            <div style="position: absolute; left: 180px; top: 299px; width: 34px; height: 2px; background: {{accent}}"><span class="pk" style="position: absolute; left: 0; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span></div>
+            <div style="position: absolute; left: 370px; top: 299px; width: 34px; height: 2px; background: {{accent}}"><span class="pk" style="position: absolute; left: 0; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span></div>
+            <div style="position: absolute; left: 560px; top: 299px; width: 28px; height: 2px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 587px; top: 170px; width: 2px; height: 130px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 587px; top: 300px; width: 2px; height: 130px; background: #C5CBD5"></div>
+            <div style="position: absolute; left: 587px; top: 169px; width: 27px; height: 2px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 587px; top: 429px; width: 27px; height: 2px; background: #C5CBD5"></div>
+            <div style="position: absolute; left: 770px; top: 169px; width: 28px; height: 2px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 797px; top: 78px; width: 2px; height: 160px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 797px; top: 238px; width: 2px; height: 192px; background: #C5CBD5"></div>
+            <div style="position: absolute; left: 797px; top: 77px; width: 27px; height: 2px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 797px; top: 237px; width: 27px; height: 2px; background: {{accent}}"></div>
+            <div style="position: absolute; left: 770px; top: 429px; width: 54px; height: 2px; background: #C5CBD5"></div>
+            <span style="position: absolute; left: 368px; top: 274px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5B6270; background: #FFFFFF; border-radius: 6px; padding: 2px 6px; box-shadow: 0 1px 2px rgba(13,17,23,0.08)">12.4k/s</span>
+
+            <div class="node" style="position: absolute; left: 24px; top: 262px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <span style="font-size: 14px; font-weight: 600">Clients</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">web · mobile · api</span>
+            </div>
+            <div class="node" style="position: absolute; left: 214px; top: 262px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Gateway</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #15803D"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">3 regions · 0 drops</span>
+            </div>
+            <div class="node" style="position: absolute; left: 404px; top: 262px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Auth + Router</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #15803D"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">3.1ms eval · r118</span>
+            </div>
+            <div class="node" style="position: absolute; left: 614px; top: 132px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 2px solid {{accent}}; border-radius: 16px; padding: 11px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 0 6px {{accent}}1F, 0 24px 40px -18px {{accent}}99">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">support-agent</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #C2410C"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">v2.4 · canary 10%</span>
+            </div>
+            <div class="node" style="position: absolute; left: 614px; top: 392px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">research-agent</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #15803D"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">v1.9 · 64 runs/min</span>
+            </div>
+            <div class="node" style="position: absolute; left: 824px; top: 40px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #F3C9B4; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Tools · MCP</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #C2410C"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #C2410C">search_kb 412ms</span>
+            </div>
+            <div class="node" style="position: absolute; left: 824px; top: 200px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Model pool</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #15803D"></span></div>
+              <div style="display: flex; height: 6px; border-radius: 3px; overflow: hidden; gap: 2px"><span style="width: 58%; background: {{accent}}"></span><span style="width: 34%; background: #0D1117"></span><span style="width: 8%; background: #C5CBD5"></span></div>
+            </div>
+            <div class="node" style="position: absolute; left: 824px; top: 392px; width: 156px; height: 76px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E1E5EB; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.18)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Vector memory</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #15803D"></span></div>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">48M vec · 71% hit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="position: absolute; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 2px; background: #FFFFFF; border-radius: 12px; padding: 4px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 8px 24px -12px rgba(13,17,23,0.2)">
+        <button type="button" aria-label="Zoom out" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; font-size: 18px; color: #0D1117">−</button>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5B6270; padding: 0 6px">100%</span>
+        <button type="button" aria-label="Zoom in" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; font-size: 18px; color: #0D1117">+</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 14px">
+      <div style="flex: 1 1 220px; min-width: 0; background: #FFFFFF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.25)">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #C2410C">IDENTITY</span>
+        <span style="font-size: 15px; font-weight: 500; line-height: 1.35">role/ml-engineer drifted to s3:* via group inheritance</span>
+        <a href="#" style="font-size: 13px; color: {{accent}}; text-decoration: none; margin-top: auto">Review 6 principals →</a>
+      </div>
+      <div style="flex: 1 1 220px; min-width: 0; background: #FFFFFF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.25)">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #15803D">COST</span>
+        <span style="font-size: 15px; font-weight: 500; line-height: 1.35">Cost-aware routing r118 shifted 22% of traffic to fast-s</span>
+        <a href="#" style="font-size: 13px; color: {{accent}}; text-decoration: none; margin-top: auto">See savings →</a>
+      </div>
+      <div style="flex: 1 1 220px; min-width: 0; background: #FFFFFF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -18px rgba(13,17,23,0.25)">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5B6270">KEYS</span>
+        <span style="font-size: 15px; font-weight: 500; line-height: 1.35">4 API keys older than 90 days, 1 unused for 30 days</span>
+        <a href="#" style="font-size: 13px; color: {{accent}}; text-decoration: none; margin-top: auto">Rotate all →</a>
+      </div>
+    </div>
+  </main>
+
+  <aside aria-label="Selected: support-agent" style="flex: 1 1 360px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 30px 60px -28px rgba(13,17,23,0.35)">
+    <div style="display: flex; align-items: flex-start; gap: 12px">
+      <span style="width: 40px; height: 40px; border-radius: 12px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></span>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.01em">support-agent</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">agent · v2.4.0 · canary 10%</span>
+      </div>
+      <button type="button" aria-label="Close panel" style="width: 36px; height: 36px; border: 0; border-radius: 10px; background: #F1F3F6; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+    </div>
+
+    <div role="tablist" aria-label="Agent details" style="display: flex; background: #F1F3F6; border-radius: 12px; padding: 3px">
+      <button type="button" role="tab" aria-selected="true" style="flex: 1; min-height: 36px; border: 0; border-radius: 9px; background: #FFFFFF; color: #0D1117; font-size: 13px; font-weight: 600; box-shadow: 0 1px 3px rgba(13,17,23,0.12)">Overview</button>
+      <button type="button" role="tab" aria-selected="false" style="flex: 1; min-height: 36px; border: 0; border-radius: 9px; background: transparent; color: #5B6270; font-size: 13px">Traces</button>
+      <button type="button" role="tab" aria-selected="false" style="flex: 1; min-height: 36px; border: 0; border-radius: 9px; background: transparent; color: #5B6270; font-size: 13px">Access</button>
+      <button type="button" role="tab" aria-selected="false" style="flex: 1; min-height: 36px; border: 0; border-radius: 9px; background: transparent; color: #5B6270; font-size: 13px">Config</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <div style="background: #F7F8FA; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5B6270">P95</span><span style="font-size: 22px; font-weight: 500">182<span style="font-size: 12px; color: #5B6270">ms</span></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #C2410C">↑ 38%</span></div>
+      <div style="background: #F7F8FA; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5B6270">SUCCESS</span><span style="font-size: 22px; font-weight: 500">99.2<span style="font-size: 12px; color: #5B6270">%</span></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #15803D">steady</span></div>
+      <div style="background: #F7F8FA; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5B6270">COST/RUN</span><span style="font-size: 22px; font-weight: 500">$0.012</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">−6%</span></div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 14px; font-weight: 600">Latency · last 60 min</span>
+        <div style="display: flex; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: {{accent}}"></span>canary</span>
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #C5CBD5"></span>stable</span>
+        </div>
+      </div>
+      <div style="height: 96px; display: flex; align-items: flex-end; gap: 4px; border-bottom: 1px solid #E1E5EB">
+        <sc-for list="{{pairs}}" as="p" hint-placeholder-count="18">
+          <div style="flex: 1; display: flex; align-items: flex-end; gap: 1px; height: 100%">
+            <div style="flex: 1; height: {{p.c}}px; background: {{accent}}; border-radius: 2px 2px 0 0"></div>
+            <div style="flex: 1; height: {{p.s}}px; background: #C5CBD5; border-radius: 2px 2px 0 0"></div>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">gap opens at the tools hop · search_kb</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 600">Access scope</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">least-privilege 92/100</span></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+        <span style="padding: 6px 10px; border-radius: 8px; background: #F1F3F6">kb:read</span>
+        <span style="padding: 6px 10px; border-radius: 8px; background: #F1F3F6">tickets:write</span>
+        <span style="padding: 6px 10px; border-radius: 8px; background: #F1F3F6">crm:read</span>
+        <span style="display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px; border: 1px solid #0D1117"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 018 0v4"></path></svg>email:send · human approval</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column">
+      <span style="font-size: 14px; font-weight: 600; padding-bottom: 6px">Recent traces</span>
+      <sc-for list="{{traces}}" as="t" hint-placeholder-count="3">
+        <a href="#" style="display: flex; align-items: center; gap: 10px; min-height: 44px; border-top: 1px solid #EEF0F3; text-decoration: none; color: #0D1117; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: {{t.c}}"></span>
+          <span style="flex: 1">{{t.id}}</span>
+          <span style="color: #5B6270">{{t.steps}}</span>
+          <span style="width: 54px; text-align: right">{{t.dur}}</span>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-top: auto">
+      <button type="button" style="flex: 1; min-height: 46px; border: 0; border-radius: 14px; background: {{accent}}; color: #FFFFFF; font-size: 14px; font-weight: 600">Promote to 50%</button>
+      <button type="button" style="flex: 1; min-height: 46px; border: 1px solid #E1E5EB; border-radius: 14px; background: #FFFFFF; color: #0D1117; font-size: 14px">Roll back</button>
+    </div>
+  </aside>
+</div>
+
+<section aria-label="Deploy timeline" style="background: #FFFFFF; border-radius: 22px; padding: 18px 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(13,17,23,0.06), 0 12px 32px -16px rgba(13,17,23,0.22)">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px"><span style="font-size: 15px; font-weight: 600">Time travel</span><span style="font-size: 13px; color: #5B6270">Scrub to see the map exactly as it was. Every deploy, policy change and incident is a marker.</span></div>
+    <div style="display: flex; gap: 6px">
+      <button type="button" style="min-height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid #E1E5EB; background: #FFFFFF; color: #0D1117; font-size: 13px">Compare 13:00 vs now</button>
+      <button type="button" style="min-height: 38px; padding: 0 14px; border-radius: 10px; border: 0; background: #0D1117; color: #FFFFFF; font-size: 13px">Live</button>
+    </div>
+  </div>
+  <div style="position: relative; height: 56px">
+    <div style="position: absolute; left: 0; right: 0; top: 20px; height: 8px; border-radius: 4px; background: #F1F3F6"></div>
+    <div style="position: absolute; left: 0; width: 100%; top: 20px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #F1F3F6 0%, #F1F3F6 88%, #FCE7DC 88%, #FCE7DC 100%)"></div>
+    <span title="billing-sync rollback" style="position: absolute; left: 40.5%; top: 16px; width: 16px; height: 16px; border-radius: 50%; background: #FFFFFF; border: 3px solid #C2410C; box-sizing: border-box; transform: translateX(-50%)"></span>
+    <span title="embed-workers scaled" style="position: absolute; left: 68.5%; top: 16px; width: 16px; height: 16px; border-radius: 50%; background: #FFFFFF; border: 3px solid #0D1117; box-sizing: border-box; transform: translateX(-50%)"></span>
+    <span title="policy drift" style="position: absolute; left: 82%; top: 16px; width: 16px; height: 16px; border-radius: 4px; background: #FFFFFF; border: 3px solid #C2410C; box-sizing: border-box; transform: translateX(-50%) rotate(45deg)"></span>
+    <span title="support-agent canary" style="position: absolute; left: 88.5%; top: 16px; width: 16px; height: 16px; border-radius: 50%; background: {{accent}}; box-sizing: border-box; transform: translateX(-50%)"></span>
+    <div style="position: absolute; right: 0; top: 4px; width: 4px; height: 40px; border-radius: 2px; background: #0D1117"></div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5B6270">
+      <span style="position: absolute; left: 0">yesterday 16:48</span>
+      <span style="position: absolute; left: 30%; transform: translateX(-50%)">00:00</span>
+      <span style="position: absolute; left: 55%; transform: translateX(-50%)">06:00</span>
+      <span style="position: absolute; left: 80%; transform: translateX(-50%)">12:00</span>
+      <span style="position: absolute; right: 0; color: #0D1117">now</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F5BFF","options":["#2F5BFF","#6D4AFF","#0E7C66","#0D1117"]},"$preview":{"width":1440,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#2F5BFF';
+    const pairs = Array.from({ length: 18 }, (_, i) => {
+      const s = Math.round(30 + Math.sin(i * 0.8) * 8 + (i % 3) * 3);
+      const c = Math.round(s + (i > 9 ? (i - 9) * 6 : Math.sin(i) * 4));
+      return { s: s, c: Math.min(92, Math.max(10, c)) };
+    });
+    return {
+      accent: accent,
+      pairs: pairs,
+      traces: [
+        { id: 'tr_91c2 · refund policy', steps: '6 steps', dur: '2.4s', c: '#C2410C' },
+        { id: 'tr_91c1 · reset password', steps: '3 steps', dur: '0.9s', c: '#15803D' },
+        { id: 'tr_91bf · order status', steps: '4 steps', dur: '1.3s', c: '#15803D' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

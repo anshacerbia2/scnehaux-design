@@ -1,0 +1,27 @@
+<!-- @dsCard group="Typography" height=520 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Heading</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="gap:var(--ds-dimension-spacing-stack-default)">
+  <div class="scnx-eyebrow">Display · docs and marketing</div>
+  <div class="scnx-display" data-level="1">Built to be verified</div>
+  <div class="scnx-display" data-level="3">Every release ships evidence</div>
+  <div class="scnx-eyebrow" style="margin-top:var(--ds-dimension-spacing-stack-comfortable)">Heading · product</div>
+  <div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">xxlarge</span><span class="scnx-heading" data-size="xxlarge">Deployments</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">xlarge</span><span class="scnx-heading" data-size="xlarge">Deployments</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">large</span><span class="scnx-heading" data-size="large">Deployments</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">medium</span><span class="scnx-heading" data-size="medium">Deployments</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">small</span><span class="scnx-heading" data-size="small">Deployments</span></div><div class="row" style="align-items:baseline;flex-wrap:nowrap"><span class="scnx-eyebrow" style="inline-size:5.5rem;flex:none">xsmall</span><span class="scnx-heading" data-size="xsmall">Deployments</span></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Feedback" height=170 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skeleton</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="scnx-surface" data-material="flat" data-padding="default" style="display:flex;gap:var(--ds-dimension-spacing-inline-comfortable);max-inline-size:28rem" aria-busy="true" aria-label="Loading project">
+  <span class="scnx-skeleton" data-shape="circle" style="inline-size:2.5rem;block-size:2.5rem"></span>
+  <div class="col" style="flex:1"><span class="scnx-skeleton" data-shape="text" style="inline-size:40%"></span><span class="scnx-skeleton" data-shape="text" style="inline-size:85%"></span><span class="scnx-skeleton" data-shape="text" style="inline-size:70%"></span><span class="scnx-skeleton" data-shape="block" style="block-size:2.25rem;inline-size:6rem;margin-top:var(--ds-dimension-spacing-stack-default)"></span></div>
+</div></div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!-- @dsCard group="Overlays" height=400 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sheet</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+.frame{position:relative;display:flex;justify-content:flex-end;block-size:400px;background:var(--ds-color-neutral-surface-canvas-default)}.scnx-scrim{position:absolute;inset:0}
+</style>
+</head>
+<body>
+<div class="frame"><div class="scnx-scrim"></div><aside class="scnx-sheet" role="dialog" aria-modal="true" aria-labelledby="st" style="position:relative">
+  <div data-part="header"><h2 data-part="title" id="st">Environment variables</h2><button class="scnx-icon-btn" data-variant="ghost" data-size="small" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div data-part="body" class="col" style="gap:var(--ds-dimension-spacing-stack-comfortable)">
+    <div class="scnx-text-field"><label data-part="label" for="k">Key</label><input data-part="input" id="k" value="DATABASE_URL"></div>
+    <div class="scnx-text-field"><label data-part="label" for="v">Value</label><input data-part="input" id="v" value="postgres://…" type="text"></div>
+    <label class="scnx-checkbox"><input type="checkbox" checked><span data-part="indicator"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Production</span></label>
+  </div>
+  <div data-part="footer"><button class="scnx-btn" data-variant="ghost" data-size="medium">Cancel</button><button class="scnx-btn" data-variant="primary" data-size="medium">Save</button></div>
+</aside></div>
+</body>
+</html>

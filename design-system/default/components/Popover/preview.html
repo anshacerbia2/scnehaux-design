@@ -1,0 +1,26 @@
+<!-- @dsCard group="Overlays" height=260 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Popover</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body class="scnx-stage">
+<div class="pv"><div class="col" style="align-items:flex-start;gap:var(--ds-dimension-spacing-inline-compact)">
+  <button class="scnx-btn" data-variant="secondary" data-size="medium" aria-expanded="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Share</button>
+  <div class="scnx-popover" role="dialog" aria-label="Share project"><div data-part="title">Share acme-dashboard</div><div data-part="body">People with the link can view deployments. Members can also redeploy.</div>
+  <input class="scnx-input" value="https://acme.scnx.app/p/8259d6e" aria-label="Share link" readonly style="margin-top:var(--ds-dimension-spacing-stack-default)">
+  <div data-part="actions"><button class="scnx-btn" data-variant="ghost" data-size="small">Done</button><button class="scnx-btn" data-variant="primary" data-size="small"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg>Copy link</button></div></div>
+</div></div>
+</body>
+</html>
