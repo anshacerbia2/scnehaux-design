@@ -902,5 +902,5 @@
 --font-sans: Inter, -apple-system, Arial, sans-serif;
 --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
-@font-face { font-family: "Inter"; src: url("fonts/Inter-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
-@font-face { font-family: "Inter"; src: url("fonts/Inter-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Inter"; src: url("../../fonts/Inter-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Inter"; src: url("../../fonts/Inter-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
