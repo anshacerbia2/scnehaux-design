@@ -17,6 +17,7 @@ concepts/
   internal-console/           Internal console, options C and D
   iam/                        IAM reachability
   docs-site/                  Public landing, signed-in workspace, component page
+  docs-instrument/            The same three docs boards, industrial expression (live)
   canvas.json                 Board titles, sizes, and positions
 ```
 
@@ -90,6 +91,9 @@ internal consoles keep a separate design.
 | `docs-site` | Public · Landing (global) | `Docs-Landing.dc.html` | [`Docs-Landing.png`](concepts/docs-site/Docs-Landing.png) |
 | `docs-site` | Signed in · Workspace home | `Docs-Home.dc.html` | [`Docs-Home.png`](concepts/docs-site/Docs-Home.png) |
 | `docs-site` | Docs · Components / Button | `Docs-Button.dc.html` | [`Docs-Button.png`](concepts/docs-site/Docs-Button.png) |
+| `docs-instrument` | Instrument · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument/Docs-Landing.png) |
+| `docs-instrument` | Instrument · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument/Docs-Home.png) |
+| `docs-instrument` | Instrument · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument/Docs-Button.png) |
 
 Each board has three files:
 
@@ -105,6 +109,14 @@ Each board has three files:
   thumbnail.
 
 The boards load their fonts from Google Fonts.
+
+`docs-instrument` is the exception to the three-file rule: its motion is the
+deliverable, and a canvas export freezes it at its first frame, so each board is
+a hand-authored live page (`<Board>.html`, sharing `instrument.css` and
+`instrument.js`) plus its still frame (`.png`, `.thumb.webp`, rendered with
+`?render&mode=dark`). It binds the default theme's tokens and the reference
+component classes; its folder README records the expression and its guidance
+status.
 
 ## Provenance
 

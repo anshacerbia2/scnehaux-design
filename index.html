@@ -98,7 +98,7 @@
   <section aria-labelledby="concepts-title">
     <p class="eyebrow">Concepts</p>
     <h2 id="concepts-title">Product screens</h2>
-    <p class="section-note">Static pages rendered from the design-canvas sources; interactive parts are frozen at their first frame. Konsep B is the direction for client-facing screens.</p>
+    <p class="section-note">Static pages rendered from the design-canvas sources; interactive parts are frozen at their first frame. Konsep B is the direction for client-facing screens. The Instrument boards are live pages: open them to see the motion.</p>
     <div id="concepts"></div>
   </section>
 
@@ -112,9 +112,10 @@
     ["internal-console", "Internal console — two options", [["C-Internal", "Opsi C — Schematic"], ["D-Internal", "Opsi D — Stratum"]]],
     ["iam", "IAM", [["IAM-Reachability", "IAM — Reachability"]]],
     ["docs-site", "Docs — public landing, signed-in workspace, component page", [["Docs-Landing", "Public · Landing (global)"], ["Docs-Home", "Signed in · Workspace home"], ["Docs-Button", "Docs · Components / Button"]]],
+    ["docs-instrument", "Docs · Instrument — the industrial expression, live (motion, scroll, lines)", [["Docs-Landing", "Instrument · Landing (global)"], ["Docs-Home", "Instrument · Workspace home"], ["Docs-Button", "Instrument · Components / Button"]], { live: true }],
   ];
   const root = document.getElementById("concepts");
-  for (const [folder, label, boards] of GROUPS) {
+  for (const [folder, label, boards, opts = {}] of GROUPS) {
     const group = document.createElement("div");
     group.className = "group";
     group.innerHTML = `<p class="eyebrow">${label}</p><div class="grid"></div>`;
@@ -127,7 +128,7 @@
         <a class="thumb" href="${base}.html" aria-label="${title}"><img src="${base}.thumb.webp" alt="" loading="lazy" width="720" height="450"></a>
         <div class="card-body">
           <a class="card-title" href="${base}.html">${title}</a>
-          <div class="links"><a href="${base}.html">Page</a><a href="${base}.png">Full image</a><a href="${REPO}${base}.dc.html">Source</a></div>
+          <div class="links"><a href="${base}.html">${opts.live ? "Live page" : "Page"}</a><a href="${base}.png">Full image</a><a href="${REPO}${base}${opts.live ? ".html" : ".dc.html"}">Source</a></div>
         </div>`;
       grid.append(card);
     }
