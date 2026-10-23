@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux design</title>
+<meta name="description" content="Design references for the Scnehaux platform: the Scnehaux UI design system and the product concepts.">
+<link rel="icon" href="design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="design-system/themes/default/tokens.css">
+<script>
+  // The tokens select a mode with data-theme; follow the system preference.
+  (() => {
+    const query = matchMedia("(prefers-color-scheme: dark)");
+    const apply = () => { document.documentElement.dataset.theme = query.matches ? "dark" : "light"; };
+    apply();
+    query.addEventListener("change", apply);
+  })();
+</script>
+<style>
+  @font-face { font-family: "Inter"; src: url(design-system/fonts/Inter-Variable.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-block-size: 100vh;
+    font-family: Inter, system-ui, sans-serif; font-feature-settings: "cv11" 1;
+    color: var(--ds-color-neutral-text-default-default);
+    background-color: var(--ds-color-neutral-surface-default-default);
+    background-image: radial-gradient(var(--ds-color-neutral-border-subtle-default) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  [data-theme="dark"] body { background-color: var(--ds-color-neutral-surface-sunken-default); background-image: radial-gradient(var(--ds-color-neutral-surface-strong-default) 1px, transparent 1px); }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; border-radius: 4px; }
+  .wrap { max-inline-size: 1200px; margin-inline: auto; padding: 40px 16px 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
+  .eyebrow { font: 500 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-neutral-text-subtle-default); margin: 0 0 12px; }
+  h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 0.98; letter-spacing: -0.045em; font-weight: 600; margin: 48px 0 16px; max-inline-size: 16ch; }
+  .lede { font-size: 1rem; line-height: 1.6; color: var(--ds-color-neutral-text-subtle-default); max-inline-size: 60ch; margin: 0; }
+  section { margin-block-start: 56px; }
+  h2 { font-size: 1.375rem; letter-spacing: -0.02em; font-weight: 600; margin: 0 0 6px; }
+  .section-note { margin: 0 0 20px; color: var(--ds-color-neutral-text-subtle-default); font-size: 14px; line-height: 1.5; }
+  .panel { border-radius: 24px; padding: 8px; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ds-color-neutral-border-subtle-default), 0 1px 2px 0 var(--ds-color-neutral-shadow-subtle-default), 0 12px 24px -8px var(--ds-color-neutral-shadow-subtle-default); }
+  .ds { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 8px; }
+  .ds-main { border-radius: 16px; padding: 24px; background: var(--ds-color-neutral-surface-canvas-default); box-shadow: 0 0 0 1px var(--ds-color-neutral-border-subtle-default); display: flex; flex-direction: column; gap: 16px; }
+  .ds-main p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ds-color-neutral-text-subtle-default); }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; block-size: 36px; padding-inline: 12px; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .btn-primary { background: var(--ds-color-neutral-surface-solid-default); color: var(--ds-color-neutral-text-contrast-default); }
+  .btn-primary:hover { background: var(--ds-color-neutral-surface-solid-hover); }
+  .btn-secondary { background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ds-color-neutral-border-default-default), 0 1px 2px 0 var(--ds-color-neutral-shadow-subtle-default); }
+  .btn-secondary:hover { background: var(--ds-color-neutral-surface-default-hover); }
+  .layers { display: grid; gap: 8px; }
+  .layer { border-radius: 16px; padding: 16px; background: var(--ds-color-neutral-surface-canvas-default); box-shadow: 0 0 0 1px var(--ds-color-neutral-border-subtle-default); }
+  .layer strong { display: block; font-size: 14px; margin-bottom: 4px; }
+  .layer span { font-size: 13px; line-height: 1.5; color: var(--ds-color-neutral-text-subtle-default); }
+  .group { margin-block-start: 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
+  .card { border-radius: 16px; overflow: hidden; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ds-color-neutral-border-subtle-default), 0 1px 2px 0 var(--ds-color-neutral-shadow-subtle-default), 0 4px 8px -2px var(--ds-color-neutral-shadow-subtle-default); display: flex; flex-direction: column; }
+  .card > a.thumb { display: block; aspect-ratio: 16 / 10; background: var(--ds-color-neutral-surface-sunken-default); }
+  .card img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: top; }
+  .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 1px 0 var(--ds-color-neutral-border-subtle-default); }
+  .card-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
+  .links { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--ds-color-neutral-text-subtle-default); }
+  .links a { text-decoration: underline; text-decoration-color: var(--ds-color-neutral-border-default-default); text-underline-offset: 3px; }
+  .links a:hover { color: var(--ds-color-neutral-text-default-default); }
+  footer { margin-top: 64px; font-size: 13px; color: var(--ds-color-neutral-text-subtle-default); }
+  @media (max-width: 760px) { .ds { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="./"><img src="design-system/assets/Logos/scnehaux-mark.svg" width="28" height="28" alt="">Scnehaux design</a>
+
+  <h1>Every Scnehaux screen, in one place.</h1>
+  <p class="lede">The Scnehaux UI design system and the product concepts built with it. The files in this repository are the source; this site shows them.</p>
+
+  <section aria-labelledby="ds-title">
+    <p class="eyebrow">Design system</p>
+    <h2 id="ds-title">Scnehaux UI</h2>
+    <p class="section-note">43 component cards with their usage and their delta from the current build, in the default theme.</p>
+    <div class="panel ds">
+      <div class="ds-main">
+        <p>Materials instead of boxes, corners that nest on the ladder 4 · 8 · 12 · 16 · 24, ink for the main action and one blue that means "here".</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="design-system/">Open the components</a>
+          <a class="btn btn-secondary" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/README.md">Read the brand book</a>
+        </div>
+      </div>
+      <div class="layers">
+        <div class="layer"><strong>Rules</strong><span>The brand book. The same in every theme.</span></div>
+        <div class="layer"><strong>Components</strong><span>Anatomy, geometry, states, token bindings. The same in every theme.</span></div>
+        <div class="layer"><strong>Values</strong><span>One folder per theme; <code>default</code> today, light and dark.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="concepts-title">
+    <p class="eyebrow">Concepts</p>
+    <h2 id="concepts-title">Product screens</h2>
+    <p class="section-note">Static pages rendered from the design-canvas sources; interactive parts are frozen at their first frame. Konsep B is the direction for client-facing screens.</p>
+    <div id="concepts"></div>
+  </section>
+
+  <footer>Source: <a href="https://github.com/anshacerbia2/scnehaux-design">anshacerbia2/scnehaux-design</a>. Token values belong to <code>@scnx/system</code>.</footer>
+</div>
+<script>
+  const REPO = "https://github.com/anshacerbia2/scnehaux-design/blob/main/";
+  const GROUPS = [
+    ["concept-b-spatial-canvas", "Konsep B — Spatial Canvas · client-facing", [["B-Console", "B · Client Dev Console"], ["B-SaaS", "B · SaaS Home"]]],
+    ["concept-a-command-surface", "Konsep A — Command Surface", [["Main", "A · Platform Console"], ["A-SaaS", "A · SaaS Home"]]],
+    ["internal-console", "Internal console — two options", [["C-Internal", "Opsi C — Schematic"], ["D-Internal", "Opsi D — Stratum"]]],
+    ["iam", "IAM", [["IAM-Reachability", "IAM — Reachability"]]],
+    ["docs-site", "Docs — public landing, signed-in workspace, component page", [["Docs-Landing", "Public · Landing (global)"], ["Docs-Home", "Signed in · Workspace home"], ["Docs-Button", "Docs · Components / Button"]]],
+  ];
+  const root = document.getElementById("concepts");
+  for (const [folder, label, boards] of GROUPS) {
+    const group = document.createElement("div");
+    group.className = "group";
+    group.innerHTML = `<p class="eyebrow">${label}</p><div class="grid"></div>`;
+    const grid = group.querySelector(".grid");
+    for (const [name, title] of boards) {
+      const base = `concepts/${folder}/${name}`;
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <a class="thumb" href="${base}.html" aria-label="${title}"><img src="${base}.thumb.webp" alt="" loading="lazy" width="720" height="450"></a>
+        <div class="card-body">
+          <a class="card-title" href="${base}.html">${title}</a>
+          <div class="links"><a href="${base}.html">Page</a><a href="${base}.png">Full image</a><a href="${REPO}${base}.dc.html">Source</a></div>
+        </div>`;
+      grid.append(card);
+    }
+    root.append(group);
+  }
+</script>
+</body>
+</html>

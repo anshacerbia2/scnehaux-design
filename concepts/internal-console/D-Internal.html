@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en"><head><!-- Static snapshot of the board, generated from the .dc.html source next to it. Do not edit; change the source and regenerate. --><meta name="viewport" content="width=1440"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Internal · Opsi D — Stratum</title>
+<style>x-dc{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet" data-dc-tpl="2"><style data-dc-tpl="3">
+body{margin:0;background:#0C0E12}
+a{color:#ECEEF2}a:hover{color:#FFFFFF}
+button{font:inherit;cursor:pointer}
+input::placeholder{color:#8E95A2}
+.nav:hover{color:#ECEEF2 !important}
+.press{transition:transform .12s ease, box-shadow .12s ease}
+.press:active{transform:translateY(3px)}
+@keyframes beam{0%{transform:translateY(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(300px);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.beam{animation:beam 2.4s cubic-bezier(.5,0,.5,1) infinite}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.beam,.pulse{animation:none}.press{transition:none}}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="D-Internal"><div data-dc-tpl="4" style="min-height: 100vh; background: rgb(12, 14, 18); color: rgb(236, 238, 242); font-family: &quot;Space Grotesk&quot;, system-ui, sans-serif; font-feature-settings: &quot;tnum&quot;;"><div data-dc-tpl="5" style="max-width: 1440px; margin: 0px auto; padding: 18px 28px 44px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px;"><header data-dc-tpl="6" style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px;">
+  <div data-dc-tpl="7" style="display: flex; align-items: center; gap: 12px;">
+    <svg data-dc-tpl="8" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path data-dc-tpl="9" d="M15 3l11 5-11 5-11-5z" fill="#8F7BFF"></path><path data-dc-tpl="10" d="M4 14l11 5 11-5" fill="none" stroke="#ECEEF2" stroke-width="1.6" stroke-linejoin="round"></path><path data-dc-tpl="11" d="M4 20l11 5 11-5" fill="none" stroke="#5A6170" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+    <span data-dc-tpl="12" style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em;">Control Plane</span>
+    <span data-dc-tpl="13" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.16em; color: rgb(143, 123, 255); border: 1px solid rgb(143, 123, 255); border-radius: 6px; padding: 3px 8px; box-shadow: rgb(5, 6, 8) 0px 3px 0px;">INTERNAL</span>
+  </div>
+  <nav data-dc-tpl="14" aria-label="Layers" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto; justify-content: center;">
+    <a data-dc-tpl="15" href="#" class="press" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; background: rgb(27, 31, 39); border: 1px solid rgb(42, 47, 57); color: rgb(236, 238, 242); text-decoration: none; font-size: 14px; box-shadow: rgb(5, 6, 8) 0px 3px 0px;">Overview</a>
+    <a data-dc-tpl="16" class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Tenants</a>
+    <a data-dc-tpl="17" class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Fleet</a>
+    <a data-dc-tpl="18" class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Identity</a>
+    <a data-dc-tpl="19" class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Models</a>
+    <a data-dc-tpl="20" class="nav" href="#" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Incidents<span data-dc-tpl="21" style="width: 7px; height: 7px; border-radius: 50%; background: rgb(255, 176, 32);"></span></a>
+    <a data-dc-tpl="22" class="nav" href="#" style="display: flex; align-items: center; min-height: 40px; padding: 0px 14px; border-radius: 10px; color: rgb(142, 149, 162); text-decoration: none; font-size: 14px;">Audit</a>
+  </nav>
+  <div data-dc-tpl="23" style="display: flex; align-items: center; gap: 10px;">
+    <button data-dc-tpl="24" type="button" class="press" style="display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0px 14px; border-radius: 12px; border: 1px solid rgb(42, 47, 57); background: rgb(20, 23, 29); color: rgb(142, 149, 162); font-size: 13px; box-shadow: rgb(5, 6, 8) 0px 3px 0px;">
+      <svg data-dc-tpl="25" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ECEEF2" stroke-width="1.8" aria-hidden="true"><circle data-dc-tpl="26" cx="11" cy="11" r="7"></circle><path data-dc-tpl="27" d="M20 20l-4-4"></path></svg>
+      Tenant, key, trace…
+      <span data-dc-tpl="28" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; border: 1px solid rgb(42, 47, 57); border-radius: 5px; padding: 1px 6px;">⌘K</span>
+    </button>
+    <button data-dc-tpl="29" type="button" aria-label="Account menu" class="press" style="width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgb(42, 47, 57); background: rgb(27, 31, 39); color: rgb(236, 238, 242); font-size: 13px; font-weight: 600; box-shadow: rgb(5, 6, 8) 0px 3px 0px;">AK</button>
+  </div></header><section data-dc-tpl="30" style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch;">
+  <div data-dc-tpl="31" style="flex: 999 1 700px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 22px; display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="32" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px;">
+      <div data-dc-tpl="33" style="display: flex; flex-direction: column; gap: 6px;">
+        <h1 data-dc-tpl="34" style="margin: 0px; font-size: 34px; font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;">The whole platform, <span data-dc-tpl="35" style="color: rgb(143, 123, 255);">in layers.</span></h1>
+        <span data-dc-tpl="36" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(142, 149, 162);">exploded view · live · all regions · click a layer to isolate it</span>
+      </div>
+      <div data-dc-tpl="37" role="group" aria-label="View" style="display: flex; background: rgb(12, 14, 18); border: 1px solid rgb(35, 40, 50); border-radius: 12px; padding: 3px;">
+        <button data-dc-tpl="38" type="button" aria-pressed="true" style="min-height: 36px; padding: 0px 14px; border: 0px; border-radius: 9px; background: rgb(35, 40, 50); color: rgb(236, 238, 242); font-size: 13px;">Stack</button>
+        <button data-dc-tpl="39" type="button" aria-pressed="false" style="min-height: 36px; padding: 0px 14px; border: 0px; border-radius: 9px; background: transparent; color: rgb(142, 149, 162); font-size: 13px;">Flat</button>
+        <button data-dc-tpl="40" type="button" aria-pressed="false" style="min-height: 36px; padding: 0px 14px; border: 0px; border-radius: 9px; background: transparent; color: rgb(142, 149, 162); font-size: 13px;">Diff 13:00</button>
+      </div>
+    </div>
+
+    <div data-dc-tpl="41" style="overflow-x: auto;">
+      <div data-dc-tpl="42" style="position: relative; width: 720px; height: 520px; margin: 0px auto;">
+        
+          <div data-dc-tpl="44" style="position: absolute; left: 40px; top: 280px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid rgb(58, 64, 76); background-color: rgb(22, 26, 33); background-image: linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px); background-size: 24px 24px; box-shadow: rgb(5, 6, 8) -10px 10px 0px, rgb(35, 40, 50) -10px 10px 0px 1.5px; display: flex; flex-wrap: wrap; place-content: center; gap: 10px; padding: 30px;">
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+          </div>
+        
+          <div data-dc-tpl="44" style="position: absolute; left: 40px; top: 205px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid rgb(255, 176, 32); background-color: rgb(34, 28, 16); background-image: linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px); background-size: 24px 24px; box-shadow: rgb(5, 6, 8) -10px 10px 0px, rgb(122, 84, 16) -10px 10px 0px 1.5px; display: flex; flex-wrap: wrap; place-content: center; gap: 10px; padding: 30px;">
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(255, 176, 32); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(255, 176, 32); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(255, 176, 32); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+          </div>
+        
+          <div data-dc-tpl="44" style="position: absolute; left: 40px; top: 130px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid rgb(143, 123, 255); background-color: rgb(26, 24, 48); background-image: linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px); background-size: 24px 24px; box-shadow: rgb(5, 6, 8) -10px 10px 0px, rgba(143, 123, 255, 0.4) -10px 10px 0px 1.5px; display: flex; flex-wrap: wrap; place-content: center; gap: 10px; padding: 30px;">
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+          </div>
+        
+          <div data-dc-tpl="44" style="position: absolute; left: 40px; top: 55px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid rgb(58, 64, 76); background-color: rgb(22, 26, 33); background-image: linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px); background-size: 24px 24px; box-shadow: rgb(5, 6, 8) -10px 10px 0px, rgb(35, 40, 50) -10px 10px 0px 1.5px; display: flex; flex-wrap: wrap; place-content: center; gap: 10px; padding: 30px;">
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+          </div>
+        
+          <div data-dc-tpl="44" style="position: absolute; left: 40px; top: -20px; width: 240px; height: 240px; box-sizing: border-box; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 20px; border: 1.5px solid rgb(58, 64, 76); background-color: rgb(22, 26, 33); background-image: linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px); background-size: 24px 24px; box-shadow: rgb(5, 6, 8) -10px 10px 0px, rgb(35, 40, 50) -10px 10px 0px 1.5px; display: flex; flex-wrap: wrap; place-content: center; gap: 10px; padding: 30px;">
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(90, 97, 112); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+              <span data-dc-tpl="46" style="width: 40px; height: 40px; border-radius: 8px; background: rgb(38, 43, 52); box-shadow: rgb(5, 6, 8) -3px 3px 0px;"></span>
+            
+          </div>
+        
+
+        <div data-dc-tpl="47" style="position: absolute; left: 159px; top: 100px; width: 2px; height: 300px; background: rgb(143, 123, 255); opacity: 0.55;"></div>
+        <span data-dc-tpl="48" class="beam" style="position: absolute; left: 155px; top: 96px; width: 10px; height: 10px; border-radius: 50%; background: rgb(143, 123, 255); box-shadow: rgba(143, 123, 255, 0.2) 0px 0px 0px 4px;"></span>
+
+        
+          <div data-dc-tpl="50" style="position: absolute; left: 330px; top: 400px; width: 46px; height: 1px; background: rgb(58, 64, 76);"></div>
+          <span data-dc-tpl="51" style="position: absolute; left: 327px; top: 397px; width: 7px; height: 7px; border-radius: 50%; background: rgb(58, 64, 76);"></span>
+          <div data-dc-tpl="52" style="position: absolute; left: 388px; top: 370px; width: 320px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="53" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">L5 · MEMORY</span></span>
+            <span data-dc-tpl="54" style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em;"><span class="sc-interp">71% cache hit</span></span>
+            <span data-dc-tpl="55" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">48M vectors · 9 ms read</span></span>
+          </div>
+        
+          <div data-dc-tpl="50" style="position: absolute; left: 330px; top: 325px; width: 46px; height: 1px; background: rgb(58, 64, 76);"></div>
+          <span data-dc-tpl="51" style="position: absolute; left: 327px; top: 322px; width: 7px; height: 7px; border-radius: 50%; background: rgb(255, 176, 32);"></span>
+          <div data-dc-tpl="52" style="position: absolute; left: 388px; top: 295px; width: 320px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="53" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgb(255, 176, 32);"><span class="sc-interp">L4 · TOOLS</span></span>
+            <span data-dc-tpl="54" style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em;"><span class="sc-interp">search_kb 412 ms ↑</span></span>
+            <span data-dc-tpl="55" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">degraded since 14:02 · INC-0412</span></span>
+          </div>
+        
+          <div data-dc-tpl="50" style="position: absolute; left: 330px; top: 250px; width: 46px; height: 1px; background: rgb(58, 64, 76);"></div>
+          <span data-dc-tpl="51" style="position: absolute; left: 327px; top: 247px; width: 7px; height: 7px; border-radius: 50%; background: rgb(143, 123, 255);"></span>
+          <div data-dc-tpl="52" style="position: absolute; left: 388px; top: 220px; width: 320px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="53" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgb(143, 123, 255);"><span class="sc-interp">L3 · MODELS</span></span>
+            <span data-dc-tpl="54" style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em;"><span class="sc-interp">142 ms · 3 pools</span></span>
+            <span data-dc-tpl="55" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">frontier-l 58% · fast-s 34% · embed 8%</span></span>
+          </div>
+        
+          <div data-dc-tpl="50" style="position: absolute; left: 330px; top: 175px; width: 46px; height: 1px; background: rgb(58, 64, 76);"></div>
+          <span data-dc-tpl="51" style="position: absolute; left: 327px; top: 172px; width: 7px; height: 7px; border-radius: 50%; background: rgb(58, 64, 76);"></span>
+          <div data-dc-tpl="52" style="position: absolute; left: 388px; top: 145px; width: 320px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="53" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">L2 · IDENTITY</span></span>
+            <span data-dc-tpl="54" style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em;"><span class="sc-interp">3.1 ms policy eval</span></span>
+            <span data-dc-tpl="55" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">1,906 orgs · 1 drift · 1 break-glass</span></span>
+          </div>
+        
+          <div data-dc-tpl="50" style="position: absolute; left: 330px; top: 100px; width: 46px; height: 1px; background: rgb(58, 64, 76);"></div>
+          <span data-dc-tpl="51" style="position: absolute; left: 327px; top: 97px; width: 7px; height: 7px; border-radius: 50%; background: rgb(58, 64, 76);"></span>
+          <div data-dc-tpl="52" style="position: absolute; left: 388px; top: 70px; width: 320px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="53" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">L1 · EDGE</span></span>
+            <span data-dc-tpl="54" style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em;"><span class="sc-interp">12.4k rps · 0 drops</span></span>
+            <span data-dc-tpl="55" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">6 regions · waf 142 blocks/1h</span></span>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div data-dc-tpl="56" style="flex: 1 1 380px; min-width: 0px; display: flex; flex-direction: column; gap: 22px;">
+    <div data-dc-tpl="57" style="background: rgb(26, 23, 16); border: 1px solid rgb(92, 69, 23); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(58, 44, 16) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div data-dc-tpl="58" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+        <span data-dc-tpl="59" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.08em; background: rgb(255, 176, 32); color: rgb(12, 14, 18); border-radius: 6px; padding: 3px 8px; font-weight: 500;">SEV-2 · INC-0412</span>
+        <span data-dc-tpl="60" style="display: flex; align-items: center; gap: 6px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(233, 211, 166);"><span data-dc-tpl="61" class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(255, 176, 32);"></span>OPEN 2h 46m</span>
+      </div>
+      <span data-dc-tpl="62" style="font-size: 19px; font-weight: 500; line-height: 1.3;">search_kb latency regression after support-agent 2.4 canary</span>
+      <span data-dc-tpl="63" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(201, 180, 138);">commander r.santoso · 38 tenants · ap-se-1</span>
+      <div data-dc-tpl="64" style="display: flex; align-items: center; gap: 0px;">
+        <span data-dc-tpl="65" style="width: 12px; height: 12px; border-radius: 4px; background: rgb(236, 238, 242);"></span><span data-dc-tpl="66" style="flex: 1 1 0%; height: 2px; background: rgb(236, 238, 242);"></span>
+        <span data-dc-tpl="67" style="width: 12px; height: 12px; border-radius: 4px; background: rgb(236, 238, 242);"></span><span data-dc-tpl="68" style="flex: 1 1 0%; height: 2px; background: rgb(255, 176, 32);"></span>
+        <span data-dc-tpl="69" style="width: 12px; height: 12px; border-radius: 4px; background: rgb(255, 176, 32); box-shadow: rgba(255, 176, 32, 0.2) 0px 0px 0px 4px;"></span><span data-dc-tpl="70" style="flex: 1 1 0%; height: 2px; background: rgb(58, 51, 32);"></span>
+        <span data-dc-tpl="71" style="width: 12px; height: 12px; border-radius: 4px; border: 2px solid rgb(92, 69, 23); box-sizing: border-box;"></span>
+      </div>
+      <div data-dc-tpl="72" style="display: grid; grid-template-columns: repeat(4, minmax(0px, 1fr)); font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(201, 180, 138);">
+        <span data-dc-tpl="73">detect 14:02</span><span data-dc-tpl="74" style="text-align: center;">triage 14:09</span><span data-dc-tpl="75" style="text-align: center; color: rgb(255, 176, 32);">mitigate</span><span data-dc-tpl="76" style="text-align: right;">resolve</span>
+      </div>
+      <div data-dc-tpl="77" style="display: flex; gap: 8px;">
+        <a data-dc-tpl="78" href="#" class="press" style="flex: 1 1 0%; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 12px; background: rgb(255, 176, 32); color: rgb(12, 14, 18); text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: rgb(122, 84, 16) 0px 4px 0px;">War room</a>
+        <button data-dc-tpl="79" type="button" class="press" style="flex: 1 1 0%; min-height: 44px; border-radius: 12px; border: 1px solid rgb(92, 69, 23); background: transparent; color: rgb(236, 238, 242); font-size: 14px; box-shadow: rgb(5, 6, 8) 0px 4px 0px;">Page owner</button>
+      </div>
+    </div>
+
+    <div data-dc-tpl="80" style="flex: 1 1 0%; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div data-dc-tpl="81" style="display: flex; justify-content: space-between; align-items: center;"><span data-dc-tpl="82" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.12em; color: rgb(142, 149, 162);">PULSE · GLOBAL</span><span data-dc-tpl="83" style="display: flex; align-items: center; gap: 6px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span data-dc-tpl="84" class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(143, 123, 255);"></span>LIVE</span></div>
+      <div data-dc-tpl="85" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;">
+        
+          <div data-dc-tpl="87" style="background: rgb(15, 18, 22); border: 1px solid rgb(30, 34, 42); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <span data-dc-tpl="88" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">REQ / S</span></span>
+            <span data-dc-tpl="89" style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: rgb(236, 238, 242);"><span class="sc-interp">48,210</span></span>
+            <div data-dc-tpl="90" style="height: 4px; border-radius: 2px; background: rgb(35, 40, 50);"><div data-dc-tpl="91" style="height: 100%; width: 62%; border-radius: 2px; background: rgb(236, 238, 242);"></div></div>
+          </div>
+        
+          <div data-dc-tpl="87" style="background: rgb(15, 18, 22); border: 1px solid rgb(30, 34, 42); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <span data-dc-tpl="88" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">P95</span></span>
+            <span data-dc-tpl="89" style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: rgb(255, 176, 32);"><span class="sc-interp">182 ms</span></span>
+            <div data-dc-tpl="90" style="height: 4px; border-radius: 2px; background: rgb(35, 40, 50);"><div data-dc-tpl="91" style="height: 100%; width: 73%; border-radius: 2px; background: rgb(255, 176, 32);"></div></div>
+          </div>
+        
+          <div data-dc-tpl="87" style="background: rgb(15, 18, 22); border: 1px solid rgb(30, 34, 42); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <span data-dc-tpl="88" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">ERROR RATE</span></span>
+            <span data-dc-tpl="89" style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: rgb(236, 238, 242);"><span class="sc-interp">0.07%</span></span>
+            <div data-dc-tpl="90" style="height: 4px; border-radius: 2px; background: rgb(35, 40, 50);"><div data-dc-tpl="91" style="height: 100%; width: 14%; border-radius: 2px; background: rgb(236, 238, 242);"></div></div>
+          </div>
+        
+          <div data-dc-tpl="87" style="background: rgb(15, 18, 22); border: 1px solid rgb(30, 34, 42); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <span data-dc-tpl="88" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.1em; color: rgb(142, 149, 162);"><span class="sc-interp">TOKENS / MIN</span></span>
+            <span data-dc-tpl="89" style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: rgb(143, 123, 255);"><span class="sc-interp">17.6M</span></span>
+            <div data-dc-tpl="90" style="height: 4px; border-radius: 2px; background: rgb(35, 40, 50);"><div data-dc-tpl="91" style="height: 100%; width: 70%; border-radius: 2px; background: rgb(143, 123, 255);"></div></div>
+          </div>
+        
+      </div>
+    </div>
+  </div></section><section data-dc-tpl="92" style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch;">
+  <div data-dc-tpl="93" style="flex: 999 1 520px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="94" style="display: flex; justify-content: space-between; align-items: center;"><h2 data-dc-tpl="95" style="margin: 0px; font-size: 19px; font-weight: 500;">Tenants · top by load</h2><a data-dc-tpl="96" href="#" style="font-size: 13px; color: rgb(142, 149, 162); text-decoration: none;">1,906 active →</a></div>
+    <div data-dc-tpl="97" style="display: flex; flex-direction: column;">
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">SL</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Sinar Logistics</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_7h2k</span> · <span class="sc-interp">ENT</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 100%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">14</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$41.2k</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(142, 149, 162);"><span class="sc-interp">—</span></span>
+        </a>
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">PE</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Pelita Energi</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_3m9q</span> · <span class="sc-interp">ENT</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 79%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">11</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$33.8k</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(255, 176, 32);"><span class="sc-interp">QUOTA 92%</span></span>
+        </a>
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">BA</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Bahari Analytics</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_x81c</span> · <span class="sc-interp">SCALE</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 57%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">8</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$19.4k</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(142, 149, 162);"><span class="sc-interp">—</span></span>
+        </a>
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">KG</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Kirana Group</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_p04d</span> · <span class="sc-interp">ENT</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 43%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">6</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$12.1k</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(255, 176, 32);"><span class="sc-interp">INC-0412</span></span>
+        </a>
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">TF</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Tirta Foods</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_5ttz</span> · <span class="sc-interp">SCALE</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 36%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">5</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$9.7k</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(142, 149, 162);"><span class="sc-interp">—</span></span>
+        </a>
+      
+        <a data-dc-tpl="99" href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 56px; padding: 6px 0px; border-top: 1px solid rgb(30, 34, 42); color: rgb(236, 238, 242); text-decoration: none;">
+          <span data-dc-tpl="100" style="width: 34px; height: 34px; border-radius: 10px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;"><span class="sc-interp">??</span></span>
+          <div data-dc-tpl="101" style="flex: 1 1 160px; min-width: 0px; display: flex; flex-direction: column; gap: 1px;"><span data-dc-tpl="102" style="font-size: 14px; font-weight: 500;"><span class="sc-interp">unknown-trial-88</span></span><span data-dc-tpl="103" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_trl88</span> · <span class="sc-interp">TRIAL</span></span></div>
+          <div data-dc-tpl="104" style="flex: 1 1 140px; display: flex; align-items: center; gap: 8px;"><div data-dc-tpl="105" style="flex: 1 1 0%; height: 6px; border-radius: 3px; background: rgb(35, 40, 50);"><div data-dc-tpl="106" style="height: 100%; width: 29%; border-radius: 3px; background: rgb(143, 123, 255);"></div></div><span data-dc-tpl="107" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; width: 30px; text-align: right;"><span class="sc-interp">4</span>%</span></div>
+          <span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; width: 70px; text-align: right;"><span class="sc-interp">$0</span></span>
+          <span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; letter-spacing: 0.06em; width: 76px; text-align: right; color: rgb(255, 176, 32);"><span class="sc-interp">ABUSE?</span></span>
+        </a>
+      
+    </div>
+  </div>
+
+  <div data-dc-tpl="110" style="flex: 1 1 360px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+    <div data-dc-tpl="111" style="display: flex; justify-content: space-between; align-items: center;"><h2 data-dc-tpl="112" style="margin: 0px; font-size: 19px; font-weight: 500;">GPU strata</h2><span data-dc-tpl="113" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);">400 GPU · +8 queued</span></div>
+    <div data-dc-tpl="114" style="display: flex; gap: 14px; align-items: flex-end; flex: 1 1 0%;">
+      
+        <div data-dc-tpl="116" style="flex: 1 1 0%; display: flex; flex-direction: column; gap: 8px; align-items: stretch;">
+          <span data-dc-tpl="117" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; text-align: center; color: rgb(255, 176, 32);"><span class="sc-interp">84</span>%</span>
+          <div data-dc-tpl="118" style="display: flex; flex-direction: column-reverse; gap: 4px;">
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(255, 176, 32);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+          </div>
+          <span data-dc-tpl="121" style="font-size: 12px; text-align: center;"><span class="sc-interp">frontier-l</span></span>
+          <span data-dc-tpl="122" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; text-align: center; color: rgb(142, 149, 162);"><span class="sc-interp">H100 · 96</span></span>
+        </div>
+      
+        <div data-dc-tpl="116" style="flex: 1 1 0%; display: flex; flex-direction: column; gap: 8px; align-items: stretch;">
+          <span data-dc-tpl="117" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; text-align: center; color: rgb(236, 238, 242);"><span class="sc-interp">61</span>%</span>
+          <div data-dc-tpl="118" style="display: flex; flex-direction: column-reverse; gap: 4px;">
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+          </div>
+          <span data-dc-tpl="121" style="font-size: 12px; text-align: center;"><span class="sc-interp">fast-s</span></span>
+          <span data-dc-tpl="122" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; text-align: center; color: rgb(142, 149, 162);"><span class="sc-interp">L4 · 240</span></span>
+        </div>
+      
+        <div data-dc-tpl="116" style="flex: 1 1 0%; display: flex; flex-direction: column; gap: 8px; align-items: stretch;">
+          <span data-dc-tpl="117" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; text-align: center; color: rgb(236, 238, 242);"><span class="sc-interp">38</span>%</span>
+          <div data-dc-tpl="118" style="display: flex; flex-direction: column-reverse; gap: 4px;">
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(143, 123, 255);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+          </div>
+          <span data-dc-tpl="121" style="font-size: 12px; text-align: center;"><span class="sc-interp">embed-v3</span></span>
+          <span data-dc-tpl="122" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; text-align: center; color: rgb(142, 149, 162);"><span class="sc-interp">L4 · 64</span></span>
+        </div>
+      
+        <div data-dc-tpl="116" style="flex: 1 1 0%; display: flex; flex-direction: column; gap: 8px; align-items: stretch;">
+          <span data-dc-tpl="117" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px; text-align: center; color: rgb(236, 238, 242);"><span class="sc-interp">12</span>%</span>
+          <div data-dc-tpl="118" style="display: flex; flex-direction: column-reverse; gap: 4px;">
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(90, 97, 112);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+              <span data-dc-tpl="120" style="height: 12px; border-radius: 4px; background: rgb(35, 40, 50);"></span>
+            
+          </div>
+          <span data-dc-tpl="121" style="font-size: 12px; text-align: center;"><span class="sc-interp">burst</span></span>
+          <span data-dc-tpl="122" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; text-align: center; color: rgb(142, 149, 162);"><span class="sc-interp">spot · 0–128</span></span>
+        </div>
+      
+    </div>
+  </div>
+
+  <div data-dc-tpl="123" style="flex: 1 1 380px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="124" style="display: flex; justify-content: space-between; align-items: center;"><h2 data-dc-tpl="125" style="margin: 0px; font-size: 19px; font-weight: 500;">Privileged access</h2><a data-dc-tpl="126" href="#" style="font-size: 13px; color: rgb(142, 149, 162); text-decoration: none;">Audit →</a></div>
+    <div data-dc-tpl="127" style="display: flex; flex-direction: column;">
+      
+        <div data-dc-tpl="129" style="display: flex; gap: 12px; padding: 11px 0px; border-top: 1px solid rgb(30, 34, 42);">
+          <span data-dc-tpl="130" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162); width: 42px; padding-top: 2px;"><span class="sc-interp">16:41</span></span>
+          <div data-dc-tpl="131" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="132" style="font-size: 13px;"><span data-dc-tpl="133" style="font-weight: 500;"><span class="sc-interp">dina.p</span></span> <span data-dc-tpl="134" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(255, 176, 32);"><span class="sc-interp">BREAK-GLASS</span></span></span>
+            <span data-dc-tpl="135" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">kms/prod</span> · <span class="sc-interp">INC-0412</span></span>
+          </div>
+        </div>
+      
+        <div data-dc-tpl="129" style="display: flex; gap: 12px; padding: 11px 0px; border-top: 1px solid rgb(30, 34, 42);">
+          <span data-dc-tpl="130" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162); width: 42px; padding-top: 2px;"><span class="sc-interp">16:22</span></span>
+          <div data-dc-tpl="131" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="132" style="font-size: 13px;"><span data-dc-tpl="133" style="font-weight: 500;"><span class="sc-interp">r.santoso</span></span> <span data-dc-tpl="134" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(143, 123, 255);"><span class="sc-interp">jit.grant</span></span></span>
+            <span data-dc-tpl="135" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">prod-db rw</span> · <span class="sc-interp">60 min</span></span>
+          </div>
+        </div>
+      
+        <div data-dc-tpl="129" style="display: flex; gap: 12px; padding: 11px 0px; border-top: 1px solid rgb(30, 34, 42);">
+          <span data-dc-tpl="130" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162); width: 42px; padding-top: 2px;"><span class="sc-interp">15:58</span></span>
+          <div data-dc-tpl="131" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="132" style="font-size: 13px;"><span data-dc-tpl="133" style="font-weight: 500;"><span class="sc-interp">svc/deployer</span></span> <span data-dc-tpl="134" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(143, 123, 255);"><span class="sc-interp">release.hold</span></span></span>
+            <span data-dc-tpl="135" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">support-agent 2.4</span> · <span class="sc-interp">p95 guard</span></span>
+          </div>
+        </div>
+      
+        <div data-dc-tpl="129" style="display: flex; gap: 12px; padding: 11px 0px; border-top: 1px solid rgb(30, 34, 42);">
+          <span data-dc-tpl="130" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162); width: 42px; padding-top: 2px;"><span class="sc-interp">15:31</span></span>
+          <div data-dc-tpl="131" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="132" style="font-size: 13px;"><span data-dc-tpl="133" style="font-weight: 500;"><span class="sc-interp">m.wijaya</span></span> <span data-dc-tpl="134" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(143, 123, 255);"><span class="sc-interp">tenant.quota</span></span></span>
+            <span data-dc-tpl="135" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_3m9q +20%</span> · <span class="sc-interp">#8812</span></span>
+          </div>
+        </div>
+      
+        <div data-dc-tpl="129" style="display: flex; gap: 12px; padding: 11px 0px; border-top: 1px solid rgb(30, 34, 42);">
+          <span data-dc-tpl="130" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162); width: 42px; padding-top: 2px;"><span class="sc-interp">13:05</span></span>
+          <div data-dc-tpl="131" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 3px;">
+            <span data-dc-tpl="132" style="font-size: 13px;"><span data-dc-tpl="133" style="font-weight: 500;"><span class="sc-interp">a.kurnia</span></span> <span data-dc-tpl="134" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: rgb(143, 123, 255);"><span class="sc-interp">tenant.suspend</span></span></span>
+            <span data-dc-tpl="135" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">org_trl91</span> · <span class="sc-interp">card testing</span></span>
+          </div>
+        </div>
+      
+    </div>
+  </div></section><section data-dc-tpl="136" style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch;">
+  <div data-dc-tpl="137" style="flex: 999 1 600px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+    <div data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px;"><h2 data-dc-tpl="139" style="margin: 0px; font-size: 19px; font-weight: 500;">Rollouts &amp; flags</h2><span data-dc-tpl="140" style="display: flex; gap: 22px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span data-dc-tpl="141">1%</span><span data-dc-tpl="142">10%</span><span data-dc-tpl="143">50%</span><span data-dc-tpl="144">100%</span></span></div>
+    
+      <div data-dc-tpl="146" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 52px; border-top: 1px solid rgb(30, 34, 42);">
+        <span data-dc-tpl="147" style="flex: 1 1 220px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px;"><span class="sc-interp">support-agent 2.4.0</span></span>
+        <div data-dc-tpl="148" style="flex: 2 1 260px; display: flex; gap: 4px;">
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(255, 176, 32); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+        </div>
+        <span data-dc-tpl="151" style="flex: 0 0 110px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(255, 176, 32);"><span class="sc-interp">HELD · 10%</span></span>
+      </div>
+    
+      <div data-dc-tpl="146" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 52px; border-top: 1px solid rgb(30, 34, 42);">
+        <span data-dc-tpl="147" style="flex: 1 1 220px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px;"><span class="sc-interp">router-policy r118</span></span>
+        <div data-dc-tpl="148" style="flex: 2 1 260px; display: flex; gap: 4px;">
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+        </div>
+        <span data-dc-tpl="151" style="flex: 0 0 110px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);"><span class="sc-interp">100% · DONE</span></span>
+      </div>
+    
+      <div data-dc-tpl="146" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 52px; border-top: 1px solid rgb(30, 34, 42);">
+        <span data-dc-tpl="147" style="flex: 1 1 220px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px;"><span class="sc-interp">flag: streaming-tools-v2</span></span>
+        <div data-dc-tpl="148" style="flex: 2 1 260px; display: flex; gap: 4px;">
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+        </div>
+        <span data-dc-tpl="151" style="flex: 0 0 110px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(236, 238, 242);"><span class="sc-interp">50% · AUTO</span></span>
+      </div>
+    
+      <div data-dc-tpl="146" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 52px; border-top: 1px solid rgb(30, 34, 42);">
+        <span data-dc-tpl="147" style="flex: 1 1 220px; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 13px;"><span class="sc-interp">flag: tenant-byok</span></span>
+        <div data-dc-tpl="148" style="flex: 2 1 260px; display: flex; gap: 4px;">
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(143, 123, 255); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+            <span data-dc-tpl="150" style="flex: 1 1 0%; height: 14px; border-radius: 4px; background: rgb(35, 40, 50); box-shadow: rgb(5, 6, 8) 0px 3px 0px;"></span>
+          
+        </div>
+        <span data-dc-tpl="151" style="flex: 0 0 110px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(236, 238, 242);"><span class="sc-interp">1% · ENT</span></span>
+      </div>
+    
+  </div>
+
+  <div data-dc-tpl="152" style="flex: 1 1 400px; min-width: 0px; background: rgb(20, 23, 29); border: 1px solid rgb(35, 40, 50); border-radius: 22px; box-shadow: rgba(255, 255, 255, 0.05) 0px 1px 0px inset, rgb(5, 6, 8) 0px 8px 0px, rgb(26, 30, 37) 0px 8px 0px 1px; margin-bottom: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div data-dc-tpl="153" style="display: flex; justify-content: space-between; align-items: center;"><h2 data-dc-tpl="154" style="margin: 0px; font-size: 19px; font-weight: 500;">Regions</h2><span data-dc-tpl="155" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: rgb(142, 149, 162);">scale-out at 80%</span></div>
+    <div data-dc-tpl="156" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 10px;">
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(92, 69, 23); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">ap-se-1</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(255, 176, 32);"><span class="sc-interp">86</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">14.2k rps</span></span>
+        </button>
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(35, 40, 50); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">ap-se-2</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(236, 238, 242);"><span class="sc-interp">64</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">11.8k rps</span></span>
+        </button>
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(35, 40, 50); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">ap-ne-1</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(236, 238, 242);"><span class="sc-interp">58</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">8.9k rps</span></span>
+        </button>
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(35, 40, 50); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">eu-w-1</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(236, 238, 242);"><span class="sc-interp">41</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">6.1k rps</span></span>
+        </button>
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(35, 40, 50); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">us-e-1</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(236, 238, 242);"><span class="sc-interp">52</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">5.7k rps</span></span>
+        </button>
+      
+        <button data-dc-tpl="158" type="button" class="press" style="text-align: left; background: rgb(15, 18, 22); border: 1px solid rgb(35, 40, 50); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; color: rgb(236, 238, 242); box-shadow: rgb(5, 6, 8) 0px 4px 0px;">
+          <span data-dc-tpl="159" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; font-weight: 500;"><span class="sc-interp">us-w-2</span></span>
+          <span data-dc-tpl="160" style="font-size: 24px; font-weight: 300; color: rgb(236, 238, 242);"><span class="sc-interp">23</span>%</span>
+          <span data-dc-tpl="161" style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: rgb(142, 149, 162);"><span class="sc-interp">1.5k rps</span></span>
+        </button>
+      
+    </div>
+  </div></section></div></div></div></div>
+
+
+
+</body></html>
