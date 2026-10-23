@@ -10,4 +10,4 @@ Heading titles a page or section; its visual size is independent of its level.
 
 ## Delta from the current build
 
-- Display levels 1–3 move from the docs site's Sass into `typography.display.*` tokens (planned), so marketing and docs share one scale.
+- Display levels 1–3 move from the docs site's Sass into a shared type scale, so marketing and docs share one scale. `typography.display.*` is a proposal: it needs a STD-UIP-TKN-001 revision before it is a token.

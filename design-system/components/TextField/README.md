@@ -11,5 +11,5 @@ TextField is a labelled single-line input with optional description and error.
 
 ## Delta from the current build
 
-- Input height fixed at 36px (`ds-dimension-size-control-medium`) with 12px inline padding; radius 6 → 12.
+- Input height fixed at 36px with 12px inline padding; radius 6 → 12.
 - Focus changes the border to blue and uses the focus outline at offset 0; the error line gains an icon.

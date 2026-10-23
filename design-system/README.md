@@ -1,3 +1,5 @@
+> **Status: reference, non-normative (ADR-UIP-VIS-002).** The binding rules are ADR-UIP-VIS-001 (materials, the concentric ladder, ink acts and blue signals, the stage, type voice, geometry) and STD-UIP-TKN-001 (token grammar); a component's contract is its specification in `ui-platform`. Sections that restate those records add nothing binding. Content fundamentals, the motion signature "the rise", iconography, and the logo are **guidance** until an ADR or STD revision records them.
+
 Scnehaux UI is an accessible React design system with perceptual color, scoped multi-brand theming and zero runtime CSS, and every release ships with the evidence that it works. Its look is **spatial**: ink controls and layered materials on a dotted stage, one electric blue that means "here", and corners that nest. Build every screen from the rules below; a screen that follows them reads as Scnehaux at a glance.
 
 ## The six signatures
@@ -52,7 +54,7 @@ These are what make a screen recognizably Scnehaux. Never drop one to match anot
 ## Space, size and layout
 
 - Spacing is semantic: `ds-dimension-spacing-inline-*` between siblings on a line (4, 8, 16), `-stack-*` between blocks (4, 8, 16), `-inset-*` inside containers (8, 16, 24), `-page` 24 and `-section` 32.
-- Controls are 28, 36 or 44px tall (`ds-dimension-size-control-*`) with inline padding of half the height minus 6 (8, 12, 16). Rows in menus, listboxes, navigation and pagination are 32px (`ds-dimension-size-row`); table body rows are 44px. No pointer target is smaller than 24px (`ds-dimension-size-target-minimum`).
+- Controls are 28, 36 or 44px tall with inline padding of half the height minus 6 (8, 12, 16). Rows in menus, listboxes, navigation and pagination are 32px; table body rows are 44px. No pointer target is smaller than 24px. These sizes are component geometry, recorded in each component's specification, not tokens (ADR-UIP-VIS-001 item 6); `components/bundle.css` draws them as local `--scnx-size-*` properties.
 - Shells: EdgeLayout (Navbar 64px, Sidebar 280px, all on the canvas, hairline-separated) for dense internal tools; FloatingLayout (Sidebar and content as raised materials 8px apart on the stage ground) for the client-facing product. Layout primitives (Box, Container, Flex, Grid, Stack) only arrange; they carry no look.
 
 ## Materials, rings and shadows
