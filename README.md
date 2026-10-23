@@ -20,6 +20,14 @@ concepts/
   canvas.json                 Board titles, sizes, and positions
 ```
 
+## Website
+
+**https://anshacerbia2.github.io/scnehaux-design/** (GitHub Pages, from `main`).
+The hub links the component viewer (`/design-system/`) and every concept page.
+To run it locally: `npx serve .` at the repository root and open
+`http://localhost:3000/`; the component viewer loads its cards with `fetch()`,
+which browsers block from a `file://` page.
+
 ## Rules
 
 1. **This repository is the source of the designs.** The design canvases in
@@ -38,8 +46,9 @@ concepts/
    (spatial identity), STD-UIP-TKN-001 (token grammar), and each component's
    specification in `ui-platform`. A card shows the target; it does not
    override a specification.
-5. **A rendered PNG changes with its source** in the same pull request, so a
-   reader who cannot run the source still sees the current design.
+5. **Generated files change with their source** in the same pull request (the
+   static page, PNG, and thumbnail of a board; the PNGs of a card), so a reader
+   who cannot run the source still sees the current design.
 
 ## `design-system/` — Scnehaux UI
 
@@ -55,9 +64,7 @@ The design system, in three layers:
   (or "Planned").
 - `themes/default/rendered/<Name>.light.png` and `.dark.png`: every card in the
   default theme.
-- `index.html`: every card live, with a filter and a theme and mode switch. Run
-  `npx serve .` at the repository root and open `/design-system/`; browsers
-  block its `fetch()` from a `file://` page.
+- `index.html`: every card live, with a filter and a theme and mode switch.
 - Shared files: `design-system.json`, `assets/` (icons, logo), and `fonts/`
   (Inter, SIL Open Font License 1.1, `OFL.txt`).
 
@@ -71,7 +78,7 @@ after it merges (ui-platform PLAN, "Spatial identity adoption").
 Konsep B, Spatial Canvas, is the chosen direction for client-facing screens;
 internal consoles keep a separate design.
 
-| Folder | Board | Source | Rendered |
+| Folder | Board | Source | Image |
 | :-- | :-- | :-- | :-- |
 | `concept-a-command-surface` | A · Platform Console | `Main.dc.html` | [`Main.png`](concepts/concept-a-command-surface/Main.png) |
 | `concept-a-command-surface` | A · SaaS Home | `A-SaaS.dc.html` | [`A-SaaS.png`](concepts/concept-a-command-surface/A-SaaS.png) |
@@ -84,12 +91,20 @@ internal consoles keep a separate design.
 | `docs-site` | Signed in · Workspace home | `Docs-Home.dc.html` | [`Docs-Home.png`](concepts/docs-site/Docs-Home.png) |
 | `docs-site` | Docs · Components / Button | `Docs-Button.dc.html` | [`Docs-Button.png`](concepts/docs-site/Docs-Button.png) |
 
-The `.dc.html` files are design-canvas sources (`<x-dc>` markup with
-`<sc-for>`/`<sc-if>` templates and a data script). They need the canvas
-runtime, which belongs to the design tool and is not redistributed here, so
-they do not render when opened directly. Read them as source (layout, CSS
-values, copy, data) and look at the PNG for the picture. The boards load their
-fonts from Google Fonts.
+Each board has three files:
+
+- `<Board>.dc.html`: the design-canvas source (`<x-dc>` markup with
+  `<sc-for>`/`<sc-if>` templates and a data script). It needs the canvas
+  runtime, which belongs to the design tool and is not redistributed here, so
+  it does not render when opened directly. Edit this one.
+- `<Board>.html`: a static page generated from the source with the runtime,
+  without scripts; it opens in any browser. Interactive parts are frozen at
+  their first frame (the landing page's 3D hero is an image). Generated, never
+  edited.
+- `<Board>.png` and `<Board>.thumb.webp`: the full render and the hub
+  thumbnail.
+
+The boards load their fonts from Google Fonts.
 
 ## Provenance
 
