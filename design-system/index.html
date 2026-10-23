@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scnehaux UI · default theme</title>
+<title>Scnehaux UI reference</title>
 <!-- Viewer for the component reference. Serve this folder over HTTP (for example
      `npx serve .` at the repository root); browsers block fetch() from file:// pages. Each card's
-     preview.html is loaded with tokens.css and components/bundle.css, as the design
-     tool frames it, under the chosen data-theme. -->
-<link rel="stylesheet" href="tokens.css">
+     preview.html is loaded with the chosen theme's themes/<theme>/tokens.css and
+     components/bundle.css, as the design tool frames it, under the chosen mode
+     (data-theme). Components and rules are shared; a theme only supplies values. -->
+<link id="tokens" rel="stylesheet" href="themes/default/tokens.css">
 <style>
   @font-face { font-family: "Inter"; src: url(fonts/Inter-Variable.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
   :root { color-scheme: light dark; }
@@ -34,11 +35,11 @@
 </head>
 <body>
 <header>
-  <h1>Scnehaux UI · default theme</h1>
+  <h1>Scnehaux UI reference</h1>
   <input id="filter" type="search" placeholder="Filter components" aria-label="Filter components">
-  <select id="theme" aria-label="Theme">
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
+  <select id="theme" aria-label="Theme and mode">
+    <option value="default/light">Default · Light</option>
+    <option value="default/dark">Default · Dark</option>
   </select>
 </header>
 <main id="cards"></main>
@@ -48,7 +49,8 @@
   const theme = document.getElementById("theme");
   const filter = document.getElementById("filter");
   const params = new URLSearchParams(location.search);
-  theme.value = params.get("theme") ?? "light";
+  theme.value = params.get("theme") ?? "default/light";
+  if (!theme.value) theme.value = "default/light";
   const base = new URL(".", location.href).href;
   const sources = new Map();
   try {
@@ -61,9 +63,11 @@
     main.innerHTML = `<section><p class="note">The previews could not be loaded (${String(error.message)}). Serve this folder over HTTP, for example <code>npx serve .</code> at the repository root, or open the PNGs in <code>rendered/</code>.</p></section>`;
     throw error;
   }
-  const head = `<base href="${base}components/x/"><link rel="stylesheet" href="${base}tokens.css"><link rel="stylesheet" href="${base}components/bundle.css"><style>@font-face{font-family:"Inter";src:url(${base}fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900}</style>`;
+  const head = (folder) => `<base href="${base}components/x/"><link rel="stylesheet" href="${base}themes/${folder}/tokens.css"><link rel="stylesheet" href="${base}components/bundle.css"><style>@font-face{font-family:"Inter";src:url(${base}fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900}</style>`;
   function render() {
-    document.documentElement.dataset.theme = theme.value;
+    const [folder, mode] = theme.value.split("/");
+    document.getElementById("tokens").href = `themes/${folder}/tokens.css`;
+    document.documentElement.dataset.theme = mode;
     const q = filter.value.trim().toLowerCase();
     main.replaceChildren();
     for (const name of NAMES) {
@@ -75,7 +79,7 @@
       const frame = document.createElement("iframe");
       frame.title = `${name} preview`;
       frame.style.blockSize = `${height}px`;
-      frame.srcdoc = html.replace("<html", `<html data-theme="${theme.value}"`).replace("<head>", `<head>${head}`);
+      frame.srcdoc = html.replace("<html", `<html data-theme="${mode}"`).replace("<head>", `<head>${head(folder)}`);
       section.append(frame);
       main.append(section);
     }
