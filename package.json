@@ -9,6 +9,7 @@
     "serve": "npx --yes serve@14.2.4 ."
   },
   "devDependencies": {
-    "playwright": "1.55.0"
+    "playwright": "1.55.0",
+    "pngjs": "7.0.0"
   }
 }
