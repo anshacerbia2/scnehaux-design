@@ -1,0 +1,25 @@
+<!-- @dsCard group="Forms" height=200 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Radio</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><fieldset style="border:0;margin:0;padding:0" class="col"><legend class="scnx-text" data-variant="label-default" style="font-weight:500;margin-bottom:var(--ds-dimension-spacing-stack-default)">Build machine</legend>
+  <label class="scnx-radio"><input type="radio" name="m"><span data-part="indicator"></span><span>Standard<span data-part="description">2 vCPU, 4 GB</span></span></label>
+  <label class="scnx-radio"><input type="radio" name="m" checked><span data-part="indicator"></span><span>Performance<span data-part="description">8 vCPU, 16 GB</span></span></label>
+  <label class="scnx-radio"><input type="radio" name="m" disabled><span data-part="indicator"></span><span>Dedicated (Enterprise)</span></label>
+</fieldset></div>
+</body>
+</html>

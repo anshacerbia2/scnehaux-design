@@ -1,0 +1,1 @@
+The Scnehaux UI mark. `scnehaux-mark.svg`: ink tile #1d2024 with #fcfcfd parts, for light grounds. `scnehaux-mark-inverse.svg`: tile #edeef0 with #101113 parts, for dark grounds. Both keep the check in Scnx Blue #0a6cf2. Minimum size 20px; clear space 4px.

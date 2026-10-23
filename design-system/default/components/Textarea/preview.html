@@ -1,0 +1,23 @@
+<!-- @dsCard group="Forms" height=230 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Textarea</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="max-inline-size:32rem">
+  <div class="scnx-text-field"><label data-part="label" for="ta">Release notes</label><textarea data-part="input" id="ta" aria-describedby="tad">Adds Badge, Alert and IconButton. Every pair meets 4.5:1 in both modes.</textarea><p data-part="description" id="tad" style="display:flex">Markdown is supported.<span data-part="count">72 / 500</span></p></div>
+</div>
+</body>
+</html>

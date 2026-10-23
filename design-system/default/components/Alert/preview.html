@@ -1,0 +1,27 @@
+<!-- @dsCard group="Feedback" height=450 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alert</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv" style="gap:var(--ds-dimension-spacing-stack-default)">
+  <div class="scnx-alert" data-scheme="info" role="status"><span data-part="icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></span><div data-part="content"><div data-part="title">A new version is available</div><div data-part="body">Version 2.1 adds the materials tokens.</div></div><div data-part="actions"><button class="scnx-btn" data-variant="secondary" data-size="small">Update</button></div></div>
+  <div class="scnx-alert" data-scheme="success" role="status"><span data-part="icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.7 2.7L16 9.6"/></svg></span><div data-part="content"><div data-part="title">Deployment ready</div><div data-part="body">acme-dashboard is live on 3 regions.</div></div></div>
+  <div class="scnx-alert" data-scheme="warning" role="status"><span data-part="icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5L2.8 19.5h18.4z"/><path d="M12 10v4M12 16.9v.1"/></svg></span><div data-part="content"><div data-part="title">Build minutes at 90%</div><div data-part="body">Builds pause at the limit on 1 November.</div></div><div data-part="actions"><button class="scnx-btn" data-variant="secondary" data-size="small">Upgrade</button></div></div>
+  <div class="scnx-alert" data-scheme="danger" role="alert"><span data-part="icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg></span><div data-part="content"><div data-part="title">Build failed</div><div data-part="body">Type error in src/app/page.tsx on line 42.</div></div><div data-part="actions"><button class="scnx-btn" data-variant="secondary" data-size="small">View logs</button></div></div>
+  <div class="scnx-alert" data-scheme="neutral" role="status"><span data-part="icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></span><div data-part="content"><div data-part="title">Scheduled maintenance</div><div data-part="body">The dashboard is read-only on Sunday 02:00–03:00 WIB.</div></div></div>
+</div>
+</body>
+</html>

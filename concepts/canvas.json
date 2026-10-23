@@ -1,0 +1,29 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "A-SaaS.dc.html": {"expand": "fill", "h": 1680, "title": "A · SaaS Home", "w": 1440, "x": 1520, "y": 0},
+    "B-Console.dc.html": {"expand": "fill", "h": 1440, "title": "B · Client Dev Console", "w": 1440, "x": 0, "y": 2100},
+    "B-SaaS.dc.html": {"expand": "fill", "h": 1560, "title": "B · SaaS Home", "w": 1440, "x": 1520, "y": 2100},
+    "Main.dc.html": {"expand": "fill", "h": 1680, "title": "A · Platform Console", "w": 1440, "x": 0, "y": 0},
+    "C-Internal.dc.html": {"expand": "fill", "h": 1640, "title": "Internal · Opsi C — Schematic", "w": 1440, "x": 0, "y": 4080},
+    "D-Internal.dc.html": {"expand": "fill", "h": 1640, "title": "Internal · Opsi D — Stratum", "w": 1440, "x": 1520, "y": 4080},
+    "IAM-Reachability.dc.html": {"expand": "fill", "h": 1960, "title": "Internal · IAM — Reachability", "is_interactive": true, "w": 1440, "x": 0, "y": 6140},
+    "Docs-Landing.dc.html": {"expand": "fill", "h": 5600, "title": "Public · Landing (global)", "is_interactive": true, "w": 1440, "x": 0, "y": 8520},
+    "Docs-Home.dc.html": {"expand": "fill", "h": 2480, "title": "Signed in · Workspace home", "is_interactive": true, "w": 1440, "x": 1520, "y": 8520},
+    "Docs-Button.dc.html": {"expand": "fill", "h": 2900, "title": "Docs · Components / Button", "is_interactive": true, "w": 1440, "x": 3040, "y": 8520}
+  },
+  "createdOnFiles": {"at": "2026-10-20T09:55:00Z", "v": 1},
+  "designSystems": [],
+  "launch": {"view": "canvas"},
+  "notes": {
+    "rowA": {"kind": "title1", "maxW": 2960, "text": "Konsep A — Command Surface", "w": 240, "x": 0, "y": -300},
+    "rowB": {"kind": "title1", "maxW": 2960, "text": "Konsep B — Spatial Canvas · client-facing", "w": 240, "x": 0, "y": 1800},
+    "rowC": {"kind": "title1", "maxW": 2960, "text": "Internal Console — 2 opsi", "w": 240, "x": 0, "y": 3780},
+    "rowD": {"kind": "title1", "maxW": 1440, "text": "IAM — Reachability", "w": 240, "x": 0, "y": 5840},
+    "rowE": {"kind": "title1", "maxW": 4480, "text": "Docs — public landing → signed-in workspace → pillar pages", "w": 240, "x": 0, "y": 8220}
+  },
+  "order": ["Main.dc.html", "A-SaaS.dc.html", "B-Console.dc.html", "B-SaaS.dc.html", "C-Internal.dc.html", "D-Internal.dc.html", "IAM-Reachability.dc.html", "Docs-Landing.dc.html", "Docs-Home.dc.html", "Docs-Button.dc.html"],
+  "pages": [],
+  "title": "Platform Dashboard Concepts"
+}

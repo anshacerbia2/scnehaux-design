@@ -1,0 +1,21 @@
+<!-- @dsCard group="Data display" height=120 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Code</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><p class="scnx-text" data-variant="body-default">Install <code class="scnx-code">@scnx/system</code>, then set <code class="scnx-code" data-intent="primary">data-scnx-theme</code> on the root.</p><div class="row"><code class="scnx-code" data-intent="success">PASS</code><code class="scnx-code" data-intent="warning">--force</code><code class="scnx-code" data-intent="danger">ENOENT</code><code class="scnx-code" data-intent="info">v2.1.0</code></div></div>
+</body>
+</html>

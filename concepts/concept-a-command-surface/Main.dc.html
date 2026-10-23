@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Platform Console — Command Surface</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#EDEEF0}a:hover{color:#FFFFFF}
+button{font:inherit;cursor:pointer}
+input::placeholder{color:#8B909A}
+.chip:hover{border-color:#4A4F59 !important;color:#EDEEF0 !important}
+.nav:hover{color:#EDEEF0 !important}
+@keyframes flow{0%{transform:translateX(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(50px);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.flow{animation:flow 1.8s linear infinite}
+.flow2{animation:flow 1.8s linear .9s infinite}
+.pulse{animation:pulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.flow,.flow2,.pulse{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0A0B0D; color: #EDEEF0; font-family: 'Geist', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 18px 28px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid #1C1F25">
+  <div style="display: flex; align-items: center; gap: 14px">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="15" height="15" rx="4" fill="none" stroke="#EDEEF0" stroke-width="1.5"></rect><rect x="10" y="10" width="15" height="15" rx="4" fill="{{accent}}"></rect></svg>
+    <button type="button" style="display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid #23262D; border-radius: 10px; padding: 0 12px; min-height: 40px; color: #EDEEF0; font-size: 14px">
+      <span style="color: #8B909A">acme</span><span style="color: #4A4F59">/</span><span>production</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B909A" stroke-width="2" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg>
+    </button>
+  </div>
+  <nav aria-label="Spaces" style="display: flex; flex-wrap: wrap; gap: 2px">
+    <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 0 14px; min-height: 40px; border-radius: 10px; background: #16191E; color: #EDEEF0; text-decoration: none; font-size: 14px"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>Overview</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Runtime</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Models</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 8px; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Identity<span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #0A0B0D; background: #FFB020; border-radius: 6px; padding: 1px 6px">1</span></a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Keys</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Observe</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; padding: 0 14px; min-height: 40px; border-radius: 10px; color: #8B909A; text-decoration: none; font-size: 14px">Billing</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px">
+    <span style="display: flex; align-items: center; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A; padding-right: 6px"><span class="pulse" style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span>NOMINAL</span>
+    <button type="button" aria-label="Notifications" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid #23262D; border-radius: 10px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EDEEF0" stroke-width="1.6" aria-hidden="true"><path d="M6 8a6 6 0 1112 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg>
+    </button>
+    <button type="button" aria-label="Account menu" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: #23262D; color: #EDEEF0; font-size: 13px; font-weight: 500">AK</button>
+  </div>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+  <div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding-top: 18px">
+    <div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8B909A">TUE 20 OCT · 16:48 WIB · AP-SOUTHEAST-1</div>
+    <h1 style="margin: 0; font-size: 54px; line-height: 1.02; font-weight: 400; letter-spacing: -0.035em; max-width: 780px">Everything is running.<br><span style="color: #8B909A">Two things need your judgment.</span></h1>
+
+    <div style="display: flex; align-items: center; gap: 14px; background: #111317; border: 1px solid #2E323A; border-radius: 18px; padding: 0 10px 0 22px; min-height: 70px">
+      <span aria-hidden="true" style="font-family: 'Geist Mono', monospace; font-size: 22px; color: {{accent}}">›</span>
+      <label for="intent" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Command the platform</label>
+      <input id="intent" type="text" placeholder="deploy support-agent@2.4 to prod · canary 10% · rollback if p95 &gt; 250ms" style="flex: 1; min-width: 0; height: 66px; background: transparent; border: 0; outline: none; color: #EDEEF0; font-family: inherit; font-size: 17px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A; border: 1px solid #2E323A; border-radius: 6px; padding: 3px 7px">⌘K</span>
+      <button type="button" style="height: 48px; padding: 0 22px; border: 0; border-radius: 12px; background: {{accent}}; color: #0A0B0D; font-size: 14px; font-weight: 600">Run</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px">
+      <button class="chip" type="button" style="min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #23262D; background: transparent; color: #8B909A; font-size: 13px">Rotate keys older than 90 days</button>
+      <button class="chip" type="button" style="min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #23262D; background: transparent; color: #8B909A; font-size: 13px">Why did cost spike at 02:00?</button>
+      <button class="chip" type="button" style="min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #23262D; background: transparent; color: #8B909A; font-size: 13px">Who touched prod-db today?</button>
+      <button class="chip" type="button" style="min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #23262D; background: transparent; color: #8B909A; font-size: 13px">Scale embed workers ×2</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 12px">
+      <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px; background: #111317; border: 1px solid #23262D; border-radius: 16px; padding: 18px">
+        <div style="display: flex; align-items: center; gap: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB020">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z" fill="#FFB020"></path></svg>IDENTITY · DRIFT
+        </div>
+        <div style="font-size: 16px; line-height: 1.4">role/ml-engineer inherited <span style="font-family: 'Geist Mono', monospace; color: #FFB020">s3:*</span> through group data-platform</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">detected 14:20 · 6 principals · blast radius: 3 buckets</div>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid #2E323A; background: #16191E; color: #EDEEF0; font-size: 13px">Review diff</button>
+          <button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid #2E323A; background: transparent; color: #EDEEF0; font-size: 13px">Revert</button>
+        </div>
+      </div>
+      <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px; background: #111317; border: 1px solid #23262D; border-radius: 16px; padding: 18px">
+        <div style="display: flex; align-items: center; gap: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB020">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z" fill="#FFB020"></path></svg>RUNTIME · LATENCY
+        </div>
+        <div style="font-size: 16px; line-height: 1.4">support-agent p95 up <span style="font-family: 'Geist Mono', monospace; color: #FFB020">+38%</span> since canary deploy at 14:02</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">correlated: tool search_kb · confidence high</div>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid #2E323A; background: #16191E; color: #EDEEF0; font-size: 13px">Investigate</button>
+          <button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid #2E323A; background: transparent; color: #EDEEF0; font-size: 13px">Roll back canary</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside aria-label="Pulse" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8B909A">PULSE</span>
+      <span style="display: flex; align-items: center; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>LIVE · 60S</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #23262D; border-radius: 14px; overflow: hidden">
+      <sc-for list="{{metrics}}" as="m" hint-placeholder-count="4">
+        <div style="background: #111317; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A">{{m.label}}</span>
+          <div style="display: flex; align-items: baseline; gap: 4px"><span style="font-size: 34px; font-weight: 300; letter-spacing: -0.03em">{{m.value}}</span><span style="font-size: 14px; color: #8B909A">{{m.unit}}</span></div>
+          <div style="display: flex; align-items: flex-end; gap: 2px; height: 28px">
+            <sc-for list="{{m.bars}}" as="b" hint-placeholder-count="24">
+              <div style="flex: 1; height: {{b.h}}px; background: {{b.c}}; border-radius: 1px"></div>
+            </sc-for>
+          </div>
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: {{m.dc}}">{{m.delta}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8B909A">Spend this month</span><span style="font-family: 'Geist Mono', monospace">$18.2k <span style="color: #8B909A">/ $28k cap</span></span></div>
+      <div style="height: 6px; border-radius: 3px; background: #23262D; overflow: hidden"><div style="width: 65%; height: 100%; background: {{accent}}"></div></div>
+      <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">forecast: lands at 91% of cap · on track</div>
+    </div>
+  </aside>
+</section>
+
+<section aria-label="Runtime fabric" style="background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 20px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -0.02em">Runtime fabric</h2>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">request path · every hop, live</span>
+    </div>
+    <div role="group" aria-label="Time window" style="display: flex; background: #0A0B0D; border: 1px solid #23262D; border-radius: 12px; padding: 3px">
+      <button type="button" aria-pressed="true" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: #23262D; color: #EDEEF0; font-size: 13px">Live</button>
+      <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #8B909A; font-size: 13px">1h</button>
+      <button type="button" aria-pressed="false" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #8B909A; font-size: 13px">24h</button>
+    </div>
+  </div>
+
+  <div style="overflow-x: auto">
+    <div style="display: flex; align-items: center; min-width: 1100px">
+      <div style="flex: 1 1 0; min-width: 0; border: 1px solid #2E323A; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A"><span>01 · EDGE</span><span style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span></div>
+        <div style="font-size: 15px">gateway</div>
+        <div style="display: flex; align-items: baseline; gap: 4px"><span style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em">12.4k</span><span style="font-size: 13px; color: #8B909A">rps</span></div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">3 regions · 0 drops</div>
+      </div>
+      <div style="flex: 0 0 56px; position: relative; height: 1px; border-top: 1px dashed #3A3F48"><span class="flow" style="position: absolute; left: 0; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span></div>
+      <div style="flex: 1 1 0; min-width: 0; border: 1px solid #2E323A; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A"><span>02 · AUTH</span><span style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span></div>
+        <div style="font-size: 15px">identity · policy</div>
+        <div style="display: flex; align-items: baseline; gap: 4px"><span style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em">3.1</span><span style="font-size: 13px; color: #8B909A">ms eval</span></div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">142 denies / 1h · 0 bypass</div>
+      </div>
+      <div style="flex: 0 0 56px; position: relative; height: 1px; border-top: 1px dashed #3A3F48"><span class="flow2" style="position: absolute; left: 0; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span></div>
+      <div style="flex: 1.35 1 0; min-width: 0; border: 1px solid {{accent}}; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #14171B">
+        <div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A"><span>03 · MODEL POOL</span><span style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span></div>
+        <div style="font-size: 15px">router → 3 models</div>
+        <div style="display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px"><div style="width: 58%; background: {{accent}}"></div><div style="width: 34%; background: #EDEEF0"></div><div style="width: 8%; background: #4A4F59"></div></div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A"><span><span style="color: #EDEEF0">58%</span> frontier-l</span><span><span style="color: #EDEEF0">34%</span> fast-s</span><span><span style="color: #EDEEF0">8%</span> embed-v3</span></div>
+      </div>
+      <div style="flex: 0 0 56px; position: relative; height: 1px; border-top: 1px dashed #3A3F48"><span class="flow" style="position: absolute; left: 0; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: #FFB020"></span></div>
+      <div style="flex: 1 1 0; min-width: 0; border: 1px solid #5A4520; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A"><span>04 · TOOLS</span><span style="width: 7px; height: 7px; border-radius: 50%; background: #FFB020"></span></div>
+        <div style="font-size: 15px">search_kb · crm · email</div>
+        <div style="display: flex; align-items: baseline; gap: 4px"><span style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: #FFB020">412</span><span style="font-size: 13px; color: #8B909A">ms p95</span></div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">search_kb degraded since 14:02</div>
+      </div>
+      <div style="flex: 0 0 56px; position: relative; height: 1px; border-top: 1px dashed #3A3F48"><span class="flow2" style="position: absolute; left: 0; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span></div>
+      <div style="flex: 1 1 0; min-width: 0; border: 1px solid #2E323A; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8B909A"><span>05 · MEMORY</span><span style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span></div>
+        <div style="font-size: 15px">vector · session</div>
+        <div style="display: flex; align-items: baseline; gap: 4px"><span style="font-size: 28px; font-weight: 300; letter-spacing: -0.03em">71</span><span style="font-size: 13px; color: #8B909A">% cache hit</span></div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">48M vectors · 9ms read</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px 28px; padding-top: 16px; border-top: 1px solid #1C1F25; font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">
+    <span>guardrails <span style="color: #EDEEF0">0 blocks</span> / 1h</span>
+    <span>cost / 1k req <span style="color: #EDEEF0">$0.84</span></span>
+    <span>failover <span style="color: #EDEEF0">ready</span> · ap-northeast-1</span>
+    <span>active agents <span style="color: #EDEEF0">14</span></span>
+    <span>open traces <span style="color: #EDEEF0">2,316</span></span>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px">
+  <div style="flex: 1 1 360px; min-width: 0; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 500">Identity</h2>
+      <a href="#" style="font-size: 13px; color: #8B909A; text-decoration: none">Access graph →</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 26px; font-weight: 300">312</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">HUMANS</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 26px; font-weight: 300">958</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">SERVICES</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 26px; font-weight: 300">14</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">AGENTS</span></div>
+    </div>
+    <div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8B909A; padding-top: 14px; border-top: 1px solid #1C1F25">ELEVATED RIGHT NOW</div>
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <sc-for list="{{elevated}}" as="e" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span style="width: 32px; height: 32px; border-radius: 9px; background: #23262D; display: flex; align-items: center; justify-content: center; font-size: 12px">{{e.init}}</span>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px">{{e.who}}</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">{{e.scope}}</span></div>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 12px">{{e.left}}</span>
+          </div>
+          <div style="height: 2px; background: #23262D; border-radius: 1px"><div style="height: 100%; width: {{e.pct}}%; background: {{accent}}"></div></div>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" style="margin-top: auto; min-height: 44px; border-radius: 12px; border: 1px solid #2E323A; background: #16191E; color: #EDEEF0; font-size: 14px">Grant just-in-time access</button>
+  </div>
+
+  <div style="flex: 1 1 360px; min-width: 0; background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 500">Deployments</h2>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">TODAY</span>
+    </div>
+    <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+      <sc-for list="{{deploys}}" as="d" hint-placeholder-count="4">
+        <li style="display: flex; gap: 14px">
+          <div style="display: flex; flex-direction: column; align-items: center; width: 10px; padding-top: 6px">
+            <span style="width: 9px; height: 9px; border-radius: 3px; background: {{d.c}}"></span>
+            <span style="flex: 1; width: 1px; background: #23262D; margin-top: 6px"></span>
+          </div>
+          <div style="flex: 1; min-width: 0; display: flex; justify-content: space-between; gap: 10px; padding-bottom: 20px">
+            <div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px">{{d.name}}</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">{{d.meta}}</span></div>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: {{d.c}}; white-space: nowrap">{{d.status}}</span>
+          </div>
+        </li>
+      </sc-for>
+    </ol>
+    <button type="button" style="margin-top: auto; min-height: 44px; border-radius: 12px; border: 1px solid #2E323A; background: #16191E; color: #EDEEF0; font-size: 14px">New release</button>
+  </div>
+
+  <div style="flex: 1 1 360px; min-width: 0; background: #0D0E10; border: 1px solid #23262D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 500">Agent runs</h2>
+      <span style="display: flex; align-items: center; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A"><span class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>TAIL</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 9px; font-family: 'Geist Mono', monospace; font-size: 12px">
+      <sc-for list="{{logs}}" as="l" hint-placeholder-count="9">
+        <div style="display: flex; gap: 12px; white-space: nowrap; overflow: hidden">
+          <span style="color: #8B909A">{{l.t}}</span>
+          <span style="color: #8B909A">{{l.id}}</span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: {{l.c}}">{{l.ev}}</span>
+          <span style="color: {{l.c}}">{{l.ms}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #1C1F25">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8B909A">248 runs/min · 99.2% ok</span>
+      <a href="#" style="font-size: 13px; color: #EDEEF0; text-decoration: none">Open in Observe →</a>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Timeline" style="background: #111317; border: 1px solid #23262D; border-radius: 20px; padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 16px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8B909A">TIMELINE · 24H</span>
+      <span style="font-size: 14px; color: #8B909A">Drag the playhead to replay the whole console at any moment.</span>
+    </div>
+    <div style="display: flex; gap: 8px">
+      <button type="button" style="min-height: 36px; padding: 0 14px; border-radius: 10px; border: 1px solid #2E323A; background: transparent; color: #EDEEF0; font-size: 13px">Replay incident</button>
+      <button type="button" style="min-height: 36px; padding: 0 14px; border-radius: 10px; border: 0; background: #23262D; color: #EDEEF0; font-size: 13px">Live</button>
+    </div>
+  </div>
+  <div style="position: relative; height: 64px">
+    <div style="position: absolute; left: 88.5%; right: 0; top: 0; bottom: 18px; background: rgba(255,176,32,0.08); border-radius: 6px"></div>
+    <div style="position: absolute; left: 0; right: 0; top: 10px; height: 28px; display: flex; justify-content: space-between; align-items: flex-end">
+      <sc-for list="{{ticks}}" as="k" hint-placeholder-count="49">
+        <span style="width: 1px; height: {{k.h}}px; background: #2E323A"></span>
+      </sc-for>
+    </div>
+    <span title="billing-sync rolled back" style="position: absolute; left: 40.5%; top: 2px; width: 9px; height: 9px; border-radius: 2px; background: #FF6B6B; transform: translateX(-50%) rotate(45deg)"></span>
+    <span title="embed-workers scaled" style="position: absolute; left: 68.5%; top: 2px; width: 8px; height: 8px; border-radius: 2px; background: {{accent}}; transform: translateX(-50%)"></span>
+    <span title="router-policy r118" style="position: absolute; left: 78.6%; top: 2px; width: 8px; height: 8px; border-radius: 2px; background: {{accent}}; transform: translateX(-50%)"></span>
+    <span title="support-agent canary" style="position: absolute; left: 88.5%; top: 2px; width: 8px; height: 8px; border-radius: 2px; background: #FFB020; transform: translateX(-50%)"></span>
+    <div style="position: absolute; right: 0; top: -4px; bottom: 16px; width: 2px; background: {{accent}}"></div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 14px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8B909A">
+      <span style="position: absolute; left: 0">16:48</span>
+      <span style="position: absolute; left: 30%; transform: translateX(-50%)">00:00</span>
+      <span style="position: absolute; left: 55%; transform: translateX(-50%)">06:00</span>
+      <span style="position: absolute; left: 80%; transform: translateX(-50%)">12:00</span>
+      <span style="position: absolute; right: 0; color: #EDEEF0">NOW</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#D4FF3A","options":["#D4FF3A","#7CF7FF","#FF7A3D","#B9A6FF"]},"$preview":{"width":1440,"height":1680}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#D4FF3A';
+    const bars = (seed, warn) => Array.from({ length: 24 }, (_, i) => {
+      const h = Math.min(28, Math.round(6 + (Math.sin(i * 0.62 + seed) + 1) * 8 + (i % 4) * 1.6 + (warn && i > 17 ? (i - 17) * 1.4 : 0)));
+      return { h: h, c: i > 19 ? (warn ? '#FFB020' : accent) : '#2E323A' };
+    });
+    return {
+      accent: accent,
+      metrics: [
+        { label: 'REQUESTS / S', value: '12,480', unit: '', delta: '+4.2% vs 1h', dc: '#8B909A', bars: bars(1, false) },
+        { label: 'P95 LATENCY', value: '182', unit: 'ms', delta: '+38% · tools hop', dc: '#FFB020', bars: bars(2.4, true) },
+        { label: 'ERROR RATE', value: '0.07', unit: '%', delta: 'within SLO 0.5%', dc: '#8B909A', bars: bars(3.7, false) },
+        { label: 'TOKENS / MIN', value: '4.2', unit: 'M', delta: '+11% vs 1h', dc: '#8B909A', bars: bars(5.1, false) }
+      ],
+      elevated: [
+        { init: 'RS', who: 'r.santoso', scope: 'prod-db · read/write · JIT', left: '38m', pct: 64 },
+        { init: 'DP', who: 'dina.p', scope: 'kms/prod · decrypt · break-glass', left: '12m', pct: 20 },
+        { init: 'SV', who: 'svc/etl-nightly', scope: 's3://lake-raw · write', left: '2h', pct: 85 }
+      ],
+      deploys: [
+        { name: 'support-agent 2.4.0', meta: 'canary 10% → prod · 14:02', status: 'WATCHING', c: '#FFB020' },
+        { name: 'router-policy r118', meta: 'cost-aware routing · 11:40', status: 'LIVE', c: accent },
+        { name: 'embed-workers', meta: 'scaled 6 → 10 · 09:15', status: 'LIVE', c: accent },
+        { name: 'billing-sync 1.9.2', meta: 'auto-rollback on error rate · 02:31', status: 'ROLLED BACK', c: '#FF6B6B' }
+      ],
+      logs: [
+        { t: '16:48:02', id: 'run_8f2a', ev: 'tool_call search_kb', ms: '412ms', c: '#FFB020' },
+        { t: '16:48:02', id: 'run_8f29', ev: 'model frontier-l · 1.2k tok', ms: '890ms', c: '#EDEEF0' },
+        { t: '16:48:01', id: 'run_8f28', ev: 'policy allow crm:read', ms: '3ms', c: '#EDEEF0' },
+        { t: '16:48:01', id: 'run_8f27', ev: 'guardrail pass pii-scan', ms: '6ms', c: '#EDEEF0' },
+        { t: '16:48:00', id: 'run_8f26', ev: 'tool_call search_kb', ms: '398ms', c: '#FFB020' },
+        { t: '16:48:00', id: 'run_8f25', ev: 'model fast-s · 310 tok', ms: '140ms', c: '#EDEEF0' },
+        { t: '16:47:59', id: 'run_8f24', ev: 'memory hit session/ctx', ms: '9ms', c: '#EDEEF0' },
+        { t: '16:47:59', id: 'run_8f23', ev: 'approval email:send → human', ms: 'wait', c: accent },
+        { t: '16:47:58', id: 'run_8f22', ev: 'completed · 4 steps', ms: '1.9s', c: '#EDEEF0' }
+      ],
+      ticks: Array.from({ length: 49 }, (_, i) => ({ h: i % 6 === 0 ? 18 : 8 }))
+    };
+  }
+}
+</script>
+</body>
+</html>

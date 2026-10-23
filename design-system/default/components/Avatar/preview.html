@@ -1,0 +1,21 @@
+<!-- @dsCard group="Data display" height=110 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Avatar</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="row" style="gap:var(--ds-dimension-spacing-inset-comfortable)"><div class="row"><span class="scnx-avatar" data-size="small">AN</span><span class="scnx-avatar" data-size="medium">AN</span><span class="scnx-avatar" data-size="large">AN<span data-part="status" aria-label="Online"></span></span></div><div class="row"><span class="scnx-avatar" data-size="small" data-shape="square">AC</span><span class="scnx-avatar" data-size="medium" data-shape="square">AC</span><span class="scnx-avatar" data-size="large" data-shape="square">AC</span></div><span class="scnx-avatar-group"><span class="scnx-avatar" data-size="medium">AN</span><span class="scnx-avatar" data-size="medium">BS</span><span class="scnx-avatar" data-size="medium">CW</span><span class="scnx-avatar" data-size="medium">+4</span></span></div></div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- @dsCard group="Feedback" height=140 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Badge</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv">
+  <div class="row"><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="medium">Neutral</span><span class="scnx-badge" data-scheme="primary" data-emphasis="subtle" data-size="medium">Primary</span><span class="scnx-badge" data-scheme="info" data-emphasis="subtle" data-size="medium">Info</span><span class="scnx-badge" data-scheme="success" data-emphasis="subtle" data-size="medium">Success</span><span class="scnx-badge" data-scheme="warning" data-emphasis="subtle" data-size="medium">Warning</span><span class="scnx-badge" data-scheme="danger" data-emphasis="subtle" data-size="medium">Danger</span></div>
+  <div class="row"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="medium">Neutral</span><span class="scnx-badge" data-scheme="primary" data-emphasis="solid" data-size="medium">Primary</span><span class="scnx-badge" data-scheme="info" data-emphasis="solid" data-size="medium">Info</span><span class="scnx-badge" data-scheme="success" data-emphasis="solid" data-size="medium">Success</span><span class="scnx-badge" data-scheme="warning" data-emphasis="solid" data-size="medium">Warning</span><span class="scnx-badge" data-scheme="danger" data-emphasis="solid" data-size="medium">Danger</span></div>
+  <div class="row"><span class="scnx-badge" data-scheme="success" data-emphasis="subtle" data-size="medium"><span data-part="dot"></span>Live</span><span class="scnx-badge" data-scheme="warning" data-emphasis="subtle" data-size="medium"><span data-part="dot"></span>Building</span><span class="scnx-badge" data-scheme="danger" data-emphasis="subtle" data-size="medium"><span data-part="dot"></span>Failed</span><span class="scnx-badge" data-scheme="primary" data-emphasis="subtle" data-size="small">Beta</span><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">v2.0</span></div>
+</div>
+</body>
+</html>

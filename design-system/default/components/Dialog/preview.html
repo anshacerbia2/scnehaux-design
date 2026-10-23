@@ -1,0 +1,27 @@
+<!-- @dsCard group="Overlays" height=380 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dialog</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+.stage-dim{position:relative;display:grid;place-items:center;min-block-size:380px;padding:var(--ds-dimension-spacing-inset-comfortable);background:var(--ds-color-neutral-surface-canvas-default)}.scnx-scrim{position:absolute;inset:0}
+</style>
+</head>
+<body>
+<div class="stage-dim"><div class="scnx-scrim"></div><div class="scnx-dialog" role="dialog" aria-modal="true" aria-labelledby="dt" style="position:relative">
+  <h2 data-part="title" id="dt">Delete acme-dashboard?</h2>
+  <p data-part="description">This removes 128 deployments, 3 domains and all environment variables. It cannot be undone.</p>
+  <div data-part="body"><div class="scnx-text-field"><label data-part="label" for="dc">Type <span class="scnx-code">acme-dashboard</span> to confirm</label><input data-part="input" id="dc" placeholder="acme-dashboard"></div></div>
+  <div data-part="actions"><button class="scnx-btn" data-variant="ghost" data-size="medium">Cancel</button><button class="scnx-btn" data-variant="danger" data-size="medium">Delete project</button></div>
+  <div data-part="close"><button class="scnx-icon-btn" data-variant="ghost" data-size="small" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+</div></div>
+</body>
+</html>

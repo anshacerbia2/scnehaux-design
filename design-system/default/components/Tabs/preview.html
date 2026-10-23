@@ -1,0 +1,24 @@
+<!-- @dsCard group="Navigation" height=240 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tabs</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv">
+  <div class="scnx-tabs"><div data-part="list" role="tablist" aria-label="Project"><button data-part="tab" role="tab" aria-selected="true">Overview</button><button data-part="tab" role="tab" aria-selected="false">Deployments<span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">128</span></button><button data-part="tab" role="tab" aria-selected="false">Analytics</button><button data-part="tab" role="tab" aria-selected="false" disabled>Firewall</button></div>
+  <div data-part="panel" role="tabpanel">The production deployment serves 3 regions. Last build: 41 seconds.</div></div>
+</div>
+</body>
+</html>

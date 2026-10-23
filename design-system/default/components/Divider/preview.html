@@ -1,0 +1,21 @@
+<!-- @dsCard group="Data display" height=150 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Divider</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><hr class="scnx-divider" data-orientation="horizontal" data-color="muted"><div class="scnx-divider-label"><hr class="scnx-divider" data-orientation="horizontal"><span class="scnx-eyebrow">or continue with</span><hr class="scnx-divider" data-orientation="horizontal"></div><div class="row" style="block-size:1.5rem"><span class="muted">Docs</span><hr class="scnx-divider" data-orientation="vertical"><span class="muted">Changelog</span><hr class="scnx-divider" data-orientation="vertical"><span class="muted">Status</span></div></div>
+</body>
+</html>

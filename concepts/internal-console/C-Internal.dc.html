@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Internal Control Plane — Schematic</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F4F6}
+a{color:#0B0D12}a:hover{color:#C23D08}
+button{font:inherit;cursor:pointer}
+.nav:hover{color:#0B0D12 !important}
+.row:hover{background:#F7F8FA}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F3F4F6; color: #0B0D12; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-feature-settings: 'tnum' 1">
+<div style="max-width: 1440px; margin: 0 auto; padding: 0 28px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding: 16px 0 14px; border-bottom: 1.5px solid #0B0D12">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="1.5" y="1.5" width="25" height="25" fill="none" stroke="#0B0D12" stroke-width="1.5"></rect><path d="M14 4v20M4 14h20" stroke="#0B0D12" stroke-width="1"></path><circle cx="14" cy="14" r="5" fill="{{accent}}"></circle></svg>
+    <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.01em">Control Plane</span>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #C23D08; border: 1.5px solid #C23D08; padding: 3px 7px; transform: rotate(-2deg)">INTERNAL · RESTRICTED</span>
+  </div>
+  <nav aria-label="Sheets" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
+    <a href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #0B0D12; text-decoration: none; font-size: 14px; font-weight: 500; box-shadow: inset 0 -2px 0 #0B0D12"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #5A6170">01</span>Overview</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">02</span>Tenants</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">03</span>Fleet</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">04</span>Identity</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">05</span>Models</a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">06</span>Incidents<span style="width: 6px; height: 6px; background: {{accent}}"></span></a>
+    <a class="nav" href="#" style="display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; color: #5A6170; text-decoration: none; font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">07</span>Audit</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px">
+    <button type="button" style="display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 12px; border: 1px solid #0B0D12; background: #FFFFFF; color: #5A6170; font-size: 13px; min-width: 200px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B0D12" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+      <span style="flex: 1; text-align: left">Find tenant, key, trace</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px">⌘K</span>
+    </button>
+    <button type="button" aria-label="Account menu" style="width: 40px; height: 40px; border: 0; background: #0B0D12; color: #FFFFFF; font-size: 13px; font-weight: 500">AK</button>
+  </div>
+</header>
+
+<div aria-hidden="true" style="display: flex; height: 24px; border-bottom: 1px solid #C9CED6; margin-top: -8px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #5A6170">
+  <sc-for list="{{cols}}" as="c" hint-placeholder-count="12">
+    <div style="flex: 1; border-left: 1px solid #C9CED6; padding: 5px 6px; display: flex; justify-content: space-between"><span>{{c}}</span><span style="width: 1px; height: 4px; background: #C9CED6; align-self: flex-end; margin-right: 50%"></span></div>
+  </sc-for>
+</div>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+  <div style="flex: 999 1 720px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-01</span>REQUEST ANATOMY · P95 · ALL TENANTS</span>
+      <span>A1 — H2</span>
+    </div>
+    <div style="padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 26px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+        <h1 style="margin: 0; font-size: 40px; line-height: 1.05; font-weight: 300; letter-spacing: -0.03em; max-width: 620px">Every millisecond, <span style="font-weight: 500">dimensioned.</span></h1>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A6170">scale 1 : live · window 60 s</span>
+      </div>
+
+      <div style="overflow-x: auto">
+        <div style="display: flex; min-width: 820px; gap: 0">
+          <div style="flex: 182 1 0; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex">
+              <sc-for list="{{hops}}" as="h" hint-placeholder-count="6">
+                <div style="flex: {{h.ms}} 1 0; min-width: 64px; display: flex; flex-direction: column; gap: 6px">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-align: center; color: {{h.tc}}">{{h.ms}} ms</span>
+                  <div style="position: relative; height: 9px; border-left: 1px solid #0B0D12; border-right: 1px solid #0B0D12; margin: 0 1px"><span style="position: absolute; left: 0; right: 0; top: 4px; height: 1px; background: #0B0D12"></span></div>
+                  <div style="height: 56px; margin: 0 1px; background: {{h.bg}}; border: {{h.b}}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; padding: 0 10px; gap: 2px">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: {{h.fc}}">{{h.n}}</span>
+                    <span style="font-size: 12px; color: {{h.fc}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{h.d}}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="position: relative; height: 22px; margin: 0 1px; border-left: 1px solid #0B0D12; border-right: 1px solid #0B0D12">
+              <span style="position: absolute; left: 0; right: 0; top: 10px; height: 1px; background: #0B0D12"></span>
+              <span style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); background: #FFFFFF; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500">182 ms  p95 · global</span>
+            </div>
+          </div>
+          <div style="flex: 68 1 0; min-width: 120px; display: flex; flex-direction: column; gap: 10px; position: relative">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-align: center; color: #5A6170">68 ms</span>
+            <div style="height: 9px"></div>
+            <div style="height: 56px; border: 1px dashed #9AA1AD; border-left: 0; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">HEADROOM</div>
+            <span style="position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: {{accent}}"></span>
+            <span style="position: absolute; right: 8px; bottom: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #C23D08">SLO 250 ms</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #E4E7EC">
+        <div style="padding: 16px 16px 0 0; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">REQ / S</span><span style="font-size: 30px; font-weight: 300; letter-spacing: -0.02em">48,210</span></div>
+        <div style="padding: 16px 16px 0; border-left: 1px solid #E4E7EC; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">ERROR RATE</span><span style="font-size: 30px; font-weight: 300; letter-spacing: -0.02em">0.07%</span></div>
+        <div style="padding: 16px 16px 0; border-left: 1px solid #E4E7EC; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">ACTIVE TENANTS</span><span style="font-size: 30px; font-weight: 300; letter-spacing: -0.02em">1,906</span></div>
+        <div style="padding: 16px 0 0 16px; border-left: 1px solid #E4E7EC; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">TOKENS / MIN</span><span style="font-size: 30px; font-weight: 300; letter-spacing: -0.02em">17.6M</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 400px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-02</span>REGIONS · CAPACITY</span>
+      <span>I1 — L2</span>
+    </div>
+    <div style="padding: 8px 18px 18px; display: flex; flex-direction: column">
+      <sc-for list="{{regions}}" as="r" hint-placeholder-count="6">
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 52px; border-bottom: 1px solid #EEF0F3">
+          <span style="width: 10px; height: 10px; box-sizing: border-box; background: {{r.fill}}; border: 2px solid {{r.sc}}"></span>
+          <div style="flex: 0 0 104px; display: flex; flex-direction: column; gap: 1px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500">{{r.code}}</span><span style="font-size: 11px; color: #5A6170">{{r.name}}</span></div>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+            <div style="position: relative; height: 10px; border: 1px solid #0B0D12; box-sizing: border-box">
+              <div style="height: 100%; width: {{r.cap}}%; background: {{r.bar}}"></div>
+              <span style="position: absolute; left: 80%; top: -4px; bottom: -4px; width: 1px; background: #C23D08"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #5A6170"><span>{{r.cap}}% cap</span><span>{{r.rps}}</span></div>
+          </div>
+        </div>
+      </sc-for>
+      <span style="padding-top: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5A6170">red tick = 80% scale-out threshold</span>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+  <div style="flex: 999 1 520px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-03</span>TENANTS · TOP BY LOAD</span>
+      <span>A3 — E4</span>
+    </div>
+    <div style="overflow-x: auto; padding: 4px 18px 16px">
+      <table style="width: 100%; min-width: 520px; border-collapse: collapse; font-size: 13px">
+        <thead>
+          <tr style="text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">
+            <th style="padding: 10px 8px 10px 0; font-weight: 500; border-bottom: 1px solid #0B0D12">TENANT</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12">PLAN</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12; width: 34%">SHARE OF LOAD</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12; text-align: right">SPEND MTD</th>
+            <th style="padding: 10px 0 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12; text-align: right">FLAG</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{tenants}}" as="t" hint-placeholder-count="6">
+            <tr class="row" style="border-bottom: 1px solid #EEF0F3">
+              <td style="padding: 12px 8px 12px 0; font-weight: 500">{{t.name}}<span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; color: #5A6170">{{t.id}}</span></td>
+              <td style="padding: 12px 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{t.plan}}</td>
+              <td style="padding: 12px 8px"><div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 6px; background: #EEF0F3"><div style="height: 100%; width: {{t.share}}%; background: #0B0D12"></div></div><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; width: 34px; text-align: right">{{t.share}}%</span></div></td>
+              <td style="padding: 12px 8px; font-family: 'IBM Plex Mono', monospace; text-align: right">{{t.spend}}</td>
+              <td style="padding: 12px 0 12px 8px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-align: right; color: {{t.fc}}">{{t.flag}}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 340px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-04</span>GPU POOLS</span>
+      <span>F3 — H4</span>
+    </div>
+    <div style="padding: 18px; display: flex; flex-direction: column; gap: 20px">
+      <sc-for list="{{pools}}" as="p" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 14px; font-weight: 500">{{p.name}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{p.tc}}">{{p.used}}%</span></div>
+          <div style="position: relative; height: 14px; border-bottom: 1px solid #0B0D12">
+            <div style="position: absolute; left: 0; bottom: 3px; height: 8px; width: {{p.res}}%; border: 1px solid #0B0D12; box-sizing: border-box"></div>
+            <div style="position: absolute; left: 0; bottom: 3px; height: 8px; width: {{p.used}}%; background: {{p.bar}}"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #5A6170"><span>0</span><span>{{p.meta}}</span><span>100</span></div>
+        </div>
+      </sc-for>
+      <div style="display: flex; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5A6170; padding-top: 4px; border-top: 1px solid #EEF0F3">
+        <span style="display: flex; align-items: center; gap: 6px; padding-top: 10px"><span style="width: 12px; height: 8px; background: #0B0D12"></span>used</span>
+        <span style="display: flex; align-items: center; gap: 6px; padding-top: 10px"><span style="width: 12px; height: 8px; border: 1px solid #0B0D12; box-sizing: border-box"></span>reserved</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 320px; min-width: 0; position: relative; background: #FFFFFF; border: 1.5px solid #0B0D12; display: flex; flex-direction: column">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; background: #0B0D12; color: #FFFFFF; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="background: {{accent}}; color: #0B0D12; padding: 1px 6px; font-weight: 500">SEV-2</span>INC-0412 · OPEN 2h 46m</span>
+      <span>I3 — L4</span>
+    </div>
+    <div style="padding: 18px; display: flex; flex-direction: column; gap: 16px; flex: 1">
+      <span style="font-size: 18px; font-weight: 500; line-height: 1.3">search_kb latency regression after support-agent 2.4 canary</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5A6170">commander r.santoso · 38 tenants affected · ap-se-1</span>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <li style="display: flex; gap: 12px">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 12px">
+              <span style="width: 12px; height: 12px; box-sizing: border-box; border: 2px solid #0B0D12; background: {{s.fill}}"></span>
+              <span style="flex: 1; width: 1px; background: #C9CED6"></span>
+            </div>
+            <div style="flex: 1; display: flex; justify-content: space-between; gap: 8px; padding-bottom: 14px"><span style="font-size: 13px; color: {{s.c}}">{{s.label}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5A6170">{{s.t}}</span></div>
+          </li>
+        </sc-for>
+      </ol>
+      <a href="#" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 44px; background: #0B0D12; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 500">Open war room →</a>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+  <div style="flex: 999 1 640px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-06</span>PRIVILEGED ACCESS · AUDIT TRAIL</span>
+      <span>A5 — G6</span>
+    </div>
+    <div style="overflow-x: auto; padding: 4px 18px 16px">
+      <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 13px">
+        <thead>
+          <tr style="text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5A6170">
+            <th style="padding: 10px 8px 10px 0; font-weight: 500; border-bottom: 1px solid #0B0D12">TIME</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12">ACTOR</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12">ACTION</th>
+            <th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12">TARGET</th>
+            <th style="padding: 10px 0 10px 8px; font-weight: 500; border-bottom: 1px solid #0B0D12">REASON</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{audit}}" as="a" hint-placeholder-count="6">
+            <tr class="row" style="border-bottom: 1px solid #EEF0F3; background: {{a.bg}}">
+              <td style="padding: 11px 8px 11px 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A6170">{{a.t}}</td>
+              <td style="padding: 11px 8px; font-weight: 500">{{a.who}}</td>
+              <td style="padding: 11px 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{a.c}}">{{a.act}}</td>
+              <td style="padding: 11px 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{a.target}}</td>
+              <td style="padding: 11px 0 11px 8px; color: #5A6170">{{a.why}}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 420px; min-width: 0; position: relative; background: #FFFFFF; border: 1px solid #D5D9E0; display: flex; flex-direction: column">
+    <span style="position: absolute; left: -1px; top: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; top: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-top: 2px solid #0B0D12"></span>
+    <span style="position: absolute; left: -1px; bottom: -1px; width: 12px; height: 12px; border-left: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-right: 2px solid #0B0D12; border-bottom: 2px solid #0B0D12"></span>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid #E4E7EC; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #5A6170">
+      <span style="display: flex; align-items: center; gap: 10px"><span style="border: 1px solid #0B0D12; color: #0B0D12; padding: 1px 6px">M-07</span>ROLLOUTS · FLAGS</span>
+      <span>H5 — L6</span>
+    </div>
+    <div style="padding: 10px 18px 18px; display: flex; flex-direction: column">
+      <sc-for list="{{rollouts}}" as="r" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 0; border-bottom: 1px solid #EEF0F3">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500">{{r.name}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: {{r.c}}">{{r.state}}</span></div>
+          <div style="display: flex; align-items: center">
+            <sc-for list="{{r.stages}}" as="g" hint-placeholder-count="4">
+              <div style="flex: 1; display: flex; align-items: center; gap: 0">
+                <span style="width: 14px; height: 14px; box-sizing: border-box; border: 2px solid #0B0D12; background: {{g.fill}}; flex: 0 0 auto"></span>
+                <span style="flex: 1; height: 2px; background: {{g.line}}"></span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #5A6170"><span style="flex: 1">1%</span><span style="flex: 1">10%</span><span style="flex: 1">50%</span><span style="flex: 1">100%</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end">
+  <div style="display: flex; flex-wrap: wrap; gap: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5A6170">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; background: #0B0D12"></span>nominal</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border: 2px solid #C23D08; box-sizing: border-box"></span>degraded</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; background: {{accent}}"></span>needs a human</span>
+  </div>
+  <div style="flex: 0 1 600px; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1.5px solid #0B0D12; background: #FFFFFF; font-family: 'IBM Plex Mono', monospace">
+    <div style="padding: 8px 12px; border-right: 1px solid #0B0D12; border-bottom: 1px solid #0B0D12; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 9px; letter-spacing: 0.12em; color: #5A6170">PROJECT</span><span style="font-size: 13px">Control Plane</span></div>
+    <div style="padding: 8px 12px; border-right: 1px solid #0B0D12; border-bottom: 1px solid #0B0D12; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 9px; letter-spacing: 0.12em; color: #5A6170">SHEET</span><span style="font-size: 13px">01 / 07 Overview</span></div>
+    <div style="padding: 8px 12px; border-bottom: 1px solid #0B0D12; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 9px; letter-spacing: 0.12em; color: #5A6170">ENV</span><span style="font-size: 13px">prod · global</span></div>
+    <div style="padding: 8px 12px; border-right: 1px solid #0B0D12; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 9px; letter-spacing: 0.12em; color: #5A6170">REVISION</span><span style="font-size: 13px">2026.10.20-1648</span></div>
+    <div style="padding: 8px 12px; border-right: 1px solid #0B0D12; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 9px; letter-spacing: 0.12em; color: #5A6170">OPERATOR</span><span style="font-size: 13px">AK · on-call</span></div>
+    <div style="padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; background: #0B0D12; color: #FFFFFF"><span style="font-size: 9px; letter-spacing: 0.12em; color: #A9B0BC">STATUS</span><span style="font-size: 13px">1 SEV-2 open</span></div>
+  </div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF5A1F","options":["#FF5A1F","#FFD23F","#3DDC97","#4D7CFF"]},"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#FF5A1F';
+    const hop = (n, ms, d, kind) => {
+      if (kind === 'focus') return { n: n, ms: ms, d: d, bg: '#0B0D12', b: '0', fc: '#FFFFFF', tc: '#0B0D12' };
+      if (kind === 'warn') return { n: n, ms: ms, d: d, bg: '#FFF1EA', b: '2px solid #C23D08', fc: '#0B0D12', tc: '#C23D08' };
+      return { n: n, ms: ms, d: d, bg: '#EEF0F3', b: '0', fc: '#0B0D12', tc: '#0B0D12' };
+    };
+    const st = (on, cur) => ({ fill: on ? '#0B0D12' : (cur ? accent : '#FFFFFF'), line: on ? '#0B0D12' : '#C9CED6' });
+    const stages = (n, cur) => [0, 1, 2, 3].map((i) => st(i < n, i === n && cur));
+    return {
+      accent: accent,
+      cols: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
+      hops: [
+        hop('EDGE', 8, 'tls · waf', ''),
+        hop('AUTH', 3, 'policy eval', ''),
+        hop('ROUTE', 2, 'r118', ''),
+        hop('MODEL', 142, 'frontier-l · fast-s · embed-v3', 'focus'),
+        hop('TOOLS', 24, 'search_kb ↑', 'warn'),
+        hop('MEM', 3, 'cache', '')
+      ],
+      regions: [
+        { code: 'ap-se-1', name: 'Jakarta', cap: 86, rps: '14.2k rps', fill: '#FFFFFF', sc: '#C23D08', bar: '#C23D08' },
+        { code: 'ap-se-2', name: 'Singapore', cap: 64, rps: '11.8k rps', fill: '#0B0D12', sc: '#0B0D12', bar: '#0B0D12' },
+        { code: 'ap-ne-1', name: 'Tokyo', cap: 58, rps: '8.9k rps', fill: '#0B0D12', sc: '#0B0D12', bar: '#0B0D12' },
+        { code: 'eu-w-1', name: 'Frankfurt', cap: 41, rps: '6.1k rps', fill: '#0B0D12', sc: '#0B0D12', bar: '#0B0D12' },
+        { code: 'us-e-1', name: 'Virginia', cap: 52, rps: '5.7k rps', fill: '#0B0D12', sc: '#0B0D12', bar: '#0B0D12' },
+        { code: 'us-w-2', name: 'Oregon', cap: 23, rps: '1.5k rps', fill: '#0B0D12', sc: '#0B0D12', bar: '#0B0D12' }
+      ],
+      tenants: [
+        { name: 'Sinar Logistics', id: 'org_7h2k', plan: 'ENT', share: 14, spend: '$41.2k', flag: '—', fc: '#5A6170' },
+        { name: 'Pelita Energi', id: 'org_3m9q', plan: 'ENT', share: 11, spend: '$33.8k', flag: 'QUOTA 92%', fc: '#C23D08' },
+        { name: 'Bahari Analytics', id: 'org_x81c', plan: 'SCALE', share: 8, spend: '$19.4k', flag: '—', fc: '#5A6170' },
+        { name: 'Kirana Group', id: 'org_p04d', plan: 'ENT', share: 6, spend: '$12.1k', flag: 'INC-0412', fc: '#C23D08' },
+        { name: 'Tirta Foods', id: 'org_5ttz', plan: 'SCALE', share: 5, spend: '$9.7k', flag: '—', fc: '#5A6170' },
+        { name: 'unknown-trial-88', id: 'org_trl88', plan: 'TRIAL', share: 4, spend: '$0', flag: 'ABUSE?', fc: '#C23D08' }
+      ],
+      pools: [
+        { name: 'frontier-l · H100', used: 84, res: 92, meta: '96 GPU · +8 queued', tc: '#C23D08', bar: '#C23D08' },
+        { name: 'fast-s · L4', used: 61, res: 75, meta: '240 GPU', tc: '#0B0D12', bar: '#0B0D12' },
+        { name: 'embed-v3 · L4', used: 38, res: 50, meta: '64 GPU', tc: '#0B0D12', bar: '#0B0D12' },
+        { name: 'burst · spot', used: 12, res: 30, meta: '0–128 elastic', tc: '#0B0D12', bar: '#0B0D12' }
+      ],
+      steps: [
+        { label: 'Detected by SLO monitor', t: '14:02', fill: '#0B0D12', c: '#0B0D12' },
+        { label: 'Triaged · tools hop isolated', t: '14:09', fill: '#0B0D12', c: '#0B0D12' },
+        { label: 'Mitigating · canary held at 10%', t: 'now', fill: accent, c: '#0B0D12' },
+        { label: 'Resolved', t: '—', fill: '#FFFFFF', c: '#5A6170' }
+      ],
+      audit: [
+        { t: '16:41:07', who: 'dina.p', act: 'BREAK-GLASS', target: 'kms/prod', why: 'INC-0412 key rotation', c: '#C23D08', bg: '#FFF6F1' },
+        { t: '16:22:50', who: 'r.santoso', act: 'jit.grant', target: 'prod-db rw', why: 'INC-0412 · 60 min', c: '#0B0D12', bg: '#FFFFFF' },
+        { t: '15:58:12', who: 'svc/deployer', act: 'release.hold', target: 'support-agent 2.4', why: 'auto · p95 guard', c: '#0B0D12', bg: '#FFFFFF' },
+        { t: '15:31:44', who: 'm.wijaya', act: 'tenant.quota', target: 'org_3m9q +20%', why: 'ticket #8812', c: '#0B0D12', bg: '#FFFFFF' },
+        { t: '14:20:03', who: 'system', act: 'policy.drift', target: 'role/ml-engineer', why: 'group inheritance', c: '#C23D08', bg: '#FFFFFF' },
+        { t: '13:05:29', who: 'a.kurnia', act: 'tenant.suspend', target: 'org_trl91', why: 'abuse · card testing', c: '#0B0D12', bg: '#FFFFFF' }
+      ],
+      rollouts: [
+        { name: 'support-agent 2.4.0', state: 'HELD · 10%', c: '#C23D08', stages: stages(1, true) },
+        { name: 'router-policy r118', state: '100% · DONE', c: '#5A6170', stages: stages(4, false) },
+        { name: 'flag: streaming-tools-v2', state: '50% · AUTO', c: '#0B0D12', stages: stages(2, true) },
+        { name: 'flag: tenant-byok', state: '1% · ENT ONLY', c: '#0B0D12', stages: stages(0, true) }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

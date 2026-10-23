@@ -1,0 +1,21 @@
+<!-- @dsCard group="Data display" height=90 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kbd</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<div class="pv"><div class="row" style="gap:var(--ds-dimension-spacing-inset-comfortable)"><span class="row" style="gap:4px"><kbd class="scnx-kbd">⌘</kbd><kbd class="scnx-kbd">K</kbd></span><span class="row" style="gap:4px"><kbd class="scnx-kbd">Ctrl</kbd><kbd class="scnx-kbd">Shift</kbd><kbd class="scnx-kbd">P</kbd></span><span class="row" style="gap:4px"><kbd class="scnx-kbd">Esc</kbd></span><span class="muted">Press <kbd class="scnx-kbd">?</kbd> for shortcuts</span></div></div>
+</body>
+</html>

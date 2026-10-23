@@ -1,0 +1,22 @@
+<!-- @dsCard group="Navigation" height=220 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Navbar</title>
+<style>
+html,body{margin:0}body{background:var(--ds-color-neutral-surface-canvas-default)}
+.pv{padding:var(--ds-dimension-spacing-inset-comfortable);display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-comfortable)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-dimension-spacing-inline-default)}
+.col{display:flex;flex-direction:column;gap:var(--ds-dimension-spacing-stack-default)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-dimension-spacing-inset-comfortable)}
+.muted{color:var(--ds-color-neutral-text-subtle-default);font-size:var(--ds-typography-body-small-font-size)}
+body.scnx-stage{min-block-size:100vh}
+
+</style>
+</head>
+<body>
+<header class="scnx-navbar"><div class="scnx-navbar__start"><a class="scnx-navbar__brand" href="#"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" style="fill:none;stroke:var(--ds-color-neutral-text-contrast-default);stroke-width:1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" style="fill:none;stroke:var(--ds-color-neutral-text-contrast-default);stroke-width:1.4"/><path d="M15 17.5l2 2 3.5-4" style="fill:none;stroke:var(--ds-color-primary-border-strong-selected);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"/></svg>Scnehaux UI</a></div><nav class="scnx-navbar__center" aria-label="Main"><a class="scnx-navbar__link" href="#" aria-current="page">Docs</a><a class="scnx-navbar__link" href="#">Components</a><a class="scnx-navbar__link" href="#">Tokens</a><a class="scnx-navbar__link" href="#">Releases</a></nav><div class="scnx-navbar__end"><button class="scnx-icon-btn" data-variant="ghost" data-size="medium" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button><button class="scnx-btn" data-variant="primary" data-size="small">Get started</button></div></header>
+<div class="scnx-stage" style="padding:var(--ds-dimension-spacing-inline-default) 0 var(--ds-dimension-spacing-section)"><header class="scnx-navbar" data-variant="floating"><div class="scnx-navbar__start"><a class="scnx-navbar__brand" href="#"><svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" style="fill:none;stroke:var(--ds-color-neutral-text-contrast-default);stroke-width:1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" style="fill:none;stroke:var(--ds-color-neutral-text-contrast-default);stroke-width:1.4"/><path d="M15 17.5l2 2 3.5-4" style="fill:none;stroke:var(--ds-color-primary-border-strong-selected);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"/></svg>Scnehaux UI</a></div><nav class="scnx-navbar__center" aria-label="Main"><a class="scnx-navbar__link" href="#">Docs</a><a class="scnx-navbar__link" href="#" aria-current="page">Components</a><a class="scnx-navbar__link" href="#">Tokens</a></nav><div class="scnx-navbar__end"><button class="scnx-btn" data-variant="primary" data-size="small">Get started</button></div></header></div>
+</body>
+</html>
