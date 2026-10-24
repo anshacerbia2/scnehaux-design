@@ -227,6 +227,18 @@
       // the free margin between the column and the ruler
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
       compact = room < longest * SMALL;
+      for (const L of labels) {
+        L.sBig = clamp(room / L.W, SMALL * 1.2, 1);
+        L.curY = 66 + L.i * 20 + big * L.sBig;
+        if (L.i === 0) continue;
+        // a title lies down from a little below its current place until its line reaches
+        // the nav; it never starts until 24px after the previous section's line has reached
+        // the nav, so the previous title stands whole, checked, at that moment. A short
+        // section makes the next title lie down faster.
+        const P = labels[L.i - 1];
+        const before = P.i === 0 ? Infinity : P.end + (L.top - P.top) - L.end - 24;
+        L.span = Math.max(12, Math.min(L.curY + big * L.sBig + 140 - NAV, before));
+      }
       scaleState = "";
     };
     const measure = () => { vw = doc.clientWidth; measureLetters(); measureLayout(); };
@@ -295,14 +307,11 @@
          and rides with the line; as the line nears the titles at the top it lies down into
          the current place, done when the line reaches the nav (the section's bar is held);
          the previous title drops into the read stack over the same stretch. */
-      const moveIn = labels.map((L) => {
-        const sBig = clamp(room / L.W, SMALL * 1.2, 1);
-        const curY = 66 + L.i * 20 + big * sBig;
-        if (L.i === 0) return { sBig, curY, C: 1 };
-        // from a little below the current title down to the line's highest point
-        const span = curY + big * sBig + 140 - NAV;
-        return { sBig, curY, C: clamp((L.end + span - (L.top - y)) / span, 0, 1) };
-      });
+      // (the half pixel matches "here": a section line at 48.4px has reached the nav)
+      const moveIn = labels.map((L) => ({
+        sBig: L.sBig, curY: L.curY,
+        C: L.i === 0 ? 1 : clamp((L.end + L.span - (L.top - y) + 0.5) / L.span, 0, 1),
+      }));
       let check = null;
       for (const L of labels) {
         const n = L.letters.length;

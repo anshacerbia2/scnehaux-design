@@ -131,6 +131,10 @@ body { background: var(--ix-ground); }
   transform-origin: left; transition: scale 1100ms var(--ix-draw-easing);
 }
 .js-draw :is(.ix-page > main > section[data-sheet], .ix-foot.ix-wrap):not(.is-drawn)::before { scale: 0 1; }
+/* The first sheet (and the Button page's docs column) starts right under the nav, whose
+   own line is its top line: no rule and no crosses there, or the two lines would double. */
+.ix-page > main > section[data-sheet]:first-child::before, .ix-page > main > section[data-sheet]:first-child::after,
+.sq-col::before, .sq-col::after { display: none; }
 /* a cross where the rule meets each side of the column (the border sits outside the padding box) */
 .sq-col::after, .ix-page > main > section[data-sheet]::after, .ix-foot.ix-wrap::after {
   content: ""; position: absolute; z-index: 32; top: -5px; left: -6px; right: -6px; block-size: 11px; pointer-events: none;
@@ -165,7 +169,9 @@ body { background: var(--ix-ground); }
 .ix-sheet-head .ix-tb > div + div::before { content: "·"; margin-inline: 12px; color: var(--sq-faint); }
 .ix-sheet-head .ix-tb dt { color: var(--sq-faint); }
 .ix-sheet-head .ix-tb dd { margin: 0; color: var(--ix-muted); white-space: nowrap; }
-.ix-sheet { scroll-margin-top: var(--sq-nav); }
+/* every section, the first included, lands under the nav when jumped to: section 01
+   lands where the page loads (scroll 0), not 48px further down behind the nav */
+[data-sheet] { scroll-margin-top: var(--sq-nav); }
 @media (max-width: 760px) { .ix-sheet-head .ix-tb { display: none; } }
 
 /* ------------------------------------------------------------------

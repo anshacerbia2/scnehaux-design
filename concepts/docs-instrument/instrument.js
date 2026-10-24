@@ -187,8 +187,10 @@
       // A page may set <html data-ix-here="48"> to place "here" at a fixed offset from the
       // top instead (under a held nav): a sheet is here once its top reaches that offset,
       // or the highest point its top can reach before the page ends.
+      // (the page height is read live: content rising into place can change it after load)
       const offset = doc.dataset.ixHere ? Number(doc.dataset.ixHere) : NaN;
-      const hereAt = (r) => (Number.isFinite(offset) ? Math.max(offset, r.top + y - docH) + 0.5 : headY + PITCH / 2);
+      const maxScroll = Number.isFinite(offset) ? Math.max(1, doc.scrollHeight - vh) : 0;
+      const hereAt = (r) => (Number.isFinite(offset) ? Math.max(offset, r.top + y - maxScroll) + 0.5 : headY + PITCH / 2);
       let idx = 0;
       for (let i = 0; i < sheets.length; i++) { const r = sheets[i].getBoundingClientRect(); if (r.top <= hereAt(r)) idx = i; }
       if (idx !== current) {

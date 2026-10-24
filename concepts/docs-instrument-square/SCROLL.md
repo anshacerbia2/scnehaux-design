@@ -34,6 +34,7 @@ Terms used below:
 | 2.1 | Nav | Sticky at the top, 48px, above everything (z 50), including the ruler. |
 | 2.2 | Section rule draws in | 1px, the width of the viewport, scaled 0 → 1 from the left over 1100ms. It runs once, when the section enters the view (`instrument.js`: 12% visible, bottom 18% of the viewport excluded). On the Button page the rule spans the page column only. |
 | 2.3 | Crosses | An 11px cross in a strong line sits where each rule meets a column line. Static. |
+| 2.3a | First section | No rule and no crosses: it starts right under the nav, whose own line is its top line. The same holds for the Button page's docs column. |
 | 2.4 | Section bar holds | `NN / Name ··· facts` is sticky under the nav (`top: 48px`) while its section is in view. |
 | 2.5 | Bar top line | The rule sits above the bar (z 31 over z 30), so it is the bar's top line until the bar sticks. By then the rule has scrolled under the nav, and the nav's bottom line takes over. One line, never two. |
 | 2.6 | Bar pushed out | The next section pushes a held bar up. The bar's −1px bottom margin lands its line on the next rule, so they don't sit 1px apart. |
@@ -89,12 +90,12 @@ spent staggering the letters, eased in and out (cubic).
 | :-- | :-- | :-- |
 | 6.5 | Stack → standing | Starts as the line enters from the bottom, and is complete once the line has risen 25% of the viewport. |
 | 6.6 | Standing rides | The title moves with its line. |
-| 6.7 | Standing → current | Starts when the line is 140px below the current title's place, and is complete when the line reaches the nav. Where the page ends first, it completes at the highest point the line can reach. |
+| 6.7 | Standing → current | Starts when the line is 140px below the current title's place, and is complete when the line reaches the nav (within half a pixel). Where the page ends first, it completes at the highest point the line can reach. It never starts until the previous section's line is 24px past the nav, so a short section makes the next title lie down over a shorter stretch, never early. |
 | 6.8 | Current → read stack | Over the same stretch as 6.7, driven by the next section's line. |
 | 6.9 | Current section | The last one whose line has reached the nav. Where the page ends first, the highest point its line can reach counts instead. This is the moment its section bar is held. It is the page's one "here": the ruler (titles, readout, ledger, check), the bar's blue number, the nav's readout and the Button page's contents all switch on it. `square.js` sets `<html data-ix-here="48">`, which tells `instrument.js` to use the same line. |
-| 6.10 | Check | Drawn beside the current title once it is whole: not moving in or out, and not being verified. Hidden while the ruler is folded. |
+| 6.10 | Check | Drawn beside the current title once it is whole: not moving in or out, and not being verified. Because of 6.7, that is always true at the moment the line reaches the nav (or the end of the page), so the title is level and checked at that moment, never after. The check draws in over 420ms. Hidden while the ruler is folded. |
 | 6.11 | Verified on demand | Hovering or focusing a title at rest (current, read stack or ahead) shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after. Once per entry; not on a title in motion, not while folded, not under reduced motion. |
-| 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. |
+| 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. A jump lands the section's line under the nav (`scroll-margin-top: 48px` on every section). Section 01 lands at the top of the page, exactly where it loads. |
 
 **Narrow margin (compact).** When the free margin between the column and the ruler
 cannot hold even the small titles (about 1440px and below), titles never cover the
