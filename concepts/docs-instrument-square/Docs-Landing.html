@@ -9,12 +9,17 @@
 <link rel="stylesheet" href="../../design-system/themes/default/tokens.css">
 <link rel="stylesheet" href="../../design-system/components/bundle.css">
 <link rel="stylesheet" href="../docs-instrument/instrument.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600&family=Geist+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="square.css">
 <script src="../docs-instrument/instrument.js"></script>
+<script src="square.js"></script>
 <style>
   /* ---------------- Sheet 01 · Proof (hero) ---------------- */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 48px 40px; }
-  .hero-copy { display: flex; flex-direction: column; gap: 28px; }
+  .hero { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); }
+  .hero-copy { display: flex; flex-direction: column; justify-content: center; gap: 28px; padding: 72px var(--sq-pad) 64px; }
+  .hero .asm { margin: 0; block-size: auto; min-block-size: 560px; }
   .hero .ix-display { font-size: clamp(3rem, 6.2vw, 5.5rem); }
   .hero h1 .proof-mark { display: inline-block; inline-size: 0.62em; block-size: 0.62em; margin-inline-start: 0.08em; vertical-align: 0.02em; color: var(--ix-signal); }
   .hero h1 .proof-mark path { stroke-dasharray: 26; stroke-dashoffset: 0; }
@@ -71,10 +76,8 @@
   .asm-meter { display: inline-block; inline-size: 120px; block-size: 3px; margin-inline-start: 8px; vertical-align: middle; background: var(--ix-line); position: relative; overflow: hidden; border-radius: 2px; }
   .asm-meter::after { content: ""; position: absolute; inset: 0; scale: var(--p) 1; transform-origin: left; background: var(--ix-signal); }
 
-  .hero-tb { margin-block-start: 8px; }
-
   @media (max-width: 1080px) {
-    .hero { grid-template-columns: minmax(0, 1fr); padding-block-start: 48px; }
+    .hero { grid-template-columns: minmax(0, 1fr); }
     .asm { block-size: 560px; }
   }
   @media (max-width: 560px) {
@@ -87,10 +90,10 @@
   }
 
   /* ---------------- Sheet 02 · Modes ---------------- */
-  .two { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 48px; align-items: start; }
-  .two-copy { display: grid; gap: 20px; position: sticky; top: 120px; }
-  .split { position: relative; border-radius: var(--ds-dimension-radius-panel); overflow: hidden; box-shadow: var(--ds-effect-material-panel); --split: 50%; touch-action: pan-y; user-select: none; }
-  .split-pane { padding: 8px; background: var(--ds-color-neutral-surface-raised-default); color: var(--ds-color-neutral-text-default-default); }
+  .two { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); }
+  .two-copy { display: grid; gap: 20px; align-content: start; padding: 56px var(--sq-pad); }
+  .split { position: relative; overflow: hidden; --split: 50%; touch-action: pan-y; user-select: none; }
+  .split-pane { padding: 24px; background: var(--ds-color-neutral-surface-raised-default); color: var(--ds-color-neutral-text-default-default); }
   .split-pane + .split-pane { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--split)); }
   .split-handle {
     position: absolute; top: 0; bottom: 0; left: var(--split); inline-size: 0; z-index: 2; cursor: ew-resize;
@@ -126,8 +129,10 @@
   .inv li span:last-child { display: flex; gap: 10px; align-items: center; font-variant-numeric: tabular-nums; }
 
   /* ---------------- Sheet 03 · Brand ---------------- */
-  .brand-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 48px; align-items: start; }
-  .hue-panel { display: grid; gap: 8px; }
+  .brand-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+  .hue-panel { display: grid; align-content: start; padding: 56px var(--sq-pad); }
+  .hue-panel .mat { background: none; box-shadow: inset 0 0 0 1px var(--sq-line); }
+  .hue-panel .mat + .mat { margin-top: -1px; }
   .hue-ctl { padding: 18px; display: grid; gap: 14px; }
   .hue-row { display: flex; justify-content: space-between; align-items: baseline; }
   .hue-row label { font-size: 13.5px; font-weight: 600; }
@@ -148,7 +153,7 @@
   .ramp-foot { display: flex; justify-content: space-between; padding: 0 14px 12px; font: 500 10.5px/1.4 var(--mono); color: var(--ix-muted); }
 
   .brand-preview { --b9: oklch(0.5651 0.2172 259.37); --b3: oklch(0.95 0.03 259); --b11: oklch(0.45 0.18 259); }
-  .invite { padding: 22px; display: grid; gap: 16px; }
+  .invite { padding: 32px var(--sq-pad); display: grid; gap: 16px; }
   .invite-head { display: flex; justify-content: space-between; align-items: center; }
   .invite-head h4 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
   .invite .tabs { display: flex; gap: 18px; box-shadow: inset 0 -1px 0 var(--ix-line); font-size: 13px; }
@@ -162,17 +167,19 @@
   .invite .lnk { color: var(--b11); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in oklch, var(--b11) 40%, transparent); }
   .invite-actions { display: flex; justify-content: flex-end; gap: 8px; }
   .pairs { margin: 0; padding: 0; list-style: none; display: grid; gap: 1px; }
-  .pairs li { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 10px 14px; font-size: 13px; box-shadow: inset 0 -1px 0 var(--ix-line); }
+  .pairs li { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 12px var(--sq-pad); font-size: 13px; box-shadow: inset 0 -1px 0 var(--sq-line); }
   .pairs li:last-child { box-shadow: none; }
   .pairs .r { font: 500 12.5px/1 var(--mono); font-variant-numeric: tabular-nums; }
   .pairs .scnx-badge { min-inline-size: 40px; justify-content: center; }
-  .brand-note { font: 500 11px/1.5 var(--mono); color: var(--ix-muted); padding: 10px 14px 12px; box-shadow: inset 0 1px 0 var(--ix-line); }
+  .brand-note { font: 500 11px/1.5 var(--mono); color: var(--ix-muted); padding: 14px var(--sq-pad) 16px; }
 
   /* ---------------- Sheet 04 · Guarantees: a schedule, not a card grid ---------------- */
+  .g-lead h2 { max-inline-size: 18ch; }
   .schedule { margin: 0; padding: 0; list-style: none; }
-  .schedule-head, .schedule li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 0.85fr); gap: 32px; align-items: center; }
-  .schedule-head { padding-block: 10px; font: 500 10.5px/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ix-muted); box-shadow: inset 0 -1px 0 var(--ix-line-strong); }
-  .schedule li { padding-block: 28px; box-shadow: inset 0 -1px 0 var(--ix-line); }
+  .schedule-head, .schedule li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 0.85fr); gap: 32px; align-items: center; padding-inline: var(--sq-pad); }
+  .schedule-head { padding-block: 12px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--sq-faint); box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .schedule li { padding-block: 32px; box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .schedule li:last-child { box-shadow: none; }
   .schedule h3 { margin: 0 0 6px; }
   .csp.spec { display: block; }
   .spec { min-block-size: 64px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -192,7 +199,7 @@
   .brands .sw { block-size: 22px; border-radius: var(--ds-dimension-radius-element); display: grid; place-items: center; font-family: var(--font-sans); font-weight: 600; font-size: 11.5px; color: white; }
 
   /* ---------------- Sheet 05 · Tokens ---------------- */
-  .grammar { padding: 28px 28px 22px; display: grid; gap: 22px; overflow-x: auto; }
+  .grammar { padding: 40px var(--sq-pad) 32px; display: grid; gap: 22px; overflow-x: auto; }
   .gram-line { display: flex; align-items: flex-start; gap: 0; font: 500 clamp(13px, 1.6vw, 19px)/1 var(--mono); white-space: nowrap; }
   .gram-seg { display: grid; gap: 12px; justify-items: stretch; }
   .gram-seg > code { padding-inline: 1px; }
@@ -206,7 +213,7 @@
   .states button:hover { color: var(--ix-text); }
   .states button[aria-pressed="true"] { background: var(--ds-color-neutral-surface-raised-default); color: var(--ix-text); box-shadow: var(--ds-effect-material-raised); }
   .states button[data-invalid] { text-decoration: line-through; text-decoration-color: var(--ds-color-danger-text-subtle-default); }
-  .compile { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 8px; }
+  .compile { grid-template-columns: minmax(0, 1fr) 240px; }
   .compile .ix-term pre { min-block-size: 132px; }
   .render-cell { display: grid; place-items: center; gap: 10px; padding: 16px; text-align: center; }
   .render-cell code { font: 500 10.5px/1.4 var(--mono); color: var(--ix-muted); overflow-wrap: anywhere; max-inline-size: 100%; }
@@ -219,47 +226,44 @@
   .tok-note { font: 500 11px/1.5 var(--mono); color: var(--ix-muted); }
 
   /* ---------------- Sheet 06 · Evidence ---------------- */
-  .gauges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-block-end: 48px; box-shadow: inset 0 1px 0 var(--ix-line-strong), inset 0 -1px 0 var(--ix-line); }
-  .gauge { padding: 22px 24px 20px 0; display: grid; gap: 8px; box-shadow: inset -1px 0 0 var(--ix-line); }
-  .gauge + .gauge { padding-inline-start: 24px; }
+  .gauges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .gauge { padding: 40px var(--sq-pad) 36px; display: grid; gap: 10px; box-shadow: inset -1px 0 0 var(--sq-line); }
   .gauge:last-child { box-shadow: none; }
   .gauge strong { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 600; font-variant-numeric: tabular-nums; }
   .gauge p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--ix-muted); max-inline-size: 30ch; }
   .gauge .scale { block-size: 8px; background: repeating-linear-gradient(to right, var(--ix-line) 0 1px, transparent 1px 11px); position: relative; }
   .gauge .scale::after { content: ""; position: absolute; left: 0; top: -3px; block-size: 14px; inline-size: 2px; background: var(--ix-signal); left: calc(var(--v) * 100%); }
-  .evidence { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
-  .ev-copy { padding: 28px; display: grid; gap: 18px; align-content: start; }
-  .ev-side { display: grid; gap: 16px; }
-  .ev-card { padding: 22px; display: grid; gap: 10px; align-content: start; }
+  .evidence { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .ev-copy { padding: 56px var(--sq-pad); display: grid; gap: 18px; align-content: start; }
+  .ev-copy .ix-term { box-shadow: 0 0 0 1px var(--sq-line); }
+  .ev-card { padding: 40px var(--sq-pad); display: grid; gap: 10px; align-content: start; }
   .ev-card .ix-h3 { font-size: 1.125rem; }
 
   /* ---------------- Sheet 07 · Contracts ---------------- */
   .contracts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; }
-  .contract { padding: 26px 24px 28px; display: grid; gap: 12px; align-content: start; box-shadow: inset -1px 0 0 var(--ix-line); position: relative; }
-  .contract:first-child { padding-inline-start: 0; } .contract:last-child { box-shadow: none; }
-  .contract .no { font: 500 11px/1 var(--mono); color: var(--ix-muted); }
-  .contract .pk { display: inline-flex; font: 500 11.5px/1 var(--mono); color: var(--ix-text); padding: 6px 8px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); justify-self: start; }
-  .contracts-line { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: 4px 0; }
-  .contracts-line .ix-dim { padding-inline-end: 24px; }
-  .contracts-line .ix-dim:first-child { padding-inline-start: 0; }
-  .cta { margin-block-start: 72px; padding: 72px 32px; text-align: center; display: grid; justify-items: center; gap: 20px; }
+  .c-lead h2 { max-inline-size: 16ch; }
+  .contract { padding: 36px var(--sq-pad) 40px; display: grid; gap: 12px; align-content: start; box-shadow: inset -1px 0 0 var(--sq-line); position: relative; }
+  .contract:last-child { box-shadow: none; }
+  .contract .no { font: 500 11px/1 var(--mono); color: var(--sq-faint); letter-spacing: 0.15em; justify-self: end; }
+  .contract .pk { display: inline-flex; font: 500 11.5px/1 var(--mono); color: var(--ix-text); padding: 6px 8px; box-shadow: inset 0 0 0 1px var(--sq-line); justify-self: start; }
+  .contracts-line { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: 24px 0; }
+  .contracts-line .ix-dim { padding-inline: var(--sq-pad); }
+  .cta { padding: 112px var(--sq-pad) 120px; text-align: center; display: grid; justify-items: center; gap: 24px; }
   .cta .ix-display { font-size: clamp(2.5rem, 6vw, 5rem); }
 
   @media (max-width: 980px) {
     .two, .brand-grid, .evidence { grid-template-columns: minmax(0, 1fr); }
-    .two-copy { position: static; }
     .schedule-head { display: none; }
     .schedule li { grid-template-columns: minmax(0, 1fr); gap: 14px; }
     .gauges { grid-template-columns: 1fr 1fr; }
-    .gauge:nth-child(2) { box-shadow: none; } .gauge:nth-child(3) { padding-inline-start: 0; }
+    .gauge:nth-child(2) { box-shadow: none; } .gauge:nth-child(-n+2) { box-shadow: inset 0 -1px 0 var(--sq-line); }
     .contracts { grid-template-columns: 1fr 1fr; }
     .contracts-line { display: none; }
-    .contract:nth-child(3) { padding-inline-start: 0; }
     .compile { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 560px) {
     .kpis { grid-template-columns: 1fr 1fr; } .kpi:last-child { display: none; }
-    .contracts { grid-template-columns: minmax(0, 1fr); } .contract { padding-inline-start: 0; box-shadow: inset 0 -1px 0 var(--ix-line); }
+    .contracts { grid-template-columns: minmax(0, 1fr); } .contract { box-shadow: inset 0 -1px 0 var(--sq-line); }
     .ramp i { block-size: 32px; } .ramp span { font-size: 8px; }
   }
 </style>
@@ -300,12 +304,17 @@
   <main id="top">
     <!-- SHEET 01 · Proof -->
     <section class="ix-wrap" id="proof" data-sheet="Proof" aria-labelledby="hero-title">
-      <div class="hero">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>01</b></span>
+        <span class="ix-sheet-name">Scnehaux UI</span>
+        <dl class="ix-tb"><div><dt>Design system</dt><dd>2.0 beta</dd></div><div><dt>License</dt><dd>Apache-2.0</dd></div></dl>
+      </div>
+      <div class="hero sq-cells">
         <div class="hero-copy">
           <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">2.0 beta</span>Open source, Apache-2.0</span>
           <h1 class="ix-display" id="hero-title">Build interfaces you can prove<svg class="proof-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="."><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></h1>
           <p class="ix-lede">An accessible React design system with perceptual color, isolated multi-brand theming and zero runtime CSS. Every release ships with the evidence that it works.</p>
-          <div class="hero-actions">
+          <div class="hero-actions sq-btn">
             <a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <span class="ix-install"><code><span class="d">$</span> npm i @scnx/system @scnx/core-ui</code><button class="ix-copy" type="button" aria-label="Copy install command" data-copy="npm i @scnx/system @scnx/core-ui"><svg aria-hidden="true"><use href="#i-copy"/></svg></button></span>
           </div>
@@ -331,17 +340,16 @@
           <div class="asm-sum ix-dim" data-draw>one component, four contracts</div>
         </figure>
       </div>
-      <dl class="ix-tb hero-tb" aria-label="Release">
+      <dl class="sq-facts" aria-label="Release">
         <div><dt>Set</dt><dd>Scnehaux UI</dd></div>
         <div><dt>Rev</dt><dd>2.0.0-beta.0</dd></div>
         <div><dt>Packages</dt><dd>core-ui, system</dd></div>
         <div><dt>Provenance</dt><dd>SLSA L2</dd></div>
         <div><dt>Checked</dt><dd class="ok">CI, 0 open</dd></div>
       </dl>
-    </section>
 
-    <!-- The receipt tape: what the last releases proved -->
-    <section class="ix-tape" aria-label="Recent release evidence">
+      <!-- The receipt tape: what the last releases proved -->
+      <div class="ix-tape" role="region" aria-label="Recent release evidence">
       <div class="ix-tape-track">
         <ol>
           <li><span class="ok">verified</span><b>button</b> a11y ×3 · axe, NVDA, VoiceOver <span class="h">sha256:9f2c…41ae</span></li>
@@ -353,17 +361,18 @@
           <li><span class="ok">verified</span><b>core-ui</b> SSR and RSC render parity <span class="h">sha256:51aa…7e10</span></li>
         </ol>
       </div>
+      </div>
     </section>
 
     <!-- SHEET 02 · Modes -->
     <section class="ix-wrap ix-sheet" id="modes" data-sheet="Modes" aria-labelledby="modes-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>02</b>/07</span>
+        <span class="ix-sheet-no"><b>02</b></span>
         <span class="ix-sheet-name">One root, every mode</span>
         <dl class="ix-tb"><div><dt>Attribute</dt><dd>data-scnx-resolved-mode</dd></div><div><dt>Pairs</dt><dd>checked in both</dd></div></dl>
       </div>
-      <div class="two">
+      <div class="two sq-cells">
         <div class="two-copy">
           <h2 class="ix-h2" id="modes-title">Drag to switch the lights.</h2>
           <p class="ix-body">Same markup, same components. One attribute on the root resolves every token for light or dark, with contrast verified in both.</p>
@@ -402,11 +411,11 @@
     <section class="ix-wrap ix-sheet" id="brand" data-sheet="Brand" aria-labelledby="brand-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>03</b>/07</span>
+        <span class="ix-sheet-no"><b>03</b></span>
         <span class="ix-sheet-name">Bring your brand</span>
         <dl class="ix-tb"><div><dt>Space</dt><dd>OKLCH, sRGB-safe</dd></div><div><dt>Steps</dt><dd>12</dd></div><div><dt>Gate</dt><dd>WCAG 2.2</dd></div></dl>
       </div>
-      <div class="brand-grid">
+      <div class="brand-grid sq-cells">
         <div class="hue-panel">
           <h2 class="ix-h2" id="brand-title">One hue in. A verified theme out.</h2>
           <p class="ix-body" style="margin-block: 16px 24px">Pick a color. Twelve perceptual steps are generated in OKLCH, mapped to semantic roles, and every foreground and background pair is contrast-checked here in your browser.</p>
@@ -422,7 +431,7 @@
               </div>
             </div>
           </div>
-          <div class="mat" style="margin-top: 8px">
+          <div class="mat">
             <div class="ramp" id="ramp" aria-label="Generated 12-step ramp"></div>
             <div class="ramp-foot"><span>step 1 · app background</span><span id="ramp-solid">step 9 → primary.surface.solid</span></div>
           </div>
@@ -446,11 +455,11 @@
     <section class="ix-wrap ix-sheet" id="guarantees" data-sheet="Guarantees" aria-labelledby="g-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>04</b>/07</span>
+        <span class="ix-sheet-no"><b>04</b></span>
         <span class="ix-sheet-name">Schedule of guarantees</span>
         <dl class="ix-tb"><div><dt>Kept across</dt><dd>minor versions</dd></div><div><dt>Tested from</dt><dd>packed tarball</dd></div></dl>
       </div>
-      <h2 class="ix-h2" id="g-title" style="max-inline-size: 18ch; margin-block-end: 40px">The details you would otherwise build yourself.</h2>
+      <div class="sq-lead g-lead"><h2 class="ix-h2" id="g-title">The details you would otherwise build yourself.</h2></div>
       <div class="schedule-head" aria-hidden="true"><span>Guarantee</span><span>Specimen</span><span>Verified by</span></div>
       <ul class="schedule">
         <li>
@@ -496,11 +505,11 @@
     <section class="ix-wrap ix-sheet" id="tokens" data-sheet="Tokens" aria-labelledby="t-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>05</b>/07</span>
+        <span class="ix-sheet-no"><b>05</b></span>
         <span class="ix-sheet-name">Tokens that know the rules</span>
         <dl class="ix-tb"><div><dt>Grammar</dt><dd>STD-UIP-TKN-001</dd></div><div><dt>Checked</dt><dd>at build</dd></div></dl>
       </div>
-      <div class="two" style="grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr)">
+      <div class="two sq-cells">
         <div class="two-copy">
           <h2 class="ix-h2" id="t-title">Impossible states don't compile.</h2>
           <p class="ix-body">Every token name reads as scheme, role, emphasis and state. A surface can be hovered or pressed, but never focused. That combination is rejected at build time, so it never reaches your users.</p>
@@ -524,7 +533,7 @@
               <button type="button" aria-pressed="false" data-s="focus">focus</button>
             </div>
           </div>
-          <div class="compile" style="margin-top: 8px">
+          <div class="compile sq-cells">
             <div class="ix-term" data-theme="dark"><div class="ix-term-bar"><span class="lamp"><i></i><i></i><i></i></span>checkout.css</div><pre id="compile-out" aria-live="polite"></pre></div>
             <div class="mat-flat render-cell"><span class="pay" id="pay" data-state="default">Pay now</span><code id="pay-token">color.primary.surface.solid.default</code></div>
           </div>
@@ -536,7 +545,7 @@
     <section class="ix-wrap ix-sheet" id="evidence" data-sheet="Evidence" aria-labelledby="e-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>06</b>/07</span>
+        <span class="ix-sheet-no"><b>06</b></span>
         <span class="ix-sheet-name">Don't trust us</span>
         <dl class="ix-tb"><div><dt>Signed</dt><dd>Sigstore</dd></div><div><dt>Logged</dt><dd>Rekor</dd></div><div><dt>SBOM</dt><dd>CycloneDX</dd></div></dl>
       </div>
@@ -546,7 +555,7 @@
         <div class="gauge" style="--v:0.66"><strong>AA</strong><div class="scale"></div><p>contrast checked for every declared pair, in every theme and mode.</p></div>
         <div class="gauge" style="--v:0.5"><strong>L2</strong><div class="scale"></div><p>SLSA build provenance, signed and publicly logged.</p></div>
       </div>
-      <div class="evidence">
+      <div class="evidence sq-cells">
         <div class="mat-panel" data-frame data-radius="0">
           <div class="mat-flat ev-copy">
             <h2 class="ix-h2" id="e-title">Verify it yourself, in ten seconds.</h2>
@@ -557,7 +566,7 @@
             </div>
           </div>
         </div>
-        <div class="ev-side">
+        <div class="ev-side sq-cells">
           <div class="mat ev-card"><p class="ix-eyebrow">Accessibility, per component</p><h3 class="ix-h3">A conformance report for every complex widget, not a badge on the homepage.</h3><a class="ix-link" href="#">Read a sample report</a></div>
           <div class="mat ev-card"><p class="ix-eyebrow">Agent-ready</p><h3 class="ix-h3">Your coding agent builds with the real components.</h3><p class="ix-body"><code class="scnx-code">llms.txt</code> and an MCP docs server, generated from the packed API reports.</p></div>
         </div>
@@ -568,11 +577,11 @@
     <section class="ix-wrap ix-sheet" id="contracts" data-sheet="Contracts" aria-labelledby="c-title">
       <div class="ix-ruler" aria-hidden="true"></div>
       <div class="ix-sheet-head">
-        <span class="ix-sheet-no">Sheet <b>07</b>/07</span>
+        <span class="ix-sheet-no"><b>07</b></span>
         <span class="ix-sheet-name">Four contracts, one system</span>
         <dl class="ix-tb"><div><dt>Adopt</dt><dd>behavior alone, or the full look</dd></div></dl>
       </div>
-      <h2 class="ix-h2" id="c-title" style="max-inline-size: 16ch; margin-block-end: 40px">Every page links its primitive, its tokens and its evidence.</h2>
+      <div class="sq-lead c-lead"><h2 class="ix-h2" id="c-title">Every page links its primitive, its tokens and its evidence.</h2></div>
       <div class="contracts" data-draw>
         <div class="contracts-line" aria-hidden="true"><span class="ix-dim">behavior</span><span class="ix-dim">look</span><span class="ix-dim">values</span><span class="ix-dim" data-signal>proof</span></div>
         <div class="contract"><span class="no">01</span><h3 class="ix-h3">Primitives</h3><p class="ix-body">Headless, accessible behavior with semantic HTML and zero styling.</p><span class="pk">@scnx/core-ui</span></div>
@@ -583,7 +592,7 @@
       <div class="mat-panel cta" data-frame data-radius="0">
         <h2 class="ix-display">Ship the interface. Keep the receipts.</h2>
         <p class="ix-lede">Free and open source. Bring your brand, keep your stack, and verify every release you install.</p>
-        <div class="hero-actions"><a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started</a><a class="scnx-btn" data-variant="secondary" data-size="large" href="#">Star on GitHub</a></div>
+        <div class="hero-actions sq-btn"><a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started</a><a class="scnx-btn" data-variant="secondary" data-size="large" href="#">Star on GitHub</a></div>
       </div>
     </section>
   </main>
