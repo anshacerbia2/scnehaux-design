@@ -59,7 +59,7 @@
 
   /* A section opens with a rule across the page and a cross on each divider, then its bar. */
   .sec { position: relative; scroll-margin-top: var(--sq-nav); }
-  .sec::before { content: ""; position: absolute; z-index: 1; inset-inline: 0; top: 0; block-size: 1px; background: var(--sq-line); transform-origin: left; transition: scale 1100ms var(--ix-draw-easing); }
+  .sec::before { content: ""; position: absolute; z-index: 31; inset-inline: 0; top: 0; block-size: 1px; background: var(--sq-line); transform-origin: left; transition: scale 1100ms var(--ix-draw-easing); }
   .js-draw .sec:not(.is-drawn)::before { scale: 0 1; }
   .sec::after {
     content: ""; position: absolute; z-index: 32; top: -5px; left: -5px; right: -5px; block-size: 11px; pointer-events: none;

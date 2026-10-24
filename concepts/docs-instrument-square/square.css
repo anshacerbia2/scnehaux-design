@@ -111,9 +111,11 @@ body { background: var(--ix-ground); }
   position: relative; max-inline-size: var(--sq-col); margin-inline: auto; padding: 0;
   border-inline: 1px solid var(--sq-line);
 }
-/* the rule runs edge to edge of the viewport and draws in from the left once */
+/* The rule runs edge to edge of the viewport and draws in from the left once. It sits
+   above the section bar, so it is the bar's top line until the bar meets the nav; by
+   then the rule has scrolled under the nav, and the nav's own line takes over. */
 .sq-col::before, .ix-page > main > section[data-sheet]::before, .ix-foot.ix-wrap::before {
-  content: ""; position: absolute; z-index: 1; top: 0; left: 50%; inline-size: 100vw; block-size: 1px;
+  content: ""; position: absolute; z-index: 31; top: 0; left: 50%; inline-size: 100vw; block-size: 1px;
   translate: -50% 0; background: var(--sq-line); pointer-events: none;
   transform-origin: left; transition: scale 1100ms var(--ix-draw-easing);
 }
@@ -215,6 +217,8 @@ html[data-ruler="on"]::-webkit-scrollbar { display: none; inline-size: 0; block-
   position: fixed; inset-block: 0; right: 0; z-index: 45; inline-size: 60px; overflow: hidden;
   cursor: crosshair; touch-action: none; user-select: none;
 }
+.sq-ruler:focus { outline: none; }
+.sq-ruler:focus-visible { box-shadow: inset 2px 0 0 var(--ds-color-primary-border-default-focus); }
 .sq-ruler-glass {
   position: absolute; inset: 0; background: color-mix(in oklch, var(--ix-ground) 55%, transparent);
   -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
@@ -229,10 +233,11 @@ html[data-ruler="on"]::-webkit-scrollbar { display: none; inline-size: 0; block-
 .sq-ruler-now::before { content: ""; position: absolute; inset-inline: 0; top: 0; block-size: 1px; background: var(--ix-signal); }
 .sq-ruler-now span { position: absolute; right: 4px; top: 5px; font: 500 9px/1 var(--mono); letter-spacing: 0.08em; color: var(--ix-signal-text); font-variant-numeric: tabular-nums; }
 [data-theme="dark"] .sq-ruler-now span { color: var(--ds-color-primary-text-subtle-default); }
-.sq-ruler-cursor { position: fixed; right: 0; top: 0; z-index: 46; inline-size: 60px; block-size: 3px; translate: 0 -50%; background: var(--ix-text); opacity: 0; pointer-events: none; will-change: transform, opacity; }
+.sq-ruler-cursor { position: fixed; right: 0; top: 0; z-index: 47; inline-size: 60px; block-size: 3px; translate: 0 -50%; background: var(--ix-text); opacity: 0; pointer-events: none; will-change: transform, opacity; }
 
 /* Section titles beside the ruler: one span per letter, placed by square.js. */
-.sq-labels { position: fixed; inset: 0; z-index: 44; pointer-events: none; }
+/* above the ruler's glass, so a title standing on the ruler stays crisp */
+.sq-labels { position: fixed; inset: 0; z-index: 46; pointer-events: none; }
 .sq-labels span {
   position: absolute; left: 0; top: 0; white-space: pre; will-change: transform;
   font: 600 var(--sq-label-size, 34px)/1 "Archivo", var(--font-sans); font-stretch: 125%; font-variation-settings: "wdth" 125;
