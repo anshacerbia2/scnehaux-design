@@ -1,0 +1,26 @@
+/* Scnehaux UI · Instrument · Square
+   The Instrument expression with square geometry and no read head. Loaded after
+   docs-instrument/instrument.css; it changes nothing else.
+
+   Every radius token resolves to 0, so the concentric ladder collapses to one value:
+   the components and materials still bind radius.mark … radius.pill, they draw square.
+   The literal radii in the pages (50%, 3px, a slider thumb) are flattened too.
+   This departs from the brand book's ladder; it is guidance only (see README.md). */
+
+:root {
+  --ds-dimension-radius-mark: 0;
+  --ds-dimension-radius-element: 0;
+  --ds-dimension-radius-control: 0;
+  --ds-dimension-radius-container: 0;
+  --ds-dimension-radius-panel: 0;
+  --ds-dimension-radius-pill: 0;
+}
+*, *::before, *::after { border-radius: 0 !important; }
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb { border-radius: 0 !important; }
+input[type="range"]::-moz-range-track,
+input[type="range"]::-moz-range-thumb { border-radius: 0 !important; }
+
+/* No read head. "Here" is still the sheet at the reading height (instrument.js):
+   the rail mark, the sheet number and the nav readout turn blue. */
+.ix-readhead { display: none; }
