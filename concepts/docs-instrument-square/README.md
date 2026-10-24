@@ -95,9 +95,14 @@ takes its place.
   section nears, its letters fly up to the large place as the section reaches the
   reading line, and the previous title drops into the read stack. Every move is a
   function of the scroll position (over half a screen, less where sections are
-  close), so scrolling back plays it back. A letter flying into the current place
-  reads as a hash character (`0–9 A–F`) until it lands, and once the title is whole
-  a blue check is drawn beside it.
+  close), so scrolling back plays it back. Once the current title is whole, a blue
+  check is drawn beside it.
+- **Verified on demand.** Hovering or focusing a title at rest (the current one or
+  either stack) verifies it again: its letters read as hash characters (`0–9 A–F`)
+  for 120ms, then resolve left to right, one every 45ms; the current title's check
+  is drawn again after. Once per entry, never on a title in motion or with the ruler
+  folded, and not under reduced motion. Scrolling moves the letters; only a hover
+  shuffles them.
 - **Titles never cover the page at rest.** The large title shrinks to the free
   margin between the column and the ruler. Where even the small titles do not fit
   (about 1440px and below), the current title stands upright at the head of the
