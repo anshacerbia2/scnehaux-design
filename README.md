@@ -98,6 +98,7 @@ internal consoles keep a separate design.
 | `docs-instrument-square` | Square · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument-square/Docs-Landing.png) |
 | `docs-instrument-square` | Square · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument-square/Docs-Home.png) |
 | `docs-instrument-square` | Square · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument-square/Docs-Button.png) |
+| `docs-instrument-square` | Square · Brand book | `Brand-Book.html` | [`Brand-Book.png`](concepts/docs-instrument-square/Brand-Book.png) |
 
 Each board has three files:
 

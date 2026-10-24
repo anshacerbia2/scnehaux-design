@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux UI · Instrument · Square · Brand book</title>
+<meta name="description" content="Brand book of the Instrument · Square docs expression: principles, lines, layout, colour, type, components, motion, rules and how ui-platform-docs adopts it.">
+<link rel="icon" href="../../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../design-system/themes/default/tokens.css">
+<link rel="stylesheet" href="../../design-system/components/bundle.css">
+<link rel="stylesheet" href="../docs-instrument/instrument.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="square.css">
+<script src="../docs-instrument/instrument.js"></script>
+<script src="square.js"></script>
+<style>
+  /* Brand book layout: every block is a cell or a row of the line system it documents. */
+  .bb-hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+  .bb-hero > div { padding: 72px var(--sq-pad) 64px; display: grid; gap: 24px; align-content: start; }
+  .bb-hero .ix-display { font-size: clamp(2.75rem, 5.6vw, 4.75rem); }
+  .bb-lead { padding: 56px var(--sq-pad) 48px; box-shadow: inset 0 -1px 0 var(--sq-line); display: grid; gap: 16px; }
+  .bb-lead .ix-h2 { max-inline-size: 22ch; }
+  .bb-lead .ix-lede { max-inline-size: 70ch; }
+  .bb-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bb-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bb-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bb-cell { padding: 32px var(--sq-pad) 36px; display: grid; gap: 12px; align-content: start; }
+  .bb-cell .no { font: 500 11px/1 var(--mono); letter-spacing: 0.15em; color: var(--sq-faint); }
+  .bb-cell p { margin: 0; }
+  .bb-k { font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--sq-faint); }
+
+  /* tables in rows of lines */
+  .bb-table-wrap { overflow-x: auto; }
+  .bb-table { inline-size: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .bb-table th { text-align: left; padding: 12px 16px; font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--sq-faint); box-shadow: inset 0 -1px 0 var(--sq-line); white-space: nowrap; }
+  .bb-table td { padding: 14px 16px; vertical-align: top; box-shadow: inset 0 -1px 0 var(--sq-line); line-height: 1.55; color: var(--ix-muted); }
+  .bb-table tr:last-child td { box-shadow: none; }
+  .bb-table :is(th, td):first-child { padding-inline-start: var(--sq-pad); }
+  .bb-table :is(th, td):last-child { padding-inline-end: var(--sq-pad); }
+  .bb-table td:first-child { color: var(--ix-text); font-weight: 500; white-space: nowrap; }
+  .bb-table code, .bb-cell code, .bb-lead code { font: 500 12px/1.5 var(--mono); color: var(--ix-text); }
+
+  /* lines: a drawn specimen */
+  .bb-draw { position: relative; block-size: 220px; background: var(--ix-ground); overflow: hidden; }
+  .bb-draw .rule { position: absolute; inset-inline: 0; top: 70px; block-size: 1px; background: var(--sq-line); }
+  .bb-draw .col { position: absolute; inset-block: 0; inline-size: 1px; background: var(--sq-line); }
+  .bb-draw .col.a { left: 22%; } .bb-draw .col.b { left: 78%; }
+  .bb-draw .x { position: absolute; top: 65px; inline-size: 11px; block-size: 11px; background: var(--sq-plus); background-size: auto; }
+  .bb-draw .x.a { left: calc(22% - 5px); } .bb-draw .x.b { left: calc(78% - 5px); }
+  .bb-draw .x { background:
+    linear-gradient(var(--sq-cross), var(--sq-cross)) 5px 0 / 1px 11px no-repeat,
+    linear-gradient(var(--sq-cross), var(--sq-cross)) 0 5px / 11px 1px no-repeat; }
+  .bb-draw .bar { position: absolute; left: 22%; right: 22%; top: 71px; block-size: 36px; box-shadow: inset 0 -1px 0 var(--sq-line); display: flex; align-items: center; padding-inline: 14px; font: 500 10px/1 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-text); }
+  .bb-draw .bar b { color: var(--sq-faint); font-weight: 500; margin-inline-end: 8px; }
+  .bb-draw .tag { position: absolute; font: 500 10px/1 var(--mono); letter-spacing: 0.08em; color: var(--sq-faint); }
+
+  /* do / don't */
+  .bb-dd { display: grid; gap: 14px; align-content: start; }
+  .bb-dd .demo { block-size: 120px; display: grid; place-items: center; background: var(--ix-ground); box-shadow: inset 0 0 0 1px var(--sq-line); }
+  .bb-dd .demo .box { inline-size: 62%; block-size: 56%; box-shadow: 0 0 0 1px var(--sq-line); }
+  .bb-dd .demo .box .box { inline-size: 84%; block-size: 70%; margin: 6% auto 0; }
+  .bb-dd .demo .cells { inline-size: 62%; block-size: 56%; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--sq-line); box-shadow: 0 0 0 1px var(--sq-line); }
+  .bb-dd .demo .cells i { background: var(--ix-ground); }
+  .bb-dd .verdict { display: flex; gap: 8px; align-items: baseline; font: 500 11px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; }
+  .bb-dd .verdict.do { color: var(--ds-color-success-text-subtle-default); }
+  .bb-dd .verdict.dont { color: var(--ds-color-danger-text-subtle-default); }
+  [data-theme="light"] .bb-dd .verdict.do { color: var(--ds-color-success-text-default-default); }
+  [data-theme="light"] .bb-dd .verdict.dont { color: var(--ds-color-danger-text-default-default); }
+
+  /* colour */
+  .bb-swatch { display: grid; gap: 10px; align-content: start; padding: 28px var(--sq-pad) 32px; }
+  .bb-swatch .chip { block-size: 64px; box-shadow: inset 0 0 0 1px var(--sq-line); }
+  .bb-swatch strong { font-size: 14px; }
+  .bb-swatch code { font: 500 11px/1.45 var(--mono); color: var(--ix-muted); overflow-wrap: anywhere; }
+
+  /* type */
+  .bb-type { display: grid; gap: 10px; padding: 36px var(--sq-pad) 40px; }
+  .bb-type .spec { color: var(--ix-text); margin: 0; }
+  .bb-type .meta { font: 500 11px/1.4 var(--mono); color: var(--sq-faint); letter-spacing: 0.06em; }
+
+  .bb-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .bb-note { padding: 18px var(--sq-pad) 22px; font: 500 11.5px/1.6 var(--mono); color: var(--ix-muted); box-shadow: inset 0 1px 0 var(--sq-line); }
+  .bb-note b { color: var(--ix-text); font-weight: 500; }
+
+  @media (max-width: 980px) { .bb-hero, .bb-grid-3, .bb-grid-4 { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) { .bb-grid-2 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 28 28"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="#0a6cf2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="ix-reticle" aria-hidden="true"></div>
+
+<div class="ix-page">
+  <div class="ix-wrap ix-nav-shell">
+    <header class="ix-nav">
+      <a class="ix-brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
+      <span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small" style="margin-inline-end:8px" data-nav-optional>Brand book</span>
+      <ul class="ix-nav-links">
+        <li><a href="Docs-Landing.html">Landing</a></li>
+        <li><a href="Docs-Home.html">Workspace</a></li>
+        <li><a href="Docs-Button.html">Components</a></li>
+        <li><a href="#top" aria-current="page">Brand book</a></li>
+      </ul>
+      <span class="ix-nav-spacer"></span>
+      <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/11</span>
+      <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="scnx-btn" data-variant="primary" data-size="small" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/concepts/docs-instrument-square/SCROLL.md" data-nav-optional>Scroll behaviour</a>
+    </header>
+  </div>
+
+  <main id="top">
+    <!-- 01 · Overview -->
+    <section class="ix-wrap" id="overview" data-sheet="Overview" aria-labelledby="bb-title">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>01</b></span>
+        <span class="ix-sheet-name">Instrument · Square</span>
+        <dl class="ix-tb"><div><dt>For</dt><dd>ui-platform-docs</dd></div><div><dt>Status</dt><dd>guidance</dd></div></dl>
+      </div>
+      <div class="bb-hero sq-cells">
+        <div>
+          <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Brand book</span>Docs expression of Scnehaux UI</span>
+          <h1 class="ix-display" id="bb-title">One line, drawn and verified.</h1>
+          <p class="ix-lede">How the Scnehaux UI documentation looks and moves. The docs are drawn as one continuous technical line, and every part of the reading is verified: the section you are in, the sections you have read, the labels you point at.</p>
+          <div class="hero-actions sq-btn" style="display:flex; flex-wrap:wrap; gap:10px">
+            <a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Landing.html">See it live<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="scnx-btn" data-variant="secondary" data-size="large" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/concepts/docs-instrument-square/SCROLL.md">Scroll behaviour</a>
+          </div>
+        </div>
+        <div>
+          <p class="ix-eyebrow">This book covers</p>
+          <p class="ix-body">The <b>chrome</b> of the docs site: lines, layout, the nav, section bars, cells, type voices, colour roles, motion and the ruler scrollbar. It is the reference for <code>ui-platform-docs</code>.</p>
+          <p class="ix-eyebrow">It does not cover</p>
+          <p class="ix-body">Product components and token values. Those belong to <code>ui-platform</code> (<code>@scnx/system</code>) and the Scnehaux UI brand book (<code>design-system/README.md</code>). This book uses them; it never redefines them.</p>
+        </div>
+      </div>
+      <dl class="sq-facts" aria-label="Book">
+        <div><dt>Expression</dt><dd>Instrument · Square</dd></div>
+        <div><dt>Source</dt><dd>scnehaux-design</dd></div>
+        <div><dt>Applies to</dt><dd>ui-platform-docs</dd></div>
+        <div><dt>Tokens from</dt><dd>@scnx/system</dd></div>
+        <div><dt>Authority</dt><dd>ADR-UIP-VIS-002</dd></div>
+      </dl>
+    </section>
+
+    <!-- 02 · Principles -->
+    <section class="ix-wrap ix-sheet" id="principles" data-sheet="Principles" aria-labelledby="h-principles">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>02</b></span>
+        <span class="ix-sheet-name">Principles</span>
+        <dl class="ix-tb"><div><dt>Count</dt><dd>six</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-principles">Six rules the whole site keeps.</h2></div>
+      <div class="sq-cells bb-grid-3">
+        <div class="bb-cell"><span class="no">01</span><h3 class="ix-h3">One line, never a box in a box</h3><p class="ix-body">The page is one drawing. Areas are cells that share their dividers. Nothing is framed inside another frame.</p></div>
+        <div class="bb-cell"><span class="no">02</span><h3 class="ix-h3">Square</h3><p class="ix-body">The chrome has no radius. Corners are where lines meet, and a strong cross marks every join of a rule and a column.</p></div>
+        <div class="bb-cell"><span class="no">03</span><h3 class="ix-h3">Blue means here</h3><p class="ix-body">Scnx Blue marks only the current place, focus, selection, links and checks. It is never decoration and never a button fill.</p></div>
+        <div class="bb-cell"><span class="no">04</span><h3 class="ix-h3">Two voices</h3><p class="ix-body">Inter speaks the content. A tracked, upper-case mono speaks the instrument: bars, labels, facts, readouts, buttons.</p></div>
+        <div class="bb-cell"><span class="no">05</span><h3 class="ix-h3">Verify, don't decorate</h3><p class="ix-body">Motion proves something: a section read is checked, a label pointed at is re-verified from hash characters. Nothing moves only to move.</p></div>
+        <div class="bb-cell"><span class="no">06</span><h3 class="ix-h3">Motion answers the reader</h3><p class="ix-body">Movement follows the scroll, the pointer or the keys. It plays back when scrolled back, and stops under reduced motion.</p></div>
+      </div>
+    </section>
+
+    <!-- 03 · Lines -->
+    <section class="ix-wrap ix-sheet" id="lines" data-sheet="Lines" aria-labelledby="h-lines">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>03</b></span>
+        <span class="ix-sheet-name">Lines</span>
+        <dl class="ix-tb"><div><dt>Weight</dt><dd>1px</dd></div><div><dt>Cross</dt><dd>11px</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-lines">Every line is one pixel, and there is only ever one.</h2></div>
+      <div class="sq-cells bb-grid-2">
+        <div class="bb-draw" aria-label="A section opening: the rule across the page, the column lines, a cross at each join, and the section bar under the rule.">
+          <span class="col a"></span><span class="col b"></span><span class="rule"></span>
+          <span class="x a"></span><span class="x b"></span>
+          <span class="bar"><b>04 /</b>Section name</span>
+          <span class="tag" style="left:2%; top:52px">rule</span><span class="tag" style="left:calc(22% + 8px); top:24px">column</span><span class="tag" style="left:calc(78% + 10px); top:52px">cross</span><span class="tag" style="left:calc(22% + 14px); top:122px">section bar</span>
+        </div>
+        <div class="bb-table-wrap">
+          <table class="bb-table">
+            <thead><tr><th scope="col">Line</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><td>Line</td><td><code>--sq-line</code>: text at 16%. One family for every divider.</td></tr>
+              <tr><td>Cross</td><td><code>--sq-cross</code>: text at 72%, an 11px plus where a rule meets a column.</td></tr>
+              <tr><td>Rule</td><td>The width of the viewport at the top of every section, drawn in from the left once.</td></tr>
+              <tr><td>Column</td><td>Two lines bound the centre column for the whole page.</td></tr>
+              <tr><td>First section</td><td>No rule and no cross: the nav's line is its top line.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="sq-cells bb-grid-2">
+        <div class="bb-cell bb-dd"><div class="demo"><span class="cells"><i></i><i></i><i></i><i></i></span></div><span class="verdict do">Do · cells share their lines</span><p class="ix-body">A grid of cells draws its dividers by showing the line colour through a 1px gap.</p></div>
+        <div class="bb-cell bb-dd"><div class="demo"><span class="box"><span class="box"></span></span></div><span class="verdict dont">Don't · a box in a box</span><p class="ix-body">Two frames 1px or 8px apart read as a double line. Never frame a panel inside a frame.</p></div>
+      </div>
+    </section>
+
+    <!-- 04 · Layout -->
+    <section class="ix-wrap ix-sheet" id="layout" data-sheet="Layout" aria-labelledby="h-layout">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>04</b></span>
+        <span class="ix-sheet-name">Layout</span>
+        <dl class="ix-tb"><div><dt>Column</dt><dd>1280px max</dd></div><div><dt>Nav</dt><dd>48px</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-layout">A centre column, cut into sheets.</h2><p class="ix-lede">Each section is a sheet: a rule, a bar that holds under the nav, a lead, then cells and rows. Content keeps a 40px inner pad (20px on phones).</p></div>
+      <div class="bb-table-wrap">
+        <table class="bb-table">
+          <thead><tr><th scope="col">Part</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead>
+          <tbody>
+            <tr><td>Column</td><td><code>min(1280px, 100vw − 2 × clamp(16px, 8vw, 320px))</code></td><td>The same on every page: 1280 at 1920, 1210 at 1440, 1075 at 1280.</td></tr>
+            <tr><td>Inner pad</td><td><code>--sq-pad</code>: 40px, 20px at 760px and below</td><td>The left and right pad of every cell, row and bar.</td></tr>
+            <tr><td>Nav</td><td><code>--sq-nav</code>: 48px, full width, sticky</td><td>A strip of cells, one line between any two. The sheet readout leaves at 1240px and below.</td></tr>
+            <tr><td>Section bar</td><td>Sticky at 48px, <code>NN / Name ··· facts</code></td><td>Its line lands on the next rule when pushed out (−1px bottom margin).</td></tr>
+            <tr><td>Lead</td><td>56–72px top, a line below</td><td>The section's large heading and lede.</td></tr>
+            <tr><td>Cells</td><td><code>.sq-cells</code>: grid, 1px gap, line-coloured</td><td>A cell is never framed on its own and never fades on its own.</td></tr>
+            <tr><td>Facts row</td><td><code>.sq-facts</code>: a row of label / value cells</td><td>The section's title block, set as a row.</td></tr>
+            <tr><td>Jumps</td><td><code>scroll-margin-top: 48px</code> on every section</td><td>A section lands with its line under the nav. Section 01 lands at the top.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 05 · Colour -->
+    <section class="ix-wrap ix-sheet" id="colour" data-sheet="Colour" aria-labelledby="h-colour">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>05</b></span>
+        <span class="ix-sheet-name">Colour</span>
+        <dl class="ix-tb"><div><dt>Values</dt><dd>@scnx/system tokens</dd></div><div><dt>Modes</dt><dd>dark, light</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-colour">Roles, not colours. Every value is a token.</h2><p class="ix-lede">The docs pick roles; <code>ui-platform</code> supplies the values in both modes. The swatches below are live: switch the mode in the nav.</p></div>
+      <div class="sq-cells bb-grid-4">
+        <div class="bb-swatch"><span class="chip" style="background:var(--ix-ground)"></span><strong>Ground</strong><code>neutral.surface.default (light)<br>neutral.surface.sunken (dark)</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--ix-text)"></span><strong>Text</strong><code>neutral.text.default</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--ix-muted)"></span><strong>Muted</strong><code>neutral.text.subtle</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--sq-faint)"></span><strong>Faint</strong><code>text at 42% on ground (derived)</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--sq-line)"></span><strong>Line</strong><code>text at 16% (derived)</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--sq-cross)"></span><strong>Cross</strong><code>text at 72% (derived)</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--ix-signal)"></span><strong>Signal · here</strong><code>primary.surface.solid</code></div>
+        <div class="bb-swatch"><span class="chip" style="background:var(--ds-color-neutral-surface-solid-default)"></span><strong>Ink · primary action</strong><code>neutral.surface.solid on neutral.text.contrast</code></div>
+      </div>
+      <div class="bb-note"><b>Derived values</b> (line, cross, faint, glass) are mixes of tokens, declared on every theme root so a dark island on a light page resolves its own. They are expression-local (<code>--sq-*</code>), never new tokens. <b>Status colours</b> (success, warning, danger) come only through ui-platform components such as Badge.</div>
+    </section>
+
+    <!-- 06 · Type -->
+    <section class="ix-wrap ix-sheet" id="type" data-sheet="Type" aria-labelledby="h-type">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>06</b></span>
+        <span class="ix-sheet-name">Type</span>
+        <dl class="ix-tb"><div><dt>Content</dt><dd>Inter</dd></div><div><dt>Instrument</dt><dd>IBM Plex Mono</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-type">Inter speaks. The instrument reads out.</h2></div>
+      <div class="sq-cells bb-grid-2">
+        <div class="bb-type"><p class="spec ix-display" style="font-size:clamp(2.5rem,4.6vw,4rem)">Display</p><span class="meta">Inter 500 · −0.04em · line 0.98 · clamp(3rem, 7.4vw, 6.25rem)</span></div>
+        <div class="bb-type"><p class="spec ix-h2">Section heading</p><span class="meta">Inter 500 · −0.035em · line 1.04 · clamp(2rem, 4.2vw, 3.25rem)</span></div>
+        <div class="bb-type"><p class="spec ix-h3">Card heading</p><span class="meta">Inter 550 · −0.012em · 17px</span><p class="spec ix-body">Body: Inter 14px · line 1.6 · muted. Lede: 17px · line 1.6.</p></div>
+        <div class="bb-type"><p class="spec sq-hud">04 / Schedule of guarantees</p><span class="meta">HUD voice · IBM Plex Mono 500 · 11px · +0.15em · upper case</span><p class="ix-body">Bars, eyebrows, facts, table heads, nav links, buttons, readouts. Every HUD face is mono, so a shuffle never shifts a width.</p></div>
+      </div>
+      <div class="bb-note"><b>Ruler titles</b> are Inter 650, 1.77% of the viewport width (22–34px), upper case. <b>Code</b> follows the token <code>--font-mono</code>; in this expression the mono is IBM Plex Mono (a deviation, see Status).</div>
+    </section>
+
+    <!-- 07 · Components -->
+    <section class="ix-wrap ix-sheet" id="components" data-sheet="Components" aria-labelledby="h-components">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>07</b></span>
+        <span class="ix-sheet-name">Components</span>
+        <dl class="ix-tb"><div><dt>From</dt><dd>ui-platform</dd></div><div><dt>Chrome</dt><dd>docs-local</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-components">Product components come from ui-platform. The chrome is the docs' own.</h2></div>
+      <div class="sq-cells bb-grid-2">
+        <div class="bb-cell">
+          <span class="bb-k">ui-platform components used</span>
+          <div class="bb-row"><span class="scnx-btn" data-variant="primary" data-size="small">Button</span><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Badge</span><span class="scnx-badge" data-scheme="success" data-emphasis="subtle" data-size="small">Badge · success</span><kbd class="scnx-kbd">Kbd</kbd><code class="scnx-code">code</code></div>
+          <div class="bb-row"><div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Segmented"><button data-part="item" role="radio" aria-checked="true">Segmented</button><button data-part="item" role="radio" aria-checked="false" tabindex="-1">control</button></div><label class="scnx-switch"><input type="checkbox" role="switch" checked><span data-part="track"></span>Switch</label></div>
+          <p class="ix-body">Used as shipped: their variants, sizes and states, bound to tokens. The docs never restyle a product component except through the chrome rules below.</p>
+        </div>
+        <div class="bb-cell">
+          <span class="bb-k">Docs chrome (not in ui-platform)</span>
+          <div class="bb-row sq-btn"><a class="scnx-btn" data-variant="primary" data-size="large" href="#components">Call to action</a><a class="scnx-btn" data-variant="secondary" data-size="large" href="#components">Secondary</a></div>
+          <p class="ix-body">Nav strip, section bar, cells, facts row, lead, chip, install line, the 48px mono call to action (<code>.sq-btn</code>), the ruler scrollbar and its titles. They live in the docs site and are built from tokens.</p>
+        </div>
+      </div>
+      <div class="bb-note"><b>Specimen rule.</b> Where a page shows a component as a specimen (a component page's stage, a do and don't example), the specimen renders with ui-platform's own tokens, including its radius and mono. The chrome's radius 0 and its mono must not reach it, so the docs never show a component other than it ships. <b>Today the radius override is global: scoping it to the chrome is an open follow-up.</b></div>
+    </section>
+
+    <!-- 08 · Motion -->
+    <section class="ix-wrap ix-sheet" id="motion" data-sheet="Motion" aria-labelledby="h-motion">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>08</b></span>
+        <span class="ix-sheet-name">Motion</span>
+        <dl class="ix-tb"><div><dt>Detail</dt><dd>SCROLL.md</dd></div><div><dt>Reduced</dt><dd>respected</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-motion">Motion that proves where you are.</h2><p class="ix-lede">The full list, with every trigger and value, is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/concepts/docs-instrument-square/SCROLL.md">SCROLL.md</a>. These are the movements and their numbers.</p></div>
+      <div class="bb-table-wrap">
+        <table class="bb-table">
+          <thead><tr><th scope="col">Movement</th><th scope="col">Values</th><th scope="col">Trigger</th></tr></thead>
+          <tbody>
+            <tr><td>Reveal</td><td>28px rise, 8px blur → 0, 900ms <code>power3.out</code>, 80ms apart</td><td>A block first entering the view.</td></tr>
+            <tr><td>Rule</td><td>Drawn in from the left, 1100ms</td><td>A section first entering the view.</td></tr>
+            <tr><td>Glide</td><td>Eased toward the target, 120ms time constant (drag 80ms)</td><td>Wheel or trackpad, ruler click or drag, ruler keys.</td></tr>
+            <tr><td>Titles</td><td>Letter by letter, last letter first</td><td>The section's line: entering stands the title up, nearing the nav lays it down.</td></tr>
+            <tr><td>Check</td><td>Drawn over 420ms</td><td>A section read (ledger), a current title whole.</td></tr>
+            <tr><td>Verify</td><td>Hash <code>0–9 A–F</code> for 120ms, then one character every 45ms</td><td>Pointing at or focusing a title, a nav link or a call to action. Try the buttons in 07.</td></tr>
+            <tr><td>Fold</td><td>170ms time constant</td><td>Pointer over, focus on, or a drag of the ruler.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-note"><b>Never</b> animate a component specimen. <b>Never</b> loop motion that the reader did not cause, except the receipt tape, which pauses on hover and focus. <b>Under reduced motion</b> nothing glides, rises or shuffles; titles still follow the scroll, because they are positions.</div>
+    </section>
+
+    <!-- 09 · Rules -->
+    <section class="ix-wrap ix-sheet" id="rules" data-sheet="Rules" aria-labelledby="h-rules">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>09</b></span>
+        <span class="ix-sheet-name">Do and don't</span>
+        <dl class="ix-tb"><div><dt>Checked by</dt><dd>review</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-rules">The mistakes the drawing makes visible.</h2></div>
+      <div class="bb-table-wrap">
+        <table class="bb-table">
+          <thead><tr><th scope="col">Do</th><th scope="col">Don't</th></tr></thead>
+          <tbody>
+            <tr><td>Divide with the cell gap, one line</td><td>Frame a panel inside a frame, or put two lines 1px apart</td></tr>
+            <tr><td>Draw a cross where a rule meets a column</td><td>Draw a rule or cross under the nav (the first section)</td></tr>
+            <tr><td>Use blue for here, focus, selection, links, checks</td><td>Fill a button with blue, or use blue as decoration</td></tr>
+            <tr><td>Set bars, labels, facts and buttons in the mono HUD voice</td><td>Shuffle text in a proportional face (widths would jump)</td></tr>
+            <tr><td>Take every value from a token, or mix tokens for a line</td><td>Introduce a hex colour or a new token in the docs</td></tr>
+            <tr><td>Show component specimens as they ship</td><td>Let the chrome's radius 0 or mono reach a specimen</td></tr>
+            <tr><td>Let motion follow the scroll, the pointer or the keys</td><td>Start motion on a timer the reader did not ask for</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10 · Status -->
+    <section class="ix-wrap ix-sheet" id="status" data-sheet="Status" aria-labelledby="h-status">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>10</b></span>
+        <span class="ix-sheet-name">Status and deviations</span>
+        <dl class="ix-tb"><div><dt>Normative</dt><dd>no</dd></div><div><dt>Needs</dt><dd>ADR-UIP-VIS-001 rev.</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-status">Guidance today. Rules only by decision.</h2><p class="ix-lede">This book is a reference (ADR-UIP-VIS-002). Where it departs from the Scnehaux UI brand book, the departure is listed here and holds only for the docs chrome until an ADR-UIP-VIS-001 revision records it.</p></div>
+      <div class="bb-table-wrap">
+        <table class="bb-table">
+          <thead><tr><th scope="col">Departure</th><th scope="col">Brand book says</th><th scope="col">This book</th><th scope="col">Scope</th></tr></thead>
+          <tbody>
+            <tr><td>Radius</td><td>The concentric ladder (R24 panel, pad 8, R16 container)</td><td>Radius 0</td><td>Chrome only; specimens keep the ladder (follow-up)</td></tr>
+            <tr><td>Mono</td><td>The system mono</td><td>IBM Plex Mono for the HUD voice</td><td>Chrome; code and specimens follow the token</td></tr>
+            <tr><td>Rise</td><td>4px, no scaling</td><td>28px with an 8px blur, once on entry</td><td>Chrome content blocks</td></tr>
+            <tr><td>Materials</td><td>Fill, ring and shadow per material</td><td>Ring only; one long low shadow for floating layers</td><td>Chrome</td></tr>
+            <tr><td>Scrolling</td><td>Native</td><td>Eased wheel and a ruler scrollbar from 1024px</td><td>The docs site</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 11 · Adopt -->
+    <section class="ix-wrap ix-sheet" id="adopt" data-sheet="Adopt" aria-labelledby="h-adopt">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>11</b></span>
+        <span class="ix-sheet-name">Adopting it in ui-platform-docs</span>
+        <dl class="ix-tb"><div><dt>Owner</dt><dd>scnehaux-design</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-adopt">Take the values from ui-platform. Build the chrome in the docs.</h2></div>
+      <div class="sq-cells bb-grid-3">
+        <div class="bb-cell"><span class="no">From ui-platform</span><h3 class="ix-h3">Tokens and components</h3><p class="ix-body">Colour roles in both modes, type families, spacing, motion tokens, and every component the pages show (Button, Badge, Segmented, Switch, Kbd, Code). Nothing is copied: the docs depend on <code>@scnx/system</code>.</p></div>
+        <div class="bb-cell"><span class="no">In ui-platform-docs</span><h3 class="ix-h3">The chrome</h3><p class="ix-body">The line system, nav strip, section bars, cells, facts, lead, calls to action, the ruler and its titles, reveal, glide and verify. The reference implementation is <code>square.css</code> and <code>square.js</code> in this folder.</p></div>
+        <div class="bb-cell"><span class="no">Here, in scnehaux-design</span><h3 class="ix-h3">This book</h3><p class="ix-body">Rules, values and examples. A change to the look lands here first, by pull request, and the docs follow. The docs do not write their own brand rules.</p></div>
+      </div>
+      <div class="bb-note"><b>Order.</b> First, scope the chrome's radius and mono away from specimens. Then port <code>square.css</code> and <code>square.js</code>, on top of <code>@scnx/system</code>'s tokens. Last, migrate the pages to the sheet structure (bars, cells, facts). The behaviour to match is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/concepts/docs-instrument-square/SCROLL.md">SCROLL.md</a>.</div>
+    </section>
+  </main>
+
+  <footer class="ix-wrap ix-foot" data-draw>
+    <div class="ix-setblock" aria-label="Drawing set">
+      <div><span class="k">Drawing set</span><span class="v">Instrument · Square · brand book</span></div>
+      <div><span class="k">Sheets</span><span class="v">01–11</span></div>
+      <div><span class="k">Applies to</span><span class="v">ui-platform-docs</span></div>
+      <div><span class="k">Status</span><span class="v">guidance</span></div>
+      <div><span class="k">Authority</span><span class="v">ADR-UIP-VIS-002</span></div>
+    </div>
+  </footer>
+</div>
+
+<nav class="ix-rail" aria-label="Sheets"><ol class="ix-rail-marks"></ol><span class="ix-rail-progress"></span></nav>
+</body>
+</html>

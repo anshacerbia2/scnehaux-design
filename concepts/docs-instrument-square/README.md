@@ -22,6 +22,14 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 | Public · Landing (global) | [`Docs-Landing.html`](Docs-Landing.html) | [`Docs-Landing.png`](Docs-Landing.png) |
 | Signed in · Workspace home | [`Docs-Home.html`](Docs-Home.html) | [`Docs-Home.png`](Docs-Home.png) |
 | Docs · Components / Button | [`Docs-Button.html`](Docs-Button.html) | [`Docs-Button.png`](Docs-Button.png) |
+| **Brand book** | [`Brand-Book.html`](Brand-Book.html) | [`Brand-Book.png`](Brand-Book.png) |
+
+**The brand book** ([`Brand-Book.html`](Brand-Book.html)) is the reference for
+`ui-platform-docs`. It covers principles, lines, layout, colour roles, type,
+components, motion, do and don't, status and deviations, and how to adopt it. It is
+written here, in scnehaux-design. Tokens and product components stay in
+`ui-platform` (`@scnx/system`); the docs chrome is the docs' own, built from those
+tokens.
 
 ## The drawing
 
