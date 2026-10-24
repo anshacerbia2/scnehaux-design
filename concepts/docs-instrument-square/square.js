@@ -33,7 +33,7 @@
   if (new URLSearchParams(location.search).has("render")) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
   const wide = matchMedia("(min-width: 1024px)");
-  const RAIL = 60, TOP = 60, BOTTOM = 14, PITCH = 22, NAV = 48;
+  const RAIL = 60, TOP = 60, BOTTOM = 14, NAV = 48;
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
   const TAU_MODE = 170, TAU_WHEEL = 120, TAU_TRACKPAD = 45;
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
@@ -197,7 +197,7 @@
     document.body.append(glassTop, glassBottom, layer, verified, jumps, rail, cursor);
 
     /* ---------- measure: on resize only, never while scrolling ---------- */
-    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, readLine = 0, room = 0, compact = false, longest = 0, scaleState = "", W = 10;
+    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, compact = false, longest = 0, scaleState = "", W = 10;
     const column = document.querySelector(".sq-col") || document.querySelector(".ix-page > main > section[data-sheet]");
     const measureLetters = () => {
       big = clamp(Math.round(vw * 0.0177), 22, 34);
@@ -215,16 +215,18 @@
       docH = Math.max(1, doc.scrollHeight);
       maxScroll = Math.max(1, docH - vh);
       H = Math.max(1, vh - TOP - BOTTOM);
-      // the same reading line instrument.js uses for "here"
-      readLine = Math.round((vh * 0.4) / PITCH) * PITCH + PITCH / 2;
       for (const L of labels) {
         L.top = L.sheet.getBoundingClientRect().top + scrollY;
-        L.v = L.i === 0 ? 0 : clamp(((L.top - readLine) / maxScroll) * 100, 0, 100);
+        // its place on the scale: where its line sits in the document
+        L.v = L.i === 0 ? 0 : clamp((L.top / docH) * 100, 0, 100);
+        // the progress at which the blue now line, sliding down the viewport, meets the
+        // section's line on the page: top − p·maxScroll = TOP + p·H
+        L.at = L.i === 0 ? 0 : clamp(((L.top - TOP) / (maxScroll + H)) * 100, 0, 100);
       }
-      // a title moves over half a screen of scrolling, or less where sections are close,
-      // so no move starts before the page has moved
-      W = Math.max(0.5, ((vh * 0.5) / maxScroll) * 100);
-      for (const L of labels) L.win = L.i === 0 ? W : Math.max(0.25, Math.min(W, (L.v - labels[L.i - 1].v) * 0.9));
+      // from that meeting a title moves over 30% of a screen of relative travel, or less
+      // where sections are close
+      W = Math.max(0.25, ((vh * 0.3) / (maxScroll + H)) * 100);
+      for (const L of labels) L.win = L.i === 0 ? W : Math.max(0.25, Math.min(W, (L.at - labels[L.i - 1].at) * 0.9));
       // the free margin between the column and the ruler
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
       compact = room < longest * SMALL;
@@ -236,7 +238,8 @@
     let mode = 0, modeTarget = 0, pointerY = -1, dragging = false, focused = false, lastT = performance.now(), shownCur = -1, lastY = -1, lastMode = -1;
     const hoverY = (v) => TOP + (v / 100) * H;
     const progress = () => clamp((scrollY / maxScroll) * 100, 0, 100);
-    const currentIndex = () => { let idx = 0; for (const L of labels) if (L.top - scrollY <= readLine) idx = L.i; return idx; };
+    // the current section: the last one whose line the now line has reached
+    const currentIndex = () => { const p = progress(); let idx = 0; for (const L of labels) if (p >= L.at) idx = L.i; return idx; };
 
     /* Where letter k of a title sits in each place it can be: [x, y, rotation, scale, tone, opacity]. */
     const across = (L, k, y, s, t, o = 1) => [vw - RAIL - L.W * s + (L.letters[k].c + L.letters[k].w / 2) * s, y, 0, s, t, o];
@@ -291,8 +294,9 @@
       put(glassTop, "opacity", glass); put(glassBottom, "opacity", glass);
 
       /* Titles: every letter is placed from the scroll position. A title waits in the
-         stack, stands on the ruler as its section nears, becomes current as the section
-         reaches the reading line, and joins the read stack as the next one takes over. */
+         stack, stands on the ruler hanging from its section's line as that line comes
+         into view, becomes current once the blue now line meets the section's line, and
+         joins the read stack as the next one takes over. */
       let check = null;
       for (const L of labels) {
         const n = L.letters.length;
@@ -300,13 +304,14 @@
         const stackY = vh - 37 - (last - L.i) * 20;
         const pastY = 66 + 9 + L.i * 20;
         const curY = 66 + L.i * 20 + big * sBig;
-        const standY = lineY + ((L.v - p) / 100) * docH;
         const half = (L.W * UPRIGHT) / 2;
-        // how far along each move the title is (0–1)
+        // standing, the title's top meets its section's line on the page
+        const standY = L.top - y + half;
+        // how far along each move the title is (0–1); the move to current starts at the meeting
         const U = clamp((stackY - 14 - (standY + half)) / (vh * 0.18), 0, 1);
-        const C = L.i === 0 ? 1 : clamp((p - (L.v - L.win)) / L.win, 0, 1);
+        const C = L.i === 0 ? 1 : clamp((p - L.at) / L.win, 0, 1);
         const nx = labels[L.i + 1];
-        const Q = nx ? clamp((p - (nx.v - nx.win)) / nx.win, 0, 1) : 0;
+        const Q = nx ? clamp((p - nx.at) / nx.win, 0, 1) : 0;
         const headY = TOP + 14 + half;
         let whole = true, settled = mode === 0;
         // a verification run ends when its last letter has resolved

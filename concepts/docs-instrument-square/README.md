@@ -91,11 +91,14 @@ takes its place.
   one large under them, the next one stands upright on the ruler where it begins,
   and the rest wait at the bottom right. Each title is a link to its section.
 - **Change, with the scroll.** Titles move as the page moves, letter by letter, the
-  last letter first: the next title climbs out of the stack onto the ruler as its
-  section nears, its letters fly up to the large place as the section reaches the
-  reading line, and the previous title drops into the read stack. Every move is a
-  function of the scroll position (over half a screen, less where sections are
-  close), so scrolling back plays it back. Once the current title is whole, a blue
+  last letter first. The next title climbs out of the stack and stands on the ruler,
+  hanging from its section's line on the page, as that line comes into view. It
+  stays there until the blue now line, which slides down the viewport as the page
+  scrolls, meets that line; only then do its letters fly up to the large place and
+  the previous title drops into the read stack. Each move runs over 30% of a screen
+  of travel (less where sections are close) and is a function of the scroll
+  position, so scrolling back plays it back. The ruler's section marks sit where
+  each section's line sits in the document, so scale and page agree. Once the current title is whole, a blue
   check is drawn beside it.
 - **Verified on demand.** Hovering or focusing a title at rest (the current one or
   either stack) verifies it again: its letters read as hash characters (`0–9 A–F`)
