@@ -18,7 +18,7 @@ concepts/
   iam/                        IAM reachability
   docs-site/                  Public landing, signed-in workspace, component page
   docs-instrument/            The same three docs boards, industrial expression (live)
-  docs-instrument-square/     Instrument with square geometry and no read head (live)
+  docs-instrument-square/     Instrument as one line drawing, with a ruler scrollbar (live)
   canvas.json                 Board titles, sizes, and positions
 ```
 
@@ -121,8 +121,10 @@ a hand-authored live page (`<Board>.html`, sharing `instrument.css` and
 `?render&mode=dark`). It binds the default theme's tokens and the reference
 component classes; its folder README records the expression and its guidance
 status. `docs-instrument-square` follows the same rule and reuses Instrument's
-`instrument.css` and `instrument.js`, adding only `square.css` (radius tokens
-at 0, no read head).
+`instrument.css` and `instrument.js`, adding `square.css` (a framed column,
+crossing rules, sticky section bars, cells that share their lines, radius tokens
+at 0) and `square.js` (a ruler scrollbar with section titles). Its thumbnails
+are the live first screen, so they show the ruler.
 
 ## Provenance
 
