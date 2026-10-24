@@ -18,6 +18,7 @@ concepts/
   iam/                        IAM reachability
   docs-site/                  Public landing, signed-in workspace, component page
   docs-instrument/            The same three docs boards, industrial expression (live)
+  docs-instrument-square/     Instrument with square geometry and no read head (live)
   canvas.json                 Board titles, sizes, and positions
 ```
 
@@ -94,6 +95,9 @@ internal consoles keep a separate design.
 | `docs-instrument` | Instrument · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument/Docs-Landing.png) |
 | `docs-instrument` | Instrument · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument/Docs-Home.png) |
 | `docs-instrument` | Instrument · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument/Docs-Button.png) |
+| `docs-instrument-square` | Square · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument-square/Docs-Landing.png) |
+| `docs-instrument-square` | Square · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument-square/Docs-Home.png) |
+| `docs-instrument-square` | Square · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument-square/Docs-Button.png) |
 
 Each board has three files:
 
@@ -116,7 +120,9 @@ a hand-authored live page (`<Board>.html`, sharing `instrument.css` and
 `instrument.js`) plus its still frame (`.png`, `.thumb.webp`, rendered with
 `?render&mode=dark`). It binds the default theme's tokens and the reference
 component classes; its folder README records the expression and its guidance
-status.
+status. `docs-instrument-square` follows the same rule and reuses Instrument's
+`instrument.css` and `instrument.js`, adding only `square.css` (radius tokens
+at 0, no read head).
 
 ## Provenance
 
