@@ -81,7 +81,13 @@ body { background: var(--ix-ground); }
 .ix-nav > .ix-nav-spacer { flex: 1; }
 .ix-brand { block-size: var(--sq-nav); padding-inline: 20px 24px; box-shadow: inset -1px 0 0 var(--sq-line); }
 .ix-nav > .scnx-badge { margin-inline: 16px !important; }
-.ix-nav-links { block-size: var(--sq-nav); align-items: stretch; gap: 0; padding-inline: 4px; box-shadow: inset -1px 0 0 var(--sq-line), inset 1px 0 0 var(--sq-line); }
+/* One line between two cells, never two: the brand draws the line after it; the links
+   draw none of their own (after a badge they take one before them); the spacer draws the
+   line after the links, so with no room left it has no width and the next cell's line
+   is the only one. */
+.ix-nav-links { block-size: var(--sq-nav); align-items: stretch; gap: 0; padding-inline: 4px; }
+.ix-nav > .scnx-badge + .ix-nav-links { box-shadow: inset 1px 0 0 var(--sq-line); }
+.ix-nav > .ix-nav-spacer { align-self: stretch; box-shadow: inset 1px 0 0 var(--sq-line); }
 .ix-nav-links a {
   block-size: var(--sq-nav); padding-inline: 16px;
   font: 500 11px/1 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted);
@@ -107,6 +113,9 @@ body { background: var(--ix-ground); }
 .ix-nav .scnx-btn[data-variant="primary"]:hover { background: var(--ds-color-neutral-surface-solid-hover); }
 .ix-nav .search { padding-inline: 16px 12px; border: 0; background: none; box-shadow: inset 1px 0 0 var(--sq-line); }
 .ix-nav .who { padding-inline: 14px 18px; }
+/* The strip of cells is wider than Instrument's floating nav: the sheet readout (which
+   the ruler's own readout repeats) leaves first, so the nav never overflows. */
+@media (max-width: 1240px) { .ix-nav > .ix-sheet-readout { display: none; } }
 
 /* Calls to action outside a specimen share the HUD voice and a 48px height. */
 .sq-btn .scnx-btn { block-size: 48px; min-block-size: 48px; gap: 10px; }

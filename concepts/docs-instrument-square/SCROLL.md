@@ -31,7 +31,7 @@ Terms used below:
 
 | # | Behaviour | Detail |
 | :-- | :-- | :-- |
-| 2.1 | Nav | Sticky at the top, 48px, above everything (z 50), including the ruler. |
+| 2.1 | Nav | Sticky at the top, 48px, above everything (z 50), including the ruler. A strip of cells with one line between any two. At 1240px and below the sheet readout leaves (the ruler repeats it), so the strip fits down to 1024px. Below 980px the links leave too. |
 | 2.2 | Section rule draws in | 1px, the width of the viewport, scaled 0 → 1 from the left over 1100ms. It runs once, when the section enters the view (`instrument.js`: 12% visible, bottom 18% of the viewport excluded). On the Button page the rule spans the page column only. |
 | 2.3 | Crosses | An 11px cross in a strong line sits where each rule meets a column line. Static. |
 | 2.3a | First section | No rule and no crosses: it starts right under the nav, whose own line is its top line. The same holds for the Button page's docs column. |
@@ -115,7 +115,7 @@ page at rest:
 | 7.4 | Cursor | A 3px ink line at the pointer. |
 | 7.5 | Titles | All small and level, each at its section's place on the scale. Current at full tone, the rest at 86%. They move in letter by letter over the first 40% of the fold. |
 | 7.6 | Click | Glides to the point under the pointer: `(y − 60) / (viewport − 74)` of the page. |
-| 7.7 | Drag | Scrubs instantly with the pointer. |
+| 7.7 | Drag | Glides after the pointer, closer behind than a wheel (80ms time constant), and lands where the pointer is on release. |
 | 7.8 | Unfold | On pointer leave, unless dragging or focused. |
 
 ## 8. Keyboard

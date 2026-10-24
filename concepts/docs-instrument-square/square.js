@@ -40,7 +40,7 @@
   const wide = matchMedia("(min-width: 1024px)");
   const RAIL = 60, TOP = 60, BOTTOM = 14, NAV = 48;
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
-  const TAU_MODE = 170, TAU_WHEEL = 120;
+  const TAU_MODE = 170, TAU_WHEEL = 120, TAU_DRAG = 80; // a drag glides too, closer behind the pointer
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
@@ -80,7 +80,6 @@
       if (reduce.matches) { running = false; current = target; write(target, performance.now()); return; }
       if (!running) { running = true; current = scrollY; last = performance.now(); requestAnimationFrame(step); }
     };
-    const set = (y) => { running = false; target = current = clamp(y, 0, max()); write(current, performance.now()); };
     // an element that can still scroll this way keeps the wheel
     const scrollsItself = (node, dy) => {
       for (let n = node; n && n !== document.body && n !== doc; n = n.parentElement) {
@@ -106,7 +105,7 @@
       if (Math.abs(scrollY - written) <= 1.5) return;
       running = false; target = current = scrollY;
     }, { passive: true });
-    return { to, set, onWrite: (fn) => listeners.push(fn) };
+    return { to, onWrite: (fn) => listeners.push(fn) };
   })();
 
   ready(() => {
@@ -384,18 +383,16 @@
     const invalidate = () => { lastY = -1; request(); };
 
     /* ---------- pointer ---------- */
-    const toScroll = (y, glide) => {
-      const top = clamp((y - TOP) / H, 0, 1) * maxScroll;
-      glide ? smooth.to(top) : smooth.set(top);
-    };
+    // a click glides to the point like a wheel; a drag glides after the pointer, closer behind
+    const toScroll = (y, tau) => smooth.to(clamp((y - TOP) / H, 0, 1) * maxScroll, tau);
     const enter = () => { modeTarget = 1; request(); };
     const leave = () => { if (!dragging && !focused) { modeTarget = 0; pointerY = -1; invalidate(); } };
     rail.addEventListener("pointerenter", enter);
     rail.addEventListener("pointerleave", () => { pointerY = -1; leave(); });
     jumps.addEventListener("pointerover", (e) => { if (e.target.closest("a") && modeTarget > 0.5) enter(); });
     jumps.addEventListener("pointerout", (e) => { if (!rail.contains(e.relatedTarget) && !jumps.contains(e.relatedTarget)) leave(); });
-    rail.addEventListener("pointermove", (e) => { pointerY = e.clientY; if (dragging) toScroll(e.clientY, false); invalidate(); });
-    rail.addEventListener("pointerdown", (e) => { dragging = true; rail.setPointerCapture(e.pointerId); toScroll(e.clientY, true); enter(); });
+    rail.addEventListener("pointermove", (e) => { pointerY = e.clientY; if (dragging) toScroll(e.clientY, TAU_DRAG); invalidate(); });
+    rail.addEventListener("pointerdown", (e) => { dragging = true; rail.setPointerCapture(e.pointerId); toScroll(e.clientY, TAU_WHEEL); enter(); });
     const up = () => { dragging = false; };
     rail.addEventListener("pointerup", up);
     rail.addEventListener("pointercancel", up);

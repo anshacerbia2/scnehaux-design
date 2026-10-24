@@ -22,7 +22,8 @@
   .who { display: inline-flex; align-items: center; gap: 8px; block-size: 28px; padding-inline: 2px 10px; border-radius: var(--ds-dimension-radius-element); font-size: 13px; font-weight: 500; }
   .who span:first-child { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-solid-default); color: var(--ds-color-neutral-text-contrast-default); font-size: 10.5px; font-weight: 600; }
   @media (max-width: 1360px) { .who span:last-child { display: none; } }
-  @media (max-width: 1240px) { .search { min-inline-size: 0; } .search span:not(.scnx-kbd) { display: none; } }
+  /* the strip of cells is wider than Instrument's floating nav: the search drops its label sooner */
+  @media (max-width: 1400px) { .search { min-inline-size: 0; } .search span:not(.scnx-kbd) { display: none; } }
 
   /* Sheet 01 · Overview */
   .over { grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); }
