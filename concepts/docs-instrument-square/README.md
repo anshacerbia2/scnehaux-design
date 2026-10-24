@@ -48,85 +48,35 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
    mono upper-case labels, the current page as an ink chip, the primary action as
    a solid ink cell. Calls to action outside a specimen share the 48px height.
 
-## Reveal (`square.js`)
+## Scroll behaviour
 
-Content rises into place as it first enters the view: from 28px below and an 8px
-blur to rest, 900ms, `power3.out`, in document order 80ms apart. The finest blocks
-rise (a heading, a paragraph, a card's parts), never a cell on its own, since a
-fading cell would show the grid's line colour through it. A 3D drawing (the landing
-assembly) rises without the blur, which would flatten it. The page is held hidden
-until the blocks are marked, so nothing shows and then jumps. Reduced motion,
-`?render` and no JS show everything at once.
+**[`SCROLL.md`](SCROLL.md) lists every scroll behaviour in full, with its values.**
+In short:
 
-## Smooth scroll (`square.js`)
-
-A mouse-wheel notch is eased toward its target (Lenis-style, no library, a 120ms
-time constant, close to the reference's `lerp: 0.12`). A trackpad keeps native
-scrolling: its own inertia is already smooth and runs off the main thread. An
-element that can still scroll that way keeps the wheel (the Button sidebar, code
-blocks); ctrl or pinch zoom, horizontal swipes, keys, anchors and find are never
-intercepted, and reduced motion turns it off.
-
-The ruler and its titles are redrawn in the same frame the glide moves the page,
-never a frame behind it: a frame late reads as the ruler dragging behind the page.
-Nothing reads layout while scrolling: section positions are measured on resize and
-cached, the scale moves as one transform at rest, and a style is written only when
-it changes. `instrument.js` writes its per-frame values (read-head energy and focus)
-on the read head instead of the root, so scrolling no longer restyles the whole
-document: style recalculation while scrolling Landing fell from about 1.6s to 31ms
-over 2.3s of native scrolling (Chromium, CDP metrics).
-
-## The ruler scrollbar (`square.js`)
-
-The native scrollbar is hidden at 1024px and wider; a 60px ruler on the right edge
-takes its place.
-
-- **At rest** the ruler reads at page scale (one tick per 1% of the page, a number
-  every 5) around a blue *now* line that reads like a receipt: `05 · 042%`, the
-  section and the position.
-- **The ledger.** Each section's start is marked on the scale. A section read to its
-  end is verified: its mark turns blue and a check is drawn beside it. The one being
-  read is ink; the rest are faint.
-- **Titles.** Sections already read are stacked small at the top right, the current
-  one large under them, the next one stands upright on the ruler where it begins,
-  and the rest wait at the bottom right. Each title is a link to its section.
-- **Change, with the section's line.** Titles follow their section's line on the
-  page, letter by letter, the last letter first. As the line enters the viewport
-  from below, the title climbs out of the stack, stands up on the ruler and rides
-  with the line. As the line nears the titles at the top (from 140px below the
-  current title), its letters lie down into the large place, done when the line
-  reaches the nav, which is when the section's bar is held; the previous title drops
-  into the read stack over the same stretch. Every position is a function of the
-  scroll, so scrolling back plays it back. The blue now line plays no part. The
-  ruler's section marks sit where each section's line sits in the document. Once the current title is whole, a blue
-  check is drawn beside it.
-- **Verified on demand.** Hovering or focusing a title at rest (the current one or
-  either stack) verifies it again: its letters read as hash characters (`0–9 A–F`)
-  for 120ms, then resolve left to right, one every 45ms; the current title's check
-  is drawn again after. Once per entry, never on a title in motion or with the ruler
-  folded, and not under reduced motion. Scrolling moves the letters; only a hover
-  shuffles them.
-- **Titles never cover the page at rest.** The large title shrinks to the free
-  margin between the column and the ruler. Where even the small titles do not fit
-  (about 1440px and below), the current title stands upright at the head of the
-  ruler, the next one where it begins, and the others wait until the ruler folds.
-- **Hover.** The ruler folds the whole page into 0–100 over the viewport, draws the
-  visible part as a window, marks the pointer with a 3px ink line, and every title
-  moves to the point where its section begins. Click to jump, drag to scrub.
-- **Keyboard.** The ruler is focusable and folds on focus. Arrows step 1% (shift 5%),
-  Page Up and Page Down move by section, Home and End go to the ends. It reports
-  its value as "42%, Guarantees".
-- The ruler, titles and the corner glass behind them are viewport furniture: they
-  are left out of `?render`, without JS, below 1024px, and under reduced motion
-  every change lands at once.
+- **Reveal.** Content rises 28px out of an 8px blur as it first enters the view
+  (900ms, `power3.out`, 80ms apart).
+- **Smooth scroll.** A mouse-wheel notch glides (120ms time constant, Lenis-style,
+  no library). A trackpad stays native.
+- **The ruler scrollbar.** From 1024px up, it replaces the native scrollbar: page
+  scale at rest, a blue now line with a receipt readout (`05 · 042%`), and a ledger
+  that verifies each section read.
+- **Section titles.** They follow their section's line, letter by letter, last
+  letter first. A title stands up on the ruler as the line enters the viewport, and
+  lies down into the current place as the line nears the nav. A hover verifies a
+  title at rest again (hash characters, then left to right).
+- **Fold.** On hover, focus or drag, the ruler folds the page into 0–100. Click
+  jumps, drag scrubs, and keys step.
+- **Off where it should be.** The ruler is off below 1024px; reveal and glide are off
+  under reduced motion; all of it is off in `?render` and without JS.
 
 ## Files
 
 - `square.css`: the line system, the nav, the section bars, the cells and the ruler
   styles, loaded after `../docs-instrument/instrument.css`. The `--sq-*` properties
-  (line, node, glass, column, padding) are expression-local guidance.
-- `square.js`: smooth scroll, the ruler scrollbar, its ledger and titles. No
+  (line, cross, glass, column, padding) are expression-local guidance.
+- `square.js`: reveal, smooth scroll, the ruler scrollbar, its ledger and titles. No
   dependencies.
+- `SCROLL.md`: every scroll behaviour, with its values and where it is off.
 - `<Board>.html`: the Instrument page laid out as cells (section bars, `sq-cells`
   grids, `sq-facts` rows). Content is otherwise Instrument's; keep the two in step
   when a board changes. They still run `../docs-instrument/instrument.js`.

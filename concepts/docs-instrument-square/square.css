@@ -287,4 +287,4 @@ html[data-ruler="on"]::-webkit-scrollbar { display: none; inline-size: 0; block-
 
 /* Render mode (?render): the PNG is the finished drawing, without viewport furniture. */
 .is-render .ix-nav-shell { position: relative; }
-.is-render .ix-sheet-head { position: relative; top: 0; }
+.is-render :is(.ix-sheet-head, .sec-head) { position: relative; top: 0; }
