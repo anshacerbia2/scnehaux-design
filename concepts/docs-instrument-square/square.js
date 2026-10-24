@@ -1,8 +1,7 @@
 /* Scnehaux UI · Instrument · Square — smooth scroll, reveal and the ruler scrollbar.
 
-   Smooth scroll: a mouse-wheel notch is eased toward its target (Lenis-style, no
-   library). A trackpad keeps native scrolling, whose own inertia is already smooth and
-   runs off the main thread. Anything that scrolls itself, a pinch or ctrl zoom, a
+   Smooth scroll: every wheel input, mouse or trackpad, is eased toward its target
+   (Lenis-style, no library). Anything that scrolls itself, a pinch or ctrl zoom, a
    horizontal swipe and reduced motion keep the native behaviour; keys, anchors and find
    are never intercepted. The ruler is redrawn in the same frame the page moves, never a
    frame behind it.
@@ -33,12 +32,15 @@
    glides, rises or scrambles. */
 (() => {
   const doc = document.documentElement;
+  // one "here" for the whole page: a section is here once its line reaches the nav, the
+  // moment its bar is held (instrument.js reads this for the bar, the readout and contents)
+  doc.dataset.ixHere = "48";
   if (new URLSearchParams(location.search).has("render")) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
   const wide = matchMedia("(min-width: 1024px)");
   const RAIL = 60, TOP = 60, BOTTOM = 14, NAV = 48;
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
-  const TAU_MODE = 170, TAU_WHEEL = 120, TAU_TRACKPAD = 45;
+  const TAU_MODE = 170, TAU_WHEEL = 120;
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
@@ -94,13 +96,10 @@
       if (reduce.matches || e.ctrlKey || e.defaultPrevented) return;
       let dy = e.deltaY, dx = e.deltaX;
       if (e.deltaMode === 1) { dy *= 16; dx *= 16; } else if (e.deltaMode === 2) { dy *= innerHeight; dx *= innerHeight; }
-      // a trackpad sends many small pixel deltas and brings its own inertia: leave it native
-      // (and compositor-driven) unless a glide is already running, which it then steers
-      const trackpad = e.deltaMode === 0 && (Math.abs(e.deltaY) < 50 || !Number.isInteger(e.deltaY));
-      if (trackpad && !running) return;
       if (dy === 0 || Math.abs(dx) > Math.abs(dy) || scrollsItself(e.target, dy)) return;
+      // every wheel glides the same way, mouse or trackpad, as Lenis does
       e.preventDefault();
-      to((running ? target : scrollY) + dy, trackpad ? TAU_TRACKPAD : TAU_WHEEL);
+      to((running ? target : scrollY) + dy);
     }, { passive: false });
     // any other mover (keys, anchors, find, the scrollbar on narrow screens) takes over
     addEventListener("scroll", () => {
@@ -228,6 +227,18 @@
       // the free margin between the column and the ruler
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
       compact = room < longest * SMALL;
+      for (const L of labels) {
+        L.sBig = clamp(room / L.W, SMALL * 1.2, 1);
+        L.curY = 66 + L.i * 20 + big * L.sBig;
+        if (L.i === 0) continue;
+        // a title lies down from a little below its current place until its line reaches
+        // the nav; it never starts until 24px after the previous section's line has reached
+        // the nav, so the previous title stands whole, checked, at that moment. A short
+        // section makes the next title lie down faster.
+        const P = labels[L.i - 1];
+        const before = P.i === 0 ? Infinity : P.end + (L.top - P.top) - L.end - 24;
+        L.span = Math.max(12, Math.min(L.curY + big * L.sBig + 140 - NAV, before));
+      }
       scaleState = "";
     };
     const measure = () => { vw = doc.clientWidth; measureLetters(); measureLayout(); };
@@ -296,14 +307,11 @@
          and rides with the line; as the line nears the titles at the top it lies down into
          the current place, done when the line reaches the nav (the section's bar is held);
          the previous title drops into the read stack over the same stretch. */
-      const moveIn = labels.map((L) => {
-        const sBig = clamp(room / L.W, SMALL * 1.2, 1);
-        const curY = 66 + L.i * 20 + big * sBig;
-        if (L.i === 0) return { sBig, curY, C: 1 };
-        // from a little below the current title down to the line's highest point
-        const span = curY + big * sBig + 140 - NAV;
-        return { sBig, curY, C: clamp((L.end + span - (L.top - y)) / span, 0, 1) };
-      });
+      // (the half pixel matches "here": a section line at 48.4px has reached the nav)
+      const moveIn = labels.map((L) => ({
+        sBig: L.sBig, curY: L.curY,
+        C: L.i === 0 ? 1 : clamp((L.end + L.span - (L.top - y) + 0.5) / L.span, 0, 1),
+      }));
       let check = null;
       for (const L of labels) {
         const n = L.letters.length;
@@ -420,7 +428,7 @@
       measure();
       invalidate();
     };
-    // a native scroll (keys, trackpad, anchors) redraws on the next frame; a glide already redrew
+    // a native scroll (keys, anchors, find) redraws on the next frame; a glide already redrew
     addEventListener("scroll", request, { passive: true });
     addEventListener("resize", () => { measure(); invalidate(); });
     wide.addEventListener?.("change", on);

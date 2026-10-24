@@ -183,10 +183,16 @@
       if (head) head.style.setProperty("--ix-energy", energy.toFixed(3));
       if (railProgress) railProgress.style.blockSize = `${(y / docH) * 100}%`;
 
-      // which sheet is under the read head
-      const line = headY + PITCH / 2;
+      // Which sheet is "here": by default the one under the read head (about 40% down).
+      // A page may set <html data-ix-here="48"> to place "here" at a fixed offset from the
+      // top instead (under a held nav): a sheet is here once its top reaches that offset,
+      // or the highest point its top can reach before the page ends.
+      // (the page height is read live: content rising into place can change it after load)
+      const offset = doc.dataset.ixHere ? Number(doc.dataset.ixHere) : NaN;
+      const maxScroll = Number.isFinite(offset) ? Math.max(1, doc.scrollHeight - vh) : 0;
+      const hereAt = (r) => (Number.isFinite(offset) ? Math.max(offset, r.top + y - maxScroll) + 0.5 : headY + PITCH / 2);
       let idx = 0;
-      for (let i = 0; i < sheets.length; i++) if (sheets[i].getBoundingClientRect().top <= line) idx = i;
+      for (let i = 0; i < sheets.length; i++) { const r = sheets[i].getBoundingClientRect(); if (r.top <= hereAt(r)) idx = i; }
       if (idx !== current) {
         sheets[current]?.classList.remove("is-current");
         sheets[idx]?.classList.add("is-current");
@@ -200,7 +206,7 @@
       }
       if (readout && sheets[idx]) {
         const r = sheets[idx].getBoundingClientRect();
-        const p = Math.min(1, Math.max(0, (line - r.top) / r.height));
+        const p = Math.min(1, Math.max(0, (hereAt(r) - r.top) / r.height));
         const pctEl = readout.querySelector(".pct");
         if (pctEl) pctEl.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
       }
