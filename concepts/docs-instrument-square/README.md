@@ -28,6 +28,9 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 3. **Section bars.** `02 / Name ········ facts`: number, name and the section's
    title-block facts in the HUD voice (mono, tracked, upper case). The bar holds
    under the nav while its section is read; the number turns blue when it is "here".
+   The crossing rule sits above the bar, so it is the bar's top line until the bar
+   meets the nav; by then the rule has scrolled under the nav and the nav's line
+   takes over, so the two never double.
 4. **No radius.** Every radius token (`radius.mark` … `radius.pill`) resolves to 0
    and literal radii are flattened. Components still bind the tokens. The Button
    *Anatomy* view reads `R0 · radius.control`.
@@ -35,6 +38,13 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
    a solid ink cell. Calls to action outside a specimen share the 48px height.
+
+## Smooth scroll (`square.js`)
+
+The wheel is eased toward its target (Lenis-style, no library: about 150ms time
+constant). An element that can still scroll that way keeps the wheel (the Button
+sidebar, code blocks); ctrl or pinch zoom, horizontal swipes, keys, anchors and
+find are never intercepted, and reduced motion turns it off.
 
 ## The ruler scrollbar (`square.js`)
 
@@ -48,9 +58,16 @@ takes its place.
   and the rest wait at the bottom right. Each title is a link to its section.
 - **Change.** When the current section changes, every title re-forms letter by
   letter: each letter flies, turns and scales to its new place after a short stagger.
+- **Titles never cover the page at rest.** The large title shrinks to the free
+  margin between the column and the ruler. Where even the small titles do not fit
+  (about 1440px and below), the current title stands upright at the head of the
+  ruler, the next one where it begins, and the others wait until the ruler folds.
 - **Hover.** The ruler folds the whole page into 0–100 over the viewport, draws the
   visible part as a window, marks the pointer with a 3px ink line, and every title
   moves to the point where its section begins. Click to jump, drag to scrub.
+- **Keyboard.** The ruler is focusable and folds on focus. Arrows step 1% (shift 5%),
+  Page Up and Page Down move by section, Home and End go to the ends. It reports
+  its value as "42%, Guarantees".
 - The ruler, titles and the corner glass behind them are viewport furniture: they
   are left out of `?render`, without JS, below 1024px, and under reduced motion
   every change lands at once.
