@@ -11,9 +11,11 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 > ADR-UIP-VIS-001 revision.
 >
 > The ruler scrollbar began from a reference site's page-position ruler. What makes
-> it Scnehaux's own is the evidence vocabulary: the square node at every join, the
-> ledger marks that verify each section read, titles verified from hash characters,
-> and the brand faces, Inter and a plain mono.
+> it Scnehaux's own is the evidence vocabulary: the ledger marks that verify each
+> section read, titles verified from hash characters, the receipt readout, and the
+> brand faces, Inter and a plain mono.
+>
+> The reveal moves content 28px, past Instrument's 4px rise; that too is guidance.
 
 | Board | Page | Image |
 | :-- | :-- | :-- |
@@ -26,11 +28,11 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 1. **One line, never a box in a box.** The page is a centre column bounded by two
    hairlines. Content is laid out as cells that share their dividers (the line
    shows through a 1px grid gap), so a panel never sits inside another frame.
-2. **The crossing rule and its nodes.** Every section opens with a 1px rule across
-   the whole viewport, drawn in from the left once. Where it meets each side of the
-   column sits a node: a 9px square ring with a 3px core, the square stage dot of
-   the brand book drawn at the join. On the Button page the rule spans the page
-   column between the sidebar and the contents, and the nodes sit on those dividers.
+2. **The crossing rule and its crosses.** Every section opens with a 1px rule across
+   the whole viewport, drawn in from the left once, with a strong 11px cross where
+   it meets each side of the column. On the Button page the rule spans the page
+   column between the sidebar and the contents, and the crosses sit on those
+   dividers.
 3. **Section bars.** `02 / Name ········ facts`: number, name and the section's
    title-block facts in the HUD voice (mono, tracked, upper case). The bar holds
    under the nav while its section is read; the number turns blue when it is "here".
@@ -46,15 +48,27 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
    mono upper-case labels, the current page as an ink chip, the primary action as
    a solid ink cell. Calls to action outside a specimen share the 48px height.
 
+## Reveal (`square.js`)
+
+Content rises into place as it first enters the view: from 28px below and an 8px
+blur to rest, 900ms, `power3.out`, in document order 80ms apart. The finest blocks
+rise (a heading, a paragraph, a card's parts), never a cell on its own, since a
+fading cell would show the grid's line colour through it. A 3D drawing (the landing
+assembly) rises without the blur, which would flatten it. The page is held hidden
+until the blocks are marked, so nothing shows and then jumps. Reduced motion,
+`?render` and no JS show everything at once.
+
 ## Smooth scroll (`square.js`)
 
-A mouse-wheel notch is eased toward its target (Lenis-style, no library, a 100ms
-time constant). A trackpad keeps native scrolling: its own inertia is already
-smooth and runs off the main thread. An element that can still scroll that way
-keeps the wheel (the Button sidebar, code blocks); ctrl or pinch zoom, horizontal
-swipes, keys, anchors and find are never intercepted, and reduced motion turns it
-off.
+A mouse-wheel notch is eased toward its target (Lenis-style, no library, a 120ms
+time constant, close to the reference's `lerp: 0.12`). A trackpad keeps native
+scrolling: its own inertia is already smooth and runs off the main thread. An
+element that can still scroll that way keeps the wheel (the Button sidebar, code
+blocks); ctrl or pinch zoom, horizontal swipes, keys, anchors and find are never
+intercepted, and reduced motion turns it off.
 
+The ruler and its titles are redrawn in the same frame the glide moves the page,
+never a frame behind it: a frame late reads as the ruler dragging behind the page.
 Nothing reads layout while scrolling: section positions are measured on resize and
 cached, the scale moves as one transform at rest, and a style is written only when
 it changes. `instrument.js` writes its per-frame values (read-head energy and focus)
@@ -76,10 +90,14 @@ takes its place.
 - **Titles.** Sections already read are stacked small at the top right, the current
   one large under them, the next one stands upright on the ruler where it begins,
   and the rest wait at the bottom right. Each title is a link to its section.
-- **Change.** When the current section changes, every title re-forms letter by
-  letter: each letter flies, turns and scales to its new place after a short stagger.
-  The title becoming current is verified as it lands: each letter resolves from hash
-  characters (`0–9 A–F`), then a blue check is drawn beside the title.
+- **Change, with the scroll.** Titles move as the page moves, letter by letter, the
+  last letter first: the next title climbs out of the stack onto the ruler as its
+  section nears, its letters fly up to the large place as the section reaches the
+  reading line, and the previous title drops into the read stack. Every move is a
+  function of the scroll position (over half a screen, less where sections are
+  close), so scrolling back plays it back. A letter flying into the current place
+  reads as a hash character (`0–9 A–F`) until it lands, and once the title is whole
+  a blue check is drawn beside it.
 - **Titles never cover the page at rest.** The large title shrinks to the free
   margin between the column and the ruler. Where even the small titles do not fit
   (about 1440px and below), the current title stands upright at the head of the
