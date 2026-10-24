@@ -155,13 +155,15 @@
       if (!texts.length) return;
       if (!node.hasAttribute("aria-label")) node.setAttribute("aria-label", node.textContent.trim().replace(/\s+/g, " "));
       let start = 0, raf = 0;
-      const step = (t) => {
+      const step = (frameT) => {
+        // a frame's timestamp can precede the hover that started the run: never count back
+        const t = Math.max(frameT, start);
         let k = 0, done = true;
         const tick = Math.floor((t - start) / 50);
         for (const x of texts) {
           let out = "";
           for (const ch of x.real) {
-            if (ch.trim() && t < start + DECODE_LEAD + k * DECODE_STEP) { out += HEX[(k * 7 + tick * 13 + ((k * tick) % 5)) % 16]; done = false; } else out += ch;
+            if (ch.trim() && t < start + DECODE_LEAD + k * DECODE_STEP) { out += HEX[(k * 7 + tick * 13 + ((k * tick) % 5)) & 15]; done = false; } else out += ch;
             k++;
           }
           if (x.n.nodeValue !== out) x.n.nodeValue = out;
@@ -287,7 +289,7 @@
     const blend = (a, b, t) => a.map((v, j) => mix(v, b[j], t));
     // letter k's share of a move: the last letter leaves first
     const stagger = (P, k, n) => { const idx = n - 1 - k; const off = n > 1 ? (SPREAD * idx) / (n - 1) : 0; return ease(clamp((P - off) / (1 - SPREAD), 0, 1)); };
-    const hash = (a, b, c) => { let h = (a * 73856093) ^ (b * 19349663) ^ (c * 83492791); h = (h ^ (h >>> 13)) * 1274126177; return Math.abs(h ^ (h >>> 16)) % 16; };
+    const hash = (a, b, c) => { let h = (a * 73856093) ^ (b * 19349663) ^ (c * 83492791); h = (h ^ (h >>> 13)) * 1274126177; return (h ^ (h >>> 16)) & 15; }; // always 0–15
 
     const frame = (t) => {
       const dt = Math.min(64, t - lastT); lastT = t;
