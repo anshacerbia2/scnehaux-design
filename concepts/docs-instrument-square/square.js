@@ -15,12 +15,15 @@
    ("05 · 042%"); hovered or focused, it folds the whole page into 0–100 with the
    viewport drawn as a window. Each section's start is marked on the scale; a section
    read to its end is verified (blue, with a check). Section titles sit beside it: the
-   ones read stacked small at the top, the current one large under them, the next one
-   standing on the ruler where it begins, the rest waiting at the bottom. Titles move
-   with the scroll, letter by letter, last letter first: scroll back and they go back.
-   A title becoming current is checked once whole. Hovering or focusing a title at rest
-   verifies it again: its letters read as hash characters, then resolve left to right. Titles never cover the page at rest: the large title shrinks to
-   the free margin, and where the margin is too narrow they stand upright on the ruler.
+   ones read stacked small at the top, the current one large under them, the rest
+   waiting at the bottom. Titles follow their section's line, letter by letter, last
+   letter first: as the line enters the viewport the title stands up on the ruler and
+   rides with it; as the line nears the titles at the top it lies down into the current
+   place, done when the line reaches the nav. Scroll back and they go back. A title
+   becoming current is checked once whole. Hovering or focusing a title at rest
+   verifies it again: its letters read as hash characters, then resolve left to right.
+   Titles never cover the page at rest: the large title shrinks to the free margin, and
+   where the margin is too narrow they stand upright on the ruler.
    Click or drag to move; with focus, arrows step 1% (shift 5%), Page Up and Page Down
    move by section, Home and End go to the ends.
 
@@ -197,7 +200,7 @@
     document.body.append(glassTop, glassBottom, layer, verified, jumps, rail, cursor);
 
     /* ---------- measure: on resize only, never while scrolling ---------- */
-    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, compact = false, longest = 0, scaleState = "", W = 10;
+    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, compact = false, longest = 0, scaleState = "";
     const column = document.querySelector(".sq-col") || document.querySelector(".ix-page > main > section[data-sheet]");
     const measureLetters = () => {
       big = clamp(Math.round(vw * 0.0177), 22, 34);
@@ -219,14 +222,9 @@
         L.top = L.sheet.getBoundingClientRect().top + scrollY;
         // its place on the scale: where its line sits in the document
         L.v = L.i === 0 ? 0 : clamp((L.top / docH) * 100, 0, 100);
-        // the progress at which the blue now line, sliding down the viewport, meets the
-        // section's line on the page: top − p·maxScroll = TOP + p·H
-        L.at = L.i === 0 ? 0 : clamp(((L.top - TOP) / (maxScroll + H)) * 100, 0, 100);
+        // the highest its line gets on screen: under the nav, or where the page ends
+        L.end = L.i === 0 ? -Infinity : Math.max(NAV, L.top - maxScroll);
       }
-      // from that meeting a title moves over 30% of a screen of relative travel, or less
-      // where sections are close
-      W = Math.max(0.25, ((vh * 0.3) / (maxScroll + H)) * 100);
-      for (const L of labels) L.win = L.i === 0 ? W : Math.max(0.25, Math.min(W, (L.at - labels[L.i - 1].at) * 0.9));
       // the free margin between the column and the ruler
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
       compact = room < longest * SMALL;
@@ -238,8 +236,8 @@
     let mode = 0, modeTarget = 0, pointerY = -1, dragging = false, focused = false, lastT = performance.now(), shownCur = -1, lastY = -1, lastMode = -1;
     const hoverY = (v) => TOP + (v / 100) * H;
     const progress = () => clamp((scrollY / maxScroll) * 100, 0, 100);
-    // the current section: the last one whose line the now line has reached
-    const currentIndex = () => { const p = progress(); let idx = 0; for (const L of labels) if (p >= L.at) idx = L.i; return idx; };
+    // the current section: the last one whose line has reached the nav (its bar is held)
+    const currentIndex = () => { let idx = 0; for (const L of labels) if (L.top - scrollY <= L.end + 0.5) idx = L.i; return idx; };
 
     /* Where letter k of a title sits in each place it can be: [x, y, rotation, scale, tone, opacity]. */
     const across = (L, k, y, s, t, o = 1) => [vw - RAIL - L.W * s + (L.letters[k].c + L.letters[k].w / 2) * s, y, 0, s, t, o];
@@ -293,25 +291,32 @@
       const glass = (compact ? mode : 1).toFixed(3);
       put(glassTop, "opacity", glass); put(glassBottom, "opacity", glass);
 
-      /* Titles: every letter is placed from the scroll position. A title waits in the
-         stack, stands on the ruler hanging from its section's line as that line comes
-         into view, becomes current once the blue now line meets the section's line, and
-         joins the read stack as the next one takes over. */
+      /* Titles: every letter is placed from the section's line on screen. A title waits
+         in the stack; as its section's line enters the viewport it stands up on the ruler
+         and rides with the line; as the line nears the titles at the top it lies down into
+         the current place, done when the line reaches the nav (the section's bar is held);
+         the previous title drops into the read stack over the same stretch. */
+      const moveIn = labels.map((L) => {
+        const sBig = clamp(room / L.W, SMALL * 1.2, 1);
+        const curY = 66 + L.i * 20 + big * sBig;
+        if (L.i === 0) return { sBig, curY, C: 1 };
+        // from a little below the current title down to the line's highest point
+        const span = curY + big * sBig + 140 - NAV;
+        return { sBig, curY, C: clamp((L.end + span - (L.top - y)) / span, 0, 1) };
+      });
       let check = null;
       for (const L of labels) {
         const n = L.letters.length;
-        const sBig = clamp(room / L.W, SMALL * 1.2, 1);
+        const { sBig, curY, C } = moveIn[L.i];
         const stackY = vh - 37 - (last - L.i) * 20;
         const pastY = 66 + 9 + L.i * 20;
-        const curY = 66 + L.i * 20 + big * sBig;
         const half = (L.W * UPRIGHT) / 2;
-        // standing, the title's top meets its section's line on the page
-        const standY = L.top - y + half;
-        // how far along each move the title is (0–1); the move to current starts at the meeting
-        const U = clamp((stackY - 14 - (standY + half)) / (vh * 0.18), 0, 1);
-        const C = L.i === 0 ? 1 : clamp((p - L.at) / L.win, 0, 1);
-        const nx = labels[L.i + 1];
-        const Q = nx ? clamp((p - nx.at) / nx.win, 0, 1) : 0;
+        const line = L.top - y;
+        // standing, the title hangs from its section's line, kept on screen while the line enters
+        const standY = clamp(line + 8, TOP + 8, vh - BOTTOM - 2 * half) + half;
+        // how far along each move the title is (0–1): up as the line enters, down as it nears the top
+        const U = clamp((vh - line) / (vh * 0.25), 0, 1);
+        const Q = labels[L.i + 1] ? moveIn[L.i + 1].C : 0;
         const headY = TOP + 14 + half;
         let whole = true, settled = mode === 0;
         // a verification run ends when its last letter has resolved
