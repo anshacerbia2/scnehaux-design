@@ -94,9 +94,14 @@ own tokens. That is the product's own theme-root mechanism, shown working.
 
 ## Files
 
-- `instrument.css`, `instrument.js`: the expression, shared by the three pages.
-  They bind `design-system/themes/default/tokens.css` and reuse the real
-  component classes from `design-system/components/bundle.css`.
+- `instrument.css`, `instrument.js`: the expression, shared by the three pages and
+  reused by `docs-instrument-square`. They bind
+  `design-system/themes/default/tokens.css` and reuse the real component classes
+  from `design-system/components/bundle.css`. "Here" (the current sheet, which
+  drives the sheet number, the nav readout, the rail and any `[data-spy]`
+  contents) is the sheet under the read head. A page without a read head can set
+  `<html data-ix-here="48">` instead. Then a sheet is here once its top reaches
+  48px from the top, or the highest point its top can reach before the page ends.
 - `<Board>.html`: hand-authored and live (no design-canvas source, because the
   motion is the deliverable and the canvas export freezes it at its first frame).
 - `<Board>.png`, `<Board>.thumb.webp`: the still frame, dark mode, 1440px wide,

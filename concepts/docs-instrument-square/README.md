@@ -55,8 +55,10 @@ In short:
 
 - **Reveal.** Content rises 28px out of an 8px blur as it first enters the view
   (900ms, `power3.out`, 80ms apart).
-- **Smooth scroll.** A mouse-wheel notch glides (120ms time constant, Lenis-style,
-  no library). A trackpad stays native.
+- **Smooth scroll.** Every wheel input, mouse or trackpad, glides (120ms time
+  constant, Lenis-style, no library).
+- **One "here".** A section is current once its line reaches the nav: ruler, section
+  bar, nav readout and contents switch together.
 - **The ruler scrollbar.** From 1024px up, it replaces the native scrollbar: page
   scale at rest, a blue now line with a receipt readout (`05 · 042%`), and a ledger
   that verifies each section read.

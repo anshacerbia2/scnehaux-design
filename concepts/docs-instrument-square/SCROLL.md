@@ -37,7 +37,7 @@ Terms used below:
 | 2.4 | Section bar holds | `NN / Name ··· facts` is sticky under the nav (`top: 48px`) while its section is in view. |
 | 2.5 | Bar top line | The rule sits above the bar (z 31 over z 30), so it is the bar's top line until the bar sticks. By then the rule has scrolled under the nav, and the nav's bottom line takes over. One line, never two. |
 | 2.6 | Bar pushed out | The next section pushes a held bar up. The bar's −1px bottom margin lands its line on the next rule, so they don't sit 1px apart. |
-| 2.7 | "Here" on the bar | The bar's number turns blue when its section crosses `instrument.js`'s reading line, at about 40% of the viewport. *See "Known difference" below.* |
+| 2.7 | "Here" on the bar | The bar's number turns blue when its section is current: when its line reaches the nav (see 6.9). The nav's `Sheet NN/07 NN%` readout and the Button page's "On this page" highlight switch at the same moment, as do the ruler's titles, readout and ledger. |
 
 ## 3. Content
 
@@ -55,8 +55,8 @@ Terms used below:
 
 | # | Behaviour | Detail |
 | :-- | :-- | :-- |
-| 4.1 | Mouse wheel glides | Each notch moves the target. The page eases toward it with a 120ms time constant (the reference uses Lenis `lerp: 0.12`) and lands within 0.5px. Notches add up while gliding. |
-| 4.2 | Trackpad stays native | Pixel deltas under 50, or fractional ones, are left to the browser. Its own inertia is smooth and runs off the main thread. If a glide is already running, the trackpad steers it with a 45ms time constant. |
+| 4.1 | Wheel glides | Every wheel input, mouse or trackpad, moves a target. The page eases toward it with a 120ms time constant (the reference uses Lenis `lerp: 0.12`) and lands within 0.5px. Inputs add up while gliding. |
+| 4.2 | Trackpad | It glides like the mouse, as Lenis does. Its many small deltas add up to one eased movement. |
 | 4.3 | Left to the browser | Ctrl or pinch zoom, a mostly horizontal swipe, an element under the pointer that can still scroll that way (the Button sidebar, code blocks), an event another handler has already taken, and reduced motion. |
 | 4.4 | Others take over | Keys, anchor links, find-in-page and the native scrollbar on narrow screens move the page directly. A glide in progress yields to them. |
 | 4.5 | Line units | `deltaMode` 1 counts 16px per line; `deltaMode` 2 counts one viewport per page. |
@@ -91,7 +91,7 @@ spent staggering the letters, eased in and out (cubic).
 | 6.6 | Standing rides | The title moves with its line. |
 | 6.7 | Standing → current | Starts when the line is 140px below the current title's place, and is complete when the line reaches the nav. Where the page ends first, it completes at the highest point the line can reach. |
 | 6.8 | Current → read stack | Over the same stretch as 6.7, driven by the next section's line. |
-| 6.9 | Current section | The last one whose line has reached the nav. That is the moment its section bar is held, and it drives the readout, the ledger and the check. |
+| 6.9 | Current section | The last one whose line has reached the nav. Where the page ends first, the highest point its line can reach counts instead. This is the moment its section bar is held. It is the page's one "here": the ruler (titles, readout, ledger, check), the bar's blue number, the nav's readout and the Button page's contents all switch on it. `square.js` sets `<html data-ix-here="48">`, which tells `instrument.js` to use the same line. |
 | 6.10 | Check | Drawn beside the current title once it is whole: not moving in or out, and not being verified. Hidden while the ruler is folded. |
 | 6.11 | Verified on demand | Hovering or focusing a title at rest (current, read stack or ahead) shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after. Once per entry; not on a title in motion, not while folded, not under reduced motion. |
 | 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. |
@@ -140,13 +140,13 @@ Moves glide like a wheel notch. It announces `aria-valuenow` and `aria-valuetext
 | `?render` | No ruler, no reveal, no glide. Bars and nav are not sticky. Used for the still-frame PNGs. |
 | No JS | The finished page with the native scrollbar. Nothing is hidden. |
 
-## Known difference
+## One "here"
 
-Two definitions of "here" run side by side:
-- **Ruler (`square.js`).** The current section is the one whose line has reached the nav. This drives the ruler's titles, readout and ledger.
-- **`instrument.js`.** It still uses its reading line at 40% of the viewport. This drives the blue number on the section bar, the nav's `Sheet NN/07 NN%` readout and the Button page's "On this page" highlight.
-
-Between those two points, the two can briefly disagree. Aligning `instrument.js` with the nav line would change the Instrument boards too, so it is left for a decision.
+Square has one definition of the current section: its line has reached the nav (6.9).
+Instrument's own boards keep their reading line at about 40% of the viewport, because
+their read head is drawn there. Square removed the read head, so that line no longer
+meant anything here. `instrument.js` takes the line from `data-ix-here`; unset, it
+keeps the read head's line, so the Instrument boards are unchanged.
 
 ## Performance
 

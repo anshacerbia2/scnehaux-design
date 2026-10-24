@@ -1,8 +1,7 @@
 /* Scnehaux UI · Instrument · Square — smooth scroll, reveal and the ruler scrollbar.
 
-   Smooth scroll: a mouse-wheel notch is eased toward its target (Lenis-style, no
-   library). A trackpad keeps native scrolling, whose own inertia is already smooth and
-   runs off the main thread. Anything that scrolls itself, a pinch or ctrl zoom, a
+   Smooth scroll: every wheel input, mouse or trackpad, is eased toward its target
+   (Lenis-style, no library). Anything that scrolls itself, a pinch or ctrl zoom, a
    horizontal swipe and reduced motion keep the native behaviour; keys, anchors and find
    are never intercepted. The ruler is redrawn in the same frame the page moves, never a
    frame behind it.
@@ -33,12 +32,15 @@
    glides, rises or scrambles. */
 (() => {
   const doc = document.documentElement;
+  // one "here" for the whole page: a section is here once its line reaches the nav, the
+  // moment its bar is held (instrument.js reads this for the bar, the readout and contents)
+  doc.dataset.ixHere = "48";
   if (new URLSearchParams(location.search).has("render")) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
   const wide = matchMedia("(min-width: 1024px)");
   const RAIL = 60, TOP = 60, BOTTOM = 14, NAV = 48;
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
-  const TAU_MODE = 170, TAU_WHEEL = 120, TAU_TRACKPAD = 45;
+  const TAU_MODE = 170, TAU_WHEEL = 120;
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
@@ -94,13 +96,10 @@
       if (reduce.matches || e.ctrlKey || e.defaultPrevented) return;
       let dy = e.deltaY, dx = e.deltaX;
       if (e.deltaMode === 1) { dy *= 16; dx *= 16; } else if (e.deltaMode === 2) { dy *= innerHeight; dx *= innerHeight; }
-      // a trackpad sends many small pixel deltas and brings its own inertia: leave it native
-      // (and compositor-driven) unless a glide is already running, which it then steers
-      const trackpad = e.deltaMode === 0 && (Math.abs(e.deltaY) < 50 || !Number.isInteger(e.deltaY));
-      if (trackpad && !running) return;
       if (dy === 0 || Math.abs(dx) > Math.abs(dy) || scrollsItself(e.target, dy)) return;
+      // every wheel glides the same way, mouse or trackpad, as Lenis does
       e.preventDefault();
-      to((running ? target : scrollY) + dy, trackpad ? TAU_TRACKPAD : TAU_WHEEL);
+      to((running ? target : scrollY) + dy);
     }, { passive: false });
     // any other mover (keys, anchors, find, the scrollbar on narrow screens) takes over
     addEventListener("scroll", () => {
@@ -420,7 +419,7 @@
       measure();
       invalidate();
     };
-    // a native scroll (keys, trackpad, anchors) redraws on the next frame; a glide already redrew
+    // a native scroll (keys, anchors, find) redraws on the next frame; a glide already redrew
     addEventListener("scroll", request, { passive: true });
     addEventListener("resize", () => { measure(); invalidate(); });
     wide.addEventListener?.("change", on);
