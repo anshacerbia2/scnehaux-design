@@ -61,8 +61,8 @@
   .sec { position: relative; scroll-margin-top: var(--sq-nav); }
   .sec::before { content: ""; position: absolute; z-index: 31; inset-inline: 0; top: 0; block-size: 1px; background: var(--sq-line); transform-origin: left; transition: scale 1100ms var(--ix-draw-easing); }
   .js-draw .sec:not(.is-drawn)::before { scale: 0 1; }
-  /* a node on each divider (the page draws its dividers as inset lines) */
-  .sec::after { content: ""; position: absolute; z-index: 32; top: -4px; left: -4px; right: -4px; block-size: 9px; pointer-events: none; background: var(--sq-node); }
+  /* a cross on each divider (the page draws its dividers as inset lines) */
+  .sec::after { content: ""; position: absolute; z-index: 32; top: -5px; left: -5px; right: -5px; block-size: 11px; pointer-events: none; background: var(--sq-plus); }
   .sec-head {
     position: sticky; top: var(--sq-nav); z-index: 30; display: flex; align-items: center; gap: 0; margin: 0 0 -1px; padding: 14px var(--sq-pad);
     background: var(--sq-glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: inset 0 -1px 0 var(--sq-line);

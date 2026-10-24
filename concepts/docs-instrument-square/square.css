@@ -36,15 +36,13 @@ input[type="range"]::-moz-range-thumb { border-radius: 0 !important; }
   --sq-cross: color-mix(in oklch, var(--ix-text) 72%, transparent);
   --sq-faint: color-mix(in oklch, var(--ix-text) 42%, var(--ix-ground));
   --sq-glass: color-mix(in oklch, var(--ix-ground) 72%, transparent);
-  /* The node: where a rule meets a column line, a 9px square ring with a 3px core, the
-     square stage dot of the brand book drawn at the join. One at each end of the strip. */
-  --sq-node:
-    linear-gradient(var(--sq-cross), var(--sq-cross)) 3px 3px / 3px 3px no-repeat,
-    linear-gradient(var(--ix-ground), var(--ix-ground)) 1px 1px / 7px 7px no-repeat,
-    linear-gradient(var(--sq-cross), var(--sq-cross)) 0 0 / 9px 9px no-repeat,
-    linear-gradient(var(--sq-cross), var(--sq-cross)) right 3px top 3px / 3px 3px no-repeat,
-    linear-gradient(var(--ix-ground), var(--ix-ground)) right 1px top 1px / 7px 7px no-repeat,
-    linear-gradient(var(--sq-cross), var(--sq-cross)) right 0 top 0 / 9px 9px no-repeat;
+  /* The cross: where a rule meets a column line, an 11px plus in a strong line. One at
+     each end of an 11px strip centred on the rule. */
+  --sq-plus:
+    linear-gradient(var(--sq-cross), var(--sq-cross)) 5px 0 / 1px 11px no-repeat,
+    linear-gradient(var(--sq-cross), var(--sq-cross)) 0 5px / 11px 1px no-repeat,
+    linear-gradient(var(--sq-cross), var(--sq-cross)) right 5px top 0 / 1px 11px no-repeat,
+    linear-gradient(var(--sq-cross), var(--sq-cross)) right 0 top 5px / 11px 1px no-repeat;
 
   --ds-effect-material-flat: 0 0 0 1px var(--sq-line);
   --ds-effect-material-raised: 0 0 0 1px var(--sq-line);
@@ -54,6 +52,10 @@ input[type="range"]::-moz-range-thumb { border-radius: 0 !important; }
   --ds-effect-material-modal: 0 0 0 1px var(--sq-line), 0 24px 48px -28px oklch(0 0 0 / 0.45);
   --ds-effect-material-sheet: 0 0 0 1px var(--sq-line), 0 24px 48px -28px oklch(0 0 0 / 0.45);
 }
+
+/* A theme island takes its own text colour, not the one inherited from the page
+   (a dark card on a light page would otherwise print dark on dark). */
+[data-theme]:not(html) { color: var(--ix-text); }
 
 /* Instrument devices this expression replaces. */
 .ix-reticle, .ix-readhead, .ix-rail, .ix-ruler, .ix-r, .ix-mk { display: none !important; }
@@ -129,10 +131,20 @@ body { background: var(--ix-ground); }
   transform-origin: left; transition: scale 1100ms var(--ix-draw-easing);
 }
 .js-draw :is(.ix-page > main > section[data-sheet], .ix-foot.ix-wrap):not(.is-drawn)::before { scale: 0 1; }
-/* a node where the rule meets each side of the column (the border sits outside the padding box) */
+/* a cross where the rule meets each side of the column (the border sits outside the padding box) */
 .sq-col::after, .ix-page > main > section[data-sheet]::after, .ix-foot.ix-wrap::after {
-  content: ""; position: absolute; z-index: 32; top: -4px; left: -5px; right: -5px; block-size: 9px; pointer-events: none;
-  background: var(--sq-node);
+  content: ""; position: absolute; z-index: 32; top: -5px; left: -6px; right: -6px; block-size: 11px; pointer-events: none;
+  background: var(--sq-plus);
+}
+
+/* Reveal (square.js): content rises 28px out of an 8px blur as it first enters the view.
+   Before the first paint the page is held hidden, so nothing shows and then jumps. */
+.sq-boot .ix-page > :not(.ix-nav-shell) { opacity: 0; }
+.sq-reveal { opacity: 0; translate: 0 28px; filter: blur(8px); }
+.sq-reveal.sq-reveal-flat { filter: none; }
+.sq-reveal.is-in {
+  opacity: 1; translate: none; filter: blur(0);
+  transition: opacity 900ms cubic-bezier(0.215, 0.61, 0.355, 1) var(--sq-d, 0ms), translate 900ms cubic-bezier(0.215, 0.61, 0.355, 1) var(--sq-d, 0ms), filter 900ms cubic-bezier(0.215, 0.61, 0.355, 1) var(--sq-d, 0ms);
 }
 
 /* Section bar: "02 / Name ············ facts", held under the nav while its sheet is read.
