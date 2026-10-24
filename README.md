@@ -122,7 +122,8 @@ a hand-authored live page (`<Board>.html`, sharing `instrument.css` and
 component classes; its folder README records the expression and its guidance
 status. `docs-instrument-square` follows the same rule and reuses Instrument's
 `instrument.css` and `instrument.js`, adding only `square.css` (radius tokens
-at 0, no read head).
+at 0, no read head, hairline materials, a sheet frame, hatched mounts and
+lighter type).
 
 ## Provenance
 

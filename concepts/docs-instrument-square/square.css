@@ -1,10 +1,10 @@
 /* Scnehaux UI · Instrument · Square
-   The Instrument expression with square geometry and no read head. Loaded after
-   docs-instrument/instrument.css; it changes nothing else.
+   The Instrument expression drawn as an engineering sheet: square geometry, hairlines
+   instead of soft shadows, a frame that runs the height of the set, hatched mounts and
+   lighter type. Loaded after docs-instrument/instrument.css; it overrides, never forks.
 
    Every radius token resolves to 0, so the concentric ladder collapses to one value:
    the components and materials still bind radius.mark … radius.pill, they draw square.
-   The literal radii in the pages (50%, 3px, a slider thumb) are flattened too.
    This departs from the brand book's ladder; it is guidance only (see README.md). */
 
 :root {
@@ -24,3 +24,89 @@ input[type="range"]::-moz-range-thumb { border-radius: 0 !important; }
 /* No read head. "Here" is still the sheet at the reading height (instrument.js):
    the rail mark, the sheet number and the nav readout turn blue. */
 .ix-readhead { display: none; }
+
+/* ------------------------------------------------------------------
+   Hairlines, not shadows. Materials keep their fill and ring; the blur goes.
+   Only what floats over content (menus, dialogs, sheets) keeps one long, low shadow.
+   Re-declared per theme root, like instrument.css, so islands resolve their own lines.
+   ------------------------------------------------------------------ */
+:root, [data-theme] {
+  --sq-hair: var(--ds-color-neutral-border-subtle-default);
+  --sq-hair-strong: var(--ds-color-neutral-border-default-default);
+  --sq-hatch: repeating-linear-gradient(135deg, var(--sq-hair) 0 1px, transparent 1px 6px);
+  --sq-lift: 0 28px 48px -28px oklch(0 0 0 / 0.45);
+
+  --ds-effect-material-flat: 0 0 0 1px var(--sq-hair);
+  --ds-effect-material-raised: 0 0 0 1px var(--sq-hair);
+  --ds-effect-material-panel: 0 0 0 1px var(--sq-hair-strong);
+  --ds-effect-material-tooltip: 0 0 0 1px var(--sq-hair-strong);
+  --ds-effect-material-menu: 0 0 0 1px var(--sq-hair-strong), var(--sq-lift);
+  --ds-effect-material-modal: 0 0 0 1px var(--sq-hair-strong), var(--sq-lift);
+  --ds-effect-material-sheet: 0 0 0 1px var(--sq-hair-strong), var(--sq-lift);
+
+  /* the reticle steps back: the frame and the rulers carry the structure now */
+  --ix-dot: color-mix(in oklch, var(--ds-color-neutral-border-subtle-default) 70%, var(--ix-ground));
+}
+[data-theme="dark"] {
+  --ix-dot: color-mix(in oklch, var(--ds-color-neutral-surface-strong-default) 60%, var(--ix-ground));
+}
+
+/* ------------------------------------------------------------------
+   The frame: each sheet is bounded left and right by a hairline that meets the
+   ruler at its ends, so the set reads as one continuous drawing border.
+   ------------------------------------------------------------------ */
+@media (min-width: 760px) {
+  .ix-wrap[data-sheet], .ix-wrap.ix-foot, .ix-wrap.docs {
+    box-shadow: inset 1px 0 0 var(--sq-hair), inset -1px 0 0 var(--sq-hair);
+  }
+  .ix-ruler::before {
+    background:
+      linear-gradient(var(--ix-line-strong), var(--ix-line-strong)) left top / 100% 1px no-repeat,
+      repeating-linear-gradient(to right, var(--ix-line) 0 1px, transparent 1px var(--ix-pitch)) left top / 100% 5px no-repeat,
+      repeating-linear-gradient(to right, var(--ix-line-strong) 0 1px, transparent 1px calc(var(--ix-pitch) * 5)) left top / 100% 9px no-repeat;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Mounts: a panel's 8px pad is hatched, like a section cut, and the plate sits on it.
+   The call-to-action panel has a deep pad, so it stays a plain plate.
+   ------------------------------------------------------------------ */
+.mat-panel {
+  background:
+    linear-gradient(var(--ds-color-neutral-surface-raised-default), var(--ds-color-neutral-surface-raised-default)) content-box,
+    var(--sq-hatch) border-box,
+    var(--ix-ground);
+}
+.mat-panel.cta {
+  background: var(--ds-color-neutral-surface-raised-default);
+  box-shadow: 0 0 0 1px var(--sq-hair-strong), inset 0 0 0 8px var(--ix-ground), inset 0 0 0 9px var(--sq-hair);
+}
+.mat-well { background: var(--sq-hatch), var(--ds-color-neutral-surface-sunken-default); }
+
+/* Navigation: an opaque strip on the frame, no glass. */
+.ix-nav {
+  background: var(--ix-ground);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: 0 0 0 1px var(--sq-hair-strong);
+}
+.ix-nav-links a[aria-current="page"] { background: transparent; box-shadow: inset 0 -2px 0 var(--ix-text); }
+
+/* ------------------------------------------------------------------
+   Type: lighter and opener. Weight carries less, the measure and the grid carry more.
+   ------------------------------------------------------------------ */
+.ix-display { font-weight: 500; letter-spacing: -0.042em; line-height: 0.98; }
+.ix-h2 { font-weight: 500; letter-spacing: -0.035em; line-height: 1.04; }
+.ix-h3 { font-weight: 550; letter-spacing: -0.012em; }
+/* the pages' own <style> loads after this file, so their rules are outranked with html */
+html .page-head h1 { font-weight: 500; letter-spacing: -0.04em; }
+html .sec-head h2 { font-weight: 500; letter-spacing: -0.025em; }
+html .gauge strong, html .readout strong { font-weight: 300; letter-spacing: -0.035em; }
+.ix-lede { color: color-mix(in oklch, var(--ix-muted) 88%, var(--ix-text)); }
+
+.ix-eyebrow, .ix-sheet-name { letter-spacing: 0.18em; }
+.ix-sheet-no { letter-spacing: 0.12em; }
+.ix-sheet-head { margin-block-end: 64px; }
+
+/* Title blocks and the set block: label cells read like a stamped plate. */
+.ix-tb dt, .ix-tb .k, .ix-setblock .k { letter-spacing: 0.16em; }
+.ix-tb, .ix-setblock { box-shadow: inset 0 0 0 1px var(--sq-hair-strong); }
