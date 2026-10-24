@@ -6,9 +6,14 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 
 > **Status: reference, non-normative (ADR-UIP-VIS-002).** Square geometry departs
 > from the brand book's concentric ladder (R24 panel, pad 8, R16 container), and the
-> ruler labels use Archivo Expanded and the HUD text Geist Mono instead of the system
-> mono. It is an option to compare, not a rule; adopting it needs an ADR-UIP-VIS-001
-> revision.
+> HUD text uses IBM Plex Mono instead of the system mono (the ruler titles are Inter,
+> the brand face). It is an option to compare, not a rule; adopting it needs an
+> ADR-UIP-VIS-001 revision.
+>
+> The ruler scrollbar began from a reference site's page-position ruler. What makes
+> it Scnehaux's own is the evidence vocabulary: the square node at every join, the
+> ledger marks that verify each section read, titles verified from hash characters,
+> and the brand faces, Inter and a plain mono.
 
 | Board | Page | Image |
 | :-- | :-- | :-- |
@@ -21,16 +26,18 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 1. **One line, never a box in a box.** The page is a centre column bounded by two
    hairlines. Content is laid out as cells that share their dividers (the line
    shows through a 1px grid gap), so a panel never sits inside another frame.
-2. **The crossing rule.** Every section opens with a 1px rule across the whole
-   viewport, drawn in from the left once, with a bold 11px cross where it meets
-   each side of the column. On the Button page the rule spans the page column
-   between the sidebar and the contents, and the crosses sit on those dividers.
+2. **The crossing rule and its nodes.** Every section opens with a 1px rule across
+   the whole viewport, drawn in from the left once. Where it meets each side of the
+   column sits a node: a 9px square ring with a 3px core, the square stage dot of
+   the brand book drawn at the join. On the Button page the rule spans the page
+   column between the sidebar and the contents, and the nodes sit on those dividers.
 3. **Section bars.** `02 / Name ········ facts`: number, name and the section's
    title-block facts in the HUD voice (mono, tracked, upper case). The bar holds
    under the nav while its section is read; the number turns blue when it is "here".
    The crossing rule sits above the bar, so it is the bar's top line until the bar
    meets the nav; by then the rule has scrolled under the nav and the nav's line
-   takes over, so the two never double.
+   takes over. When the next section pushes a held bar up, the bar's -1px bottom
+   margin lands its line on the next rule. The lines never double.
 4. **No radius.** Every radius token (`radius.mark` … `radius.pill`) resolves to 0
    and literal radii are flattened. Components still bind the tokens. The Button
    *Anatomy* view reads `R0 · radius.control`.
@@ -41,10 +48,19 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 
 ## Smooth scroll (`square.js`)
 
-The wheel is eased toward its target (Lenis-style, no library: about 150ms time
-constant). An element that can still scroll that way keeps the wheel (the Button
-sidebar, code blocks); ctrl or pinch zoom, horizontal swipes, keys, anchors and
-find are never intercepted, and reduced motion turns it off.
+A mouse-wheel notch is eased toward its target (Lenis-style, no library, a 100ms
+time constant). A trackpad keeps native scrolling: its own inertia is already
+smooth and runs off the main thread. An element that can still scroll that way
+keeps the wheel (the Button sidebar, code blocks); ctrl or pinch zoom, horizontal
+swipes, keys, anchors and find are never intercepted, and reduced motion turns it
+off.
+
+Nothing reads layout while scrolling: section positions are measured on resize and
+cached, the scale moves as one transform at rest, and a style is written only when
+it changes. `instrument.js` writes its per-frame values (read-head energy and focus)
+on the read head instead of the root, so scrolling no longer restyles the whole
+document: style recalculation while scrolling Landing fell from about 1.6s to 31ms
+over 2.3s of native scrolling (Chromium, CDP metrics).
 
 ## The ruler scrollbar (`square.js`)
 
@@ -52,12 +68,18 @@ The native scrollbar is hidden at 1024px and wider; a 60px ruler on the right ed
 takes its place.
 
 - **At rest** the ruler reads at page scale (one tick per 1% of the page, a number
-  every 5) around a blue *now* line that shows the position as `042%`.
+  every 5) around a blue *now* line that reads like a receipt: `05 · 042%`, the
+  section and the position.
+- **The ledger.** Each section's start is marked on the scale. A section read to its
+  end is verified: its mark turns blue and a check is drawn beside it. The one being
+  read is ink; the rest are faint.
 - **Titles.** Sections already read are stacked small at the top right, the current
   one large under them, the next one stands upright on the ruler where it begins,
   and the rest wait at the bottom right. Each title is a link to its section.
 - **Change.** When the current section changes, every title re-forms letter by
   letter: each letter flies, turns and scales to its new place after a short stagger.
+  The title becoming current is verified as it lands: each letter resolves from hash
+  characters (`0–9 A–F`), then a blue check is drawn beside the title.
 - **Titles never cover the page at rest.** The large title shrinks to the free
   margin between the column and the ruler. Where even the small titles do not fit
   (about 1440px and below), the current title stands upright at the head of the
@@ -76,8 +98,9 @@ takes its place.
 
 - `square.css`: the line system, the nav, the section bars, the cells and the ruler
   styles, loaded after `../docs-instrument/instrument.css`. The `--sq-*` properties
-  (line, cross, glass, column, padding) are expression-local guidance.
-- `square.js`: the ruler scrollbar and its titles. One rAF loop, no dependencies.
+  (line, node, glass, column, padding) are expression-local guidance.
+- `square.js`: smooth scroll, the ruler scrollbar, its ledger and titles. No
+  dependencies.
 - `<Board>.html`: the Instrument page laid out as cells (section bars, `sq-cells`
   grids, `sq-facts` rows). Content is otherwise Instrument's; keep the two in step
   when a board changes. They still run `../docs-instrument/instrument.js`.

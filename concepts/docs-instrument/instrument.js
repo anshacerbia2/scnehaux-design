@@ -175,11 +175,12 @@
       const y = scrollY;
       const vh = innerHeight;
 
-      // read-head energy follows scroll speed and decays
+      // read-head energy follows scroll speed and decays. Per-frame values are written on
+      // the elements that read them: a custom property set on the root would restyle the
+      // whole document every frame.
       energy = Math.min(1, energy * 0.86 + Math.abs(y - lastY) / 60);
       lastY = y;
-      doc.style.setProperty("--ix-energy", energy.toFixed(3));
-      doc.style.setProperty("--ix-scroll", (y / docH).toFixed(4));
+      if (head) head.style.setProperty("--ix-energy", energy.toFixed(3));
       if (railProgress) railProgress.style.blockSize = `${(y / docH) * 100}%`;
 
       // which sheet is under the read head
@@ -223,8 +224,8 @@
       addEventListener("resize", () => { placeHead(); request(); });
       // the read head's lit dots lean toward the pointer
       addEventListener("pointermove", (e) => {
-        if (e.pointerType !== "mouse") return;
-        doc.style.setProperty("--ix-focus", `${(e.clientX / innerWidth) * 100}%`);
+        if (e.pointerType !== "mouse" || !head) return;
+        head.style.setProperty("--ix-focus", `${(e.clientX / innerWidth) * 100}%`);
       }, { passive: true });
     } else {
       scrubs.forEach((el) => el.style.setProperty("--p", el.dataset.still ?? "0"));
