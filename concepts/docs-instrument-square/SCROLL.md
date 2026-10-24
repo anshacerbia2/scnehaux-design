@@ -16,6 +16,7 @@ Terms used below:
 | *nav* | The 48px navigation strip, held at the top of the viewport. |
 | *p* | Page progress, `scrollY / maxScroll × 100` (0–100). |
 | *rest / folded* | The ruler at page scale / the ruler folded into 0–100 (hover, focus or drag). |
+| *half a pixel* | A threshold, not rounding. Section tops are often fractional (48.4px), so a line within half a pixel of a mark counts as having reached it. Every position is still computed and drawn unrounded (to 0.1px). |
 
 ## 1. Page load
 
@@ -94,7 +95,7 @@ spent staggering the letters, eased in and out (cubic).
 | 6.8 | Current → read stack | Over the same stretch as 6.7, driven by the next section's line. |
 | 6.9 | Current section | The last one whose line has reached the nav. Where the page ends first, the highest point its line can reach counts instead. This is the moment its section bar is held. It is the page's one "here": the ruler (titles, readout, ledger, check), the bar's blue number, the nav's readout and the Button page's contents all switch on it. `square.js` sets `<html data-ix-here="48">`, which tells `instrument.js` to use the same line. |
 | 6.10 | Check | Drawn beside the current title once it is whole: not moving in or out, and not being verified. Because of 6.7, that is always true at the moment the line reaches the nav (or the end of the page), so the title is level and checked at that moment, never after. The check draws in over 420ms. Hidden while the ruler is folded. |
-| 6.11 | Verified on demand | Hovering or focusing a title at rest (current, read stack or ahead) shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after. Once per entry; not on a title in motion, not while folded, not under reduced motion. |
+| 6.11 | Verified on demand | Hovering or focusing a title at rest shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after, when the title is the current one. "At rest" covers the current title, both stacks, and every title while the ruler is open or opening. A title in a scroll move, or with the ruler closing, is not at rest. Standing titles sit on the ruler, so pointing at one opens the ruler first. Once per entry; not under reduced motion. |
 | 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. A jump lands the section's line under the nav (`scroll-margin-top: 48px` on every section). Section 01 lands at the top of the page, exactly where it loads. |
 
 **Narrow margin (compact).** When the free margin between the column and the ruler
@@ -116,7 +117,8 @@ page at rest:
 | 7.5 | Titles | All small and level, each at its section's place on the scale. Current at full tone, the rest at 86%. They move in letter by letter over the first 40% of the fold. |
 | 7.6 | Click | Glides to the point under the pointer: `(y − 60) / (viewport − 74)` of the page. |
 | 7.7 | Drag | Glides after the pointer, closer behind than a wheel (80ms time constant), and lands where the pointer is on release. |
-| 7.8 | Unfold | On pointer leave, unless dragging or focused. |
+| 7.8 | Onto a title | Moving the pointer from the ruler onto a title keeps the ruler open, so its titles can be read, verified (6.11) or followed. |
+| 7.9 | Unfold | When the pointer leaves both the ruler and its titles, unless dragging or focused. |
 
 ## 8. Keyboard
 

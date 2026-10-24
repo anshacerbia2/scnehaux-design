@@ -183,9 +183,10 @@
       mark.innerHTML = `<i></i>${CHECK}`;
       scale.append(mark);
       const L = { sheet: s, i, name, letters, link: a, mark, W: 0, v: 0, top: 0, box: "", decode: 0, settled: false };
-      // hovering or focusing a title at rest verifies it again: once per entry, never while it moves
+      // hovering or focusing a title at rest verifies it again, the ruler folded or not:
+      // once per entry, never while it moves
       const verify = () => {
-        if (reduce.matches || L.decode || !L.settled || modeTarget > 0.5) return;
+        if (reduce.matches || L.decode || !L.settled) return;
         L.decode = performance.now();
         request();
       };
@@ -325,7 +326,10 @@
         const U = clamp((vh - line) / (vh * 0.25), 0, 1);
         const Q = labels[L.i + 1] ? moveIn[L.i + 1].C : 0;
         const headY = TOP + 14 + half;
-        let whole = true, settled = mode === 0;
+        // at rest: with the ruler open or opening (its titles laid out on the scale), or closed
+        // and not mid-move; a ruler still closing is in motion
+        const opening = modeTarget === 1;
+        let whole = true, settled = opening || mode === 0;
         // a verification run ends when its last letter has resolved
         if (L.decode && t > L.decode + DECODE_LEAD + (n - 1) * DECODE_STEP) L.decode = 0;
         for (let k = 0; k < n; k++) {
@@ -338,7 +342,7 @@
           // folded: every title lies at the point its section begins
           const mk = ease(clamp(mode * 1.4 - (0.4 * k) / Math.max(1, n - 1), 0, 1));
           if (mk > 0) at = blend(at, across(L, k, hoverY(L.v), SMALL, L.i === cur ? 1 : 0.86), mk);
-          if ((u > 0 && u < 1) || (c > 0 && c < 1) || (q > 0 && q < 1)) settled = false;
+          if (!opening && ((u > 0 && u < 1) || (c > 0 && c < 1) || (q > 0 && q < 1))) settled = false;
           // verified on demand: a hovered title reads as hash characters, then resolves left to right
           let ch = l.real;
           if (L.decode && l.real !== " " && t < L.decode + DECODE_LEAD + k * DECODE_STEP) ch = HEX[hash(L.i, k, Math.floor((t - L.decode) / 50))];
@@ -388,7 +392,8 @@
     const enter = () => { modeTarget = 1; request(); };
     const leave = () => { if (!dragging && !focused) { modeTarget = 0; pointerY = -1; invalidate(); } };
     rail.addEventListener("pointerenter", enter);
-    rail.addEventListener("pointerleave", () => { pointerY = -1; leave(); });
+    // moving from the ruler onto a title keeps it open, so the title can be read and verified
+    rail.addEventListener("pointerleave", (e) => { pointerY = -1; if (jumps.contains(e.relatedTarget)) invalidate(); else leave(); });
     jumps.addEventListener("pointerover", (e) => { if (e.target.closest("a") && modeTarget > 0.5) enter(); });
     jumps.addEventListener("pointerout", (e) => { if (!rail.contains(e.relatedTarget) && !jumps.contains(e.relatedTarget)) leave(); });
     rail.addEventListener("pointermove", (e) => { pointerY = e.clientY; if (dragging) toScroll(e.clientY, TAU_DRAG); invalidate(); });
