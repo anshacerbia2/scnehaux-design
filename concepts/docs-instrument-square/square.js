@@ -143,6 +143,36 @@
       found.forEach((n) => io.observe(n));
     }
 
+    /* ---------- Shuffle: nav links and calls to action are verified on hover ----------
+       The same as a ruler title: hash characters for a moment, then the label resolves
+       left to right. Only their text nodes change (an icon stays put), every face here is
+       mono so nothing shifts, and the accessible name stays the real label. Component
+       specimens are left alone. */
+    document.querySelectorAll(".ix-nav-links a, .ix-nav .scnx-btn, .sq-btn .scnx-btn").forEach((node) => {
+      const texts = [];
+      const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      for (let n = walk.nextNode(); n; n = walk.nextNode()) if (n.nodeValue.trim()) texts.push({ n, real: n.nodeValue });
+      if (!texts.length) return;
+      if (!node.hasAttribute("aria-label")) node.setAttribute("aria-label", node.textContent.trim().replace(/\s+/g, " "));
+      let start = 0, raf = 0;
+      const step = (t) => {
+        let k = 0, done = true;
+        const tick = Math.floor((t - start) / 50);
+        for (const x of texts) {
+          let out = "";
+          for (const ch of x.real) {
+            if (ch.trim() && t < start + DECODE_LEAD + k * DECODE_STEP) { out += HEX[(k * 7 + tick * 13 + ((k * tick) % 5)) % 16]; done = false; } else out += ch;
+            k++;
+          }
+          if (x.n.nodeValue !== out) x.n.nodeValue = out;
+        }
+        raf = done ? 0 : requestAnimationFrame(step);
+      };
+      const run = () => { if (raf || reduce.matches) return; start = performance.now(); raf = requestAnimationFrame(step); };
+      node.addEventListener("pointerenter", run);
+      node.addEventListener("focus", () => { if (node.matches(":focus-visible")) run(); });
+    });
+
     const sheets = [...document.querySelectorAll("[data-sheet]")];
     if (!sheets.length) return;
 

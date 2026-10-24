@@ -47,6 +47,11 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
    a solid ink cell. Calls to action outside a specimen share the 48px height.
+   Hovering or focusing a nav link or a call to action verifies its label like a
+   ruler title: hash characters for 120ms, then it resolves left to right, one
+   character every 45ms. Only the text changes; the icon stays put, the mono face
+   keeps the width, and the accessible name stays the real label. Component specimens
+   (the Button page's stage, the guarantees' Save and Cancel) are left alone.
 
 ## Scroll behaviour
 
