@@ -18,8 +18,8 @@
    ones read stacked small at the top, the current one large under them, the next one
    standing on the ruler where it begins, the rest waiting at the bottom. Titles move
    with the scroll, letter by letter, last letter first: scroll back and they go back.
-   A title becoming current resolves from hash characters as its letters land, and is
-   checked once whole. Titles never cover the page at rest: the large title shrinks to
+   A title becoming current is checked once whole. Hovering or focusing a title at rest
+   verifies it again: its letters read as hash characters, then resolve left to right. Titles never cover the page at rest: the large title shrinks to
    the free margin, and where the margin is too narrow they stand upright on the ruler.
    Click or drag to move; with focus, arrows step 1% (shift 5%), Page Up and Page Down
    move by section, Home and End go to the ends.
@@ -37,6 +37,7 @@
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
   const TAU_MODE = 170, TAU_WHEEL = 120, TAU_TRACKPAD = 45;
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
+  const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
   const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
 
@@ -180,7 +181,15 @@
       const mark = el("span", "sq-mark", { "data-state": "ahead" });
       mark.innerHTML = `<i></i>${CHECK}`;
       scale.append(mark);
-      const L = { sheet: s, i, name, letters, link: a, mark, W: 0, v: 0, top: 0, box: "" };
+      const L = { sheet: s, i, name, letters, link: a, mark, W: 0, v: 0, top: 0, box: "", decode: 0, settled: false };
+      // hovering or focusing a title at rest verifies it again: once per entry, never while it moves
+      const verify = () => {
+        if (reduce.matches || L.decode || !L.settled || modeTarget > 0.5) return;
+        L.decode = performance.now();
+        request();
+      };
+      a.addEventListener("pointerenter", verify);
+      a.addEventListener("focus", verify);
       items.push({ n: mark, v: () => L.v });
       return L;
     });
@@ -242,7 +251,8 @@
       const kMode = reduce.matches ? 1 : 1 - Math.exp(-dt / TAU_MODE);
       mode = Math.abs(modeTarget - mode) < 0.002 ? modeTarget : mix(mode, modeTarget, kMode);
       const y = scrollY;
-      if (y === lastY && mode === lastMode) return mode !== modeTarget;
+      const decoding = labels.some((L) => L.decode);
+      if (y === lastY && mode === lastMode && !decoding) return mode !== modeTarget;
       lastY = y; lastMode = mode;
       const p = progress(), lineY = hoverY(p), cur = currentIndex();
 
@@ -298,7 +308,9 @@
         const nx = labels[L.i + 1];
         const Q = nx ? clamp((p - (nx.v - nx.win)) / nx.win, 0, 1) : 0;
         const headY = TOP + 14 + half;
-        let whole = true;
+        let whole = true, settled = mode === 0;
+        // a verification run ends when its last letter has resolved
+        if (L.decode && t > L.decode + DECODE_LEAD + (n - 1) * DECODE_STEP) L.decode = 0;
         for (let k = 0; k < n; k++) {
           const l = L.letters[k];
           const u = stagger(U, k, n), c = stagger(C, k, n), q = stagger(Q, k, n);
@@ -309,14 +321,17 @@
           // folded: every title lies at the point its section begins
           const mk = ease(clamp(mode * 1.4 - (0.4 * k) / Math.max(1, n - 1), 0, 1));
           if (mk > 0) at = blend(at, across(L, k, hoverY(L.v), SMALL, L.i === cur ? 1 : 0.86), mk);
-          // a letter landing as current is read from hash characters until it lands
-          const ch = !reduce.matches && c > 0 && c < 1 && mk < 0.5 && l.real !== " " ? HEX[hash(L.i, k, Math.floor(c * 7))] : l.real;
+          if ((u > 0 && u < 1) || (c > 0 && c < 1) || (q > 0 && q < 1)) settled = false;
+          // verified on demand: a hovered title reads as hash characters, then resolves left to right
+          let ch = l.real;
+          if (L.decode && l.real !== " " && t < L.decode + DECODE_LEAD + k * DECODE_STEP) ch = HEX[hash(L.i, k, Math.floor((t - L.decode) / 50))];
           if (ch !== l.shown) l.span.textContent = l.shown = ch;
-          if (c < 1 || q > 0) whole = false;
+          if (c < 1 || q > 0 || L.decode) whole = false;
           put(l.span, "transform", `translate3d(${at[0].toFixed(1)}px, ${at[1].toFixed(1)}px, 0) translate(-50%, -50%) rotate(${at[2].toFixed(1)}deg) scale(${at[3].toFixed(3)})`);
           put(l.span, "color", `color-mix(in oklch, var(--ix-text) ${(at[4] * 100).toFixed(0)}%, var(--ix-ground))`);
           put(l.span, "opacity", at[5].toFixed(2));
         }
+        L.settled = settled;
         if (whole && !compact && mode < 0.05) check = { L, y: curY, s: sBig };
         // the jump link covers the title where it mostly is, and leaves the tab order when hidden
         const place = mode > 0.5 ? "hover" : Q > 0.5 ? "past" : C > 0.5 ? "current" : U > 0.5 ? "upright" : "stack";
@@ -341,7 +356,7 @@
       }
       if (check && !verified.hasAttribute("data-on")) verified.setAttribute("data-on", "");
       else if (!check && verified.hasAttribute("data-on")) verified.removeAttribute("data-on");
-      return mode !== modeTarget;
+      return mode !== modeTarget || labels.some((L) => L.decode);
     };
     // one loop, only while the fold animates; scrolling redraws in the frame it moves
     let looping = false;
