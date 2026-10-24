@@ -21,8 +21,9 @@
    place, done when the line reaches the nav. Scroll back and they go back. A title
    becoming current is checked once whole. Hovering or focusing a title at rest
    verifies it again: its letters read as hash characters, then resolve left to right.
-   Titles never cover the page at rest: the large title shrinks to the free margin, and
-   where the margin is too narrow they stand upright on the ruler.
+   The layout is the same at every width the ruler shows (1024px up): the large title
+   shrinks toward the free margin, to 80% at most, and overlaps the page over the
+   corner glass where the margin is narrower.
    Click or drag to move; with focus, arrows step 1% (shift 5%), Page Up and Page Down
    move by section, Home and End go to the ends.
 
@@ -199,17 +200,16 @@
     document.body.append(glassTop, glassBottom, layer, verified, jumps, rail, cursor);
 
     /* ---------- measure: on resize only, never while scrolling ---------- */
-    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, compact = false, longest = 0, scaleState = "";
+    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, scaleState = "";
     const column = document.querySelector(".sq-col") || document.querySelector(".ix-page > main > section[data-sheet]");
     const measureLetters = () => {
       big = clamp(Math.round(vw * 0.0177), 22, 34);
       doc.style.setProperty("--sq-label-size", `${big}px`);
-      longest = 0;
       for (const L of labels) {
         let c = 0;
         // offsetWidth is the laid-out width at the base size, before scale and rotation
         for (const l of L.letters) { if (l.shown !== l.real) l.span.textContent = l.shown = l.real; l.w = l.span.offsetWidth; l.c = c; c += l.w; }
-        L.W = c; longest = Math.max(longest, c);
+        L.W = c;
       }
     };
     const measureLayout = () => {
@@ -226,9 +226,10 @@
       }
       // the free margin between the column and the ruler
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
-      compact = room < longest * SMALL;
       for (const L of labels) {
-        L.sBig = clamp(room / L.W, SMALL * 1.2, 1);
+        // the same layout at every width: the large title shrinks toward the free margin,
+        // never below 80%; where the margin is narrower it overlaps the page over the glass
+        L.sBig = clamp(room / L.W, 0.8, 1);
         L.curY = 66 + L.i * 20 + big * L.sBig;
         if (L.i === 0) continue;
         // a title lies down from a little below its current place until its line reaches
@@ -250,9 +251,9 @@
     // the current section: the last one whose line has reached the nav (its bar is held)
     const currentIndex = () => { let idx = 0; for (const L of labels) if (L.top - scrollY <= L.end + 0.5) idx = L.i; return idx; };
 
-    /* Where letter k of a title sits in each place it can be: [x, y, rotation, scale, tone, opacity]. */
-    const across = (L, k, y, s, t, o = 1) => [vw - RAIL - L.W * s + (L.letters[k].c + L.letters[k].w / 2) * s, y, 0, s, t, o];
-    const upright = (L, k, y, t, o = 1) => [vw - 32, y + (L.W * UPRIGHT) / 2 - (L.letters[k].c + L.letters[k].w / 2) * UPRIGHT, -90, UPRIGHT, t, o];
+    /* Where letter k of a title sits in each place it can be: [x, y, rotation, scale, tone]. */
+    const across = (L, k, y, s, t) => [vw - RAIL - L.W * s + (L.letters[k].c + L.letters[k].w / 2) * s, y, 0, s, t];
+    const upright = (L, k, y, t) => [vw - 32, y + (L.W * UPRIGHT) / 2 - (L.letters[k].c + L.letters[k].w / 2) * UPRIGHT, -90, UPRIGHT, t];
     const blend = (a, b, t) => a.map((v, j) => mix(v, b[j], t));
     // letter k's share of a move: the last letter leaves first
     const stagger = (P, k, n) => { const idx = n - 1 - k; const off = n > 1 ? (SPREAD * idx) / (n - 1) : 0; return ease(clamp((P - off) / (1 - SPREAD), 0, 1)); };
@@ -298,9 +299,6 @@
       }
       put(cursor, "opacity", pointerY < 0 ? "0" : mode.toFixed(3));
       if (pointerY >= 0) put(cursor, "transform", ty(pointerY));
-      // the glass behind the titles is only needed where titles can cover the page
-      const glass = (compact ? mode : 1).toFixed(3);
-      put(glassTop, "opacity", glass); put(glassBottom, "opacity", glass);
 
       /* Titles: every letter is placed from the section's line on screen. A title waits
          in the stack; as its section's line enters the viewport it stands up on the ruler
@@ -325,7 +323,6 @@
         // how far along each move the title is (0–1): up as the line enters, down as it nears the top
         const U = clamp((vh - line) / (vh * 0.25), 0, 1);
         const Q = labels[L.i + 1] ? moveIn[L.i + 1].C : 0;
-        const headY = TOP + 14 + half;
         // at rest: with the ruler open or opening (its titles laid out on the scale), or closed
         // and not mid-move; a ruler still closing is in motion
         const opening = modeTarget === 1;
@@ -335,10 +332,10 @@
         for (let k = 0; k < n; k++) {
           const l = L.letters[k];
           const u = stagger(U, k, n), c = stagger(C, k, n), q = stagger(Q, k, n);
-          let at = compact ? across(L, k, stackY, SMALL, 0.42, 0) : across(L, k, stackY, SMALL, 0.42);
+          let at = across(L, k, stackY, SMALL, 0.42);
           at = blend(at, upright(L, k, standY, 0.42), u);
-          at = blend(at, compact ? upright(L, k, headY, 1) : across(L, k, curY, sBig, 1), c);
-          at = blend(at, compact ? across(L, k, pastY, SMALL, 0.42, 0) : across(L, k, pastY, SMALL, 0.42), q);
+          at = blend(at, across(L, k, curY, sBig, 1), c);
+          at = blend(at, across(L, k, pastY, SMALL, 0.42), q);
           // folded: every title lies at the point its section begins
           const mk = ease(clamp(mode * 1.4 - (0.4 * k) / Math.max(1, n - 1), 0, 1));
           if (mk > 0) at = blend(at, across(L, k, hoverY(L.v), SMALL, L.i === cur ? 1 : 0.86), mk);
@@ -350,22 +347,19 @@
           if (c < 1 || q > 0 || L.decode) whole = false;
           put(l.span, "transform", `translate3d(${at[0].toFixed(1)}px, ${at[1].toFixed(1)}px, 0) translate(-50%, -50%) rotate(${at[2].toFixed(1)}deg) scale(${at[3].toFixed(3)})`);
           put(l.span, "color", `color-mix(in oklch, var(--ix-text) ${(at[4] * 100).toFixed(0)}%, var(--ix-ground))`);
-          put(l.span, "opacity", at[5].toFixed(2));
         }
         L.settled = settled;
-        if (whole && !compact && mode < 0.05) check = { L, y: curY, s: sBig };
-        // the jump link covers the title where it mostly is, and leaves the tab order when hidden
+        if (whole && mode < 0.05) check = { L, y: curY, s: sBig };
+        // the jump link covers the title where it mostly is
         const place = mode > 0.5 ? "hover" : Q > 0.5 ? "past" : C > 0.5 ? "current" : U > 0.5 ? "upright" : "stack";
         const box = place === "hover" ? [vw - RAIL - L.W * SMALL, hoverY(L.v) - (big * SMALL) / 2, L.W * SMALL, big * SMALL]
           : place === "upright" ? [vw - 32 - (big * UPRIGHT) / 2, standY - half, big * UPRIGHT, half * 2]
-          : place === "current" ? (compact ? [vw - 32 - (big * UPRIGHT) / 2, headY - half, big * UPRIGHT, half * 2] : [vw - RAIL - L.W * sBig, curY - (big * sBig) / 2, L.W * sBig, big * sBig])
+          : place === "current" ? [vw - RAIL - L.W * sBig, curY - (big * sBig) / 2, L.W * sBig, big * sBig]
           : [vw - RAIL - L.W * SMALL, (place === "past" ? pastY : stackY) - (big * SMALL) / 2, L.W * SMALL, big * SMALL];
-        const hidden = compact && mode < 0.5 && (place === "past" || place === "stack");
-        const key = box.map((v) => v.toFixed(0)).join(",") + (hidden ? "h" : "");
+        const key = box.map((v) => v.toFixed(0)).join(",");
         if (key !== L.box) {
           L.box = key;
           Object.assign(L.link.style, { transform: `translate(${box[0]}px, ${box[1]}px)`, width: `${box[2]}px`, height: `${box[3]}px` });
-          L.link.hidden = hidden;
         }
       }
       // the check beside the current title, once it stands whole

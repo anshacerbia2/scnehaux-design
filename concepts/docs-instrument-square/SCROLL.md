@@ -72,7 +72,7 @@ Terms used below:
 | 5.2 | Now line | A blue line at `nowY = 60 + p × (viewport − 74) / 100`, sliding down the viewport as the page scrolls. |
 | 5.3 | Readout | Under the now line, like a receipt: `05 · 042%` (the current section, then *p*). |
 | 5.4 | The ledger | A 20×2px mark at each section's place in the document (`top / pageHeight`). Marks are faint ahead, ink for the current section, and blue with a drawn check once read (an earlier section, or every section once *p* ≥ 99.5). |
-| 5.5 | Glass | The ruler strip has a 9px backdrop blur, fading to the left. Two corner glasses (top 260px, bottom 220px, up to 380px wide) sit behind the title stacks. |
+| 5.5 | Glass | The ruler strip has a 9px backdrop blur, fading to the left. Two corner glasses (top 260px, bottom 220px, up to 380px wide) always sit behind the title stacks. |
 
 ## 6. Section titles
 
@@ -84,7 +84,7 @@ spent staggering the letters, eased in and out (cubic).
 | :-- | :-- | :-- |
 | 6.1 | Stack (ahead) | Small (16px), right-aligned at the ruler, bottom-aligned: `y = viewport − 37 − (last − i) × 20`. Tone 42%. |
 | 6.2 | Standing | Upright on the ruler (rotated −90°, 18px). It hangs from its section line (top at line + 8px), kept on screen while the line is still entering. Tone 42%. |
-| 6.3 | Current | Large: `clamp(1.77% of viewport width, 22, 34)px`, shrunk to fit the free margin (no smaller than 1.2 × small). `y = 66 + i × 20 + size`. Full tone, with a blue check beside it once whole. |
+| 6.3 | Current | Large: `clamp(1.77% of viewport width, 22, 34)px`, shrunk toward the free margin (never below 80%). `y = 66 + i × 20 + size`. Full tone, with a blue check beside it once whole. |
 | 6.4 | Read stack | Small, top-aligned under the nav: `y = 75 + i × 20`. Tone 42%. |
 
 | # | Move | Trigger (section line on screen) |
@@ -98,13 +98,12 @@ spent staggering the letters, eased in and out (cubic).
 | 6.11 | Verified on demand | Hovering or focusing a title at rest shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after, when the title is the current one. "At rest" covers the current title, both stacks, and every title while the ruler is open or opening. A title in a scroll move, or with the ruler closing, is not at rest. Standing titles sit on the ruler, so pointing at one opens the ruler first. Once per entry; not under reduced motion. |
 | 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. A jump lands the section's line under the nav (`scroll-margin-top: 48px` on every section). Section 01 lands at the top of the page, exactly where it loads. |
 
-**Narrow margin (compact).** When the free margin between the column and the ruler
-cannot hold even the small titles (about 1440px and below), titles never cover the
-page at rest:
-- The current title stands upright at the head of the ruler (top 74px).
-- The next title stands upright where its line is.
-- The others are hidden, and their links leave the tab order.
-- The corner glass shows only while the ruler is folded.
+**The same at every width.** Wherever the ruler shows (1024px and up), the titles keep
+one layout and one behaviour:
+- Read stack, large current title with its check, standing next title, and the waiting stack.
+- Only the size follows the viewport: 1.77% of its width, between 22 and 34px.
+- The large title shrinks toward the free margin between the column and the ruler, but never below 80%.
+- Where the margin is narrower, the titles overlap the page's top-right corner over the corner glass, as the reference does.
 
 ## 7. The ruler folded
 
