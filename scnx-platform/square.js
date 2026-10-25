@@ -16,8 +16,9 @@
    read to its end is verified (blue, with a check). Section titles sit beside it: the
    ones read stacked small at the top, the current one large under them, the rest
    waiting at the bottom. Titles follow their section's line, letter by letter, last
-   letter first: as the line enters the viewport the title stands up on the ruler and
-   rides with it; as the line nears the titles at the top it lies down into the current
+   letter first: as the line rises toward the stack the title stands up on the ruler, clear
+   of the titles still waiting, and rides with it; as the line nears the titles at the top
+   it lies down into the current
    place, done when the line reaches the nav. Scroll back and they go back. A title
    becoming current is checked once whole. Hovering or focusing a title at rest
    verifies it again: its letters read as hash characters, then resolve left to right.
@@ -43,6 +44,7 @@
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
   const TAU_MODE = 170, TAU_WHEEL = 120, TAU_DRAG = 80; // a drag glides too, closer behind the pointer
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
+  const STAND = 140; // the line's travel over which a title stands up from the stack, or lies back into it
   const DIM = 0.68; // a title not current: text at 68% still reads 4.5:1 or more in both modes
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
@@ -233,7 +235,7 @@
     document.body.append(glassTop, glassBottom, layer, verified, jumps, rail, cursor);
 
     /* ---------- measure: on resize only, never while scrolling ---------- */
-    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, room = 0, scaleState = "";
+    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, pitch = 20, room = 0, scaleState = "";
     const column = document.querySelector(".sq-col") || document.querySelector(".ix-page > main > section[data-sheet]");
     const measureLetters = () => {
       big = clamp(Math.round(vw * 0.0177), 22, 34);
@@ -263,7 +265,7 @@
         // the same layout at every width: the large title shrinks toward the free margin,
         // never below 80%; where the margin is narrower it overlaps the page over the glass
         L.sBig = clamp(room / L.W, 0.8, 1);
-        L.curY = 66 + L.i * 20 + big * L.sBig;
+        L.curY = 66 + L.i * pitch + big * L.sBig;
         if (L.i === 0) continue;
         // a title lies down from a little below its current place until its line reaches
         // the nav; it never starts until 24px after the previous section's line has reached
@@ -272,6 +274,16 @@
         const P = labels[L.i - 1];
         const before = P.i === 0 ? Infinity : P.end + (L.top - P.top) - L.end - 24;
         L.span = Math.max(12, Math.min(L.curY + big * L.sBig + 140 - NAV, before));
+        // standing, the title hangs from its line, and its foot stays 8px above the next
+        // title waiting in the stack: it stands up only once its line has risen to where it
+        // hangs clear of the stack (hang), over the next STAND px, and lies back down over the
+        // same stretch, so it never crosses the stack in either direction. It is whole
+        // before it starts to lie down at the top; where the viewport leaves no room for
+        // that, it goes from the stack to the current place directly.
+        const below = L.i < last ? vh - 37 - (last - L.i - 1) * pitch - (big * SMALL) / 2 : vh - BOTTOM;
+        L.hang = below - 8 - L.W * UPRIGHT - 8;
+        const clear = L.hang - (L.end + L.span); // between clearing the stack and lying down at the top
+        L.stand = clear < 12 ? 0 : Math.min(STAND, clear);
       }
       scaleState = "";
     };
@@ -334,7 +346,8 @@
       if (pointerY >= 0) put(cursor, "transform", ty(pointerY));
 
       /* Titles: every letter is placed from the section's line on screen. A title waits
-         in the stack; as its section's line enters the viewport it stands up on the ruler
+         in the stack; as its section's line rises toward the place where the title can hang
+         from it clear of the stack, it stands up on the ruler, done when the line gets there,
          and rides with the line; as the line nears the titles at the top it lies down into
          the current place, done when the line reaches the nav (the section's bar is held);
          the previous title drops into the read stack over the same stretch. */
@@ -347,15 +360,21 @@
       for (const L of labels) {
         const n = L.letters.length;
         const { sBig, curY, C } = moveIn[L.i];
-        const stackY = vh - 37 - (last - L.i) * 20;
-        const pastY = 66 + 9 + L.i * 20;
+        const stackY = vh - 37 - (last - L.i) * pitch;
+        const pastY = 66 + pitch * 0.45 + L.i * pitch;
         const half = (L.W * UPRIGHT) / 2;
         const line = L.top - y;
-        // standing, the title hangs from its section's line, kept on screen while the line enters
-        const standY = clamp(line + 8, TOP + 8, vh - BOTTOM - 2 * half) + half;
-        // how far along each move the title is (0–1): up as the line enters, down as it nears the top
-        const U = clamp((vh - line) / (vh * 0.25), 0, 1);
-        const Q = labels[L.i + 1] ? moveIn[L.i + 1].C : 0;
+        // standing, the title hangs from its section's line (see measureLayout: L.hang, L.stand),
+        // and its top stays 8px under its current place, so it lies down without crossing the
+        // titles already read
+        const standY = Math.max(line + 8, curY + (big * sBig) / 2 + 8) + half;
+        // how far along each move the title is (0–1): up once the line has risen clear of the
+        // stack, down as it nears the top
+        const U = L.stand ? clamp((L.hang - line) / L.stand, 0, 1) : 0;
+        // the current title leaves for the read stack while the next one lies down, but has
+        // left the current place before the next title's first letter lands there (its last
+        // letter lands at 1 − SPREAD of the move)
+        const Q = labels[L.i + 1] ? clamp(moveIn[L.i + 1].C / (1 - SPREAD), 0, 1) : 0;
         // at rest: with the ruler open or opening (its titles laid out on the scale), or closed
         // and not mid-move; a ruler still closing is in motion
         const opening = modeTarget === 1;

@@ -82,14 +82,14 @@ spent staggering the letters, eased in and out (cubic).
 
 | # | Place | Position and look |
 | :-- | :-- | :-- |
-| 6.1 | Stack (ahead) | Small (16px), right-aligned at the ruler, bottom-aligned: `y = viewport − 37 − (last − i) × 20`. Tone 68% (4.5:1 or more in both modes). |
-| 6.2 | Standing | Upright on the ruler (rotated −90°, 18px). It hangs from its section line (top at line + 8px), kept on screen while the line is still entering. Tone 68% (4.5:1 or more in both modes). |
-| 6.3 | Current | Large: `clamp(1.77% of viewport width, 22, 34)px`, shrunk toward the free margin (never below 80%). `y = 66 + i × 20 + size`. Full tone, with a blue check beside it once whole. |
-| 6.4 | Read stack | Small, top-aligned under the nav: `y = 75 + i × 20`. Tone 68% (4.5:1 or more in both modes). |
+| 6.1 | Stack (ahead) | Small (16px at the largest size; 16/34 of the large size), right-aligned at the ruler, bottom-aligned: `y = viewport − 37 − (last − i) × row`. A **row** of either stack is the small size plus a quarter (20px at the largest, about 13px at 1024px). Tone 68% (4.5:1 or more in both modes). |
+| 6.2 | Standing | Upright on the ruler (rotated −90°, 18px). It hangs from its section line (top at line + 8px). Its foot never goes lower than 8px above the next title waiting in the stack, and its top never higher than 8px under its own current place, so it never covers either stack: near the top it stops there while its line goes on to the nav, and lies down from that place. Tone 68% (4.5:1 or more in both modes). |
+| 6.3 | Current | Large: `clamp(1.77% of viewport width, 22, 34)px`, shrunk toward the free margin (never below 80%). `y = 66 + i × row + size`. Full tone, with a blue check beside it once whole. |
+| 6.4 | Read stack | Small, top-aligned under the nav: `y = 66 + 0.45 × row + i × row` (75 + i × 20 at the largest). Tone 68% (4.5:1 or more in both modes). |
 
 | # | Move | Trigger (section line on screen) |
 | :-- | :-- | :-- |
-| 6.5 | Stack → standing | Starts as the line enters from the bottom, and is complete once the line has risen 25% of the viewport. |
+| 6.5 | Stack → standing | Measured from the bottom stack, not the viewport: starts once the line has risen to where the title hangs clear of the stack (its foot 8px above the next waiting title, so the start rises with every title still waiting and with the title's own length), and is complete 140px later. Scrolling back, the title lies down over the same stretch, before its foot reaches the stack. The stretch shortens to end before 6.7 starts; where the viewport leaves under 12px for it, the title goes from the stack to the current place directly. |
 | 6.6 | Standing rides | The title moves with its line. |
 | 6.7 | Standing → current | Starts when the line is 140px below the current title's place, and is complete when the line reaches the nav (within half a pixel). Where the page ends first, it completes at the highest point the line can reach. It never starts until the previous section's line is 24px past the nav, so a short section makes the next title lie down over a shorter stretch, never early. |
 | 6.8 | Current → read stack | Over the same stretch as 6.7, driven by the next section's line. |
