@@ -9,7 +9,7 @@
    and "here".
 
    Square corners and ring materials come from the theme itself: the pages load
-   @scnx/system's industrial tokens (design-system/vendor/scnx-system/, synced by
+   @scnx/system's scnx-platform tokens (design-system/vendor/scnx-system/, synced by
    scripts/sync-tokens.mjs), so nothing here re-declares a radius or a material.
    Nothing here selects a product component (.scnx-*). Guidance only (see README.md). */
 

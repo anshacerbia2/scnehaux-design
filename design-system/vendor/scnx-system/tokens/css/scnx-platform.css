@@ -19,7 +19,7 @@
 }
 
 @layer tokens {
-[data-scnx-theme="industrial"][data-scnx-resolved-mode="light"] {
+[data-scnx-theme="scnx-platform"][data-scnx-resolved-mode="light"] {
   --ds-color-danger-border-default-default: oklch(0.8072 0.0894 18.49);
   --ds-color-danger-border-default-disabled: oklch(0.9561 0.021 16.27);
   --ds-color-danger-border-default-focus: oklch(0.5076 0.1933 25.18);
@@ -573,7 +573,7 @@
   --ds-typography-weight-semibold: 600;
 }
 
-[data-scnx-theme="industrial"][data-scnx-resolved-mode="dark"] {
+[data-scnx-theme="scnx-platform"][data-scnx-resolved-mode="dark"] {
   --ds-color-danger-border-default-default: oklch(0.4505 0.1205 18.95);
   --ds-color-danger-border-default-disabled: oklch(0.2496 0.0642 13.15);
   --ds-color-danger-border-default-focus: oklch(0.7837 0.1617 22.33);

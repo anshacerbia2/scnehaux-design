@@ -1,7 +1,7 @@
 # scnx-platform · Docs · Instrument · Square
 
 The design of the Scnehaux platform (IAM, AI runtime, organization, the docs), in the
-`@scnx/system` theme `industrial` (to be renamed `scnx-platform`); `Brand-Book.html` is
+`@scnx/system` theme `scnx-platform` (was `industrial`); `Brand-Book.html` is
 its brand book. The Instrument boards (`../others/docs-instrument/`) drawn as one continuous line
 drawing. Content, colour roles and Instrument's motion (drawing, typing, counters,
 "here") are kept; the geometry, the lines and the scrollbar change.
@@ -54,13 +54,13 @@ tokens.
    theme's values, proposed in
    [`design-system/proposals/industrial-structure.md`](../design-system/proposals/industrial-structure.md):
    components carry no design of their own, read a hook (`--scnx-*`) that falls back
-   to a semantic token (`--ds-*`), and the theme `industrial` maps those tokens
+   to a semantic token (`--ds-*`), and the theme `scnx-platform` maps those tokens
    square. The chrome and every component, on a stage or in a mock, are square; the
    Button *Anatomy* view reads `R0 · radius.control`. `pill` stays fully rounded,
    because the round shape of a radio, a switch or a status dot carries meaning.
    The pages read these values from the package itself: they link
-   `../design-system/vendor/scnx-system/tokens/css/industrial.css`, synced byte for byte
-   by `scripts/sync-tokens.mjs`, and set `data-scnx-theme="industrial"` with
+   `../design-system/vendor/scnx-system/tokens/css/scnx-platform.css`, synced byte for byte
+   by `scripts/sync-tokens.mjs`, and set `data-scnx-theme="scnx-platform"` with
    `data-scnx-resolved-mode` on every theme root, as the package selects. Nothing selects
    a product component (`.scnx-*`).
 5. **No read head, no reticle, no left rail.** The ruler scrollbar replaces them.

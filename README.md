@@ -51,9 +51,8 @@ which browsers block from a `file://` page.
    request first; the canvas is republished from the merged files.
 2. **Scnehaux UI is the design system; a theme supplies the values, and a design
    shows one theme.** The components (`design-system/components/`) are shared.
-   `scnx-platform/` shows the package's `industrial` theme and `scnx-saas/` its
-   `achromatic` theme; the ids are to be renamed to `scnx-platform` and
-   `scnx-saas` in `@scnx/system`. A theme maps Tier-2 values above the guarded
+   `scnx-platform/` shows the package's `scnx-platform` theme (was `industrial`) and
+   `scnx-saas/` its `scnx-saas` theme (was `achromatic`). A theme maps Tier-2 values above the guarded
    floors, never rules (ADR-UIP-VIS-001).
 3. **Token values belong to `@scnx/system`.** `npm run sync:tokens` runs the
    package's own emitter at the ui-platform commit pinned in
@@ -155,7 +154,7 @@ plus its still frame (`.png`, `.thumb.webp`, rendered with `?render&mode=dark`).
 `scnx-platform` has its own copies of Instrument's `instrument.css` and
 `instrument.js`, adds `square.css` (a framed column, crossing rules, sticky
 section bars, cells that share their lines) and `square.js` (a ruler scrollbar
-with section titles), and binds `@scnx/system`'s industrial tokens from
+with section titles), and binds `@scnx/system`'s scnx-platform tokens from
 `design-system/vendor/`; its thumbnails are the live first screen, so they show
 the ruler. `others/docs-instrument` keeps the earlier snapshot.
 
