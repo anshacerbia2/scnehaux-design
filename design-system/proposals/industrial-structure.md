@@ -85,10 +85,13 @@ today, and moving them to Tier 2 is part of this change.
   Tier 2.
 - **A hook is public API.** SLDS 2 does not support component-level hooks, and
   Salesforce's guidance is to replace them with global hooks where possible [6]. Each
-  hook is a contract to keep, so a component lists its hooks in its `*.spec.json`,
-  and the budget in STD-UIP-TKN-002 §3.5 (five aliases per component, each with a
-  review record) is revisited for this change. Open question for the owner: keep five,
-  or set a new budget.
+  hook is a contract to keep, so a component lists its hooks in its `*.spec.json`.
+  The standards already bound them by review, not by count: each alias records "the
+  component purpose, Tier-2 fallback, theme/state coverage, and migration impact. A
+  numerical cap and an ADR for each alias are not required" (STD-UIP-TKN-001, Component
+  Alias Review), and aliases "are justified by independent component semantics, not by
+  an arbitrary numeric quota" (STD-UIP-TKN-002). This change keeps that rule; only the
+  prefix moves from `--ds-` to `--scnx-`.
 - **Set it on a scope, not on `:root`, when it changes at runtime.** In a document of
   about 42,000 elements, a write to a custom property on `:root` measured about 77ms,
   "independent of what reads the variable", against about 0.5ms on the consuming
@@ -160,7 +163,7 @@ own mono (`--sq-mono`) and product code keeps the system mono.
 
 | Repository | Change |
 | :-- | :-- |
-| `scnehaux-architecture` | ADR-UIP-VIS-001 revision 3: item 6 (structural invariants) becomes the guarded floors; item 7 (a theme supplies colour only) becomes "a theme maps any Tier-2 key"; item 2 keeps industrial square as the default theme's values, not a rule; Alternatives Considered gains revision 2's theme-invariant structure, with the reason. STD-UIP-TKN-001 2.7.0: "Theme-invariant structure" becomes "Guarded floors"; "Cascading Overrides" lets a brand theme override any Tier-2 key; a Tier-3 section (prefix `--scnx-`, referenced with a fallback, never declared, never registered). STD-UIP-TKN-002: the hook budget (§3.5). |
+| `scnehaux-architecture` | ADR-UIP-VIS-001 revision 3: item 6 (structural invariants) becomes the guarded floors; item 7 (a theme supplies colour only) becomes "a theme maps any Tier-2 key"; item 2 keeps industrial square as the default theme's values, not a rule; Alternatives Considered gains revision 2's theme-invariant structure, with the reason. STD-UIP-TKN-001 2.7.0: "Theme-invariant structure" becomes "Guarded floors"; "Cascading Overrides" lets a brand theme override any Tier-2 key; Tier-3 Alias Governance moves to the prefix `--scnx-` (referenced with a fallback, never declared, never registered); its review rule stays. |
 | `ui-platform` | Component CSS reads `var(--scnx-{component}-{property}, var(--ds-…))` for every presentational property, with no literal design values; floors in component CSS (`max()`, reduced motion); the theme gate checks contrast and floors, not identical structure; industrial values (radius 0, ring materials); `default` → `industrial`; hooks listed in each `*.spec.json`; control sizes moved to Tier 2; class names on the full component name (`.scnx-btn` → `.scnx-button`), before v1. |
 | `ui-platform-docs` | Until the package ships the industrial values, the bridge in `square.css` sets them as a theme would (Tier 2 at the root). Component pages list hooks, fallbacks and floors; the Theme × Mode switch may change shape. |
 | `scnehaux-design` | After the package ships: regenerate the token snapshot (ADR-UIP-VIS-002), rename `themes/default/` to `themes/industrial/`, re-render the cards, rewrite signatures 1 and 2 of the brand book, and delete the bridge. |
