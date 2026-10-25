@@ -1,5 +1,7 @@
 > **Status: reference, non-normative (ADR-UIP-VIS-002).** The binding rules are ADR-UIP-VIS-001 (materials, the concentric ladder, ink acts and blue signals, the stage, type voice, geometry) and STD-UIP-TKN-001 (token grammar); a component's contract is its specification in `ui-platform`. Sections that restate those records add nothing binding. Content fundamentals, the motion signature "the rise", iconography, and the logo are **guidance** until an ADR or STD revision records them.
 
+> **Proposed: [the industrial structure](proposals/industrial-structure.md).** Structure (radius, spacing, border, type scale, materials, motion) becomes the system's and the same in every theme, a theme supplies only colours, and the structure is square: the ladder at 0, `pill` kept for a meaningful round, on-page materials a ring. The theme `default` becomes `industrial`. It changes signatures 1 and 2 below once ADR-UIP-VIS-001 is revised; until then they stand.
+
 Scnehaux UI is an accessible React design system with perceptual color, scoped multi-brand theming and zero runtime CSS, and every release ships with the evidence that it works. Its look is **spatial**: ink controls and layered materials on a dotted stage, one electric blue that means "here", and corners that nest. Build every screen from the rules below; a screen that follows them reads as Scnehaux at a glance.
 
 ## The six signatures

@@ -8,16 +8,34 @@
    Loaded after docs-instrument/instrument.css; instrument.js still drives drawing,
    typing, counters and "here".
 
-   The chrome is square, and it says so element by element: it never redefines a --ds-*
-   token and never selects a product component (.scnx-*). A component that appears in
-   the chrome or on a stage (a Badge in the nav, a Button specimen) keeps the radius,
-   mono and material it ships with. Guidance only (see README.md). */
+   Square corners and ring materials are the system's structure, proposed in
+   design-system/proposals/industrial-structure.md: the same in every theme, which change
+   only colours. Until @scnx/system ships it, the bridge below takes it through the
+   documented tokens (the consumer's overrides layer). Nothing here selects a product
+   component (.scnx-*). Guidance only (see README.md). */
 
 /* IBM Plex Mono, the HUD voice, served from the repository (SIL OFL 1.1, see
    design-system/fonts/OFL-IBMPlexMono.txt): a strict CSP loads fonts from 'self' only. */
 @font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-Regular.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-Medium.woff2) format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-SemiBold.woff2) format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+
+/* Bridge to the industrial structure: delete it when @scnx/system ships the structure.
+   The ladder is flat at 0; pill stays fully rounded, because the round shape of a radio,
+   a switch or a status dot carries meaning. Materials on the page are a ring; floating
+   materials keep their shipped shadows, so they still read above the page. */
+:root {
+  --ds-dimension-radius-mark: 0;
+  --ds-dimension-radius-element: 0;
+  --ds-dimension-radius-control: 0;
+  --ds-dimension-radius-container: 0;
+  --ds-dimension-radius-panel: 0;
+}
+:root, [data-theme] {
+  --ds-effect-material-flat: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
+  --ds-effect-material-raised: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
+  --ds-effect-material-panel: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
+}
 
 :root {
   --sq-nav: 48px;
@@ -42,7 +60,6 @@
      --ix-muted (4.5:1 or more) */
   --sq-faint: color-mix(in oklch, var(--ix-text) 42%, var(--ix-ground));
   --sq-glass: color-mix(in oklch, var(--ix-ground) 72%, transparent);
-  --sq-ring: 0 0 0 1px var(--sq-line);
   /* The cross: where a rule meets a column line, an 11px plus in a strong line. One at
      each end of an 11px strip centred on the rule. */
   --sq-plus:
@@ -52,10 +69,10 @@
     linear-gradient(var(--sq-cross), var(--sq-cross)) right 0 top 5px / 11px 1px no-repeat;
 }
 
-/* Square corners and hairline materials, on the chrome's own parts only. */
-:is(.ix-nav, .ix-nav-links a, .ix-sheet-readout, .ix-sheet-readout i, .ix-mode, .ix-tb, .ix-setblock,
-  .mat, .mat-panel, .mat-flat, .mat-well, .ix-term, .ix-term-bar .lamp i, .ix-chip, .ix-install, .ix-copy, .sq-cta) { border-radius: 0; }
-.mat, .mat-flat { box-shadow: var(--sq-ring); }
+/* The chrome's own round parts: Instrument draws its lamps and readout dot as circles and
+   its chip on the pill; here they are square, and the chip's Badge follows it. */
+.ix-sheet-readout i, .ix-term-bar .lamp i { border-radius: 0; }
+.ix-chip { --ds-dimension-radius-pill: 0; }
 
 /* A theme island takes its own text colour, not the one inherited from the page
    (a dark card on a light page would otherwise print dark on dark). */
@@ -106,7 +123,7 @@ body { background: var(--ix-ground); }
    voice. Primary is ink, secondary has an edge, ghost is bare. */
 .sq-cta {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  block-size: 48px; padding-inline: 22px; border: 0; background: transparent; color: var(--ix-text);
+  block-size: 48px; padding-inline: 22px; border: 0; border-radius: 0; background: transparent; color: var(--ix-text);
   font: 600 11px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background-color var(--ds-motion-feedback-duration) var(--ds-motion-feedback-easing);
 }
