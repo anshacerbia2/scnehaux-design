@@ -20,7 +20,7 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 | Board | Page | Image |
 | :-- | :-- | :-- |
 | Public · Landing (global) | [`Docs-Landing.html`](Docs-Landing.html) | [`Docs-Landing.png`](Docs-Landing.png) |
-| Signed in · Workspace home | [`Docs-Home.html`](Docs-Home.html) | [`Docs-Home.png`](Docs-Home.png) |
+| Docs · Home (get started, no sign-in) | [`Docs-Home.html`](Docs-Home.html) | [`Docs-Home.png`](Docs-Home.png) |
 | Docs · Components / Button | [`Docs-Button.html`](Docs-Button.html) | [`Docs-Button.png`](Docs-Button.png) |
 | **Brand book** | [`Brand-Book.html`](Brand-Book.html) | [`Brand-Book.png`](Brand-Book.png) |
 

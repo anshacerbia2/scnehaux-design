@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scnehaux UI · Instrument · Square · Workspace</title>
-<meta name="description" content="Instrument · Square expression of the Scnehaux UI signed-in workspace home.">
+<title>Scnehaux UI · Instrument · Square · Get started</title>
+<meta name="description" content="Instrument · Square expression of the Scnehaux UI docs home: get started, no sign-in.">
 <link rel="icon" href="../../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/themes/default/tokens.css">
 <link rel="stylesheet" href="../../design-system/components/bundle.css">
@@ -16,13 +16,12 @@
   .search { display: inline-flex; align-items: center; gap: 10px; block-size: 28px; padding-inline: 10px 4px; min-inline-size: 240px; border-radius: var(--ds-dimension-radius-element); box-shadow: inset 0 0 0 1px var(--ix-line); color: var(--ix-muted); font-size: 13px; background: var(--ds-color-neutral-surface-canvas-default); }
   .search svg { inline-size: 14px; block-size: 14px; }
   .search .scnx-kbd { margin-inline-start: auto; }
-  .who { display: inline-flex; align-items: center; gap: 8px; block-size: 28px; padding-inline: 2px 10px; border-radius: var(--ds-dimension-radius-element); font-size: 13px; font-weight: 500; }
-  .who span:first-child { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-solid-default); color: var(--ds-color-neutral-text-contrast-default); font-size: 10.5px; font-weight: 600; }
-  @media (max-width: 1360px) { .who span:last-child { display: none; } }
   /* the strip of cells is wider than Instrument's floating nav: the search drops its label sooner */
   @media (max-width: 1400px) { .search { min-inline-size: 0; } .search span:not(.scnx-kbd) { display: none; } }
+  /* search outranks GitHub: the optional call to action leaves before the nav overflows */
+  @media (max-width: 1100px) { .ix-nav > .sq-cta[data-nav-optional] { display: none; } }
 
-  /* Sheet 01 · Overview */
+  /* Sheet 01 · Get started */
   .over { grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); }
   .over-copy { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 72px var(--sq-pad) 64px; }
   .over .ix-display { font-size: clamp(2.75rem, 5.4vw, 4.75rem); }
@@ -162,10 +161,10 @@
 <div class="ix-page">
   <div class="ix-wrap ix-nav-shell">
     <header class="ix-nav">
-      <a class="ix-brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
-      <span class="sq-nav-tag"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Workspace</span></span>
+      <a class="ix-brand" href="Docs-Landing.html"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
+      <span class="sq-nav-tag"><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">2.0.0-beta.0</span></span>
       <ul class="ix-nav-links">
-        <li><a href="#" aria-current="page">Overview</a></li>
+        <li><a href="#top" aria-current="page">Get started</a></li>
         <li><a href="#">Primitives</a></li>
         <li><a href="Docs-Button.html">Components</a></li>
         <li><a href="#">Tokens</a></li>
@@ -175,25 +174,25 @@
       <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/05</span>
       <span class="search" role="search"><svg aria-hidden="true"><use href="#i-search"/></svg><span>Search docs, tokens, APIs</span><kbd class="scnx-kbd">⌘K</kbd></span>
       <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
-      <span class="who" data-nav-optional><span>AK</span><span>UI Platform</span></span>
+      <a class="sq-cta" data-variant="ghost" href="#" data-nav-optional>GitHub</a>
     </header>
   </div>
 
   <main id="top">
-    <!-- SHEET 01 · Overview -->
-    <section class="ix-wrap" id="overview" data-sheet="Overview" aria-labelledby="o-title">
+    <!-- SHEET 01 · Get started -->
+    <section class="ix-wrap" id="get-started" data-sheet="Get started" aria-labelledby="o-title">
       <div class="ix-sheet-head">
         <span class="ix-sheet-no"><b>01</b></span>
-        <span class="ix-sheet-name">Workspace</span>
-        <dl class="ix-tb"><div><dt>Reference slice</dt><dd>beta</dd></div><div><dt>Ships</dt><dd>20 Nov 2026</dd></div></dl>
+        <span class="ix-sheet-name">Get started</span>
+        <dl class="ix-tb"><div><dt>Reference slice</dt><dd>beta</dd></div><div><dt>Sign-in</dt><dd>none</dd></div></dl>
       </div>
       <div class="over sq-cells">
         <div class="over-copy">
           <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Beta</span>Reference slice ships 20 Nov 2026</span>
-          <h1 class="ix-display" id="o-title">The design system you can verify.</h1>
-          <p class="ix-lede">Accessible primitives, token-bound components and a perceptual color system. Every release ships with the evidence that it works: tested consumers, accessibility reports and signed provenance.</p>
+          <h1 class="ix-display" id="o-title">Start with the contract you need.</h1>
+          <p class="ix-lede">Behavior primitives, styled components, tokens and the release evidence behind them, all in one place and open to read. Install two packages, scope a theme root, and build.</p>
           <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center">
-            <a class="sq-cta" data-variant="primary" href="Docs-Button.html">Get started<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="sq-cta" data-variant="primary" href="Docs-Button.html">Browse components<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <span class="ix-install"><code><span class="d">$</span> pnpm add @scnx/core-ui @scnx/system</code><button class="ix-copy" type="button" aria-label="Copy install command" data-copy="pnpm add @scnx/core-ui @scnx/system"><svg aria-hidden="true"><use href="#i-copy"/></svg></button></span>
           </div>
           <ul class="ix-meta"><li>React ^19</li><li>SSR and RSC</li><li>Strict CSP</li><li>Zero runtime CSS</li><li>OKLCH, P3</li></ul>
@@ -250,7 +249,7 @@
           <div class="ccard-top"><h3 class="ix-h3">Tokens</h3><code>--ds-*</code></div>
           <p class="ix-body">One language for every value. Core scales, semantic roles, component aliases.</p>
           <div class="readout"><strong>2 × 2</strong><span>themes × modes</span></div>
-          <ul class="clist"><li><a href="#">Color: OKLCH palette and roles<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Contrast pairs, verified<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Type, dimension, motion<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Themes and brand overrides<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+          <ul class="clist"><li><a href="#">Color: OKLCH palette and roles<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Contrast pairs, verified<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Type, dimension, motion<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Themes: colour only, one structure<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
           <p class="for">For designers and theme authors</p>
         </article>
         <article class="mat ccard ink" data-theme="dark">
@@ -287,7 +286,7 @@
             <button role="tab" aria-selected="false" data-step="2" tabindex="-1"><span>2</span>Scope a theme root</button>
             <button role="tab" aria-selected="false" data-step="3" tabindex="-1"><span>3</span>Import by entry</button>
           </div>
-<pre id="moves-code" role="tabpanel"><span class="row" data-step="1"><span class="ln">1</span><span class="c">// 1 · app/layout.tsx: load CSS once</span></span><span class="row" data-step="1"><span class="ln">2</span><span class="k">import</span> <span class="s">"@scnx/system/styles/components.css"</span>;</span><span class="row" data-step="1"><span class="ln">3</span><span class="k">import</span> <span class="s">"@scnx/system/tokens/css/default.css"</span>;</span><span class="row" data-step="0"><span class="ln">4</span></span><span class="row" data-step="2"><span class="ln">5</span><span class="c">// 2 · scope a theme root; portals inherit it</span></span><span class="row" data-step="2"><span class="ln">6</span>&lt;<span class="k">div</span> <span class="p">data-scnx-theme</span>=<span class="s">"default"</span> <span class="p">data-scnx-resolved-mode</span>=<span class="s">"light"</span>&gt;</span><span class="row" data-step="2"><span class="ln">7</span>  {children}</span><span class="row" data-step="2"><span class="ln">8</span>&lt;/<span class="k">div</span>&gt;</span><span class="row" data-step="0"><span class="ln">9</span></span><span class="row" data-step="3"><span class="ln">10</span><span class="c">// 3 · import by explicit entry: no barrels, no wildcards</span></span><span class="row" data-step="3"><span class="ln">11</span><span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;</span></pre>
+<pre id="moves-code" role="tabpanel"><span class="row" data-step="1"><span class="ln">1</span><span class="c">// 1 · app/layout.tsx: load CSS once</span></span><span class="row" data-step="1"><span class="ln">2</span><span class="k">import</span> <span class="s">"@scnx/system/styles/components.css"</span>;</span><span class="row" data-step="1"><span class="ln">3</span><span class="k">import</span> <span class="s">"@scnx/system/tokens/css/industrial.css"</span>;</span><span class="row" data-step="0"><span class="ln">4</span></span><span class="row" data-step="2"><span class="ln">5</span><span class="c">// 2 · scope a theme root; portals inherit it</span></span><span class="row" data-step="2"><span class="ln">6</span>&lt;<span class="k">div</span> <span class="p">data-scnx-theme</span>=<span class="s">"industrial"</span> <span class="p">data-scnx-resolved-mode</span>=<span class="s">"light"</span>&gt;</span><span class="row" data-step="2"><span class="ln">7</span>  {children}</span><span class="row" data-step="2"><span class="ln">8</span>&lt;/<span class="k">div</span>&gt;</span><span class="row" data-step="0"><span class="ln">9</span></span><span class="row" data-step="3"><span class="ln">10</span><span class="c">// 3 · import by explicit entry: no barrels, no wildcards</span></span><span class="row" data-step="3"><span class="ln">11</span><span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;</span></pre>
         </div>
       </div>
     </section>
@@ -365,7 +364,7 @@
   <footer class="ix-wrap ix-foot" data-draw>
     <div class="ix-ruler" aria-hidden="true"></div>
     <div class="ix-setblock" style="margin-top:24px" aria-label="Drawing set">
-      <div><span class="k">Drawing set</span><span class="v">Scnehaux UI · workspace</span></div>
+      <div><span class="k">Drawing set</span><span class="v">Scnehaux UI · get started</span></div>
       <div><span class="k">Sheets</span><span class="v">01–05</span></div>
       <div><span class="k">Generated</span><span class="v">packed artifacts</span></div>
       <div><span class="k">Rev</span><span class="v">1.0.0-beta.0</span></div>
