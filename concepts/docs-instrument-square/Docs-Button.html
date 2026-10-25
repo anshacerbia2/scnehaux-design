@@ -23,7 +23,7 @@
   .filter input { all: unset; flex: 1; min-inline-size: 0; color: var(--ix-text); }
   .side h3 { margin: 20px 10px 6px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); }
   .side ul { margin: 0; padding: 0; list-style: none; }
-  .side a { position: relative; display: flex; align-items: center; justify-content: space-between; block-size: 32px; padding-inline: 10px; border-radius: 0; font-size: 13.5px; text-decoration: none; color: var(--ix-muted); }
+  .side a { position: relative; display: flex; align-items: center; justify-content: space-between; block-size: 32px; padding-inline: 10px; border-radius: var(--ds-dimension-radius-element); font-size: 13.5px; text-decoration: none; color: var(--ix-muted); }
   .side a:hover { background: var(--ds-color-neutral-surface-default-hover); color: var(--ix-text); }
   .side a[aria-current="page"] { background: color-mix(in oklch, var(--ix-text) 7%, transparent); color: var(--ix-text); font-weight: 500; }
   .side a[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; inline-size: 2px; border-radius: 0; background: var(--ix-signal); }
@@ -41,7 +41,7 @@
   [data-theme="dark"] .toc ol a[aria-current] span { color: var(--ds-color-primary-text-subtle-default); }
   .ask { padding: 14px; display: grid; gap: 8px; }
   .ask strong { font-size: 13.5px; }
-  .ask button { all: unset; box-sizing: border-box; display: block; padding: 8px 10px; border-radius: 0; background: var(--ds-color-neutral-surface-default-default); font-size: 12.5px; color: var(--ix-muted); cursor: pointer; }
+  .ask button { all: unset; box-sizing: border-box; display: block; padding: 8px 10px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-default-default); font-size: 12.5px; color: var(--ix-muted); cursor: pointer; }
   .ask button:hover { color: var(--ix-text); background: var(--ds-color-neutral-surface-default-hover); }
   .ask button:focus-visible { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; }
 
@@ -146,7 +146,7 @@
   .ptable :is(th, td):first-child { padding-inline-start: var(--sq-pad); }
   .ptable tr:last-child td { box-shadow: none; }
   .ptable td:first-child { font: 500 13px/1.5 var(--mono); white-space: nowrap; }
-  .ptable td:nth-child(2) code { font: 500 11.5px/1.5 var(--mono); padding: 2px 6px; border-radius: 0; background: var(--ds-color-neutral-surface-default-default); }
+  .ptable td:nth-child(2) code { font: 500 11.5px/1.5 var(--mono); padding: 2px 6px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); }
   .ptable td:nth-child(3) { font: 500 11.5px/1.5 var(--mono); color: var(--ix-muted); white-space: nowrap; }
   .ptable td:last-child { color: var(--ix-muted); }
 
@@ -184,12 +184,12 @@
   .isteps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; position: relative; }
   .isteps li { padding: 0 20px 0 0; display: grid; gap: 10px; align-content: start; font-family: var(--font-sans); }
   .isteps .sn { display: flex; align-items: center; gap: 10px; }
-  .isteps .sn span { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: 0; background: var(--ds-color-neutral-surface-default-default); font: 500 11px/1 var(--mono); }
+  .isteps .sn span { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); font: 500 11px/1 var(--mono); }
   .isteps .sn::after { content: ""; flex: 1; block-size: 1px; background: var(--ix-line-strong); }
   .isteps li:last-child .sn::after { display: none; }
   .isteps strong { font-size: 14px; }
   .isteps p { margin: 0; font-size: 12.5px; color: var(--ix-muted); line-height: 1.5; }
-  .isteps code { display: block; padding: 8px 10px; border-radius: 0; background: var(--ds-color-neutral-surface-canvas-default); box-shadow: var(--sq-ring); font: 500 11.5px/1.4 var(--mono); color: var(--ds-color-success-text-subtle-default); overflow-x: auto; white-space: nowrap; }
+  .isteps code { display: block; padding: 8px 10px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-canvas-default); box-shadow: var(--ds-effect-material-flat); font: 500 11.5px/1.4 var(--mono); color: var(--ds-color-success-text-subtle-default); overflow-x: auto; white-space: nowrap; }
 
   .pn { grid-template-columns: 1fr 1fr; margin: 0 !important; border-block-start: 1px solid var(--sq-line); }
   .pn a { padding: 28px var(--sq-pad); display: grid; gap: 6px; text-decoration: none; transition: background-color var(--ds-motion-feedback-duration); }
@@ -442,7 +442,7 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const motion = document.documentElement.classList.contains("js-draw");
   const state = { variant: "primary", size: "medium", state: "rest", iconEnd: true, view: "preview", mode: "dark" };
-  const GEO = { small: { h: 28, p: 8, r: 8, rTok: "element", icon: 16, gap: 4 }, medium: { h: 36, p: 12, r: 12, rTok: "control", icon: 16, gap: 8 }, large: { h: 44, p: 16, r: 12, rTok: "control", icon: 20, gap: 8 } };
+  const GEO = { small: { h: 28, p: 8, r: 0, rTok: "element", icon: 16, gap: 4 }, medium: { h: 36, p: 12, r: 0, rTok: "control", icon: 16, gap: 8 }, large: { h: 44, p: 16, r: 0, rTok: "control", icon: 20, gap: 8 } };
   const TOK = {
     primary: { bg: "neutral.surface.solid", fg: "neutral.text.contrast", bgVar: "--ds-color-neutral-surface-solid-default", fgVar: "--ds-color-neutral-text-contrast-default", note: "ink" },
     secondary: { bg: "neutral.surface.raised", fg: "neutral.text.default", bgVar: "--ds-color-neutral-surface-raised-default", fgVar: "--ds-color-neutral-text-default-default", note: "raised + 1px border" },

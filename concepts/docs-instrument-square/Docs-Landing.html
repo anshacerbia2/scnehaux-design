@@ -48,7 +48,7 @@
   .plate[data-i="2"] .plate-in { padding: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; place-items: stretch; }
   .plate[data-i="2"] .plate-in i { border-radius: var(--ds-dimension-radius-mark); }
   .plate[data-i="3"] .plate-in { background: var(--ds-color-neutral-surface-canvas-default); }
-  .seal { display: grid; place-items: center; inline-size: 92px; block-size: 92px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--ix-line-strong), inset 0 0 0 8px var(--ds-color-neutral-surface-canvas-default), inset 0 0 0 9px var(--ix-line); color: var(--ix-signal); }
+  .seal { display: grid; place-items: center; inline-size: 92px; block-size: 92px; border-radius: 0; box-shadow: inset 0 0 0 1px var(--ix-line-strong), inset 0 0 0 8px var(--ds-color-neutral-surface-canvas-default), inset 0 0 0 9px var(--ix-line); color: var(--ix-signal); }
   .seal svg { inline-size: 40px; block-size: 40px; rotate: 45deg; }
   .plate.is-lit { box-shadow: 0 0 0 2px var(--ix-signal), 0 30px 40px -24px oklch(0 0 0 / 0.35); }
 
@@ -118,7 +118,7 @@
   .kpi span { font-size: 12px; color: var(--ds-color-neutral-text-subtle-default); }
   .kpi strong { display: block; margin: 4px 0 6px; font-size: 22px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
   .bars { display: flex; align-items: flex-end; gap: 6px; block-size: 120px; padding: 12px; border-radius: var(--ds-dimension-radius-control); box-shadow: var(--ds-effect-material-flat); }
-  .bars i { flex: 1; border-radius: 4px 4px 2px 2px; background: var(--ds-color-neutral-surface-strong-default); }
+  .bars i { flex: 1; border-radius: 0; background: var(--ds-color-neutral-surface-strong-default); }
   .bars i:last-child, .bars i:nth-last-child(2) { background: var(--ds-color-primary-surface-solid-default); }
   .inv { margin: 0; padding: 0; list-style: none; border-radius: var(--ds-dimension-radius-control); box-shadow: var(--ds-effect-material-flat); }
   .inv li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 12px; font-size: 13px; box-shadow: inset 0 -1px 0 var(--ds-color-neutral-border-subtle-default); }
@@ -144,7 +144,7 @@
   .presets button[aria-pressed="true"] { outline: 2px solid var(--ix-text); outline-offset: 2px; }
   .ramp { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; padding: 14px; }
   .ramp div { display: grid; gap: 6px; }
-  .ramp i { block-size: 44px; border-radius: 0; background: var(--c); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06); }
+  .ramp i { block-size: 44px; border-radius: var(--ds-dimension-radius-mark); background: var(--c); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06); }
   .ramp span { font: 500 9.5px/1 var(--mono); color: var(--ix-muted); text-align: center; }
   .ramp div.is-solid span { color: var(--ix-text); }
   .ramp-foot { display: flex; justify-content: space-between; padding: 0 14px 12px; font: 500 10.5px/1.4 var(--mono); color: var(--ix-muted); }
@@ -187,7 +187,7 @@
   .lum div { display: flex; gap: 3px; align-items: center; }
   .lum div b { inline-size: 40px; font: 500 10px/1 var(--mono); color: var(--ix-muted); }
   .lum i { inline-size: 22px; block-size: 14px; border-radius: 0; }
-  .rtl { display: inline-flex; gap: 16px; padding: 6px 12px; border-radius: 0; box-shadow: inset 0 0 0 1px var(--ix-line); font-size: 13px; }
+  .rtl { display: inline-flex; gap: 16px; padding: 6px 12px; border-radius: var(--ds-dimension-radius-element); box-shadow: inset 0 0 0 1px var(--ix-line); font-size: 13px; }
   .rtl .on { box-shadow: inset 0 -2px 0 var(--ix-signal); padding-block-end: 2px; }
   .csp { font: 500 11.5px/1.6 var(--mono); color: var(--ix-muted); }
   .csp b { color: var(--ix-text); font-weight: 500; }
@@ -206,9 +206,9 @@
   [data-theme="dark"] .gram-seg[data-k="state"] > code { color: var(--ds-color-primary-text-subtle-default); }
   .gram-sep { color: var(--ix-muted); }
   .states { display: flex; flex-wrap: wrap; gap: 6px; }
-  .states button { block-size: 28px; padding-inline: 10px; border-radius: 0; border: 0; background: var(--ds-color-neutral-surface-default-default); font: 500 12px/1 var(--mono); color: var(--ix-muted); cursor: pointer; }
+  .states button { block-size: 28px; padding-inline: 10px; border-radius: var(--ds-dimension-radius-element); border: 0; background: var(--ds-color-neutral-surface-default-default); font: 500 12px/1 var(--mono); color: var(--ix-muted); cursor: pointer; }
   .states button:hover { color: var(--ix-text); }
-  .states button[aria-pressed="true"] { background: var(--ds-color-neutral-surface-raised-default); color: var(--ix-text); box-shadow: var(--sq-ring); }
+  .states button[aria-pressed="true"] { background: var(--ds-color-neutral-surface-raised-default); color: var(--ix-text); box-shadow: var(--ds-effect-material-raised); }
   .states button[data-invalid] { text-decoration: line-through; text-decoration-color: var(--ds-color-danger-text-subtle-default); }
   .compile { grid-template-columns: minmax(0, 1fr) 240px; }
   .compile .ix-term pre { min-block-size: 132px; }
@@ -330,7 +330,7 @@
           <div class="asm-labels">
             <div class="asm-label" data-i="3" style="--i:3"><span><b>04 Release</b><em>Proven by 7 gates</em><small>source, packed, a11y ×3</small></span></div>
             <div class="asm-label" data-i="2" style="--i:2"><span><b>03 Tokens</b><em>Bound to roles</em><small>scheme · role · emphasis · state</small></span></div>
-            <div class="asm-label" data-i="1" style="--i:1"><span><b>02 Component</b><em>Styled in static CSS</em><small>R24 panel holds R16 well</small></span></div>
+            <div class="asm-label" data-i="1" style="--i:1"><span><b>02 Component</b><em>Styled in static CSS</em><small>R0 panel holds R0 well</small></span></div>
             <div class="asm-label" data-i="0" style="--i:0"><span><b>01 Primitive</b><em>Native behavior</em><small>keyboard, focus, ARIA</small></span></div>
           </div>
           <p class="asm-assembled" aria-hidden="true">Assembly <b class="tnum" id="asm-pct">00%</b><span class="asm-meter"></span></p>

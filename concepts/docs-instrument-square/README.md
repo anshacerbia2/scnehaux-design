@@ -4,12 +4,11 @@ The Instrument boards (`concepts/docs-instrument/`) drawn as one continuous line
 drawing. Content, colour roles and Instrument's motion (drawing, typing, counters,
 "here") are kept; the geometry, the lines and the scrollbar change.
 
-> **Status: reference, non-normative (ADR-UIP-VIS-002).** The chrome's square
-> geometry departs from the brand book's concentric ladder (R24 panel, pad 8, R16
-> container), and the HUD text uses IBM Plex Mono instead of the system mono (the
-> ruler titles are Inter, the brand face). Product components keep both as they
-> ship. It is an option to compare, not a rule; adopting it needs an ADR-UIP-VIS-001
-> revision.
+> **Status: reference, non-normative (ADR-UIP-VIS-002).** Square geometry departs
+> from the brand book's concentric ladder (R24 panel, pad 8, R16 container); it is
+> proposed as the system's structure (`design-system/proposals/industrial-structure.md`)
+> and needs an ADR-UIP-VIS-001 revision. The HUD text uses IBM Plex Mono instead of
+> the system mono (the ruler titles are Inter, the brand face).
 >
 > The ruler scrollbar began from a reference site's page-position ruler. What makes
 > it Scnehaux's own is the evidence vocabulary: the ledger marks that verify each
@@ -49,13 +48,16 @@ tokens.
    meets the nav; by then the rule has scrolled under the nav and the nav's line
    takes over. When the next section pushes a held bar up, the bar's -1px bottom
    margin lands its line on the next rule. The lines never double.
-4. **No radius in the chrome.** The chrome sets radius 0 and a 1px ring on its own
-   elements (nav, cells, panels, terminals, chips, calls to action), one by one. It
-   never redefines a `--ds-*` token and never selects a product component
-   (`.scnx-*`), so every component, in the chrome or on a stage, keeps the radius,
-   mono and material it ships with: the Button stage shows R12 and its *Anatomy*
-   view reads `R12 · radius.control`; product mocks (the dashboard, the invite
-   dialog, the assembly plates) keep the ladder.
+4. **No radius, anywhere.** Square corners and ring materials are the system's
+   structure, proposed in
+   [`design-system/proposals/industrial-structure.md`](../../design-system/proposals/industrial-structure.md):
+   the same in every theme, which change only colours. The chrome and every
+   component, on a stage or in a mock, are square; the Button *Anatomy* view reads
+   `R0 · radius.control`. `pill` stays fully rounded, because the round shape of a
+   radio, a switch or a status dot carries meaning. Until `@scnx/system` ships the
+   structure, `square.css` bridges it through the documented radius and material
+   tokens (the consumer's `overrides` layer); the bridge goes when the package
+   ships. Nothing selects a product component (`.scnx-*`).
 5. **No read head, no reticle, no left rail.** The ruler scrollbar replaces them.
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
