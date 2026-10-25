@@ -1,8 +1,8 @@
-> **Status: reference, non-normative (ADR-UIP-VIS-002).** The binding rules are ADR-UIP-VIS-001 (materials, the concentric ladder, ink acts and blue signals, the stage, type voice, geometry) and STD-UIP-TKN-001 (token grammar); a component's contract is its specification in `ui-platform`. Sections that restate those records add nothing binding. Content fundamentals, the motion signature "the rise", iconography, and the logo are **guidance** until an ADR or STD revision records them.
+> **Status: reference, non-normative (ADR-UIP-VIS-002).** The binding rules are ADR-UIP-VIS-001 (materials, the concentric ladder, ink acts and blue signals, the stage, type voice, geometry) and STD-UIP-TKN-001 (token grammar); a component's contract is its specification in `ui-platform`. Sections that restate those records add nothing binding. The motion signature "the rise" is **guidance** until an ADR or STD revision records it; so are the voice, the icon grammar and the mark, now in [`brand/Brand.html`](../brand/Brand.html).
 
 > **Which design this is.** These are the rules of the scnx-saas look (the boards in [`scnx-saas/`](../scnx-saas/)), until they move to `scnx-saas/Brand-Book.html`. The scnx-platform design has its own brand book, [`scnx-platform/Brand-Book.html`](../scnx-platform/Brand-Book.html).
 
-> **Proposed: [the industrial structure](proposals/industrial-structure.md), revision 2.** Components carry no design of their own: every presentational property reads a component hook (`--scnx-*`, Tier 3) that falls back to a semantic token (`--ds-*`, Tier 2). A theme may map any Tier-2 key; a product adjusts one component through its hook. What must hold (target size, focus, contrast, reduced motion, meaningful shapes) is a guarded floor. The default theme, `industrial` (was `default`), is square: radius 0, `pill` kept for a meaningful round, on-page materials a ring. It changes signatures 1 and 2 below once ADR-UIP-VIS-001 is revised; until then they stand.
+> **[The industrial structure](proposals/industrial-structure.md), revision 3.** Components carry no design of their own: every presentational property reads a component hook (`--scnx-*`, Tier 3) that falls back to a semantic token (`--ds-*`, Tier 2), and a theme may map any Tier-2 key (recorded in ADR-UIP-VIS-001 revision 3). Revision 3 proposes the theme ids `scnx-platform` (was `industrial`, square) and `scnx-saas` (was `achromatic`), and gives `scnx-saas` the shape below: signatures 1 and 2 (materials, the concentric ladder) are this look's, so they stand.
 
 Scnehaux UI is an accessible React design system with perceptual color, scoped multi-brand theming and zero runtime CSS, and every release ships with the evidence that it works. Its look is **spatial**: ink controls and layered materials on a dotted stage, one electric blue that means "here", and corners that nest. Build every screen from the rules below; a screen that follows them reads as Scnehaux at a glance.
 
@@ -17,15 +17,9 @@ These are what make a screen recognizably Scnehaux. Never drop one to match anot
 5. **The eyebrow and the tight display.** Section kickers, table headers, group labels and metadata are eyebrows: mono, uppercase, +0.12em, `ds-color-neutral-text-subtle-default` (`eyebrow` style). Marketing headlines are Inter semibold, tracked tight (−0.055em at `display-1`, leading 0.95).
 6. **The rise.** Floating materials appear 4px from their anchor with no stem, rising 4px and fading in over `ds-motion-feedback-duration`; dialogs and sheets rise over `ds-motion-enter-duration`. Pressed controls sink 1px. All of it stops under `prefers-reduced-motion`.
 
-## Content fundamentals
+## Voice, icons and the mark
 
-- Voice: plain, specific and evidence-led. State what is true and how it is verified: "Every release ships with the evidence that it works." "Static CSS and no style or script injected at run time, so a security team never loosens its policy."
-- Sentence case everywhere: headings, buttons, menu items, table headers (the eyebrow's uppercase is CSS, not typed).
-- Buttons are verbs or verb phrases: "Deploy", "New project", "Copy link", "Delete project". Never "OK", "Submit" or "Click here".
-- Address the reader as "you"; the product speaks for itself and rarely says "we". "Bring your brand, keep your stack, and verify every release you install."
-- Numbers are exact and formatted: "3,200 / 5,000", "41 seconds", "128 deployments"; tabular figures wherever numbers update or align.
-- No exclamation marks, no emoji, no filler adjectives ("powerful", "seamless"), no "Oops". Errors say what happened and what to do: "Enter a full email address." "Add the TXT record and try again."
-- Destructive copy names the object and the consequence: "Delete acme-dashboard?" "This removes 128 deployments, 3 domains and all environment variables. It cannot be undone."
+The brand every theme shares (the name and the mark, the voice and the copy rules, the icon grammar) is written once, in [`brand/Brand.html`](../brand/Brand.html). This file keeps only the rules of the scnx-saas look.
 
 ## Color
 
@@ -79,17 +73,6 @@ These are what make a screen recognizably Scnehaux. Never drop one to match anot
 
 - `ds-motion-feedback-*` (150ms) for hover, press and floating materials; `-disclosure-*` (300ms) for accordions, sidebars and chevrons; `-enter-*` (300ms) and `-exit-*` (200ms, always shorter) for dialogs and sheets; `-attention-*` only for a rare nudge.
 - Move things 4px or less; never bounce, never scale content. Reduced motion removes movement and keeps fades.
-
-## Iconography
-
-- One icon grammar: a 24-unit grid, 1.8 stroke, round caps and joins, `currentColor`, 16px in text and controls, 20px in large controls and navigation. The real set (Icons group) is the docs site's: arrows, copy, check, code, sun, moon, monitor, orbit, reset, split, external, plus the four contract marks whose accent part takes Scnx Blue.
-- Flagged: the previews also draw x, chevrons, search, info, warning, check-circle, x-circle, plus, settings, user, home, folder, bell, more, trash, logout, layers, grid, activity and key to the same grammar. They are stand-ins until the icon set ships them; do not copy them from another library.
-- Icons beside text are decorative (`aria-hidden`); an icon-only control needs an accessible name and, unless universal, a Tooltip. Never use emoji as icons.
-
-## Logo
-
-- The mark (Logos group) is a 24px ink tile (radius 8) holding a primitive outline, a component square, a circle and a Scnx Blue check: "a primitive, a component, and a verified check". Use `scnehaux-mark.svg` on light grounds and `scnehaux-mark-inverse.svg` on dark; in code, bind its tile to ink and its check to `ds-color-primary-border-strong-selected`.
-- Set the name "Scnehaux UI" beside it in Inter semibold, −0.01em. There is no separate wordmark file.
 
 ## Components
 

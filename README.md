@@ -6,6 +6,8 @@ one per theme, each in its own folder with its own brand book; everything else
 is in `others/`.
 
 ```
+brand/
+  Brand.html                  The brand every theme shares: name, mark, voice, icons (live)
 scnx-platform/                The platform's design (IAM, AI runtime, organization, the docs), live
   Brand-Book.html             its brand book
   Docs-Landing.html, Docs-Home.html, Docs-Button.html
@@ -28,7 +30,9 @@ concepts/                     Redirects from the old addresses only
 
 A brand book belongs to a theme, not to a product: every product on
 scnx-platform reads the same brand book. A product that needs a different look
-needs a new theme, and that theme gets its own folder and brand book.
+needs a new theme, and that theme gets its own folder and brand book. What every
+theme shares (the name and the mark, the voice, the icons) is written once, in
+`brand/Brand.html`, and both brand books link to it.
 
 ## Website
 
@@ -96,6 +100,7 @@ after it merges (ui-platform PLAN, "Spatial identity adoption").
 
 | Folder | Board | Source | Image |
 | :-- | :-- | :-- | :-- |
+| `brand` | Brand (shared by both) | `Brand.html` | [`Brand.png`](brand/Brand.png) |
 | `scnx-platform` | Brand book | `Brand-Book.html` | [`Brand-Book.png`](scnx-platform/Brand-Book.png) |
 | `scnx-platform` | Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](scnx-platform/Docs-Landing.png) |
 | `scnx-platform` | Docs home (get started) | `Docs-Home.html` | [`Docs-Home.png`](scnx-platform/Docs-Home.png) |
