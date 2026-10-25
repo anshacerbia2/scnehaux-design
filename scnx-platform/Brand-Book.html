@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+<html lang="en" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scnehaux UI · Instrument · Square · Brand book</title>
 <meta name="description" content="Brand book of the Instrument · Square docs expression: principles, lines, layout, colour, type, components, motion, rules and how ui-platform-docs adopts it.">
 <link rel="icon" href="../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/industrial.css">
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/scnx-platform.css">
 <link rel="stylesheet" href="../design-system/components/bundle.css">
 <link rel="stylesheet" href="instrument.css">
 <link rel="stylesheet" href="square.css">
@@ -301,7 +301,7 @@
           <span class="bb-k">ui-platform components used</span>
           <div class="bb-row"><span class="scnx-btn" data-variant="primary" data-size="small">Button</span><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Badge</span><span class="scnx-badge" data-scheme="success" data-emphasis="subtle" data-size="small">Badge · success</span><kbd class="scnx-kbd">Kbd</kbd><code class="scnx-code">code</code></div>
           <div class="bb-row"><div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Segmented"><button data-part="item" role="radio" aria-checked="true">Segmented</button><button data-part="item" role="radio" aria-checked="false" tabindex="-1">control</button></div><label class="scnx-switch"><input type="checkbox" role="switch" checked><span data-part="track"></span>Switch</label></div>
-          <p class="ix-body">Used as shipped: their variants, sizes, states and materials, bound to tokens, in the chrome and on a stage alike. A component carries no design of its own: each presentational value reads its hook (<code>--scnx-*</code>), which falls back to a semantic token (<code>--ds-*</code>) that the theme maps. The docs run the default theme, industrial, which is square. The docs never select a product component's class to restyle it.</p>
+          <p class="ix-body">Used as shipped: their variants, sizes, states and materials, bound to tokens, in the chrome and on a stage alike. A component carries no design of its own: each presentational value reads its hook (<code>--scnx-*</code>), which falls back to a semantic token (<code>--ds-*</code>) that the theme maps. The docs run the default theme, scnx-platform, which is square. The docs never select a product component's class to restyle it.</p>
         </div>
         <div class="bb-cell">
           <span class="bb-k">Docs chrome (not in ui-platform)</span>
@@ -320,7 +320,7 @@
           </tbody>
         </table>
       </div>
-      <div class="bb-note"><b>Specimen rule.</b> Where a page shows a component, in the chrome or as a specimen (a component page's stage, a do and don't example), it renders with the system's tokens, as it ships. The default theme, industrial, is square (<a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/proposals/industrial-structure.md">the industrial structure</a>), so the chrome and a specimen in that theme agree. A Theme × Mode switch on a stage shows the component in another theme as it ships, shape included when that theme maps it. A component page lists the component's hooks (<code>--scnx-*</code>), the token each falls back to, and the floors that bound them. The pages load <code>@scnx/system</code>'s own industrial tokens, synced byte for byte into <code>design-system/vendor/scnx-system/</code>, so nothing here restates a radius or a material. Nothing selects <code>.scnx-*</code>.</div>
+      <div class="bb-note"><b>Specimen rule.</b> Where a page shows a component, in the chrome or as a specimen (a component page's stage, a do and don't example), it renders with the system's tokens, as it ships. The default theme, scnx-platform, is square (<a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/proposals/industrial-structure.md">the industrial structure</a>), so the chrome and a specimen in that theme agree. A Theme × Mode switch on a stage shows the component in another theme as it ships, shape included when that theme maps it. A component page lists the component's hooks (<code>--scnx-*</code>), the token each falls back to, and the floors that bound them. The pages load <code>@scnx/system</code>'s own scnx-platform tokens, synced byte for byte into <code>design-system/vendor/scnx-system/</code>, so nothing here restates a radius or a material. Nothing selects <code>.scnx-*</code>.</div>
     </section>
 
     <!-- 08 · Motion -->
@@ -366,7 +366,7 @@
             <tr><td>Set bars, labels, facts and buttons in the mono HUD voice</td><td>Shuffle text in a proportional face (widths would jump)</td></tr>
             <tr><td>Take every value from a token, or mix tokens for a line</td><td>Introduce a hex colour or a new token in the docs</td></tr>
             <tr><td>Set text in text or muted (4.5:1), blue text in signal text</td><td>Set text in faint or line, or blue text in the signal fill</td></tr>
-            <tr><td>Take shape from the theme (industrial: square); change one component through its <code>--scnx-*</code> hook</td><td>Select <code>.scnx-*</code> to restyle a component, or push a value under a floor (target size, focus, contrast)</td></tr>
+            <tr><td>Take shape from the theme (scnx-platform: square); change one component through its <code>--scnx-*</code> hook</td><td>Select <code>.scnx-*</code> to restyle a component, or push a value under a floor (target size, focus, contrast)</td></tr>
             <tr><td>Let motion follow the scroll, the pointer or the keys</td><td>Start motion on a timer the reader did not ask for</td></tr>
           </tbody>
         </table>
@@ -385,7 +385,7 @@
         <table class="bb-table">
           <thead><tr><th scope="col">Departure</th><th scope="col">Brand book says</th><th scope="col">This book</th><th scope="col">Scope</th></tr></thead>
           <tbody>
-            <tr><td>Radius</td><td>The concentric ladder (R24 panel, pad 8, R16 container)</td><td>Radius 0; pill kept for a meaningful round</td><td>The default theme (industrial), shipped in <code>@scnx/system</code>; the pages read it from the package</td></tr>
+            <tr><td>Radius</td><td>The concentric ladder (R24 panel, pad 8, R16 container)</td><td>Radius 0; pill kept for a meaningful round</td><td>The default theme (scnx-platform), shipped in <code>@scnx/system</code>; the pages read it from the package</td></tr>
             <tr><td>Mono</td><td>The system mono</td><td>IBM Plex Mono (self-hosted, OFL) for the HUD voice and terminals</td><td>Chrome; components keep the token mono</td></tr>
             <tr><td>Type literals</td><td>Sizes from <code>typography.*</code></td><td>Display, section heading and lede sizes, the 10–11px HUD (see 06)</td><td>Chrome</td></tr>
             <tr><td>Rise</td><td>4px, no scaling</td><td>28px with an 8px blur, once on entry</td><td>Chrome content blocks</td></tr>
@@ -409,7 +409,7 @@
         <div class="bb-cell"><span class="no">In ui-platform-docs</span><h3 class="ix-h3">The chrome</h3><p class="ix-body">The line system, nav strip, section bars, cells, facts, lead, calls to action, the ruler and its titles, reveal, glide and verify. The reference implementation is <code>square.css</code> and <code>square.js</code> in this folder.</p></div>
         <div class="bb-cell"><span class="no">Here, in scnehaux-design</span><h3 class="ix-h3">This book</h3><p class="ix-body">Rules, values and examples. A change to the look lands here first, by pull request, and the docs follow. The docs do not write their own brand rules.</p></div>
       </div>
-      <div class="bb-note"><b>Order.</b> The industrial tokens have shipped (the theme <code>industrial</code>, was <code>default</code>, is square), and these pages read them with no bridge. First, ui-platform finishes the structure (components read <code>--scnx-*</code> hooks that fall back to <code>--ds-*</code>), wave 1 (Kbd, Segmented control), and the docs serve IBM Plex Mono from their own origin (<code>font-src 'self'</code>; the files and licence are in <code>design-system/fonts/</code>). Then port <code>square.css</code> and <code>square.js</code> on top of <code>@scnx/system</code>'s tokens and give TableOfContents its controlled <code>activeId</code>. Last, migrate the pages to the sheet structure (bars, cells, facts). The behaviour to match is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md">SCROLL.md</a>.</div>
+      <div class="bb-note"><b>Order.</b> The scnx-platform tokens have shipped (the theme <code>scnx-platform</code>, was <code>industrial</code> and before that <code>default</code>, is square), and these pages read them with no bridge. First, ui-platform finishes the structure (components read <code>--scnx-*</code> hooks that fall back to <code>--ds-*</code>), wave 1 (Kbd, Segmented control), and the docs serve IBM Plex Mono from their own origin (<code>font-src 'self'</code>; the files and licence are in <code>design-system/fonts/</code>). Then port <code>square.css</code> and <code>square.js</code> on top of <code>@scnx/system</code>'s tokens and give TableOfContents its controlled <code>activeId</code>. Last, migrate the pages to the sheet structure (bars, cells, facts). The behaviour to match is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md">SCROLL.md</a>.</div>
     </section>
   </main>
 
@@ -451,7 +451,7 @@
     const paint = (colours) => { g.globalAlpha = 1; g.clearRect(0, 0, 1, 1); for (const [c, a = 1] of colours) { g.globalAlpha = a; g.fillStyle = c; g.fillRect(0, 0, 1, 1); } return [...g.getImageData(0, 0, 1, 1).data].slice(0, 3); };
     const lum = (rgb) => rgb.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
     const measure = (mode) => {
-      const island = document.createElement("div"); island.dataset.scnxTheme = "industrial"; island.dataset.scnxResolvedMode = mode; island.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
+      const island = document.createElement("div"); island.dataset.scnxTheme = "scnx-platform"; island.dataset.scnxResolvedMode = mode; island.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
       const probe = document.createElement("i"); island.append(probe); document.body.append(island);
       const resolve = (v) => { probe.style.color = v; return getComputedStyle(probe).color; };
       const ground = resolve("var(--ix-ground)");

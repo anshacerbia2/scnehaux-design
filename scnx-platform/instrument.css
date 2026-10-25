@@ -5,8 +5,8 @@
    the reticle (the stage held still), the read head (blue = "you are here"),
    sheets with title blocks, dimension lines, radius callouts and the receipt tape.
 
-   Binds only --ds-* tokens (@scnx/system's industrial theme,
-   design-system/vendor/scnx-system/tokens/css/industrial.css) and the --scnx-* geometry of
+   Binds only --ds-* tokens (@scnx/system's scnx-platform theme,
+   design-system/vendor/scnx-system/tokens/css/scnx-platform.css) and the --scnx-* geometry of
    components/bundle.css. The --ix-* properties below are expression-local and are
    guidance until an ADR-UIP-VIS-001 revision records them (see README.md). */
 
@@ -24,7 +24,7 @@
 
   /* components/bundle.css reads --font-sans and --font-mono, which the old hand-made
      snapshot declared and the package does not. They hold the package's own family
-     stacks (the body and code font-family tokens of industrial.css); they cannot point at
+     stacks (the body and code font-family tokens of scnx-platform.css); they cannot point at
      those tokens, because bundle.css points the tokens back at them. */
   --font-sans: Inter, -apple-system, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -297,7 +297,7 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------
    Code and terminals sit in a scoped dark theme root
-   (data-scnx-theme="industrial" data-scnx-resolved-mode="dark"),
+   (data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark"),
    the same mechanism a product uses for a brand island.
    ------------------------------------------------------------------ */
 .ix-term {
