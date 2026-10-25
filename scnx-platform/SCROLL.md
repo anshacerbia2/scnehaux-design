@@ -2,7 +2,7 @@
 
 Everything that moves, appears or changes as the page scrolls, in the order a reader
 meets it. Values are taken from the code: `square.js` and `square.css` in this folder,
-and `../docs-instrument/instrument.js`, which still runs here.
+and `instrument.js`, this folder's copy of Instrument's script.
 
 > **Status: guidance (ADR-UIP-VIS-002).** These are expression-local values. The 28px
 > reveal goes past Instrument's 4px rise, and the whole set needs an ADR-UIP-VIS-001

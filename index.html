@@ -73,7 +73,7 @@
   <a class="brand" href="./"><img src="design-system/assets/Logos/scnehaux-mark.svg" width="28" height="28" alt="">Scnehaux design</a>
 
   <h1>Every Scnehaux screen, in one place.</h1>
-  <p class="lede">The Scnehaux UI design system and the product concepts built with it. The files in this repository are the source; this site shows them.</p>
+  <p class="lede">The Scnehaux UI design system and the two designs built with it, scnx-platform and scnx-saas. The files in this repository are the source; this site shows them.</p>
 
   <section aria-labelledby="ds-title">
     <p class="eyebrow">Design system</p>
@@ -90,50 +90,61 @@
       <div class="layers">
         <div class="layer"><strong>Rules</strong><span>The brand book. The same in every theme.</span></div>
         <div class="layer"><strong>Components</strong><span>Anatomy, geometry, states, token bindings. The same in every theme.</span></div>
-        <div class="layer"><strong>Values</strong><span>One folder per theme; <code>default</code> today, light and dark.</span></div>
+        <div class="layer"><strong>Values</strong><span>Synced from <code>@scnx/system</code> into <code>design-system/vendor/</code>. The cards still use the earlier snapshot, <code>themes/default</code>, until they are re-rendered.</span></div>
       </div>
     </div>
   </section>
 
-  <section aria-labelledby="concepts-title">
-    <p class="eyebrow">Concepts</p>
-    <h2 id="concepts-title">Product screens</h2>
-    <p class="section-note">Static pages rendered from the design-canvas sources; interactive parts are frozen at their first frame. Konsep B is the direction for client-facing screens. The Instrument boards are live pages: open them to see the motion.</p>
-    <div id="concepts"></div>
+  <section aria-labelledby="designs-title">
+    <p class="eyebrow">Designs</p>
+    <h2 id="designs-title">Two designs, one per theme</h2>
+    <p class="section-note">Each design has its own folder and its own brand book. scnx-platform is the Scnehaux platform's look (IAM, AI runtime, organization, the docs); scnx-saas is the look of the SaaS products. Its brand book follows once ui-platform ships the theme's shape.</p>
+    <div id="designs"></div>
+  </section>
+
+  <section aria-labelledby="others-title">
+    <p class="eyebrow">Others</p>
+    <h2 id="others-title">Earlier concepts</h2>
+    <p class="section-note">Kept for reference. Static pages rendered from the design-canvas sources; interactive parts are frozen at their first frame. The Instrument boards are live pages.</p>
+    <div id="others"></div>
   </section>
 
   <footer>Source: <a href="https://github.com/anshacerbia2/scnehaux-design">anshacerbia2/scnehaux-design</a>. Token values belong to <code>@scnx/system</code>.</footer>
 </div>
 <script>
   const REPO = "https://github.com/anshacerbia2/scnehaux-design/blob/main/";
-  const GROUPS = [
-    ["concept-b-spatial-canvas", "Konsep B — Spatial Canvas · client-facing", [["B-Console", "B · Client Dev Console"], ["B-SaaS", "B · SaaS Home"]]],
-    ["concept-a-command-surface", "Konsep A — Command Surface", [["Main", "A · Platform Console"], ["A-SaaS", "A · SaaS Home"]]],
-    ["internal-console", "Internal console — two options", [["C-Internal", "Opsi C — Schematic"], ["D-Internal", "Opsi D — Stratum"]]],
-    ["iam", "IAM", [["IAM-Reachability", "IAM — Reachability"]]],
-    ["docs-site", "Docs — public landing, signed-in workspace, component page", [["Docs-Landing", "Public · Landing (global)"], ["Docs-Home", "Signed in · Workspace home"], ["Docs-Button", "Docs · Components / Button"]]],
-    ["docs-instrument", "Docs · Instrument — the industrial expression, live (motion, scroll, lines)", [["Docs-Landing", "Instrument · Landing (global)"], ["Docs-Home", "Instrument · Workspace home"], ["Docs-Button", "Instrument · Components / Button"]], { live: true }],
-    ["docs-instrument-square", "Docs · Instrument · Square — one line drawing, ruler scrollbar, live", [["Docs-Landing", "Square · Landing (global)"], ["Docs-Home", "Square · Docs home (get started)"], ["Docs-Button", "Square · Components / Button"], ["Brand-Book", "Square · Brand book"]], { live: true }],
+  const DESIGNS = [
+    ["scnx-platform", "scnx-platform — the platform: one line drawing, ruler scrollbar, live", [["Brand-Book", "Brand book"], ["Docs-Landing", "Landing (global)"], ["Docs-Home", "Docs home (get started)"], ["Docs-Button", "Components / Button"]], { live: true }],
+    ["scnx-saas", "scnx-saas — SaaS products: public landing, signed-in workspace, component page", [["Docs-Landing", "Public · Landing (global)"], ["Docs-Home", "Signed in · Workspace home"], ["Docs-Button", "Docs · Components / Button"]]],
   ];
-  const root = document.getElementById("concepts");
-  for (const [folder, label, boards, opts = {}] of GROUPS) {
-    const group = document.createElement("div");
-    group.className = "group";
-    group.innerHTML = `<p class="eyebrow">${label}</p><div class="grid"></div>`;
-    const grid = group.querySelector(".grid");
-    for (const [name, title] of boards) {
-      const base = `concepts/${folder}/${name}`;
-      const card = document.createElement("article");
-      card.className = "card";
-      card.innerHTML = `
-        <a class="thumb" href="${base}.html" aria-label="${title}"><img src="${base}.thumb.webp" alt="" loading="lazy" width="720" height="450"></a>
-        <div class="card-body">
-          <a class="card-title" href="${base}.html">${title}</a>
-          <div class="links"><a href="${base}.html">${opts.live ? "Live page" : "Page"}</a><a href="${base}.png">Full image</a><a href="${REPO}${base}${opts.live ? ".html" : ".dc.html"}">Source</a></div>
-        </div>`;
-      grid.append(card);
+  const OTHERS = [
+    ["others/concept-b-spatial-canvas", "Konsep B — Spatial Canvas · client-facing", [["B-Console", "B · Client Dev Console"], ["B-SaaS", "B · SaaS Home"]]],
+    ["others/concept-a-command-surface", "Konsep A — Command Surface", [["Main", "A · Platform Console"], ["A-SaaS", "A · SaaS Home"]]],
+    ["others/internal-console", "Internal console — two options", [["C-Internal", "Opsi C — Schematic"], ["D-Internal", "Opsi D — Stratum"]]],
+    ["others/iam", "IAM", [["IAM-Reachability", "IAM — Reachability"]]],
+    ["others/docs-instrument", "Docs · Instrument — the expression scnx-platform grew from, live", [["Docs-Landing", "Instrument · Landing (global)"], ["Docs-Home", "Instrument · Workspace home"], ["Docs-Button", "Instrument · Components / Button"]], { live: true }],
+  ];
+  for (const [id, groups] of [["designs", DESIGNS], ["others", OTHERS]]) render(document.getElementById(id), groups);
+  function render(root, groups) {
+    for (const [folder, label, boards, opts = {}] of groups) {
+      const group = document.createElement("div");
+      group.className = "group";
+      group.innerHTML = `<p class="eyebrow">${label}</p><div class="grid"></div>`;
+      const grid = group.querySelector(".grid");
+      for (const [name, title] of boards) {
+        const base = `${folder}/${name}`;
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <a class="thumb" href="${base}.html" aria-label="${title}"><img src="${base}.thumb.webp" alt="" loading="lazy" width="720" height="450"></a>
+          <div class="card-body">
+            <a class="card-title" href="${base}.html">${title}</a>
+            <div class="links"><a href="${base}.html">${opts.live ? "Live page" : "Page"}</a><a href="${base}.png">Full image</a><a href="${REPO}${base}${opts.live ? ".html" : ".dc.html"}">Source</a></div>
+          </div>`;
+        grid.append(card);
+      }
+      root.append(group);
     }
-    root.append(group);
   }
 </script>
 </body>

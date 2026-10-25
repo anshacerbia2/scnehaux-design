@@ -1,31 +1,41 @@
 # Scnehaux design
 
 Design references for the Scnehaux platform, kept as files so every person and
-every coding agent reads the same design from one place. Each design has its
-own folder.
+every coding agent reads the same design from one place. There are two designs,
+one per theme, each in its own folder with its own brand book; everything else
+is in `others/`.
 
 ```
+scnx-platform/                The platform's design (IAM, AI runtime, organization, the docs), live
+  Brand-Book.html             its brand book
+  Docs-Landing.html, Docs-Home.html, Docs-Button.html
+scnx-saas/                    The SaaS products' design: public landing, signed-in workspace, component page
 design-system/                Scnehaux UI, the design system
-  README.md                   rules: the brand book
+  README.md                   rules (the brand book of the scnx-saas look, until its HTML page)
   components/                 one card per component, shared by every theme
   index.html                  live viewer (theme and mode switch)
-  themes/
-    default/                  the default theme's values (light and dark)
-concepts/
+  vendor/scnx-system/         @scnx/system's tokens and fonts, synced byte for byte
+  themes/default/             the earlier hand-made snapshot the cards are drawn with
+others/
   concept-a-command-surface/  Konsep A — platform console and SaaS home
   concept-b-spatial-canvas/   Konsep B — client dev console and SaaS home
   internal-console/           Internal console, options C and D
   iam/                        IAM reachability
-  docs-site/                  Public landing, signed-in workspace, component page
-  docs-instrument/            The same three docs boards, industrial expression (live)
-  docs-instrument-square/     Instrument as one line drawing, with a ruler scrollbar (live)
+  docs-instrument/            The docs boards in the Instrument expression, which scnx-platform grew from (live)
   canvas.json                 Board titles, sizes, and positions
+concepts/                     Redirects from the old addresses only
 ```
+
+A brand book belongs to a theme, not to a product: every product on
+scnx-platform reads the same brand book. A product that needs a different look
+needs a new theme, and that theme gets its own folder and brand book.
 
 ## Website
 
 **https://anshacerbia2.github.io/scnehaux-design/** (GitHub Pages, from `main`).
-The hub links the component viewer (`/design-system/`) and every concept page.
+The hub links the two designs, the component viewer (`/design-system/`), and
+every page in `others/`. The old `concepts/...` addresses redirect to the new
+ones.
 To run it locally: `npx serve .` at the repository root and open
 `http://localhost:3000/`; the component viewer loads its cards with `fetch()`,
 which browsers block from a `file://` page.
@@ -35,15 +45,22 @@ which browsers block from a `file://` page.
 1. **This repository is the source of the designs.** The design canvases in
    Claude are previews made from these files. A change lands here by pull
    request first; the canvas is republished from the merged files.
-2. **Scnehaux UI is the design system; a theme only supplies values.** The rules
-   (`design-system/README.md`) and the components (`design-system/components/`)
-   are shared. Each theme is a folder under `design-system/themes/` holding its
-   tokens and its renders; `default` is the theme Scnehaux UI ships with.
-   Another theme (achromatic, a client brand) is a sibling folder that changes
-   values, never rules (ADR-UIP-VIS-001).
-3. **Token values belong to `@scnx/system`.** `tokens.json` and `tokens.css` in
-   a theme folder are a snapshot used to draw the cards. When a value here
-   differs from the package, the package wins and the snapshot is regenerated.
+2. **Scnehaux UI is the design system; a theme supplies the values, and a design
+   shows one theme.** The components (`design-system/components/`) are shared.
+   `scnx-platform/` shows the package's `industrial` theme and `scnx-saas/` its
+   `achromatic` theme; the ids are to be renamed to `scnx-platform` and
+   `scnx-saas` in `@scnx/system`. A theme maps Tier-2 values above the guarded
+   floors, never rules (ADR-UIP-VIS-001).
+3. **Token values belong to `@scnx/system`.** `npm run sync:tokens` runs the
+   package's own emitter at the ui-platform commit pinned in
+   `scripts/sync-tokens.json` and copies its output into
+   `design-system/vendor/scnx-system/` byte for byte, at the package's published
+   paths (`tokens/css/<theme>.css`, `tokens/json/<theme>.json`, `fonts/`), with
+   `SOURCE.json` recording the commit and a hash per file. Pages link those
+   files and never restate a value; `npm run check:tokens` fails when they are
+   out of date. Once the package is published, a page moves to it by changing
+   only the path prefix. The cards still use the earlier hand-made snapshot,
+   `themes/default/`, until they are re-rendered from the package.
 4. **The binding rules live in the architecture repository**: ADR-UIP-VIS-001
    (spatial identity), STD-UIP-TKN-001 (token grammar), and each component's
    specification in `ui-platform`. A card shows the target; it does not
@@ -58,9 +75,9 @@ The design system, in three layers:
 
 | Layer | Where | Changes per theme? |
 | :-- | :-- | :-- |
-| Rules — materials, the concentric ladder, ink acts and blue signals, the stage, type voice | [`README.md`](design-system/README.md) (the brand book) | No |
+| Rules — materials, the concentric ladder, ink acts and blue signals, the stage, type voice | [`README.md`](design-system/README.md) (the scnx-saas look, until `scnx-saas/Brand-Book.html`) | Yes |
 | Components — anatomy, geometry, states, token bindings | `components/<Name>/` (`preview.html`, `README.md`), `components/bundle.css` | No |
-| Values — color, radius steps, type, shadows | `themes/<theme>/` (`tokens.json`, `tokens.css`, `rendered/`) | Yes |
+| Values — color, radius steps, type, shadows | `vendor/scnx-system/` (from `@scnx/system`); the cards: `themes/default/` (`tokens.json`, `tokens.css`, `rendered/`) | Yes |
 
 - `components/<Name>/README.md` gives usage and the delta from the current build
   (or "Planned").
@@ -75,32 +92,43 @@ PLAN, "Component backlog"). The material shadow values on the cards predate the
 token implementation (ui-platform #110) and are regenerated from the package
 after it merges (ui-platform PLAN, "Spatial identity adoption").
 
-## `concepts/` — product screens
-
-Konsep B, Spatial Canvas, is the chosen direction for client-facing screens;
-internal consoles keep a separate design.
+## The two designs
 
 | Folder | Board | Source | Image |
 | :-- | :-- | :-- | :-- |
-| `concept-a-command-surface` | A · Platform Console | `Main.dc.html` | [`Main.png`](concepts/concept-a-command-surface/Main.png) |
-| `concept-a-command-surface` | A · SaaS Home | `A-SaaS.dc.html` | [`A-SaaS.png`](concepts/concept-a-command-surface/A-SaaS.png) |
-| `concept-b-spatial-canvas` | B · Client Dev Console | `B-Console.dc.html` | [`B-Console.png`](concepts/concept-b-spatial-canvas/B-Console.png) |
-| `concept-b-spatial-canvas` | B · SaaS Home | `B-SaaS.dc.html` | [`B-SaaS.png`](concepts/concept-b-spatial-canvas/B-SaaS.png) |
-| `internal-console` | Internal · Opsi C — Schematic | `C-Internal.dc.html` | [`C-Internal.png`](concepts/internal-console/C-Internal.png) |
-| `internal-console` | Internal · Opsi D — Stratum | `D-Internal.dc.html` | [`D-Internal.png`](concepts/internal-console/D-Internal.png) |
-| `iam` | Internal · IAM — Reachability | `IAM-Reachability.dc.html` | [`IAM-Reachability.png`](concepts/iam/IAM-Reachability.png) |
-| `docs-site` | Public · Landing (global) | `Docs-Landing.dc.html` | [`Docs-Landing.png`](concepts/docs-site/Docs-Landing.png) |
-| `docs-site` | Signed in · Workspace home | `Docs-Home.dc.html` | [`Docs-Home.png`](concepts/docs-site/Docs-Home.png) |
-| `docs-site` | Docs · Components / Button | `Docs-Button.dc.html` | [`Docs-Button.png`](concepts/docs-site/Docs-Button.png) |
-| `docs-instrument` | Instrument · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument/Docs-Landing.png) |
-| `docs-instrument` | Instrument · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument/Docs-Home.png) |
-| `docs-instrument` | Instrument · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument/Docs-Button.png) |
-| `docs-instrument-square` | Square · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](concepts/docs-instrument-square/Docs-Landing.png) |
-| `docs-instrument-square` | Square · Docs home (get started) | `Docs-Home.html` | [`Docs-Home.png`](concepts/docs-instrument-square/Docs-Home.png) |
-| `docs-instrument-square` | Square · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](concepts/docs-instrument-square/Docs-Button.png) |
-| `docs-instrument-square` | Square · Brand book | `Brand-Book.html` | [`Brand-Book.png`](concepts/docs-instrument-square/Brand-Book.png) |
+| `scnx-platform` | Brand book | `Brand-Book.html` | [`Brand-Book.png`](scnx-platform/Brand-Book.png) |
+| `scnx-platform` | Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](scnx-platform/Docs-Landing.png) |
+| `scnx-platform` | Docs home (get started) | `Docs-Home.html` | [`Docs-Home.png`](scnx-platform/Docs-Home.png) |
+| `scnx-platform` | Components / Button | `Docs-Button.html` | [`Docs-Button.png`](scnx-platform/Docs-Button.png) |
+| `scnx-saas` | Public · Landing (global) | `Docs-Landing.dc.html` | [`Docs-Landing.png`](scnx-saas/Docs-Landing.png) |
+| `scnx-saas` | Signed in · Workspace home | `Docs-Home.dc.html` | [`Docs-Home.png`](scnx-saas/Docs-Home.png) |
+| `scnx-saas` | Docs · Components / Button | `Docs-Button.dc.html` | [`Docs-Button.png`](scnx-saas/Docs-Button.png) |
 
-Each board has three files:
+`scnx-saas/Brand-Book.html` follows once `@scnx/system` gives its theme the
+shape of these boards (the radius ladder and soft shadows); until then the
+rules of this look are `design-system/README.md`.
+
+## `others/` — earlier concepts
+
+Kept for reference; Konsep B, Spatial Canvas, was the direction for
+client-facing screens.
+
+| Folder | Board | Source | Image |
+| :-- | :-- | :-- | :-- |
+| `concept-a-command-surface` | A · Platform Console | `Main.dc.html` | [`Main.png`](others/concept-a-command-surface/Main.png) |
+| `concept-a-command-surface` | A · SaaS Home | `A-SaaS.dc.html` | [`A-SaaS.png`](others/concept-a-command-surface/A-SaaS.png) |
+| `concept-b-spatial-canvas` | B · Client Dev Console | `B-Console.dc.html` | [`B-Console.png`](others/concept-b-spatial-canvas/B-Console.png) |
+| `concept-b-spatial-canvas` | B · SaaS Home | `B-SaaS.dc.html` | [`B-SaaS.png`](others/concept-b-spatial-canvas/B-SaaS.png) |
+| `internal-console` | Internal · Opsi C — Schematic | `C-Internal.dc.html` | [`C-Internal.png`](others/internal-console/C-Internal.png) |
+| `internal-console` | Internal · Opsi D — Stratum | `D-Internal.dc.html` | [`D-Internal.png`](others/internal-console/D-Internal.png) |
+| `iam` | Internal · IAM — Reachability | `IAM-Reachability.dc.html` | [`IAM-Reachability.png`](others/iam/IAM-Reachability.png) |
+| `docs-instrument` | Instrument · Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](others/docs-instrument/Docs-Landing.png) |
+| `docs-instrument` | Instrument · Workspace home | `Docs-Home.html` | [`Docs-Home.png`](others/docs-instrument/Docs-Home.png) |
+| `docs-instrument` | Instrument · Components / Button | `Docs-Button.html` | [`Docs-Button.png`](others/docs-instrument/Docs-Button.png) |
+
+## Board files
+
+Each canvas board (`scnx-saas` and most of `others/`) has three files:
 
 - `<Board>.dc.html`: the design-canvas source (`<x-dc>` markup with
   `<sc-for>`/`<sc-if>` templates and a data script). It needs the canvas
@@ -115,17 +143,16 @@ Each board has three files:
 
 The boards load their fonts from Google Fonts.
 
-`docs-instrument` is the exception to the three-file rule: its motion is the
-deliverable, and a canvas export freezes it at its first frame, so each board is
-a hand-authored live page (`<Board>.html`, sharing `instrument.css` and
-`instrument.js`) plus its still frame (`.png`, `.thumb.webp`, rendered with
-`?render&mode=dark`). It binds the default theme's tokens and the reference
-component classes; its folder README records the expression and its guidance
-status. `docs-instrument-square` follows the same rule and reuses Instrument's
-`instrument.css` and `instrument.js`, adding `square.css` (a framed column,
-crossing rules, sticky section bars, cells that share their lines, radius tokens
-at 0) and `square.js` (a ruler scrollbar with section titles). Its thumbnails
-are the live first screen, so they show the ruler.
+`scnx-platform` and `others/docs-instrument` are the exception to the
+three-file rule: their motion is the deliverable, and a canvas export freezes it
+at its first frame, so each board is a hand-authored live page (`<Board>.html`)
+plus its still frame (`.png`, `.thumb.webp`, rendered with `?render&mode=dark`).
+`scnx-platform` has its own copies of Instrument's `instrument.css` and
+`instrument.js`, adds `square.css` (a framed column, crossing rules, sticky
+section bars, cells that share their lines) and `square.js` (a ruler scrollbar
+with section titles), and binds `@scnx/system`'s industrial tokens from
+`design-system/vendor/`; its thumbnails are the live first screen, so they show
+the ruler. `others/docs-instrument` keeps the earlier snapshot.
 
 ## Provenance
 
