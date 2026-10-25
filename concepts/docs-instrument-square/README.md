@@ -48,16 +48,17 @@ tokens.
    meets the nav; by then the rule has scrolled under the nav and the nav's line
    takes over. When the next section pushes a held bar up, the bar's -1px bottom
    margin lands its line on the next rule. The lines never double.
-4. **No radius, anywhere.** Square corners and ring materials are the system's
-   structure, proposed in
+4. **No radius, anywhere.** Square corners and ring materials are the default
+   theme's values, proposed in
    [`design-system/proposals/industrial-structure.md`](../../design-system/proposals/industrial-structure.md):
-   the same in every theme, which change only colours. The chrome and every
-   component, on a stage or in a mock, are square; the Button *Anatomy* view reads
-   `R0 · radius.control`. `pill` stays fully rounded, because the round shape of a
-   radio, a switch or a status dot carries meaning. Until `@scnx/system` ships the
-   structure, `square.css` bridges it through the documented radius and material
-   tokens (the consumer's `overrides` layer); the bridge goes when the package
-   ships. Nothing selects a product component (`.scnx-*`).
+   components carry no design of their own, read a hook (`--scnx-*`) that falls back
+   to a semantic token (`--ds-*`), and the theme `industrial` maps those tokens
+   square. The chrome and every component, on a stage or in a mock, are square; the
+   Button *Anatomy* view reads `R0 · radius.control`. `pill` stays fully rounded,
+   because the round shape of a radio, a switch or a status dot carries meaning.
+   Until `@scnx/system` ships the industrial values, `square.css` bridges them at the
+   root, as a theme would (the consumer's `overrides` layer); the bridge goes when
+   the package ships. Nothing selects a product component (`.scnx-*`).
 5. **No read head, no reticle, no left rail.** The ruler scrollbar replaces them.
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
