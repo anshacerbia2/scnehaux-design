@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button · Scnehaux UI · Instrument · Square</title>
+<meta name="description" content="Instrument · Square expression of the Scnehaux UI component page, Button.">
+<link rel="icon" href="../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/industrial.css">
+<link rel="stylesheet" href="../design-system/components/bundle.css">
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="square.css">
+<script src="instrument.js"></script>
+<script src="square.js"></script>
+<style>
+  /* The docs column: sidebar | page | contents. The page carries the two dividers. */
+  .docs { display: grid; grid-template-columns: 248px minmax(0, 1fr) 232px; gap: 0; align-items: start; }
+  .docs > main { min-inline-size: 0; min-block-size: 100vh; box-shadow: inset 1px 0 0 var(--sq-line), inset -1px 0 0 var(--sq-line); }
+  .side, .toc { position: sticky; top: var(--sq-nav); max-block-size: calc(100vh - var(--sq-nav)); overflow-y: auto; }
+  .side { padding: 24px 12px; }
+  .filter { display: flex; align-items: center; gap: 8px; block-size: 36px; padding-inline: 10px; box-shadow: inset 0 0 0 1px var(--sq-edge); color: var(--ix-muted); font-size: 13px; margin-block-end: 8px; }
+  .filter svg { inline-size: 14px; block-size: 14px; }
+  .filter input { all: unset; flex: 1; min-inline-size: 0; color: var(--ix-text); }
+  .side h3 { margin: 20px 10px 6px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); }
+  .side ul { margin: 0; padding: 0; list-style: none; }
+  .side a { position: relative; display: flex; align-items: center; justify-content: space-between; block-size: 32px; padding-inline: 10px; border-radius: var(--ds-dimension-radius-element); font-size: 13.5px; text-decoration: none; color: var(--ix-muted); }
+  .side a:hover { background: var(--ds-color-neutral-surface-default-hover); color: var(--ix-text); }
+  .side a[aria-current="page"] { background: color-mix(in oklch, var(--ix-text) 7%, transparent); color: var(--ix-text); font-weight: 500; }
+  .side a[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; inline-size: 2px; border-radius: 0; background: var(--ix-signal); }
+
+  .toc { display: grid; gap: 16px; padding: 24px 20px; }
+  .toc nav { padding-inline-start: 2px; }
+  .toc h3 { margin: 0 0 10px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ix-muted); }
+  .toc ol { margin: 0; padding: 0; list-style: none; box-shadow: inset 1px 0 0 var(--ix-line); }
+  .toc ol a { display: flex; gap: 10px; padding: 6px 0 6px 14px; font-size: 13px; text-decoration: none; color: var(--ix-muted); position: relative; }
+  .toc ol a span { font: 500 10.5px/1.6 var(--mono); color: var(--ix-muted); }
+  .toc ol a:hover { color: var(--ix-text); }
+  .toc ol a[aria-current] { color: var(--ix-text); }
+  .toc ol a[aria-current]::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; inline-size: 2px; background: var(--ix-signal); }
+  .toc ol a[aria-current] span { color: var(--ix-signal-text); }
+  [data-scnx-resolved-mode="dark"] .toc ol a[aria-current] span { color: var(--ds-color-primary-text-subtle-default); }
+  .ask { padding: 14px; display: grid; gap: 8px; }
+  .ask strong { font-size: 13.5px; }
+  .ask button { all: unset; box-sizing: border-box; display: block; padding: 8px 10px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-default-default); font-size: 12.5px; color: var(--ix-muted); cursor: pointer; }
+  .ask button:hover { color: var(--ix-text); background: var(--ds-color-neutral-surface-default-hover); }
+  .ask button:focus-visible { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; }
+
+  .page-head { display: grid; gap: 16px; padding: 48px var(--sq-pad) 0; }
+  .page-head .sq-facts { margin: 24px calc(var(--sq-pad) * -1) 0; }
+  .crumbs { display: flex; gap: 8px; font-size: 13px; color: var(--ix-muted); margin: 0; padding: 0; list-style: none; }
+  .crumbs li + li::before { content: "/"; margin-inline-end: 8px; color: var(--ix-line-strong); }
+  .crumbs a { text-decoration: none; }
+  .page-head h1 { margin: 0; font-size: clamp(2.5rem, 4.4vw, 3.5rem); font-weight: 600; letter-spacing: -0.05em; line-height: 1; }
+  .page-head .ix-lede { max-inline-size: 64ch; }
+  .page-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+  /* A section opens with a rule across the page and a cross on each divider, then its bar. */
+  .sec { position: relative; scroll-margin-top: var(--sq-nav); }
+  .sec::before { content: ""; position: absolute; z-index: 31; inset-inline: 0; top: 0; block-size: 1px; background: var(--sq-line); transform-origin: left; transition: scale 1100ms var(--ix-draw-easing); }
+  .js-draw .sec:not(.is-drawn)::before { scale: 0 1; }
+  /* a cross on each divider (the page draws its dividers as inset lines) */
+  .sec::after { content: ""; position: absolute; z-index: 32; top: -5px; left: -5px; right: -5px; block-size: 11px; pointer-events: none; background: var(--sq-plus); }
+  .sec-head {
+    position: sticky; top: var(--sq-nav); z-index: 30; display: flex; align-items: center; gap: 0; margin: 0 0 -1px; padding: 14px var(--sq-pad);
+    background: var(--sq-glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: inset 0 -1px 0 var(--sq-line);
+  }
+  .sec-head h2 { margin: 0; font: 500 11px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-text); }
+  .sec-no { order: -1; font: 500 11px/1.4 var(--mono); letter-spacing: 0.15em; color: var(--ix-muted); transition: color var(--ds-motion-feedback-duration); }
+  .sec-no::after { content: "/"; margin-inline: 10px; color: var(--sq-faint); }
+  .sec.is-current .sec-no { color: var(--ix-signal-text); }
+  [data-scnx-resolved-mode="dark"] .sec.is-current .sec-no { color: var(--ds-color-primary-text-subtle-default); }
+
+  /* The stage */
+  .bench { grid-template-columns: minmax(0, 1fr) 272px; }
+  .bench-bar { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px var(--sq-pad); }
+  .stage {
+    position: relative; min-block-size: 420px; display: grid; place-items: center; overflow: hidden;
+    background-color: var(--scnx-stage-ground); background-image: radial-gradient(var(--scnx-stage-dot) 1px, transparent 1px); background-size: 22px 22px;
+    color: var(--ds-color-neutral-text-default-default);
+  }
+  .stage-note { position: absolute; left: 14px; top: 12px; font: 500 10.5px/1.4 var(--mono); color: var(--ds-color-neutral-text-subtle-default); }
+  .stage-cap { position: absolute; right: 14px; bottom: 12px; font: 500 10.5px/1.4 var(--mono); color: var(--ds-color-neutral-text-subtle-default); }
+  .specimen { position: relative; }
+  .anat { position: absolute; inset: 0; pointer-events: none; display: none; }
+  .stage[data-view="anatomy"] .anat { display: block; }
+  .anat .a { position: absolute; font: 500 10px/1 var(--mono); color: var(--ds-color-neutral-text-subtle-default); white-space: nowrap; }
+  .anat .line-h { block-size: 9px; background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat; box-shadow: inset 1px 0 0 currentColor, inset -1px 0 0 currentColor; color: var(--ds-color-neutral-border-strong-default); }
+  .anat .line-v { inline-size: 9px; background: linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat; box-shadow: inset 0 1px 0 currentColor, inset 0 -1px 0 currentColor; color: var(--ix-signal); }
+  .anat .lbl { position: absolute; padding: 2px 4px; border-radius: 0; background: var(--scnx-stage-ground); }
+  .anat .box { position: absolute; outline: 1px dashed var(--ds-color-neutral-border-strong-default); outline-offset: 0; }
+  .anat .pad { position: absolute; background: repeating-linear-gradient(135deg, color-mix(in oklch, var(--ix-signal) 30%, transparent) 0 2px, transparent 2px 6px); }
+  .anat .arc { position: absolute; border-top-left-radius: var(--r); box-shadow: -1.5px -1.5px 0 0 var(--ix-signal); }
+  .js-draw .stage[data-view="anatomy"] .anat > * { animation: ix-anat 520ms var(--ix-settle-easing) both; animation-delay: calc(var(--k, 0) * 70ms); }
+  @keyframes ix-anat { from { opacity: 0; } }
+  .states-grid { display: none; flex-wrap: wrap; justify-content: center; align-content: center; gap: 28px 32px; padding: 48px 24px; max-inline-size: 640px; }
+  .stage[data-view="states"] .states-grid { display: flex; }
+  .stage[data-view="states"] .specimen { display: none; }
+  .states-grid figure { margin: 0; display: grid; gap: 10px; justify-items: center; }
+  .states-grid figcaption { font: 500 10.5px/1 var(--mono); color: var(--ds-color-neutral-text-subtle-default); }
+
+  /* forced states for the "All states" view and the state control */
+  .scnx-btn[data-force="hover"][data-variant="primary"] { background: var(--ds-color-neutral-surface-solid-hover); }
+  .scnx-btn[data-force="pressed"][data-variant="primary"] { background: var(--ds-color-neutral-surface-solid-pressed); translate: 0 1px; }
+  .scnx-btn[data-force="hover"][data-variant="secondary"] { background: var(--ds-color-neutral-surface-subtle-hover); }
+  .scnx-btn[data-force="pressed"][data-variant="secondary"] { background: var(--ds-color-neutral-surface-subtle-pressed); box-shadow: none; translate: 0 1px; }
+  .scnx-btn[data-force="hover"][data-variant="ghost"] { background: var(--ds-color-neutral-surface-subtle-hover); }
+  .scnx-btn[data-force="pressed"][data-variant="ghost"] { background: var(--ds-color-neutral-surface-subtle-pressed); translate: 0 1px; }
+  .scnx-btn[data-force="hover"][data-variant="danger"] { background: var(--ds-color-danger-surface-solid-hover); }
+  .scnx-btn[data-force="pressed"][data-variant="danger"] { background: var(--ds-color-danger-surface-solid-pressed); translate: 0 1px; }
+  .scnx-btn[data-force="focus"] { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; }
+  .scnx-btn[aria-busy="true"] { cursor: progress; }
+  .scnx-btn .spin { inline-size: 16px; block-size: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 700ms linear infinite; }
+  @keyframes spin { to { rotate: 1turn; } }
+  @media (prefers-reduced-motion: reduce) { .scnx-btn .spin { animation: none; border-right-color: currentColor; opacity: 0.6; } }
+
+  .bench > .props { grid-row: 2; grid-column: 2; }
+  .props { padding: 20px; display: grid; gap: 14px; align-content: start; }
+  .props h3, .lineage h3 { margin: 0; font: 500 10px/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ix-muted); }
+  .ctl { display: grid; gap: 6px; }
+  .ctl > span { font: 500 11.5px/1 var(--mono); color: var(--ix-text); }
+  .ctl .scnx-segmented { display: flex; }
+  .ctl .scnx-segmented [data-part="item"] { flex: 1; padding-inline: 4px; font-size: 12px; }
+  .ctl-row { display: flex; justify-content: space-between; align-items: center; font: 500 11.5px/1 var(--mono); }
+  .lineage { padding: 14px; display: grid; gap: 0; }
+  .lineage h3 { margin-block-end: 8px; }
+  .lin { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding-block: 8px; box-shadow: inset 0 -1px 0 var(--ix-line); font: 500 11px/1.4 var(--mono); }
+  .lin:last-child { box-shadow: none; }
+  .lin span { color: var(--ix-muted); }
+  .lin b { font-weight: 500; text-align: right; display: inline-flex; gap: 6px; align-items: center; justify-content: flex-end; }
+  .lin b i { inline-size: 10px; block-size: 10px; border-radius: 0; box-shadow: inset 0 0 0 1px var(--ix-line-strong); }
+  .lin code { grid-column: 1 / -1; color: var(--ix-text); word-break: break-all; }
+
+  /* Install */
+  .code-card { overflow: hidden; }
+  .code-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px var(--sq-pad); flex-wrap: wrap; box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .code-bar p { margin: 0; font: 500 10.5px/1.4 var(--mono); color: var(--ix-muted); }
+  .code-card pre { margin: 0; padding: 20px var(--sq-pad) 28px; font: 400 12.5px/1.8 var(--mono); overflow-x: auto; }
+  .pkg { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 0 0 var(--sq-pad); font: 500 13px/1 var(--mono); box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .pkg .ix-copy { block-size: 48px; }
+
+  /* Props table */
+  .ptable-wrap { overflow-x: auto; background: none; box-shadow: none; }
+  .ptable { inline-size: 100%; min-inline-size: 720px; border-collapse: collapse; font-size: 13.5px; }
+  .ptable th { text-align: left; padding: 12px 16px; font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .ptable td { padding: 16px; vertical-align: top; box-shadow: inset 0 -1px 0 var(--sq-line); line-height: 1.5; }
+  .ptable :is(th, td):first-child { padding-inline-start: var(--sq-pad); }
+  .ptable tr:last-child td { box-shadow: none; }
+  .ptable td:first-child { font: 500 13px/1.5 var(--mono); white-space: nowrap; }
+  .ptable td:nth-child(2) code { font: 500 11.5px/1.5 var(--mono); padding: 2px 6px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); }
+  .ptable td:nth-child(3) { font: 500 11.5px/1.5 var(--mono); color: var(--ix-muted); white-space: nowrap; }
+  .ptable td:last-child { color: var(--ix-muted); }
+
+  /* A11y */
+  .a11y { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); }
+  .a11y-keys { padding: 32px var(--sq-pad); display: grid; gap: 12px; align-content: start; }
+  .keys { display: grid; gap: 10px; margin: 6px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--ix-muted); }
+  .keys li { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .guar { grid-template-columns: 1fr 1fr; }
+  .g { padding: 24px 28px; display: grid; gap: 6px; align-content: start; }
+  .g-top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .g-top strong { font-size: 13.5px; }
+  .g-top code { font: 500 11.5px/1 var(--mono); color: var(--ds-color-success-text-default-default); white-space: nowrap; }
+  .g p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ix-muted); }
+
+  /* Do / Don't */
+  .dd { grid-template-columns: 1fr 1fr; }
+  .dd figure { margin: 0; display: grid; grid-template-rows: 1fr auto; gap: 0; }
+  .dd .demo { padding: 40px 28px; display: grid; place-items: center; background-color: var(--scnx-stage-ground); background-image: radial-gradient(var(--scnx-stage-dot) 1px, transparent 1px); background-size: 22px 22px; }
+  .dlg { inline-size: min(100%, 340px); padding: 20px; border-radius: var(--ds-dimension-radius-panel); background: var(--ds-color-neutral-surface-floating-default); box-shadow: var(--ds-effect-material-modal); display: grid; gap: 6px; }
+  .dlg strong { font-size: 15px; letter-spacing: -0.01em; }
+  .dlg p { margin: 0 0 12px; font-size: 13px; color: var(--ix-muted); }
+  .dlg div { display: flex; justify-content: flex-end; gap: 8px; }
+  .dd figcaption { display: grid; grid-template-columns: 20px 1fr; gap: 8px; font-size: 13.5px; padding: 20px var(--sq-pad) 24px; box-shadow: inset 0 1px 0 var(--sq-line); }
+  .dd figcaption svg { inline-size: 18px; block-size: 18px; margin-top: 1px; }
+  .dd figcaption b { display: block; }
+  .dd figcaption span { color: var(--ix-muted); }
+  .dd .yes svg { color: var(--ds-color-success-icon-subtle-default); }
+  .dd .no svg { color: var(--ds-color-danger-icon-subtle-default); }
+
+  /* Integrate */
+  .integ { padding: 40px var(--sq-pad); display: grid; gap: 24px; }
+  .integ-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .integ-top h3 { margin: 0; font-family: var(--font-sans); font-size: 1.25rem; letter-spacing: -0.02em; font-weight: 600; }
+  .isteps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; position: relative; }
+  .isteps li { padding: 0 20px 0 0; display: grid; gap: 10px; align-content: start; font-family: var(--font-sans); }
+  .isteps .sn { display: flex; align-items: center; gap: 10px; }
+  .isteps .sn span { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); font: 500 11px/1 var(--mono); }
+  .isteps .sn::after { content: ""; flex: 1; block-size: 1px; background: var(--ix-line-strong); }
+  .isteps li:last-child .sn::after { display: none; }
+  .isteps strong { font-size: 14px; }
+  .isteps p { margin: 0; font-size: 12.5px; color: var(--ix-muted); line-height: 1.5; }
+  .isteps code { display: block; padding: 8px 10px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-canvas-default); box-shadow: var(--ds-effect-material-flat); font: 500 11.5px/1.4 var(--mono); color: var(--ds-color-success-text-subtle-default); overflow-x: auto; white-space: nowrap; }
+
+  .pn { grid-template-columns: 1fr 1fr; margin: 0 !important; border-block-start: 1px solid var(--sq-line); }
+  .pn a { padding: 28px var(--sq-pad); display: grid; gap: 6px; text-decoration: none; transition: background-color var(--ds-motion-feedback-duration); }
+  .pn a:hover { background: color-mix(in oklch, var(--ix-text) 5%, var(--ix-ground)); }
+  .pn small { font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); }
+  .pn strong { font-size: 15px; }
+  .pn a:last-child { text-align: right; }
+  .edit { display: flex; justify-content: space-between; padding: 20px var(--sq-pad) 64px; font: 500 11px/1.4 var(--mono); color: var(--ix-muted); box-shadow: inset 0 1px 0 var(--sq-line); }
+
+  @media (max-width: 1240px) { .docs { grid-template-columns: 220px minmax(0, 1fr); } .toc { display: none; } }
+  @media (max-width: 1024px) { .bench { grid-template-columns: minmax(0, 1fr); } .bench > .props { grid-row: auto; grid-column: auto; } .stage { min-block-size: 300px; } .a11y { grid-template-columns: minmax(0, 1fr); } .isteps { grid-template-columns: 1fr 1fr; gap: 20px 0; } }
+  @media (max-width: 860px) { .docs > main { box-shadow: none; } }
+  @media (max-width: 860px) { .docs { grid-template-columns: minmax(0, 1fr); } .side { display: none; } }
+  @media (max-width: 560px) { .guar, .dd, .pn { grid-template-columns: minmax(0, 1fr); } .isteps { grid-template-columns: minmax(0, 1fr); }  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></symbol>
+  <symbol id="i-x-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 28 28"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="#0a6cf2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="ix-reticle" aria-hidden="true"></div>
+
+<div class="ix-page" style="padding-inline-start:0">
+  <div class="ix-wrap ix-nav-shell">
+    <header class="ix-nav">
+      <a class="ix-brand" href="Docs-Landing.html"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
+      <span class="sq-nav-tag"><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">2.0.0-beta.0</span></span>
+      <ul class="ix-nav-links">
+        <li><a href="Docs-Home.html">Get started</a></li>
+        <li><a href="#">Foundations</a></li>
+        <li><a href="#" aria-current="page">Components</a></li>
+        <li><a href="#">Tokens</a></li>
+        <li><a href="Docs-Home.html#releases">Releases</a></li>
+      </ul>
+      <span class="ix-nav-spacer"></span>
+      <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/06</span>
+      <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="sq-cta" data-variant="ghost" href="#" data-nav-optional>GitHub</a>
+    </header>
+  </div>
+
+  <div class="ix-wrap docs sq-col">
+    <aside class="side" aria-label="Documentation">
+      <label class="filter"><svg aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="Filter" aria-label="Filter pages"><kbd class="scnx-kbd">/</kbd></label>
+      <h3>Get started</h3>
+      <ul><li><a href="#">Introduction</a></li><li><a href="#">Installation</a></li><li><a href="#">Theming</a></li><li><a href="#">Agents and MCP</a></li></ul>
+      <h3>Foundations</h3>
+      <ul><li><a href="#">Color</a></li><li><a href="#">Typography</a></li><li><a href="#">Space and size</a></li><li><a href="#">Materials</a></li><li><a href="#">Motion</a></li></ul>
+      <h3>Components</h3>
+      <ul><li><a href="#" aria-current="page">Button</a></li><li><a href="#">IconButton</a></li><li><a href="#">TextField</a></li><li><a href="#">Select <span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Planned</span></a></li><li><a href="#">Checkbox</a></li><li><a href="#">Switch</a></li><li><a href="#">Dialog</a></li><li><a href="#">Menu</a></li><li><a href="#">Tabs</a></li><li><a href="#">Toast</a></li></ul>
+      <h3>Patterns</h3>
+      <ul><li><a href="#">Forms</a></li><li><a href="#">Data table</a></li><li><a href="#">Empty states</a></li></ul>
+    </aside>
+
+    <main>
+      <header class="page-head">
+        <ol class="crumbs"><li><a href="#">Components</a></li><li><a href="#">Actions</a></li><li aria-current="page">Button</li></ol>
+        <h1>Button</h1>
+        <p class="ix-lede">Triggers an action. One primary per view, everything else steps back. Built on the native <code class="scnx-code">&lt;button&gt;</code>, so keyboard and screen readers work before you write a line.</p>
+        <div class="page-actions">
+          <button class="sq-cta" data-variant="secondary" type="button" data-copy="https://scnehaux.dev/components/button.md"><svg aria-hidden="true"><use href="#i-copy"/></svg>Copy for agent</button>
+          <a class="sq-cta" data-variant="ghost" href="#">Open in Figma</a>
+        </div>
+        <dl class="sq-facts" aria-label="Contract">
+          <div><dt>Lifecycle</dt><dd>Candidate</dd></div>
+          <div><dt>Primitive</dt><dd>ButtonBase</dd></div>
+          <div><dt>Runtime CSS</dt><dd>0</dd></div>
+          <div><dt>Conformance</dt><dd>WCAG 2.2 AA</dd></div>
+          <div><dt>Server</dt><dd>RSC-safe</dd></div>
+          <div><dt>Gates</dt><dd class="ok">6 of 8</dd></div>
+        </dl>
+      </header>
+
+      <!-- 01 Preview -->
+      <section class="sec" id="preview" data-sheet="Preview" aria-labelledby="h-preview">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-preview">Preview</h2><span class="sec-no">01</span></div>
+        <div class="mat-panel bench sq-cells" data-frame data-radius="0" data-radius-label="R0 / pad 8 / R0">
+          <div class="bench-bar">
+            <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="View" id="view">
+              <button data-part="item" role="radio" aria-checked="true" data-v="preview">Preview</button>
+              <button data-part="item" role="radio" aria-checked="false" data-v="anatomy" tabindex="-1">Anatomy</button>
+              <button data-part="item" role="radio" aria-checked="false" data-v="states" tabindex="-1">All states</button>
+            </div>
+            <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Stage mode" id="stage-mode">
+              <button data-part="item" role="radio" aria-checked="false" data-m="light" tabindex="-1">Light</button>
+              <button data-part="item" role="radio" aria-checked="true" data-m="dark">Dark</button>
+            </div>
+          </div>
+          <div class="stage" id="stage" data-view="preview" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+            <span class="stage-note" id="stage-note">live · rendered from tokens · dark</span>
+            <div class="specimen" id="specimen">
+              <button class="scnx-btn" id="btn" type="button" data-variant="primary" data-size="medium"><span class="lbl-t">Deploy changes</span><svg aria-hidden="true" class="ic"><use href="#i-arrow"/></svg></button>
+              <div class="anat" id="anat" aria-hidden="true"></div>
+            </div>
+            <div class="states-grid" id="states-grid" aria-label="All states of the selected variant"></div>
+            <span class="stage-cap" id="stage-cap">.scnx-btn[data-variant="primary"][data-size="medium"]</span>
+          </div>
+          <div class="mat-flat props">
+            <h3>Props</h3>
+            <div class="ctl"><span>variant</span><div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="variant" data-ctl="variant">
+              <button data-part="item" role="radio" aria-checked="true" data-val="primary">primary</button><button data-part="item" role="radio" aria-checked="false" data-val="secondary" tabindex="-1">secondary</button><button data-part="item" role="radio" aria-checked="false" data-val="ghost" tabindex="-1">ghost</button><button data-part="item" role="radio" aria-checked="false" data-val="danger" tabindex="-1">danger</button></div></div>
+            <div class="ctl"><span>size</span><div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="size" data-ctl="size">
+              <button data-part="item" role="radio" aria-checked="false" data-val="small" tabindex="-1">small</button><button data-part="item" role="radio" aria-checked="true" data-val="medium">medium</button><button data-part="item" role="radio" aria-checked="false" data-val="large" tabindex="-1">large</button></div></div>
+            <div class="ctl"><span>state</span><div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="state" data-ctl="state">
+              <button data-part="item" role="radio" aria-checked="true" data-val="rest">rest</button><button data-part="item" role="radio" aria-checked="false" data-val="hover" tabindex="-1">hover</button><button data-part="item" role="radio" aria-checked="false" data-val="focus" tabindex="-1">focus</button><button data-part="item" role="radio" aria-checked="false" data-val="disabled" tabindex="-1">off</button><button data-part="item" role="radio" aria-checked="false" data-val="busy" tabindex="-1">busy</button></div></div>
+            <div class="ctl-row"><span>iconEnd</span><label class="scnx-switch"><input type="checkbox" role="switch" checked id="icon-end" aria-label="iconEnd"><span data-part="track"></span></label></div>
+            <div class="lineage" style="padding:0; margin-top:6px">
+              <h3>Token lineage</h3>
+              <div id="lineage"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 Install -->
+      <section class="sec" id="install" data-sheet="Install and use" aria-labelledby="h-install">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-install">Install and use</h2><span class="sec-no">02</span></div>
+        <div class="ix-term code-card" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+          <div class="pkg"><code id="pkg-cmd">pnpm add @scnx/system @scnx/core-ui</code>
+            <div style="display:flex; gap:8px; align-items:center">
+              <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Package manager" id="pm">
+                <button data-part="item" role="radio" aria-checked="true" data-pm="pnpm add">pnpm</button><button data-part="item" role="radio" aria-checked="false" data-pm="npm i" tabindex="-1">npm</button><button data-part="item" role="radio" aria-checked="false" data-pm="yarn add" tabindex="-1">yarn</button><button data-part="item" role="radio" aria-checked="false" data-pm="bun add" tabindex="-1">bun</button>
+              </div>
+              <button class="ix-copy" type="button" aria-label="Copy install command" id="pkg-copy" data-copy="pnpm add @scnx/system @scnx/core-ui"><svg aria-hidden="true"><use href="#i-copy"/></svg></button>
+            </div>
+          </div>
+          <div class="code-bar"><p>synced with the stage above</p><p>React</p></div>
+          <pre id="usage"></pre>
+        </div>
+      </section>
+
+      <!-- 03 Props -->
+      <section class="sec" id="props" data-sheet="Props" aria-labelledby="h-props">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-props">Props</h2><span class="sec-no">03</span></div>
+        <div class="mat ptable-wrap">
+          <table class="ptable">
+            <thead><tr><th scope="col">Prop</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Behavior</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td><code>'primary' | 'secondary' | 'ghost' | 'danger'</code></td><td>'primary'</td><td>Visual weight. Keep one primary per view. Danger only on the confirming action.</td></tr>
+              <tr><td>size</td><td><code>'small' | 'medium' | 'large'</code></td><td>'medium'</td><td>Control height 28, 36 or 44. Inline padding is half the height minus 6.</td></tr>
+              <tr><td>loading</td><td><code>boolean</code></td><td>false</td><td>Shows a spinner, sets aria-busy, ignores clicks and keeps its width.</td></tr>
+              <tr><td>disabled</td><td><code>boolean</code></td><td>false</td><td>Native disabled. Prefer explaining nearby why an action is unavailable.</td></tr>
+              <tr><td>iconStart · iconEnd</td><td><code>ReactNode</code></td><td>—</td><td>Decorative icon slots, hidden from assistive technology, sized 16 or 20 by the control size.</td></tr>
+              <tr><td>asChild</td><td><code>boolean</code></td><td>false</td><td>Renders your own element, such as a router link, with the same styles and focus ring.</td></tr>
+              <tr><td>fullWidth</td><td><code>boolean</code></td><td>false</td><td>Fills its container. Useful in sheets on small screens.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 04 Accessibility -->
+      <section class="sec" id="a11y" data-sheet="Accessibility" aria-labelledby="h-a11y">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-a11y">Accessibility contract</h2><span class="sec-no">04</span></div>
+        <div class="mat-panel a11y sq-cells">
+          <div class="mat-flat a11y-keys">
+            <p class="ix-body">What the component keeps in every version. Break one and CI stops the release.</p>
+            <ul class="keys">
+              <li><kbd class="scnx-kbd">Tab</kbd> moves focus to the button</li>
+              <li><kbd class="scnx-kbd">Enter</kbd><kbd class="scnx-kbd">Space</kbd> activate it</li>
+              <li><kbd class="scnx-kbd">Shift</kbd><kbd class="scnx-kbd">Tab</kbd> moves focus back</li>
+            </ul>
+          </div>
+          <div class="guar sq-cells">
+            <div class="mat-flat g"><div class="g-top"><strong>Native element</strong><code>&lt;button&gt;</code></div><p>Role, focus and activation come from the platform, not from script.</p></div>
+            <div class="mat-flat g"><div class="g-top"><strong>Label contrast</strong><code id="c-label" class="tnum">–</code></div><p id="c-label-note">Label on the ink fill, measured here from the tokens of the current mode.</p></div>
+            <div class="mat-flat g"><div class="g-top"><strong>Focus visible</strong><code id="c-focus" class="tnum">–</code></div><p>2px Scnx Blue ring with a 2px offset, shown for keyboard focus.</p></div>
+            <div class="mat-flat g"><div class="g-top"><strong>Target size</strong><code>36 × 36</code></div><p>Every size meets the 24px minimum of WCAG 2.2 SC 2.5.8. Large reaches 44.</p></div>
+            <div class="mat-flat g"><div class="g-top"><strong>Busy state</strong><code>aria-busy</code></div><p>Loading is announced once through a polite live region.</p></div>
+            <div class="mat-flat g"><div class="g-top"><strong>Reduced motion</strong><code>respected</code></div><p>The spinner stops; the state is still announced. The press keeps its 1px sink.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 Do and don't -->
+      <section class="sec" id="usage-rules" data-sheet="Do and don't" aria-labelledby="h-dd">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-dd">Do and don't</h2><span class="sec-no">05</span></div>
+        <div class="dd sq-cells">
+          <figure class="yes">
+            <div class="demo"><div class="dlg"><strong>Ship v2.4 to production?</strong><p>14 services restart with no downtime.</p><div><span class="scnx-btn" data-variant="ghost">Cancel</span><span class="scnx-btn" data-variant="primary">Deploy</span></div></div></div>
+            <figcaption><svg aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Do</b>One ink primary per view. Pair it with a ghost button for the way out.</span></figcaption>
+          </figure>
+          <figure class="no">
+            <div class="demo"><div class="dlg"><strong>Ship v2.4 to production?</strong><p>14 services restart with no downtime.</p><div><span class="scnx-btn" data-variant="primary">Cancel</span><span class="scnx-btn" data-variant="primary">Deploy</span></div></div></div>
+            <figcaption><svg aria-hidden="true"><use href="#i-x-c"/></svg><span><b>Don't</b>Two primaries compete, so nobody can tell which one is safe. Blue is never a button fill.</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 06 Integrate -->
+      <section class="sec" id="integrate" data-sheet="Integrate" aria-labelledby="h-int">
+        <div class="ix-ruler" aria-hidden="true"></div>
+        <div class="sec-head"><h2 id="h-int">Integrate</h2><span class="sec-no">06</span></div>
+        <div class="ix-term integ" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+          <div class="integ-top"><h3>From zero to themed in four steps</h3>
+            <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Framework" id="fw">
+              <button data-part="item" role="radio" aria-checked="true" data-fw="app/layout.tsx">Next.js</button><button data-part="item" role="radio" aria-checked="false" data-fw="src/main.tsx" tabindex="-1">Vite</button><button data-part="item" role="radio" aria-checked="false" data-fw="app/root.tsx" tabindex="-1">Remix</button>
+            </div>
+          </div>
+          <ol class="isteps" data-draw>
+            <li><span class="sn"><span>1</span></span><strong>Install</strong><p>Components and tokens, tree-shakable by explicit entry.</p><code>pnpm add @scnx/system @scnx/core-ui</code></li>
+            <li><span class="sn"><span>2</span></span><strong>Load CSS once</strong><p>At the composition root. No runtime CSS-in-JS.</p><code id="fw-file">// app/layout.tsx</code></li>
+            <li><span class="sn"><span>3</span></span><strong>Scope a theme root</strong><p>One attribute resolves every token. Portals inherit it.</p><code>data-scnx-theme="industrial"</code></li>
+            <li><span class="sn"><span>4</span></span><strong>Connect your agents</strong><p>They read these docs and build with the real components.</p><code>/llms.txt · MCP</code></li>
+          </ol>
+        </div>
+        <div class="pn sq-cells">
+          <a class="mat" href="#"><small>Previous</small><strong>Badge</strong></a>
+          <a class="mat" href="#"><small>Next</small><strong>IconButton</strong></a>
+        </div>
+        <div class="edit"><span>updated 18 Oct 2026 · generated from source and tokens</span><a class="ix-link" href="#">Edit this page</a></div>
+      </section>
+    </main>
+
+    <aside class="toc">
+      <nav data-spy aria-label="On this page">
+        <h3>On this page</h3>
+        <ol>
+          <li><a href="#preview"><span>01</span>Preview</a></li>
+          <li><a href="#install"><span>02</span>Install and use</a></li>
+          <li><a href="#props"><span>03</span>Props</a></li>
+          <li><a href="#a11y"><span>04</span>Accessibility</a></li>
+          <li><a href="#usage-rules"><span>05</span>Do and don't</a></li>
+          <li><a href="#integrate"><span>06</span>Integrate</a></li>
+        </ol>
+      </nav>
+      <div class="mat ask"><strong>Ask about Button</strong><button type="button">How do I render it as a link?</button><button type="button">Theme it with my brand color</button><button type="button">Migrate from 1.x Button</button></div>
+      <div class="ix-term ask" data-scnx-theme="industrial" data-scnx-resolved-mode="dark" style="font-family:var(--font-sans)"><p class="ix-eyebrow">Agent-ready</p><p class="ix-body">Coding agents read these same docs through MCP, so they build with the real components.</p><code class="scnx-code">/llms.txt</code></div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const motion = document.documentElement.classList.contains("js-draw");
+  const state = { variant: "primary", size: "medium", state: "rest", iconEnd: true, view: "preview", mode: "dark" };
+  const GEO = { small: { h: 28, p: 8, r: 0, rTok: "element", icon: 16, gap: 4 }, medium: { h: 36, p: 12, r: 0, rTok: "control", icon: 16, gap: 8 }, large: { h: 44, p: 16, r: 0, rTok: "control", icon: 20, gap: 8 } };
+  const TOK = {
+    primary: { bg: "neutral.surface.solid", fg: "neutral.text.contrast", bgVar: "--ds-color-neutral-surface-solid-default", fgVar: "--ds-color-neutral-text-contrast-default", note: "ink" },
+    secondary: { bg: "neutral.surface.raised", fg: "neutral.text.default", bgVar: "--ds-color-neutral-surface-raised-default", fgVar: "--ds-color-neutral-text-default-default", note: "raised + 1px border" },
+    ghost: { bg: "transparent", fg: "neutral.text.default", bgVar: "", fgVar: "--ds-color-neutral-text-default-default", note: "no fill at rest" },
+    danger: { bg: "danger.surface.solid", fg: "danger.text.contrast", bgVar: "--ds-color-danger-surface-solid-default", fgVar: "--ds-color-danger-text-contrast-default", note: "confirming action only" },
+  };
+
+  /* ---------- color math for measured contrast (tokens are OKLCH literals) ---------- */
+  const lin = (L, C, H) => { const h = (H * Math.PI) / 180, a = C * Math.cos(h), b = C * Math.sin(h); const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3; return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s].map((v) => Math.min(1, Math.max(0, v))); };
+  const lumOf = (el, name) => { const v = getComputedStyle(el).getPropertyValue(name).trim(); const m = /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/.exec(v); if (!m) return null; const [r, g, b] = lin(+m[1], +m[2], +m[3]); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+
+  const btn = $("#btn"), stage = $("#stage"), anat = $("#anat"), specimen = $("#specimen");
+
+  function paintButton(el, s, force) {
+    el.dataset.variant = s.variant; el.dataset.size = s.size;
+    el.removeAttribute("data-force"); el.disabled = false; el.removeAttribute("aria-busy");
+    const st = force || s.state;
+    if (st === "hover" || st === "pressed" || st === "focus") el.dataset.force = st;
+    if (st === "disabled") el.disabled = true;
+    const ic = el.querySelector(".ic"), sp = el.querySelector(".spin");
+    if (st === "busy") { el.setAttribute("aria-busy", "true"); if (!sp) { const x = document.createElement("span"); x.className = "spin"; x.setAttribute("aria-hidden", "true"); el.prepend(x); } } else sp?.remove();
+    if (ic) ic.style.display = s.iconEnd && st !== "busy" ? "" : "none";
+  }
+
+  function drawAnatomy() {
+    anat.replaceChildren();
+    if (state.view !== "anatomy") return;
+    const g = GEO[state.size];
+    const b = btn.getBoundingClientRect(), o = specimen.getBoundingClientRect();
+    const x = b.left - o.left, y = b.top - o.top, w = b.width, h = b.height;
+    const add = (cls, css, text, k) => { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, css); d.style.setProperty("--k", k); if (text) { const l = document.createElement("span"); l.className = "lbl"; l.textContent = text; d.append(l); } anat.append(d); return d; };
+    add("box", { left: x + "px", top: y + "px", width: w + "px", height: h + "px", borderRadius: g.r + "px" }, "", 0);
+    add("pad", { left: x + 1 + "px", top: y + 1 + "px", width: g.p - 1 + "px", height: h - 2 + "px", borderRadius: `${g.r}px 0 0 ${g.r}px` }, "", 1);
+    add("pad", { left: x + w - g.p + "px", top: y + 1 + "px", width: g.p - 1 + "px", height: h - 2 + "px", borderRadius: `0 ${g.r}px ${g.r}px 0` }, "", 1);
+    // height, in signal: the control-size ladder
+    const vh = add("a line-v", { left: x - 22 + "px", top: y + "px", height: h + "px" }, "", 2);
+    vh.querySelector?.(".lbl"); const hl = add("a", { left: x - 58 + "px", top: y + h / 2 - 7 + "px", color: "var(--ix-signal-text)" }, `h ${g.h}`, 2);
+    // width below
+    add("a line-h", { left: x + "px", top: y + h + 16 + "px", width: w + "px" }, "", 3);
+    add("a", { left: x + w / 2 - 22 + "px", top: y + h + 26 + "px" }, `w ${Math.round(w)}`, 3);
+    // padding above
+    add("a line-h", { left: x + "px", top: y - 18 + "px", width: g.p + "px" }, "", 4);
+    add("a", { left: x - 2 + "px", top: y - 34 + "px" }, `pad ${g.p}`, 4);
+    // radius callout at the top-left corner
+    add("arc", { left: x - 6 + "px", top: y - 6 + "px", width: g.r + 6 + "px", height: g.r + 6 + "px", "--r": g.r + 6 + "px" }, "", 5);
+    add("a", { left: x + w + 14 + "px", top: y - 10 + "px", color: "var(--ix-signal-text)" }, `R${g.r} · radius.${g.rTok}`, 5);
+    // icon
+    const ic = btn.querySelector(".ic");
+    if (ic && ic.style.display !== "none") {
+      const r = ic.getBoundingClientRect();
+      add("box", { left: r.left - o.left + "px", top: r.top - o.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: "2px" }, "", 6);
+      add("a", { left: x + w + 14 + "px", top: y + h / 2 - 5 + "px" }, `icon ${g.icon} · gap ${g.gap}`, 6);
+    }
+    add("a", { left: x + w + 14 + "px", top: y + h + 2 + "px" }, `label-default · semibold`, 7);
+  }
+
+  function renderStates() {
+    const grid = $("#states-grid");
+    grid.innerHTML = "";
+    for (const st of ["rest", "hover", "pressed", "focus", "disabled", "busy"]) {
+      const f = document.createElement("figure");
+      const b = btn.cloneNode(true); b.removeAttribute("id"); b.tabIndex = -1;
+      paintButton(b, state, st);
+      f.append(b);
+      const c = document.createElement("figcaption"); c.textContent = st; f.append(c);
+      grid.append(f);
+    }
+  }
+
+  function lineage() {
+    const g = GEO[state.size], t = TOK[state.variant];
+    const sw = (v) => (v ? `<i style="background:var(${v})"></i>` : "<i></i>");
+    const sfx = state.state === "hover" ? "hover" : state.state === "disabled" ? "disabled" : state.state === "pressed" ? "pressed" : "default";
+    const rows = [
+      ["background", `${sw(t.bgVar)}${t.note}`, t.bg === "transparent" ? "transparent → subtle.hover on hover" : `color.${t.bg}.${sfx}`],
+      ["label", sw(t.fgVar), `color.${t.fg}.${sfx === "pressed" ? "default" : sfx}`],
+      ["radius", `${g.r}px`, `dimension.radius.${g.rTok}`],
+      ["height", `${g.h}px`, `--scnx-size-control-${state.size}`],
+      ["padding-x", `${g.p}px`, `h ÷ 2 − 6`],
+      ["focus ring", `<i style="background:var(--ds-color-primary-border-default-focus)"></i>2px · offset 2`, "color.primary.border.default.focus"],
+    ];
+    $("#lineage").innerHTML = rows.map(([k, v, c]) => `<div class="lin"><span>${k}</span><b>${v}</b><code>${c}</code></div>`).join("");
+  }
+
+  function usage() {
+    const A = (k, v) => `\n  <span class="p">${k}</span>` + (v === undefined ? "" : `=${v}`);
+    const S = (v) => `<span class="s">"${v}"</span>`;
+    const attrs = [state.variant !== "primary" ? A("variant", S(state.variant)) : "", state.size !== "medium" ? A("size", S(state.size)) : "", state.state === "busy" ? A("loading") : "", state.state === "disabled" ? A("disabled") : "", state.iconEnd ? A("iconEnd", "{&lt;<span class=\"k\">ArrowRight</span> /&gt;}") : ""].join("");
+    const lines = [
+      `<span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;`,
+      state.iconEnd ? `<span class="k">import</span> { ArrowRight } <span class="k">from</span> <span class="s">"@scnx/system/icons/arrow-right"</span>;` : null,
+      "",
+      `&lt;<span class="k">Button</span>${attrs}${attrs ? "\n" : ""}&gt;`,
+      `  Deploy changes`,
+      `&lt;/<span class="k">Button</span>&gt;`,
+    ].filter((l) => l !== null).join("\n").split("\n");
+    $("#usage").innerHTML = lines.map((l, i) => `<span class="ln">${i + 1}</span>${l}`).join("\n");
+  }
+
+  function measure() {
+    const lab = ratio(lumOf(stage, "--ds-color-neutral-surface-solid-default"), lumOf(stage, "--ds-color-neutral-text-contrast-default"));
+    const foc = ratio(lumOf(stage, "--ds-color-primary-border-default-focus"), lumOf(stage, "--ds-color-neutral-surface-canvas-default"));
+    $("#c-label").textContent = `${lab.toFixed(1)} : 1`;
+    $("#c-focus").textContent = `${foc.toFixed(1)} : 1`;
+    $("#c-label-note").textContent = `Label on the ink fill, measured here from the ${state.mode} tokens. AA needs 4.5.`;
+  }
+
+  function update() {
+    paintButton(btn, state);
+    $("#stage-cap").textContent = `.scnx-btn[data-variant="${state.variant}"][data-size="${state.size}"]`;
+    $("#stage-note").textContent = `live · rendered from tokens · ${state.mode}`;
+    lineage(); usage();
+    if (state.view === "states") renderStates();
+    requestAnimationFrame(drawAnatomy);
+  }
+
+  /* segmented radio groups with roving focus */
+  function radios(group, onPick) {
+    const items = $$("[role=radio]", group);
+    const pick = (b, focus) => { items.forEach((x) => { const on = x === b; x.setAttribute("aria-checked", String(on)); x.tabIndex = on ? 0 : -1; }); if (focus) b.focus(); onPick(b); };
+    items.forEach((b, i) => {
+      b.addEventListener("click", () => pick(b));
+      b.addEventListener("keydown", (e) => { const d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0; if (d) { e.preventDefault(); pick(items[(i + d + items.length) % items.length], true); } });
+    });
+  }
+  $$("[data-ctl]").forEach((g) => radios(g, (b) => { state[g.dataset.ctl] = b.dataset.val; update(); }));
+  radios($("#view"), (b) => { state.view = b.dataset.v; stage.dataset.view = state.view; update(); });
+  radios($("#stage-mode"), (b) => { state.mode = b.dataset.m; stage.dataset.scnxResolvedMode = state.mode; update(); measure(); });
+  $("#icon-end").addEventListener("change", (e) => { state.iconEnd = e.target.checked; update(); });
+  radios($("#pm"), (b) => { const cmd = `${b.dataset.pm} @scnx/system @scnx/core-ui`; $("#pkg-cmd").textContent = cmd; $("#pkg-copy").dataset.copy = cmd; });
+  radios($("#fw"), (b) => { $("#fw-file").textContent = `// ${b.dataset.fw}`; });
+  addEventListener("resize", () => requestAnimationFrame(drawAnatomy));
+  // re-measure when the page mode flips (the stage keeps its own scoped mode)
+  new MutationObserver(measure).observe(document.documentElement, { attributes: true, attributeFilter: ["data-scnx-resolved-mode"] });
+  // the stage follows the page mode at load
+  state.mode = document.documentElement.dataset.scnxResolvedMode;
+  stage.dataset.scnxResolvedMode = state.mode;
+  $$("#stage-mode [role=radio]").forEach((x) => { const on = x.dataset.m === state.mode; x.setAttribute("aria-checked", String(on)); x.tabIndex = on ? 0 : -1; });
+  update(); measure();
+  document.fonts?.ready.then(() => requestAnimationFrame(drawAnatomy));
+})();
+</script>
+</body>
+</html>

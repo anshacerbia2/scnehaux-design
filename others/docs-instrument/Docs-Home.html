@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux UI · Instrument · Workspace</title>
+<meta name="description" content="Instrument expression of the Scnehaux UI signed-in workspace home.">
+<link rel="icon" href="../../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../design-system/themes/default/tokens.css">
+<link rel="stylesheet" href="../../design-system/components/bundle.css">
+<link rel="stylesheet" href="instrument.css">
+<script src="instrument.js"></script>
+<style>
+  .search { display: inline-flex; align-items: center; gap: 10px; block-size: 28px; padding-inline: 10px 4px; min-inline-size: 240px; border-radius: var(--ds-dimension-radius-element); box-shadow: inset 0 0 0 1px var(--ix-line); color: var(--ix-muted); font-size: 13px; background: var(--ds-color-neutral-surface-canvas-default); }
+  .search svg { inline-size: 14px; block-size: 14px; }
+  .search .scnx-kbd { margin-inline-start: auto; }
+  .who { display: inline-flex; align-items: center; gap: 8px; block-size: 28px; padding-inline: 2px 10px; border-radius: var(--ds-dimension-radius-element); font-size: 13px; font-weight: 500; }
+  .who span:first-child { display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-solid-default); color: var(--ds-color-neutral-text-contrast-default); font-size: 10.5px; font-weight: 600; }
+  @media (max-width: 1360px) { .who span:last-child { display: none; } }
+  @media (max-width: 1240px) { .search { min-inline-size: 0; } .search span:not(.scnx-kbd) { display: none; } }
+
+  /* Sheet 01 · Overview */
+  .over { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); gap: 48px; align-items: start; padding-block: 48px 24px; }
+  .over-copy { display: flex; flex-direction: column; gap: 24px; padding-block-start: 24px; }
+  .over .ix-display { font-size: clamp(2.75rem, 5.4vw, 4.75rem); }
+  .lineage { padding: 8px; }
+  .lineage-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px 16px; padding: 14px 14px 16px; }
+  .lineage-head > div:first-child { flex: 1 1 220px; }
+  .lineage-head p { margin: 4px 0 0; font-size: 12.5px; color: var(--ix-muted); }
+  .chain { position: relative; display: grid; gap: 8px; --sig: 0; }
+  .chain::before { content: ""; position: absolute; left: 31px; top: 28px; bottom: 28px; inline-size: 1px; background: var(--ix-line-strong); }
+  .chain::after {
+    content: ""; position: absolute; left: 28px; top: calc(28px + (100% - 56px) * var(--sig)); inline-size: 7px; block-size: 7px; border-radius: 50%;
+    background: var(--ix-signal); box-shadow: 0 0 0 4px color-mix(in oklch, var(--ix-signal) 22%, transparent); translate: 0 -50%;
+    opacity: var(--sig-on, 0);
+  }
+  .node { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 0; padding: 14px 16px 14px 0; border-radius: var(--ds-dimension-radius-container); background: var(--ds-color-neutral-surface-canvas-default); box-shadow: var(--ds-effect-material-flat); transition: box-shadow var(--ds-motion-feedback-duration) var(--ds-motion-feedback-easing); }
+  .node.is-hit { box-shadow: 0 0 0 1px var(--ix-signal); }
+  .node-no { display: grid; place-items: center; align-self: start; justify-self: center; inline-size: 26px; block-size: 26px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-default-default); font: 500 11px/1 var(--mono); position: relative; z-index: 1; }
+  .node:last-child .node-no { background: var(--ds-color-neutral-surface-solid-default); color: var(--ds-color-neutral-text-contrast-default); }
+  .node-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .node-top strong { font-size: 14px; letter-spacing: -0.01em; }
+  .node-top strong span { color: var(--ix-muted); font-weight: 500; }
+  .node-top code { font: 500 10.5px/1 var(--mono); color: var(--ix-muted); white-space: nowrap; }
+  .node pre { margin: 8px 0 6px; font: 500 12px/1.5 var(--mono); white-space: pre-wrap; color: var(--ix-text); }
+  .node p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ix-muted); }
+  .rel { display: block; font: 500 9.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ix-muted); padding: 2px 0 2px 64px; }
+
+  /* Sheet 02 · Contracts */
+  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .ccard { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .ccard-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .ccard-top .ix-h3 { font-size: 1.375rem; letter-spacing: -0.03em; }
+  .ccard-top code { font: 500 10.5px/1 var(--mono); color: var(--ix-muted); }
+  .readout { display: flex; align-items: baseline; gap: 10px; padding-block: 14px; box-shadow: inset 0 1px 0 var(--ix-line), inset 0 -1px 0 var(--ix-line); }
+  .readout strong { font-size: 2rem; letter-spacing: -0.04em; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+  .readout span { font-size: 12.5px; color: var(--ix-muted); }
+  .clist { margin: 0; padding: 0; list-style: none; display: grid; }
+  .clist a { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-block: 7px; font-size: 13.5px; text-decoration: none; color: var(--ix-text); }
+  .clist a svg { inline-size: 14px; block-size: 14px; color: var(--ix-muted); transition: translate var(--ds-motion-feedback-duration) var(--ds-motion-feedback-easing), color var(--ds-motion-feedback-duration); }
+  .clist a:hover svg { translate: 3px 0; color: var(--ix-text); }
+  .ccard .for { margin: auto 0 0; font: 500 11px/1.4 var(--mono); color: var(--ix-muted); }
+  .ccard.ink { background: var(--ds-color-neutral-surface-canvas-default); }
+
+  /* Sheet 03 · Install */
+  .install { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr); gap: 16px; align-items: start; }
+  .choose { padding: 22px; display: grid; gap: 14px; }
+  .opt { display: grid; grid-template-columns: 20px 1fr; gap: 12px; padding: 14px; border-radius: var(--ds-dimension-radius-container); box-shadow: var(--ds-effect-material-flat); cursor: pointer; background: var(--ds-color-neutral-surface-canvas-default); }
+  .opt input { margin: 2px 0 0; accent-color: var(--ix-signal); inline-size: 16px; block-size: 16px; }
+  .opt:has(input:checked) { box-shadow: 0 0 0 1px var(--ix-signal); background: color-mix(in oklch, var(--ds-color-primary-surface-subtle-default) 55%, var(--ds-color-neutral-surface-canvas-default)); }
+  .opt:has(input:focus-visible) { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; }
+  .opt strong { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .opt p { margin: 4px 0 8px; font-size: 12.5px; color: var(--ix-muted); }
+  .opt code { font: 500 11.5px/1 var(--mono); }
+  .deps { display: flex; align-items: center; gap: 0; font: 500 11px/1 var(--mono); color: var(--ix-muted); padding-block-start: 6px; }
+  .deps span:not(.ix-dim) { padding: 6px 8px; border-radius: var(--ds-dimension-radius-mark); box-shadow: inset 0 0 0 1px var(--ix-line); color: var(--ix-text); }
+  .deps .ix-dim { flex: 1; padding-inline: 6px; }
+  .moves { overflow: hidden; }
+  .moves-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; flex-wrap: wrap; }
+  .moves-bar h2 { font-family: var(--font-sans); margin: 0; font-size: 1.25rem; letter-spacing: -0.02em; }
+  .moves-bar p { margin: 0; font: 500 11px/1.4 var(--mono); color: var(--ix-muted); }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); box-shadow: inset 0 1px 0 var(--ix-line), inset 0 -1px 0 var(--ix-line); }
+  .steps button { font-family: var(--font-sans); display: flex; align-items: center; gap: 10px; padding: 12px 16px; border: 0; background: transparent; text-align: left; font-size: 13px; font-weight: 500; color: var(--ix-muted); cursor: pointer; box-shadow: inset -1px 0 0 var(--ix-line); }
+  .steps button:last-child { box-shadow: none; }
+  .steps button span { display: grid; place-items: center; inline-size: 22px; block-size: 22px; border-radius: var(--ds-dimension-radius-mark); background: var(--ds-color-neutral-surface-default-default); font: 500 11px/1 var(--mono); }
+  .steps button[aria-selected="true"] { color: var(--ix-text); box-shadow: inset 0 -2px 0 var(--ix-signal), inset -1px 0 0 var(--ix-line); }
+  .steps button[aria-selected="true"] span { background: var(--ix-signal); color: var(--ds-color-primary-text-contrast-default); }
+  .moves pre { margin: 0; padding: 16px 20px 20px; font: 400 12.5px/1.85 var(--mono); overflow-x: auto; }
+  .moves pre .row { display: block; border-radius: 4px; transition: background-color var(--ds-motion-feedback-duration), opacity var(--ds-motion-feedback-duration); }
+  .moves pre .row.dim { opacity: 0.38; }
+  .moves pre .row.on { background: color-mix(in oklch, var(--ix-signal) 14%, transparent); }
+
+  /* Sheet 04 · Releases */
+  .track { position: relative; padding: 26px 22px 18px; }
+  .track-line { position: relative; block-size: 46px; }
+  .track-line::before { content: ""; position: absolute; inset-inline: 0; top: 18px; block-size: 6px; border-radius: 3px; background: repeating-linear-gradient(to right, var(--ix-line-strong) 0 1px, transparent 1px calc(100% / 63)); box-shadow: inset 0 0 0 1px var(--ix-line); }
+  .track-fill { position: absolute; left: 0; top: 18px; block-size: 6px; border-radius: 3px; inline-size: calc(var(--now) * 100% * var(--ix-draw, 1)); background: var(--ds-color-neutral-surface-solid-default); transition: inline-size 1200ms var(--ix-draw-easing); }
+  .js-draw .track:not(.is-drawn) { --ix-draw: 0; }
+  .today { position: absolute; left: calc(var(--now) * 100%); top: 0; translate: -50% 0; display: grid; justify-items: center; gap: 4px; font: 500 10px/1 var(--mono); color: var(--ix-signal-text); }
+  [data-theme="dark"] .today { color: var(--ds-color-primary-text-subtle-default); }
+  .today::after { content: ""; inline-size: 2px; block-size: 26px; background: var(--ix-signal); }
+  .stones { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .stones li { display: grid; gap: 4px; padding-block-start: 10px; box-shadow: inset 0 2px 0 var(--ix-line-strong); }
+  .stones li.done { box-shadow: inset 0 2px 0 var(--ds-color-neutral-surface-solid-default); }
+  .stones li.now { box-shadow: inset 0 2px 0 var(--ix-signal); }
+  .stones small { font: 500 10.5px/1.3 var(--mono); color: var(--ix-muted); }
+  .stones strong { font-size: 13px; font-weight: 600; }
+  .matrix-wrap { overflow-x: auto; }
+  .matrix { inline-size: 100%; min-inline-size: 860px; border-collapse: collapse; font-size: 13px; }
+  .matrix th { padding: 10px 12px; font: 500 10px/1.3 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ix-muted); text-align: center; box-shadow: inset 0 -1px 0 var(--ix-line-strong); white-space: nowrap; }
+  .matrix th:first-child, .matrix td:first-child { text-align: left; padding-inline-start: 22px; }
+  .matrix td { padding: 0 12px; block-size: 52px; text-align: center; box-shadow: inset 0 -1px 0 var(--ix-line); }
+  .matrix td:first-child strong { display: block; font-weight: 600; }
+  .matrix td:first-child small { font: 500 10.5px/1 var(--mono); color: var(--ix-muted); }
+  .matrix .ix-check { margin-inline: auto; }
+  .matrix .ix-tick path { transition-delay: calc(var(--d, 0) * 60ms); }
+  .pend { display: block; inline-size: 14px; block-size: 14px; margin-inline: auto; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--ix-line-strong); outline: 1px dashed transparent; }
+  .matrix-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; padding: 14px 22px; font: 500 11px/1.4 var(--mono); color: var(--ix-muted); }
+  .matrix-foot b { font-weight: 500; color: var(--ix-text); }
+
+  /* Sheet 05 · Color and agents */
+  .last { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; }
+  .color { padding: 24px; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 28px; align-items: center; }
+  .steps12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; }
+  .steps12 i { block-size: 56px; border-radius: var(--ds-dimension-radius-mark); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06); }
+  .steps12 i:nth-child(9) { outline: 2px solid var(--ix-text); outline-offset: 2px; }
+  .steps12-nums { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-block: 8px 12px; font: 500 9.5px/1 var(--mono); color: var(--ix-muted); text-align: center; }
+  .agents { padding: 24px; display: grid; gap: 12px; align-content: start; }
+  .agents .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  @media (max-width: 1080px) {
+    .over, .install, .last, .color { grid-template-columns: minmax(0, 1fr); }
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    .cards { grid-template-columns: minmax(0, 1fr); }
+    .steps { grid-template-columns: minmax(0, 1fr); } .steps button { box-shadow: inset 0 -1px 0 var(--ix-line); }
+    .stones { grid-template-columns: 1fr 1fr; }
+    .node-top code { display: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 28 28"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="#0a6cf2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<div class="ix-reticle" aria-hidden="true"></div>
+<div class="ix-readhead" aria-hidden="true"></div>
+
+<div class="ix-page">
+  <div class="ix-wrap ix-nav-shell">
+    <header class="ix-nav">
+      <a class="ix-brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
+      <span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small" style="margin-inline-end:8px">Workspace</span>
+      <ul class="ix-nav-links">
+        <li><a href="#" aria-current="page">Overview</a></li>
+        <li><a href="#">Primitives</a></li>
+        <li><a href="Docs-Button.html">Components</a></li>
+        <li><a href="#">Tokens</a></li>
+        <li><a href="#releases">Releases</a></li>
+      </ul>
+      <span class="ix-nav-spacer"></span>
+      <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/05</span>
+      <span class="search" role="search"><svg aria-hidden="true"><use href="#i-search"/></svg><span>Search docs, tokens, APIs</span><kbd class="scnx-kbd">⌘K</kbd></span>
+      <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <span class="who" data-nav-optional><span>AK</span><span>UI Platform</span></span>
+    </header>
+  </div>
+
+  <main id="top">
+    <!-- SHEET 01 · Overview -->
+    <section class="ix-wrap" id="overview" data-sheet="Overview" aria-labelledby="o-title">
+      <div class="over">
+        <div class="over-copy">
+          <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Beta</span>Reference slice ships 20 Nov 2026</span>
+          <h1 class="ix-display" id="o-title">The design system you can verify.</h1>
+          <p class="ix-lede">Accessible primitives, token-bound components and a perceptual color system. Every release ships with the evidence that it works: tested consumers, accessibility reports and signed provenance.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center">
+            <a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <span class="ix-install"><code><span class="d">$</span> pnpm add @scnx/core-ui @scnx/system</code><button class="ix-copy" type="button" aria-label="Copy install command" data-copy="pnpm add @scnx/core-ui @scnx/system"><svg aria-hidden="true"><use href="#i-copy"/></svg></button></span>
+          </div>
+          <ul class="ix-meta"><li>React ^19</li><li>SSR and RSC</li><li>Strict CSP</li><li>Zero runtime CSS</li><li>OKLCH, P3</li></ul>
+        </div>
+
+        <div class="mat-panel lineage" data-frame data-radius="24" data-radius-label="R24 / pad 8 / R16">
+          <div class="lineage-head">
+            <div><strong style="font-size:14px">One component, four contracts</strong><p>Every page links all four. Pick one to trace it.</p></div>
+            <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Component" id="pick">
+              <button data-part="item" role="radio" aria-checked="true" data-c="button">Button</button>
+              <button data-part="item" role="radio" aria-checked="false" data-c="textfield" tabindex="-1">TextField</button>
+              <button data-part="item" role="radio" aria-checked="false" data-c="dialog" tabindex="-1">Dialog</button>
+              <button data-part="item" role="radio" aria-checked="false" data-c="tabs" tabindex="-1">Tabs</button>
+            </div>
+          </div>
+          <div class="chain" id="chain" aria-live="polite">
+            <div class="node"><span class="node-no">01</span><div><div class="node-top"><strong>Primitive <span data-f="p-name">ButtonBase</span></strong><code>@scnx/core-ui</code></div><pre data-f="p-code">&lt;button type="button"&gt; | &lt;a href&gt; | asChild</pre><p data-f="p-note">Native element. Enter and Space activate. A disabled link drops its href and leaves the tab order.</p></div></div>
+            <span class="rel" aria-hidden="true">styled by</span>
+            <div class="node"><span class="node-no">02</span><div><div class="node-top"><strong>Component <span data-f="c-name">Button</span></strong><code>@scnx/system</code></div><pre data-f="c-code">.scnx-btn [data-variant="primary|secondary|ghost"]</pre><p data-f="c-note">Visual recipe only. Behavior is inherited, never re-implemented.</p></div></div>
+            <span class="rel" aria-hidden="true">bound to</span>
+            <div class="node"><span class="node-no">03</span><div><div class="node-top"><strong>Tokens <span data-f="t-name">surface, text, radius, motion</span></strong><code>--ds-*</code></div><pre data-f="t-code">neutral.surface.solid.default → ink</pre><p data-f="t-note">The primary action is ink. Its label contrast is checked in every theme and mode.</p></div></div>
+            <span class="rel" aria-hidden="true">proven by</span>
+            <div class="node"><span class="node-no">04</span><div><div class="node-top"><strong>Release <span data-f="r-name">Candidate</span></strong><code>evidence</code></div><pre data-f="r-code">source · packed · SSR/RSC · CSP · a11y ×3 · visual</pre><p data-f="r-note">Promotion to Stable waits on consumer pilots, migration and rollback evidence.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHEET 02 · Contracts -->
+    <section class="ix-wrap ix-sheet" id="contracts" data-sheet="Contracts" aria-labelledby="c-title">
+      <div class="ix-ruler" aria-hidden="true"></div>
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no">Sheet <b>02</b>/05</span>
+        <span class="ix-sheet-name">Where to start</span>
+        <dl class="ix-tb"><div><dt>Packages</dt><dd>2</dd></div><div><dt>Direction</dt><dd>style → behavior</dd></div></dl>
+      </div>
+      <h2 class="ix-h2 sr-only" id="c-title">The four contracts</h2>
+      <div class="cards">
+        <article class="mat ccard">
+          <div class="ccard-top"><h3 class="ix-h3">Primitives</h3><code>@scnx/core-ui</code></div>
+          <p class="ix-body">Headless behavior. Semantic HTML, keyboard, focus and ARIA, with zero styling.</p>
+          <div class="readout"><strong data-count="23">23</strong><span>primitives, hooks, providers</span></div>
+          <ul class="clist"><li><a href="#">Composition: asChild and as<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">DOM contract: data-part, data-state<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Server-safe and client entries<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Behavior matrices<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+          <p class="for">For teams with their own look</p>
+        </article>
+        <article class="mat ccard">
+          <div class="ccard-top"><h3 class="ix-h3">Components</h3><code>@scnx/system</code></div>
+          <p class="ix-body">Primitives dressed in Scnehaux. Static CSS, scoped themes, token-bound states.</p>
+          <div class="readout"><strong data-count="24">24</strong><span>styled components</span></div>
+          <ul class="clist"><li><a href="Docs-Button.html">Actions, inputs, overlays<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Navigation, layout, content<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Theme roots and portals<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Cascade layers and overrides<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+          <p class="for">For product teams shipping fast</p>
+        </article>
+        <article class="mat ccard">
+          <div class="ccard-top"><h3 class="ix-h3">Tokens</h3><code>--ds-*</code></div>
+          <p class="ix-body">One language for every value. Core scales, semantic roles, component aliases.</p>
+          <div class="readout"><strong>2 × 2</strong><span>themes × modes</span></div>
+          <ul class="clist"><li><a href="#">Color: OKLCH palette and roles<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Contrast pairs, verified<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Type, dimension, motion<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Themes and brand overrides<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+          <p class="for">For designers and theme authors</p>
+        </article>
+        <article class="mat ccard ink" data-theme="dark">
+          <div class="ccard-top"><h3 class="ix-h3">Releases</h3><code>evidence</code></div>
+          <p class="ix-body">Lifecycle, support matrix, migrations and the proof behind every claim.</p>
+          <div class="readout"><strong data-count="7">7</strong><span>gates per component</span></div>
+          <ul class="clist"><li><a href="#releases">Status matrix<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Support matrix<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Changelog and migrations<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Provenance and SBOM<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+          <p class="for">For tech leads, security, procurement</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SHEET 03 · Install -->
+    <section class="ix-wrap ix-sheet" id="install" data-sheet="Install" aria-labelledby="i-title">
+      <div class="ix-ruler" aria-hidden="true"></div>
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no">Sheet <b>03</b>/05</span>
+        <span class="ix-sheet-name">Install</span>
+        <dl class="ix-tb"><div><dt>Side effects</dt><dd>none on import</dd></div><div><dt>Entries</dt><dd>explicit</dd></div></dl>
+      </div>
+      <div class="install">
+        <fieldset class="mat choose" style="border:0; margin:0">
+          <legend class="sr-only">Which package do I need?</legend>
+          <h2 class="ix-h3" id="i-title" style="font-size:1.25rem">Which package do I need?</h2>
+          <p class="ix-body">Two packages, one direction of dependency. Behavior never depends on style.</p>
+          <label class="opt"><input type="radio" name="pkg" value="core"><span><strong>I bring my own styling</strong><p>Headless behavior, keyboard, focus and ARIA. No CSS, no tokens.</p><code>@scnx/core-ui</code></span></label>
+          <label class="opt"><input type="radio" name="pkg" value="system" checked><span><strong>I want the Scnehaux look <span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Most teams</span></strong><p>Styled components, themes, tokens and fonts. Installs core-ui as a peer.</p><code>@scnx/system + @scnx/core-ui</code></span></label>
+          <div class="deps" aria-label="core-ui is a peer of system, which your app installs"><span>core-ui</span><span class="ix-dim" data-draw>peer</span><span>system</span><span class="ix-dim" data-draw>install</span><span>your app</span></div>
+        </fieldset>
+        <div class="ix-term moves" data-theme="dark">
+          <div class="moves-bar"><h2>Up in three moves</h2><p>CSS once at the composition root</p></div>
+          <div class="steps" role="tablist" aria-label="Moves" id="moves">
+            <button role="tab" aria-selected="true" data-step="1"><span>1</span>Load CSS once</button>
+            <button role="tab" aria-selected="false" data-step="2" tabindex="-1"><span>2</span>Scope a theme root</button>
+            <button role="tab" aria-selected="false" data-step="3" tabindex="-1"><span>3</span>Import by entry</button>
+          </div>
+<pre id="moves-code" role="tabpanel"><span class="row" data-step="1"><span class="ln">1</span><span class="c">// 1 · app/layout.tsx: load CSS once</span></span><span class="row" data-step="1"><span class="ln">2</span><span class="k">import</span> <span class="s">"@scnx/system/styles/components.css"</span>;</span><span class="row" data-step="1"><span class="ln">3</span><span class="k">import</span> <span class="s">"@scnx/system/tokens/css/default.css"</span>;</span><span class="row" data-step="0"><span class="ln">4</span></span><span class="row" data-step="2"><span class="ln">5</span><span class="c">// 2 · scope a theme root; portals inherit it</span></span><span class="row" data-step="2"><span class="ln">6</span>&lt;<span class="k">div</span> <span class="p">data-scnx-theme</span>=<span class="s">"default"</span> <span class="p">data-scnx-resolved-mode</span>=<span class="s">"light"</span>&gt;</span><span class="row" data-step="2"><span class="ln">7</span>  {children}</span><span class="row" data-step="2"><span class="ln">8</span>&lt;/<span class="k">div</span>&gt;</span><span class="row" data-step="0"><span class="ln">9</span></span><span class="row" data-step="3"><span class="ln">10</span><span class="c">// 3 · import by explicit entry: no barrels, no wildcards</span></span><span class="row" data-step="3"><span class="ln">11</span><span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHEET 04 · Releases -->
+    <section class="ix-wrap ix-sheet" id="releases" data-sheet="Releases" aria-labelledby="r-title">
+      <div class="ix-ruler" aria-hidden="true"></div>
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no">Sheet <b>04</b>/05</span>
+        <span class="ix-sheet-name">Releases</span>
+        <dl class="ix-tb"><div><dt>Gates run on</dt><dd>packed tarballs</dd></div><div><dt>Today</dt><dd>24 Oct</dd></div></dl>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:end; gap:24px; flex-wrap:wrap; margin-block-end:28px">
+        <h2 class="ix-h2" id="r-title" style="max-inline-size:20ch">Nothing here is stable until it is proven.</h2>
+        <a class="ix-link" href="#">Open the status matrix</a>
+      </div>
+      <div class="mat-panel">
+        <div class="mat-flat track" data-draw style="--now: 0.349">
+          <div class="track-line" aria-hidden="true"><span class="track-fill"></span><span class="today">today<br></span></div>
+          <ol class="stones">
+            <li class="done"><small>done · 02 Oct</small><strong>Architecture and TDDs</strong></li>
+            <li class="done"><small>done · 09 Oct</small><strong>Deterministic bootstrap</strong></li>
+            <li class="done"><small>done · 03 Oct</small><strong>P0 repair and evidence</strong></li>
+            <li class="now"><small>in progress · 20 Nov</small><strong>Reference slice, beta</strong></li>
+            <li><small>next · 04 Dec</small><strong>Stable release</strong></li>
+          </ol>
+        </div>
+        <div class="mat-flat" style="margin-top:8px; overflow:hidden">
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <caption class="sr-only">Gate status per component in the reference slice</caption>
+              <thead><tr><th scope="col">Component</th><th scope="col">Lifecycle</th><th scope="col">Source</th><th scope="col">Packed</th><th scope="col">SSR/RSC</th><th scope="col">CSP</th><th scope="col">A11y ×3</th><th scope="col">Visual</th><th scope="col">Pilot</th><th scope="col">Rollback</th></tr></thead>
+              <tbody id="matrix-body"></tbody>
+            </table>
+          </div>
+          <div class="matrix-foot"><span><b>Support</b> chromium, firefox, webkit · node 22, 24 · typescript 5.7.3 – 7.0.2 · react ^19.0.0</span><span>SLSA build L2 · CycloneDX SBOM</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHEET 05 · Color and agents -->
+    <section class="ix-wrap ix-sheet" id="color" data-sheet="Color and agents" aria-labelledby="k-title">
+      <div class="ix-ruler" aria-hidden="true"></div>
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no">Sheet <b>05</b>/05</span>
+        <span class="ix-sheet-name">Tokens, color</span>
+        <dl class="ix-tb"><div><dt>Steps</dt><dd>12 per hue</dd></div><div><dt>Modes</dt><dd>light, dark</dd></div></dl>
+      </div>
+      <div class="last">
+        <div class="mat color">
+          <div style="display:grid; gap:12px">
+            <h2 class="ix-h3" id="k-title" style="font-size:1.375rem; letter-spacing:-0.03em">Perceptual by design</h2>
+            <p class="ix-body">Twelve OKLCH steps per hue, solid and alpha, generated for light and dark. Every declared foreground and background pair is contrast-checked in every theme before release.</p>
+            <a class="ix-link" href="#">Explore color</a>
+          </div>
+          <div data-draw>
+            <div class="steps12" aria-hidden="true">
+              <i style="background:oklch(0.991 0.006 259)"></i><i style="background:oklch(0.977 0.013 259)"></i><i style="background:oklch(0.951 0.03 259)"></i><i style="background:oklch(0.921 0.055 259)"></i><i style="background:oklch(0.886 0.08 259)"></i><i style="background:oklch(0.842 0.105 259)"></i><i style="background:oklch(0.783 0.13 259)"></i><i style="background:oklch(0.703 0.16 259)"></i><i style="background:oklch(0.5651 0.2172 259.37)"></i><i style="background:oklch(0.515 0.205 259)"></i><i style="background:oklch(0.452 0.175 259)"></i><i style="background:oklch(0.296 0.095 259)"></i>
+            </div>
+            <div class="steps12-nums" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+            <div class="ix-dim" data-signal style="margin-inline: calc(100% / 12 * 8) calc(100% / 12 * 3)">9</div>
+            <p class="ix-body ix-mono" style="font-size:11.5px; margin-top:8px">color.blue.light.9 → color.primary.surface.solid.default</p>
+          </div>
+        </div>
+        <div class="ix-term agents" data-theme="dark">
+          <p class="ix-eyebrow">For humans and agents</p>
+          <h2 class="ix-h3" style="font-size:1.25rem; letter-spacing:-0.02em; font-family:var(--font-sans)">Your coding agents read the same contracts you do.</h2>
+          <p class="ix-body" style="font-family:var(--font-sans)">Generated from the packed API reports, token JSON and release evidence. Never from prose that can drift.</p>
+          <div class="row"><code class="scnx-code">/llms.txt</code><code class="scnx-code">MCP docs server</code></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ix-wrap ix-foot" data-draw>
+    <div class="ix-ruler" aria-hidden="true"></div>
+    <div class="ix-setblock" style="margin-top:24px" aria-label="Drawing set">
+      <div><span class="k">Drawing set</span><span class="v">Scnehaux UI · workspace</span></div>
+      <div><span class="k">Sheets</span><span class="v">01–05</span></div>
+      <div><span class="k">Generated</span><span class="v">packed artifacts</span></div>
+      <div><span class="k">Rev</span><span class="v">1.0.0-beta.0</span></div>
+      <div><span class="k">Authority</span><span class="v">PAD-PLT-003, SAD-003</span></div>
+    </div>
+  </footer>
+</div>
+
+<nav class="ix-rail" aria-label="Sheets"><ol class="ix-rail-marks"></ol><span class="ix-rail-progress"></span></nav>
+
+<script>
+(() => {
+  /* ---------- Lineage: pick a component, the signal runs down its four contracts ---------- */
+  const DATA = {
+    button: {
+      "p-name": "ButtonBase", "p-code": '<button type="button"> | <a href> | asChild', "p-note": "Native element. Enter and Space activate. A disabled link drops its href and leaves the tab order.",
+      "c-name": "Button", "c-code": '.scnx-btn [data-variant="primary|secondary|ghost"]', "c-note": "Visual recipe only. Behavior is inherited, never re-implemented.",
+      "t-name": "surface, text, radius, motion", "t-code": "neutral.surface.solid.default → ink", "t-note": "The primary action is ink. Its label contrast is checked in every theme and mode.",
+      "r-name": "Candidate", "r-code": "source · packed · SSR/RSC · CSP · a11y ×3 · visual", "r-note": "Promotion to Stable waits on consumer pilots, migration and rollback evidence.",
+    },
+    textfield: {
+      "p-name": "Field", "p-code": "<label> + <input> + description + error, wired by id", "p-note": "The label, hint and error are announced together. The error is linked with aria-describedby.",
+      "c-name": "TextField", "c-code": '.scnx-text-field [data-size] [data-invalid]', "c-note": "Inputs keep a real 1px border at 3:1 and draw focus flush.",
+      "t-name": "border, surface, text", "t-code": "neutral.border.strong.default → input boundary", "t-note": "Boundary contrast is measured against every surface the field can sit on.",
+      "r-name": "Candidate · #64", "r-code": "source · packed · SSR/RSC · CSP · a11y ×3", "r-note": "Visual baseline pending the material shadow regeneration.",
+    },
+    dialog: {
+      "p-name": "DialogRoot", "p-code": "<dialog> · focus trap · inert outside · return focus", "p-note": "Escape closes, focus returns to the trigger, the page behind becomes inert.",
+      "c-name": "Dialog", "c-code": '.scnx-dialog [data-material="modal"]', "c-note": "A modal material rises over enter duration; the exit is always shorter.",
+      "t-name": "modal material, motion", "t-code": "effect.material.modal · motion.enter / exit", "t-note": "Rise distance stays at 4px. Reduced motion keeps the fade and drops the movement.",
+      "r-name": "Candidate · #65", "r-code": "source · packed · SSR/RSC · CSP · a11y ×3 · visual", "r-note": "Pilot in the IAM console before promotion.",
+    },
+    tabs: {
+      "p-name": "TabsRoot", "p-code": 'role="tablist" · roving tabindex · automatic or manual', "p-note": "Arrow keys move between tabs and mirror in right-to-left layouts.",
+      "c-name": "Tabs", "c-code": ".scnx-tabs [data-part=indicator]", "c-note": "The selected tab carries the blue indicator: you are here.",
+      "t-name": "primary indicator, text", "t-code": "primary.border.strong.selected → indicator", "t-note": "Indicator contrast is checked at 3:1 against the canvas in both modes.",
+      "r-name": "Candidate · #66 · RTL #70", "r-code": "source · packed · SSR/RSC · CSP · a11y ×3 · rtl", "r-note": "Right-to-left runs as its own scenario.",
+    },
+  };
+  const chain = document.getElementById("chain");
+  const nodes = [...chain.querySelectorAll(".node")];
+  const pick = [...document.querySelectorAll("#pick [role=radio]")];
+  const motion = document.documentElement.classList.contains("js-draw");
+  let run = 0;
+  const trace = () => {
+    if (!motion) return;
+    const id = ++run;
+    chain.style.setProperty("--sig-on", "1");
+    const start = performance.now();
+    const dur = 1100;
+    const step = (now) => {
+      if (id !== run) return;
+      const k = Math.min(1, (now - start) / dur);
+      const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      chain.style.setProperty("--sig", e.toFixed(4));
+      nodes.forEach((n, i) => n.classList.toggle("is-hit", Math.abs(e - i / 3) < 0.07));
+      if (k < 1) requestAnimationFrame(step);
+      else setTimeout(() => { if (id === run) { chain.style.setProperty("--sig-on", "0"); nodes.forEach((n) => n.classList.remove("is-hit")); } }, 500);
+    };
+    requestAnimationFrame(step);
+  };
+  const select = (btn, focus) => {
+    pick.forEach((b) => { const on = b === btn; b.setAttribute("aria-checked", String(on)); b.tabIndex = on ? 0 : -1; });
+    if (focus) btn.focus();
+    const d = DATA[btn.dataset.c];
+    chain.querySelectorAll("[data-f]").forEach((el) => { el.textContent = d[el.dataset.f]; });
+    trace();
+  };
+  pick.forEach((b, i) => {
+    b.addEventListener("click", () => select(b));
+    b.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+      if (d) { e.preventDefault(); select(pick[(i + d + pick.length) % pick.length], true); }
+    });
+  });
+  if (motion) {
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { setTimeout(trace, 600); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(chain);
+  }
+
+  /* ---------- Three moves: tabs highlight their lines ---------- */
+  const moves = [...document.querySelectorAll("#moves [role=tab]")];
+  const rows = [...document.querySelectorAll("#moves-code .row")];
+  const show = (btn, focus) => {
+    moves.forEach((b) => { const on = b === btn; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
+    if (focus) btn.focus();
+    rows.forEach((r) => { const on = r.dataset.step === btn.dataset.step; r.classList.toggle("on", on); r.classList.toggle("dim", !on && r.dataset.step !== "0"); });
+  };
+  moves.forEach((b, i) => {
+    b.addEventListener("click", () => show(b));
+    b.addEventListener("keydown", (e) => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (d) { e.preventDefault(); show(moves[(i + d + moves.length) % moves.length], true); } });
+  });
+  show(moves[0]);
+
+  /* ---------- Status matrix: checks settle row by row as the table is reached ---------- */
+  const tick = (d) => `<svg class="ix-check ix-tick" style="--d:${d}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Passed"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+  const pend = `<span class="pend" role="img" aria-label="Not run yet"></span>`;
+  const ROWS = [
+    ["Button", "button · link · asChild", [1, 1, 1, 1, 1, 1, 0, 0]],
+    ["TextField", "#64", [1, 1, 1, 1, 1, 0, 0, 0]],
+    ["Dialog", "#65", [1, 1, 1, 1, 1, 1, 0, 0]],
+    ["Tabs", "#66 · RTL #70", [1, 1, 1, 1, 1, 1, 0, 0]],
+  ];
+  const body = document.getElementById("matrix-body");
+  body.innerHTML = ROWS.map(([name, ref, gates], r) => `<tr><td><strong>${name}</strong><small>${ref}</small></td><td><span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Candidate</span></td>${gates.map((g, c) => `<td>${g ? tick(r * 8 + c) : pend}</td>`).join("")}</tr>`).join("");
+  body.closest(".mat-flat").setAttribute("data-draw", "");
+  const tbl = body.closest(".mat-flat");
+  if (motion && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { tbl.classList.add("is-drawn"); io.disconnect(); } }, { rootMargin: "0px 0px -25% 0px" });
+    io.observe(tbl);
+  } else tbl.classList.add("is-drawn");
+})();
+</script>
+</body>
+</html>

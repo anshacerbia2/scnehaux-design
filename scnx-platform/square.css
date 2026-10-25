@@ -5,37 +5,19 @@
    cells that share their lines (never a box inside a box). square.js adds the ruler
    scrollbar on the right edge.
 
-   Loaded after docs-instrument/instrument.css; instrument.js still drives drawing,
-   typing, counters and "here".
+   Loaded after instrument.css; instrument.js still drives drawing, typing, counters
+   and "here".
 
-   Square corners and ring materials are the values of the default theme, industrial,
-   proposed in design-system/proposals/industrial-structure.md. Until @scnx/system ships
-   them, the bridge below sets them at the root, as a theme maps Tier 2 (the consumer's
-   overrides layer). Nothing here selects a product component (.scnx-*). Guidance only
-   (see README.md). */
+   Square corners and ring materials come from the theme itself: the pages load
+   @scnx/system's industrial tokens (design-system/vendor/scnx-system/, synced by
+   scripts/sync-tokens.mjs), so nothing here re-declares a radius or a material.
+   Nothing here selects a product component (.scnx-*). Guidance only (see README.md). */
 
 /* IBM Plex Mono, the HUD voice, served from the repository (SIL OFL 1.1, see
    design-system/fonts/OFL-IBMPlexMono.txt): a strict CSP loads fonts from 'self' only. */
-@font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-Regular.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-Medium.woff2) format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: "IBM Plex Mono"; src: url(../../design-system/fonts/IBMPlexMono-SemiBold.woff2) format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
-
-/* Bridge to the industrial theme: delete it when @scnx/system ships its values.
-   The ladder is flat at 0; pill stays fully rounded, because the round shape of a radio,
-   a switch or a status dot carries meaning. Materials on the page are a ring; floating
-   materials keep their shipped shadows, so they still read above the page. */
-:root {
-  --ds-dimension-radius-mark: 0;
-  --ds-dimension-radius-element: 0;
-  --ds-dimension-radius-control: 0;
-  --ds-dimension-radius-container: 0;
-  --ds-dimension-radius-panel: 0;
-}
-:root, [data-theme] {
-  --ds-effect-material-flat: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
-  --ds-effect-material-raised: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
-  --ds-effect-material-panel: 0 0 0 1px var(--ds-color-neutral-border-subtle-default);
-}
+@font-face { font-family: "IBM Plex Mono"; src: url(../design-system/fonts/IBMPlexMono-Regular.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(../design-system/fonts/IBMPlexMono-Medium.woff2) format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(../design-system/fonts/IBMPlexMono-SemiBold.woff2) format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
   --sq-nav: 48px;
@@ -46,7 +28,7 @@
 @media (max-width: 760px) { :root { --sq-pad: 20px; } }
 
 /* Lines are one family, re-declared per theme root so islands resolve their own. */
-:root, [data-theme] {
+:root, [data-scnx-resolved-mode] {
   /* The chrome's mono (the HUD voice, terminals). The token mono, --font-mono, is left as
      it ships: product components (Code, Kbd) keep it. */
   --sq-mono: "IBM Plex Mono", var(--font-mono);
@@ -76,7 +58,7 @@
 
 /* A theme island takes its own text colour, not the one inherited from the page
    (a dark card on a light page would otherwise print dark on dark). */
-[data-theme]:not(html) { color: var(--ix-text); }
+[data-scnx-resolved-mode]:not(html) { color: var(--ix-text); }
 
 /* Instrument devices this expression replaces. */
 .ix-reticle, .ix-readhead, .ix-rail, .ix-ruler, .ix-r, .ix-mk { display: none !important; }
@@ -308,7 +290,7 @@ html[data-ruler="on"]::-webkit-scrollbar { display: none; inline-size: 0; block-
 .sq-ruler-now { position: absolute; right: 0; top: 0; inline-size: 60px; block-size: 0; will-change: transform; }
 .sq-ruler-now::before { content: ""; position: absolute; inset-inline: 0; top: 0; block-size: 1px; background: var(--ix-signal); }
 .sq-ruler-now span { position: absolute; right: 4px; top: 5px; font: 500 9px/1 var(--mono); letter-spacing: 0.08em; color: var(--ix-signal-text); font-variant-numeric: tabular-nums; }
-[data-theme="dark"] .sq-ruler-now span { color: var(--ds-color-primary-text-subtle-default); }
+[data-scnx-resolved-mode="dark"] .sq-ruler-now span { color: var(--ds-color-primary-text-subtle-default); }
 .sq-ruler-cursor { position: fixed; right: 0; top: 0; z-index: 47; inline-size: 60px; block-size: 3px; translate: 0 -50%; background: var(--ix-text); opacity: 0; pointer-events: none; will-change: transform, opacity; }
 
 /* Section titles beside the ruler: one span per letter, placed by square.js. */

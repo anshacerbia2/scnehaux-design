@@ -2,7 +2,7 @@
 
 The industrial expression of the three docs boards (public landing, signed-in
 workspace, component page). Same content and the same Scnehaux UI rules as
-`concepts/docs-site/`; what changes is the drawing layer on top of them, the
+`scnx-saas/`; what changes is the drawing layer on top of them, the
 scroll motion and the lines.
 
 > **Status: reference, non-normative (ADR-UIP-VIS-002).** Nothing here changes a
@@ -95,7 +95,7 @@ own tokens. That is the product's own theme-root mechanism, shown working.
 ## Files
 
 - `instrument.css`, `instrument.js`: the expression, shared by the three pages and
-  reused by `docs-instrument-square`. They bind
+  copied into `scnx-platform/`. They bind
   `design-system/themes/default/tokens.css` and reuse the real component classes
   from `design-system/components/bundle.css`. "Here" (the current sheet, which
   drives the sheet number, the nav readout, the rail and any `[data-spy]`

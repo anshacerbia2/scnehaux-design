@@ -1,6 +1,8 @@
-# Docs · Instrument · Square
+# scnx-platform · Docs · Instrument · Square
 
-The Instrument boards (`concepts/docs-instrument/`) drawn as one continuous line
+The design of the Scnehaux platform (IAM, AI runtime, organization, the docs), in the
+`@scnx/system` theme `industrial` (to be renamed `scnx-platform`); `Brand-Book.html` is
+its brand book. The Instrument boards (`../others/docs-instrument/`) drawn as one continuous line
 drawing. Content, colour roles and Instrument's motion (drawing, typing, counters,
 "here") are kept; the geometry, the lines and the scrollbar change.
 
@@ -50,15 +52,17 @@ tokens.
    margin lands its line on the next rule. The lines never double.
 4. **No radius, anywhere.** Square corners and ring materials are the default
    theme's values, proposed in
-   [`design-system/proposals/industrial-structure.md`](../../design-system/proposals/industrial-structure.md):
+   [`design-system/proposals/industrial-structure.md`](../design-system/proposals/industrial-structure.md):
    components carry no design of their own, read a hook (`--scnx-*`) that falls back
    to a semantic token (`--ds-*`), and the theme `industrial` maps those tokens
    square. The chrome and every component, on a stage or in a mock, are square; the
    Button *Anatomy* view reads `R0 · radius.control`. `pill` stays fully rounded,
    because the round shape of a radio, a switch or a status dot carries meaning.
-   Until `@scnx/system` ships the industrial values, `square.css` bridges them at the
-   root, as a theme would (the consumer's `overrides` layer); the bridge goes when
-   the package ships. Nothing selects a product component (`.scnx-*`).
+   The pages read these values from the package itself: they link
+   `../design-system/vendor/scnx-system/tokens/css/industrial.css`, synced byte for byte
+   by `scripts/sync-tokens.mjs`, and set `data-scnx-theme="industrial"` with
+   `data-scnx-resolved-mode` on every theme root, as the package selects. Nothing selects
+   a product component (`.scnx-*`).
 5. **No read head, no reticle, no left rail.** The ruler scrollbar replaces them.
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
@@ -99,17 +103,21 @@ In short:
 ## Files
 
 - `square.css`: the line system, the nav, the section bars, the cells and the ruler
-  styles, loaded after `../docs-instrument/instrument.css`. The `--sq-*` properties
+  styles, loaded after `instrument.css`. The `--sq-*` properties
   (mono, line, cross, edge, faint, glass, column, padding) are expression-local
   guidance. It serves IBM Plex Mono 400, 500 and 600 from
-  `../../design-system/fonts/` (SIL OFL 1.1, `OFL-IBMPlexMono.txt`), so no page
+  `../design-system/fonts/` (SIL OFL 1.1, `OFL-IBMPlexMono.txt`), so no page
   loads a font from another origin.
 - `square.js`: reveal, smooth scroll, the ruler scrollbar, its ledger and titles. No
   dependencies.
 - `SCROLL.md`: every scroll behaviour, with its values and where it is off.
 - `<Board>.html`: the Instrument page laid out as cells (section bars, `sq-cells`
   grids, `sq-facts` rows). Content is otherwise Instrument's; keep the two in step
-  when a board changes. They still run `../docs-instrument/instrument.js`.
+  when a board changes.
+- `instrument.css` and `instrument.js`: this design's own copies of Instrument's
+  stylesheet and script, moved to the package's theme-root attributes. `instrument.css`
+  also gives `components/bundle.css` the two font stacks it reads (`--font-sans`,
+  `--font-mono`), which the earlier snapshot declared and the package does not.
 - `<Board>.png`: the still frame, dark, 1440px wide, rendered with
   `?render&mode=dark`. `<Board>.thumb.webp`: the live first screen, dark, so the
   hub card shows the ruler.
