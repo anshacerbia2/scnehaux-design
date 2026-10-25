@@ -4,11 +4,12 @@ The Instrument boards (`concepts/docs-instrument/`) drawn as one continuous line
 drawing. Content, colour roles and Instrument's motion (drawing, typing, counters,
 "here") are kept; the geometry, the lines and the scrollbar change.
 
-> **Status: reference, non-normative (ADR-UIP-VIS-002).** Square geometry departs
-> from the brand book's concentric ladder (R24 panel, pad 8, R16 container), and the
-> HUD text uses IBM Plex Mono instead of the system mono (the ruler titles are Inter,
-> the brand face). It is an option to compare, not a rule; adopting it needs an
-> ADR-UIP-VIS-001 revision.
+> **Status: reference, non-normative (ADR-UIP-VIS-002).** The chrome's square
+> geometry departs from the brand book's concentric ladder (R24 panel, pad 8, R16
+> container), and the HUD text uses IBM Plex Mono instead of the system mono (the
+> ruler titles are Inter, the brand face). Product components keep both as they
+> ship. It is an option to compare, not a rule; adopting it needs an ADR-UIP-VIS-001
+> revision.
 >
 > The ruler scrollbar began from a reference site's page-position ruler. What makes
 > it Scnehaux's own is the evidence vocabulary: the ledger marks that verify each
@@ -48,18 +49,26 @@ tokens.
    meets the nav; by then the rule has scrolled under the nav and the nav's line
    takes over. When the next section pushes a held bar up, the bar's -1px bottom
    margin lands its line on the next rule. The lines never double.
-4. **No radius.** Every radius token (`radius.mark` … `radius.pill`) resolves to 0
-   and literal radii are flattened. Components still bind the tokens. The Button
-   *Anatomy* view reads `R0 · radius.control`.
+4. **No radius in the chrome.** The chrome sets radius 0 and a 1px ring on its own
+   elements (nav, cells, panels, terminals, chips, calls to action), one by one. It
+   never redefines a `--ds-*` token and never selects a product component
+   (`.scnx-*`), so every component, in the chrome or on a stage, keeps the radius,
+   mono and material it ships with: the Button stage shows R12 and its *Anatomy*
+   view reads `R12 · radius.control`; product mocks (the dashboard, the invite
+   dialog, the assembly plates) keep the ladder.
 5. **No read head, no reticle, no left rail.** The ruler scrollbar replaces them.
 6. **Nav and calls to action** are cells of the same lines: a full-width 48px strip,
    mono upper-case labels, the current page as an ink chip, the primary action as
-   a solid ink cell. Calls to action outside a specimen share the 48px height.
-   Hovering or focusing a nav link or a call to action verifies its label like a
-   ruler title: hash characters for 120ms, then it resolves left to right, one
+   a solid ink cell. A Badge in the nav sits in a tag cell (`.sq-nav-tag`). Calls to
+   action are docs chrome, `.sq-cta` (primary, secondary, ghost), never a restyled
+   Button. Hovering or focusing a nav link or a call to action verifies its label like
+   a ruler title: hash characters for 120ms, then it resolves left to right, one
    character every 45ms. Only the text changes; the icon stays put, the mono face
    keeps the width, and the accessible name stays the real label. Component specimens
    (the Button page's stage, the guarantees' Save and Cancel) are left alone.
+7. **Contrast.** Text is text or muted (4.5:1 or more in both modes), blue text is
+   `primary.text.*`, a control's boundary is `--sq-edge` (3:1 or more). The faint
+   mix is decoration only. The brand book's Colour sheet measures every role live.
 
 ## Scroll behaviour
 
@@ -88,7 +97,10 @@ In short:
 
 - `square.css`: the line system, the nav, the section bars, the cells and the ruler
   styles, loaded after `../docs-instrument/instrument.css`. The `--sq-*` properties
-  (line, cross, glass, column, padding) are expression-local guidance.
+  (mono, line, cross, edge, faint, glass, column, padding) are expression-local
+  guidance. It serves IBM Plex Mono 400, 500 and 600 from
+  `../../design-system/fonts/` (SIL OFL 1.1, `OFL-IBMPlexMono.txt`), so no page
+  loads a font from another origin.
 - `square.js`: reveal, smooth scroll, the ruler scrollbar, its ledger and titles. No
   dependencies.
 - `SCROLL.md`: every scroll behaviour, with its values and where it is off.
