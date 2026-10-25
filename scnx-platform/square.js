@@ -267,13 +267,14 @@
         L.sBig = clamp(room / L.W, 0.8, 1);
         L.curY = 66 + L.i * pitch + big * L.sBig;
         if (L.i === 0) continue;
-        // a title lies down from a little below its current place until its line reaches
-        // the nav; it never starts until 24px after the previous section's line has reached
-        // the nav, so the previous title stands whole, checked, at that moment. A short
-        // section makes the next title lie down faster.
+        // a standing title rides up until its top is 8px under its current place, the edge of
+        // the titles at the top, and lies down from there until its line reaches the nav; it
+        // never starts until 24px after the previous section's line has reached the nav, so
+        // the previous title stands whole, checked, at that moment. A short section makes
+        // the next title lie down faster.
         const P = labels[L.i - 1];
         const before = P.i === 0 ? Infinity : P.end + (L.top - P.top) - L.end - 24;
-        L.span = Math.max(12, Math.min(L.curY + big * L.sBig + 140 - NAV, before));
+        L.span = Math.max(12, Math.min(L.curY + (big * L.sBig) / 2 - L.end, before));
         // standing, the title hangs from its line, and its foot stays 8px above the next
         // title waiting in the stack: it stands up only once its line has risen to where it
         // hangs clear of the stack (hang), over the next STAND px, and lies back down over the
