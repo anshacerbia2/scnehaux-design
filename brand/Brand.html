@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux · Brand</title>
+<meta name="description" content="The Scnehaux brand that every theme shares: the name and the mark, the voice, the icons, and how themes, products and brand books relate.">
+<link rel="icon" href="../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/industrial.css">
+<link rel="stylesheet" href="../design-system/components/bundle.css">
+<link rel="stylesheet" href="../scnx-platform/instrument.css">
+<link rel="stylesheet" href="../scnx-platform/square.css">
+<script src="../scnx-platform/instrument.js"></script>
+<script src="../scnx-platform/square.js"></script>
+<style>
+  /* The brand page is drawn in the house theme's line system, like scnx-platform's brand book. */
+  .bb-hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+  .bb-hero > div { padding: 72px var(--sq-pad) 64px; display: grid; gap: 24px; align-content: start; }
+  .bb-hero .ix-display { font-size: clamp(2.75rem, 5.6vw, 4.75rem); }
+  .bb-lead { padding: 56px var(--sq-pad) 48px; box-shadow: inset 0 -1px 0 var(--sq-line); display: grid; gap: 16px; }
+  .bb-lead .ix-h2 { max-inline-size: 22ch; }
+  .bb-lead .ix-lede { max-inline-size: 70ch; }
+  .bb-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bb-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bb-cell { padding: 32px var(--sq-pad) 36px; display: grid; gap: 12px; align-content: start; }
+  .bb-cell .no { font: 500 11px/1 var(--mono); letter-spacing: 0.15em; color: var(--ix-muted); }
+  .bb-cell p { margin: 0; }
+  .bb-k { font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); }
+  .bb-table-wrap { overflow-x: auto; }
+  .bb-table { inline-size: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .bb-table th { text-align: left; padding: 12px 16px; font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); box-shadow: inset 0 -1px 0 var(--sq-line); white-space: nowrap; }
+  .bb-table td { padding: 14px 16px; vertical-align: top; box-shadow: inset 0 -1px 0 var(--sq-line); line-height: 1.55; color: var(--ix-muted); }
+  .bb-table tr:last-child td { box-shadow: none; }
+  .bb-table :is(th, td):first-child { padding-inline-start: var(--sq-pad); }
+  .bb-table :is(th, td):last-child { padding-inline-end: var(--sq-pad); }
+  .bb-table td:first-child { color: var(--ix-text); font-weight: 500; }
+  .bb-table.keyed td:first-child { white-space: nowrap; }
+  .bb-table code, .bb-cell code, .bb-lead code, .bb-note code { font: 500 12px/1.5 var(--mono); color: var(--ix-text); }
+  .bb-note { padding: 18px var(--sq-pad) 22px; font: 500 11.5px/1.6 var(--mono); color: var(--ix-muted); box-shadow: inset 0 1px 0 var(--sq-line); }
+  .bb-note b { color: var(--ix-text); font-weight: 500; }
+
+  /* the mark on its two grounds: each ground is a theme island in its own mode */
+  .bb-mark { display: grid; gap: 14px; align-content: start; padding: 32px var(--sq-pad) 36px; background: var(--ix-ground); }
+  .bb-mark .lockup { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ix-text); }
+  .bb-mark .sizes { display: flex; align-items: end; gap: 20px; }
+  .bb-mark .sizes span { display: grid; justify-items: center; gap: 6px; font: 500 10px/1 var(--mono); letter-spacing: 0.1em; color: var(--ix-muted); }
+  .bb-mark code { font: 500 11px/1.45 var(--mono); color: var(--ix-muted); }
+
+  /* icons, drawn with currentColor */
+  .bb-icons { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1px; background: var(--sq-line); }
+  .bb-icons figure { margin: 0; padding: 22px 8px 16px; display: grid; justify-items: center; gap: 10px; background: var(--ix-ground); color: var(--ix-text); }
+  .bb-icons figcaption { font: 500 10px/1.3 var(--mono); letter-spacing: 0.06em; color: var(--ix-muted); text-align: center; overflow-wrap: anywhere; }
+  .bb-icons .accent { color: var(--ix-signal); }
+
+  @media (max-width: 980px) { .bb-hero, .bb-grid-3 { grid-template-columns: minmax(0, 1fr); } .bb-icons { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .bb-grid-2 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <!-- The mark: the same artwork in every theme. Its tile follows the mode's ink, its check is Scnx Blue. -->
+  <symbol id="i-mark" viewBox="0 0 28 28"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="#0a6cf2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <!-- the icon set (design-system/assets/Icons), with currentColor; the contract marks keep one accent part -->
+  <symbol id="ic-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="ic-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="ic-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="ic-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="ic-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="ic-orbit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></symbol>
+  <symbol id="ic-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="ic-split" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></symbol>
+  <symbol id="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="ic-primitive-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6.5A2.5 2.5 0 0 1 6.5 4H9M15 4h2.5A2.5 2.5 0 0 1 20 6.5V9M20 15v2.5a2.5 2.5 0 0 1-2.5 2.5H15M9 20H6.5A2.5 2.5 0 0 1 4 17.5V15"/><circle class="accent" cx="12" cy="12" r="2.6" fill="var(--ix-signal)" stroke="none"/></symbol>
+  <symbol id="ic-component-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12.5" height="12.5" rx="3.2"/><rect x="8.5" y="8.5" width="12.5" height="12.5" rx="3.2" fill="var(--ix-signal)" stroke="none"/></symbol>
+  <symbol id="ic-token-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(-32 12 18)"/><rect x="9" y="4.5" width="6" height="15" rx="3" transform="rotate(32 12 18)"/><rect x="9" y="4.5" width="6" height="15" rx="3" fill="var(--ix-signal)" stroke="none"/></symbol>
+  <symbol id="ic-release-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.3 1.4 2.7-.06 1.29 2.37 2.37 1.29-.06 2.7L22 12l-1.4 2.3.06 2.7-2.37 1.29L17 20.66l-2.7-.06L12 22l-2.3-1.4-2.7.06-1.29-2.37L3.34 17l.06-2.7L2 12l1.4-2.3L3.34 7l2.37-1.29L7 3.34l2.7.06z"/><path d="M8.2 12.3l2.6 2.6 5-5.4" stroke="var(--ix-signal)" stroke-width="2"/></symbol>
+</svg>
+
+<div class="ix-reticle" aria-hidden="true"></div>
+
+<div class="ix-page">
+  <div class="ix-wrap ix-nav-shell">
+    <header class="ix-nav">
+      <a class="ix-brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux</a>
+      <span class="sq-nav-tag" data-nav-optional><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Brand</span></span>
+      <ul class="ix-nav-links">
+        <li><a href="#top" aria-current="page">Brand</a></li>
+        <li><a href="../scnx-platform/Brand-Book.html">scnx-platform</a></li>
+        <li><a href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/README.md">scnx-saas</a></li>
+      </ul>
+      <span class="ix-nav-spacer"></span>
+      <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/06</span>
+      <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="sq-cta" data-variant="primary" href="../" data-nav-optional>All designs</a>
+    </header>
+  </div>
+
+  <main id="top">
+    <!-- 01 · Overview -->
+    <section class="ix-wrap" id="overview" data-sheet="Overview" aria-labelledby="br-title">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>01</b></span>
+        <span class="ix-sheet-name">Scnehaux · Brand</span>
+        <dl class="ix-tb"><div><dt>For</dt><dd>every theme</dd></div><div><dt>Status</dt><dd>guidance</dd></div></dl>
+      </div>
+      <div class="bb-hero sq-cells">
+        <div>
+          <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Brand</span>Shared by every theme</span>
+          <h1 class="ix-display" id="br-title">One brand. A look per theme.</h1>
+          <p class="ix-lede">What stays the same whichever theme a product runs: the name and the mark, the voice, the icons. Each theme's brand book adds how that theme looks and moves, and links back here.</p>
+          <div class="hero-actions" style="display:flex; flex-wrap:wrap; gap:10px">
+            <a class="sq-cta" data-variant="primary" href="../scnx-platform/Brand-Book.html">scnx-platform brand book<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="sq-cta" data-variant="secondary" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/README.md">scnx-saas rules</a>
+          </div>
+        </div>
+        <div>
+          <p class="ix-eyebrow">This page covers</p>
+          <p class="ix-body">The <b>identity</b>: the name, the mark and its use, the voice and the copy rules, the icon grammar, and how themes, products and brand books relate. It is the one place these are written.</p>
+          <p class="ix-eyebrow">It does not cover</p>
+          <p class="ix-body">How a theme looks: shape, materials, lines, layout, type sizes, colour roles, motion. Those are in each theme's brand book. Token values belong to <code>@scnx/system</code>.</p>
+        </div>
+      </div>
+      <dl class="sq-facts" aria-label="Brand">
+        <div><dt>Brand</dt><dd>Scnehaux</dd></div>
+        <div><dt>Themes</dt><dd>scnx-platform, scnx-saas</dd></div>
+        <div><dt>Source</dt><dd>scnehaux-design</dd></div>
+        <div><dt>Tokens from</dt><dd>@scnx/system</dd></div>
+        <div><dt>Authority</dt><dd>ADR-UIP-VIS-002</dd></div>
+      </dl>
+    </section>
+
+    <!-- 02 · Name and mark -->
+    <section class="ix-wrap ix-sheet" id="mark" data-sheet="Mark" aria-labelledby="h-mark">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>02</b></span>
+        <span class="ix-sheet-name">Name and mark</span>
+        <dl class="ix-tb"><div><dt>Minimum</dt><dd>20px</dd></div><div><dt>Clear space</dt><dd>4px</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-mark">A primitive, a component, and a verified check.</h2><p class="ix-lede">The mark is a 24px ink tile holding a primitive outline, a component square, a circle and a Scnx Blue check. It is artwork, not a component: no theme maps its shape, and its check is Scnx Blue in every theme, including scnx-saas.</p></div>
+      <div class="sq-cells bb-grid-2">
+        <div class="bb-mark" data-scnx-theme="industrial" data-scnx-resolved-mode="light">
+          <span class="bb-k">On a light ground</span>
+          <span class="lockup"><svg width="28" height="28" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</span>
+          <span class="sizes"><span><svg width="48" height="48" aria-hidden="true"><use href="#i-mark"/></svg>48</span><span><svg width="28" height="28" aria-hidden="true"><use href="#i-mark"/></svg>28</span><span><svg width="20" height="20" aria-hidden="true"><use href="#i-mark"/></svg>20 min</span></span>
+          <code>scnehaux-mark.svg · tile #1d2024, parts #fcfcfd</code>
+        </div>
+        <div class="bb-mark" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+          <span class="bb-k">On a dark ground</span>
+          <span class="lockup"><svg width="28" height="28" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</span>
+          <span class="sizes"><span><svg width="48" height="48" aria-hidden="true"><use href="#i-mark"/></svg>48</span><span><svg width="28" height="28" aria-hidden="true"><use href="#i-mark"/></svg>28</span><span><svg width="20" height="20" aria-hidden="true"><use href="#i-mark"/></svg>20 min</span></span>
+          <code>scnehaux-mark-inverse.svg · tile #edeef0, parts #101113</code>
+        </div>
+      </div>
+      <div class="bb-table-wrap">
+        <table class="bb-table keyed">
+          <thead><tr><th scope="col">Rule</th><th scope="col">Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Files</td><td><code>design-system/assets/Logos/scnehaux-mark.svg</code> on light grounds, <code>scnehaux-mark-inverse.svg</code> on dark. In code, bind the tile to ink (<code>neutral.surface.solid</code>, parts <code>neutral.text.contrast</code>) and keep the check Scnx Blue, <code>#0a6cf2</code>.</td></tr>
+            <tr><td>Size and space</td><td>Never smaller than 20px. Keep 4px clear on every side.</td></tr>
+            <tr><td>Name</td><td>"Scnehaux UI" for the design system, "Scnehaux" for the platform. Inter semibold, −0.01em, beside the mark. There is no separate wordmark file.</td></tr>
+            <tr><td>Product names</td><td>A product is named after what it does: "Scnehaux IAM", "Scnehaux AI Runtime". A product name never becomes a theme name, because a theme serves many products.</td></tr>
+            <tr><td>Never</td><td>Recolour the check, redraw the parts, put the mark on a busy image, or set it below 20px.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 03 · Voice -->
+    <section class="ix-wrap ix-sheet" id="voice" data-sheet="Voice" aria-labelledby="h-voice">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>03</b></span>
+        <span class="ix-sheet-name">Voice and copy</span>
+        <dl class="ix-tb"><div><dt>Case</dt><dd>sentence</dd></div><div><dt>Address</dt><dd>you</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-voice">Plain, specific, and evidence-led.</h2><p class="ix-lede">State what is true and how it is verified: "Every release ships with the evidence that it works." "Static CSS and no style or script injected at run time, so a security team never loosens its policy."</p></div>
+      <div class="sq-cells bb-grid-3">
+        <div class="bb-cell"><span class="no">01</span><h3 class="ix-h3">Sentence case</h3><p class="ix-body">Headings, buttons, menu items and table headers. An eyebrow's upper case is CSS, never typed.</p></div>
+        <div class="bb-cell"><span class="no">02</span><h3 class="ix-h3">Verbs on buttons</h3><p class="ix-body">"Deploy", "New project", "Copy link", "Delete project". Never "OK", "Submit" or "Click here".</p></div>
+        <div class="bb-cell"><span class="no">03</span><h3 class="ix-h3">Speak to you</h3><p class="ix-body">The product speaks for itself and rarely says "we": "Bring your brand, keep your stack, and verify every release you install."</p></div>
+        <div class="bb-cell"><span class="no">04</span><h3 class="ix-h3">Exact numbers</h3><p class="ix-body">"3,200 / 5,000", "41 seconds", "128 deployments". Tabular figures wherever numbers update or align.</p></div>
+        <div class="bb-cell"><span class="no">05</span><h3 class="ix-h3">Errors say what to do</h3><p class="ix-body">"Enter a full email address." "Add the TXT record and try again." No "Oops", no exclamation marks, no emoji.</p></div>
+        <div class="bb-cell"><span class="no">06</span><h3 class="ix-h3">Name the cost</h3><p class="ix-body">Destructive copy names the object and the consequence: "Delete acme-dashboard?" "This removes 128 deployments, 3 domains and all environment variables. It cannot be undone."</p></div>
+      </div>
+      <div class="bb-table-wrap">
+        <table class="bb-table">
+          <thead><tr><th scope="col">Write</th><th scope="col">Not</th></tr></thead>
+          <tbody>
+            <tr><td>Every release ships with the evidence that it works.</td><td>A powerful, seamless design system!</td></tr>
+            <tr><td>Enter a full email address.</td><td>Oops! Something went wrong.</td></tr>
+            <tr><td>Delete project</td><td>OK</td></tr>
+            <tr><td>Status: a word or an icon with the colour ("Live" with a dot)</td><td>Green and red alone</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 · Icons -->
+    <section class="ix-wrap ix-sheet" id="icons" data-sheet="Icons" aria-labelledby="h-icons">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>04</b></span>
+        <span class="ix-sheet-name">Icons</span>
+        <dl class="ix-tb"><div><dt>Grid</dt><dd>24</dd></div><div><dt>Stroke</dt><dd>1.8</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-icons">One grammar: a 24-unit grid and a 1.8 stroke.</h2><p class="ix-lede">Round caps and joins, <code>currentColor</code>, 16px in text and controls, 20px in large controls and navigation. The four contract marks carry one accent part in Scnx Blue. The set is the same in every theme.</p></div>
+      <div class="bb-icons">
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-arrow-left"/></svg><figcaption>arrow-left</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-arrow-right"/></svg><figcaption>arrow-right</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-check"/></svg><figcaption>check</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-code"/></svg><figcaption>code</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-copy"/></svg><figcaption>copy</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-external"/></svg><figcaption>external</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-monitor"/></svg><figcaption>monitor</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-moon"/></svg><figcaption>moon</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-orbit"/></svg><figcaption>orbit</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-reset"/></svg><figcaption>reset</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-split"/></svg><figcaption>split</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-sun"/></svg><figcaption>sun</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-primitive-mark"/></svg><figcaption>primitive-mark</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-component-mark"/></svg><figcaption>component-mark</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-token-mark"/></svg><figcaption>token-mark</figcaption></figure>
+        <figure><svg width="24" height="24" aria-hidden="true"><use href="#ic-release-mark"/></svg><figcaption>release-mark</figcaption></figure>
+      </div>
+      <div class="bb-note"><b>Files</b> are in <code>design-system/assets/Icons/</code>, single-ink for use as images; in code, draw them with <code>currentColor</code>. <b>Stand-ins:</b> the previews also draw x, chevrons, search, info, warning, plus, settings, user and others to the same grammar until the set ships them; never copy an icon from another library. An icon beside text is decorative (<code>aria-hidden</code>); an icon-only control needs an accessible name and, unless universal, a tooltip. Never use emoji as icons.</div>
+    </section>
+
+    <!-- 05 · Themes and products -->
+    <section class="ix-wrap ix-sheet" id="themes" data-sheet="Themes" aria-labelledby="h-themes">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>05</b></span>
+        <span class="ix-sheet-name">Themes, products and brand books</span>
+        <dl class="ix-tb"><div><dt>Themes</dt><dd>two</dd></div><div><dt>Brand books</dt><dd>one per theme</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-themes">A product picks a theme. A theme has one brand book.</h2><p class="ix-lede">The number of brand books follows the number of themes, never the number of products. Products that look the same share a theme and read the same brand book.</p></div>
+      <div class="bb-table-wrap">
+        <table class="bb-table keyed">
+          <thead><tr><th scope="col">Theme</th><th scope="col">In @scnx/system today</th><th scope="col">Products</th><th scope="col">Brand book</th></tr></thead>
+          <tbody>
+            <tr><td>scnx-platform</td><td><code>industrial</code>, to be renamed</td><td>The Scnehaux platform: IAM, AI runtime, organization, the docs</td><td><a class="ix-link" href="../scnx-platform/Brand-Book.html">scnx-platform/Brand-Book.html</a></td></tr>
+            <tr><td>scnx-saas</td><td><code>achromatic</code>, to be renamed</td><td>The SaaS products</td><td><code>scnx-saas/Brand-Book.html</code> once the theme ships its shape; until then <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/README.md">design-system/README.md</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sq-cells bb-grid-3">
+        <div class="bb-cell"><span class="no">01</span><h3 class="ix-h3">The prefix scnx- is ours</h3><p class="ix-body">Only themes that <code>@scnx/system</code> ships are named <code>scnx-*</code>. A product's or a client's theme takes its own name, such as <code>northwind</code>, so it can never collide with a shipped one.</p></div>
+        <div class="bb-cell"><span class="no">02</span><h3 class="ix-h3">Named for whom, not for how</h3><p class="ix-body">A theme is named after who owns the look, never after a trait. A trait name stops being true the day the theme maps another Tier-2 key. Mode (light, dark) is its own axis and never part of a theme's name.</p></div>
+        <div class="bb-cell"><span class="no">03</span><h3 class="ix-h3">A new look is a new theme</h3><p class="ix-body">A product that needs a different look gets a theme, and that theme gets its own folder and brand book. A product never has a brand book of its own; product notes (terms, domain patterns, the hooks it sets) live in its repository and never change a theme's rules.</p></div>
+      </div>
+    </section>
+
+    <!-- 06 · Status -->
+    <section class="ix-wrap ix-sheet" id="status" data-sheet="Status" aria-labelledby="h-status">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>06</b></span>
+        <span class="ix-sheet-name">Status</span>
+        <dl class="ix-tb"><div><dt>Normative</dt><dd>no</dd></div><div><dt>Needs</dt><dd>ADR or STD</dd></div></dl>
+      </div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-status">Guidance until a decision records it.</h2><p class="ix-lede">This page is a reference (ADR-UIP-VIS-002). The voice, the icon grammar and the use of the mark bind a component only after an ADR or STD revision records them. The theme naming rules are proposed in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/proposals/industrial-structure.md">the industrial structure, revision 3</a>.</p></div>
+    </section>
+  </main>
+
+  <footer class="ix-wrap ix-foot" data-draw>
+    <div class="ix-setblock" aria-label="Drawing set">
+      <div><span class="k">Drawing set</span><span class="v">Scnehaux · brand</span></div>
+      <div><span class="k">Sheets</span><span class="v">01–06</span></div>
+      <div><span class="k">Applies to</span><span class="v">every theme</span></div>
+      <div><span class="k">Status</span><span class="v">guidance</span></div>
+      <div><span class="k">Authority</span><span class="v">ADR-UIP-VIS-002</span></div>
+    </div>
+  </footer>
+</div>
+
+<nav class="ix-rail" aria-label="Sheets"><ol class="ix-rail-marks"></ol><span class="ix-rail-progress"></span></nav>
+</body>
+</html>

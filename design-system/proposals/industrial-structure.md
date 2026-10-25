@@ -1,14 +1,28 @@
 # Proposal: the industrial structure
 
-> **Status: proposal, non-normative (ADR-UIP-VIS-002). Revision 2, 2026-10-25.** It
-> binds nothing until ADR-UIP-VIS-001 revision 3 and STD-UIP-TKN-001 2.7.0 record it.
-> Revision 1 (the same day) fixed structure in every theme and let a theme supply
-> only colours; ADR-UIP-VIS-001 revision 2 and STD-UIP-TKN-001 2.6.0 recorded that
-> (scnehaux-architecture#131). Revision 2 replaces it: components carry no design of
-> their own, every presentational value is open through two paths, and what must hold
-> is guarded as a floor, not locked as a value.
+> **Status: proposal, non-normative (ADR-UIP-VIS-002). Revision 3, 2026-10-26.**
+> Revision 1 (2026-10-25) fixed structure in every theme and let a theme supply only
+> colours (scnehaux-architecture#131). Revision 2 (the same day) replaced it: components
+> carry no design of their own, every presentational value is open through two paths,
+> and what must hold is guarded as a floor; ADR-UIP-VIS-001 revision 3 and
+> STD-UIP-TKN-001 2.7.0 record that (scnehaux-architecture#132), and ui-platform has
+> built most of it. Revision 3 adds what revision 2 left open: **how themes are named,
+> which brand book a product reads, and the shape of the second theme** (items 6 to 8
+> and [Themes, names and brand books](#themes-names-and-brand-books)). It binds nothing
+> until STD-UIP-TKN-001 and ADR-UIP-VIS-002 record it.
 
-The owner's direction, in their words:
+The owner's direction for revision 3, in their words:
+
+- "yg industrial itu akan gw pake buat scnehaux platform, iam, ai-runtime, dll" (the
+  industrial theme is for the Scnehaux platform, IAM, AI runtime and the rest).
+- "achromatic itu tokennya untuk design ini" (achromatic holds the tokens of the
+  docs-site design, now `scnx-saas/`).
+- "mungkin yg industrial diganti code name scnx-platform dan yg achromatic diganti jadi
+  scnx-saas" (industrial becomes `scnx-platform`, achromatic becomes `scnx-saas`).
+- "brandbook artinya per theme kan bukan lagi per product" (a brand book is per theme,
+  no longer per product).
+
+The owner's direction for revision 2:
 
 - "styled component dilarang mengapply radius atau apapun property yg mengacu ke
   spesifik design ... jadi agnostic" (a styled component applies no radius, nor any
@@ -44,8 +58,25 @@ The owner's direction, in their words:
    the component enforces it in its own CSS, so no theme or hook can break it.
 5. **Two prefixes at runtime.** Tier 1 is a compiler input and is never emitted as a
    CSS variable (ADR-GLB-FE-010). Tier 2 is `--ds-*`. Tier 3 is
-   `--scnx-{component}-{part?}-{property}`, the component namespace already used by
-   `.scnx-*` classes and `data-scnx-*` attributes.
+   `--scnx-{component}-{part?}-{property}-{state?}`, the component namespace already
+   used by `.scnx-*` classes and `data-scnx-*` attributes. A hook name has no variant
+   segment; a product changes one variant by setting the hook on `[data-variant]`
+   within its scope (the owner's decision A, 2026-10-25, recorded in ui-platform's TDD
+   styled-004 as HK5).
+6. **A theme is named after who owns the look, never after a trait.** The two shipped
+   themes become `scnx-platform` (was `industrial`: the Scnehaux platform, IAM, AI
+   runtime, organization, the docs) and `scnx-saas` (was `achromatic`: the SaaS
+   products). The prefix `scnx-` is reserved for themes `@scnx/system` ships; a product's
+   or a client's theme takes its own name (`northwind`). Mode stays its own axis and is
+   never part of a theme's name.
+7. **A brand book belongs to a theme, not to a product.** Products on one theme read one
+   brand book; a product that needs a different look gets a new theme and, with it, a
+   brand book. What every theme shares (the name and the mark, the voice, the icons) is
+   written once, on a brand page that each brand book links to.
+8. **`scnx-saas` takes the shape of its boards.** It maps the concentric radius ladder
+   and the soft material shadows that the `scnx-saas/` boards are drawn with. Revision 1
+   removed them from `achromatic` because a theme then supplied only colour; revision 2
+   lifted that rule, and the design that owns the theme needs them back.
 
 ## Why
 
@@ -118,19 +149,55 @@ Two older locks become unnecessary: overlays use the top layer (`<dialog>`, the 
 API), so the browser orders them; and components respond to their container with
 container queries, not to global breakpoints.
 
-**Who tests what.** ui-platform certifies the themes it ships (`industrial`,
-`achromatic`) in every mode. A product's own theme or hooks run the same gates (contrast
-and floors) in that product's CI.
+**Who tests what.** ui-platform certifies the themes it ships (`scnx-platform`,
+`scnx-saas`) in every mode. A product's own theme or hooks run the same gates (contrast
+and floors) in that product's CI. With one square theme and one rounded theme shipped,
+the gate also proves that every component follows a theme's shape through its hooks:
+a component that stays square under `scnx-saas` still holds a literal.
 
-## Themes after the change
+## Themes, names and brand books
 
-| Theme id | Was | What it maps |
-| :-- | :-- | :-- |
-| `industrial` | `default` | The Scnx Blue palette; square (radius 0, `pill` for meaningful shapes), ring materials |
-| `achromatic` | `achromatic` | An ink palette; its radius and shadow overrides were removed in revision 1 and stay removed by choice, not by rule |
+| Theme id | Was | Used by | What it maps | Brand book |
+| :-- | :-- | :-- | :-- | :-- |
+| `scnx-platform` | `industrial` (until 2026-10-25 `default`) | The Scnehaux platform: IAM, AI runtime, organization, the docs | The Scnx Blue palette; square (radius 0, `pill` for meaningful shapes); ring materials | `scnx-platform/Brand-Book.html` |
+| `scnx-saas` | `achromatic` | The SaaS products | An ink palette; the concentric ladder (`mark` 4, `element` 8, `control` 12, `container` 16, `panel` 24, plus `pill`); materials with their soft shadows and, in dark mode, a lit top edge | `scnx-saas/Brand-Book.html`; until it is drawn, `design-system/README.md` |
 
-A brand theme may map any Tier-2 key. ui-platform is before v1, so the id changes
-without a compatibility alias (TDD tokens-003, "Rollout and Compatibility").
+The shape values for `scnx-saas` are the ones its boards were drawn with, in the
+earlier snapshot `design-system/themes/default/tokens.css`. ui-platform is before v1, so
+both ids change without a compatibility alias (TDD tokens-003, "Rollout and
+Compatibility").
+
+**Naming rules.**
+
+- **Named after the owner of the look.** A name that describes a trait stops being true
+  the day the theme maps another Tier-2 key: `industrial` would be wrong the day it
+  gains a 4px corner, `achromatic` the day it gains an accent. The large systems name a
+  complete look after its product or brand: Adobe Spectrum ships the systems
+  `spectrum`, `express` (Adobe Express) and `spectrum-two` [15]; Fluent UI ships
+  `webLightTheme` and `teamsLightTheme` (Microsoft Teams) [16]; SLDS 2 ships
+  Salesforce Cosmos [17]. Trait words are kept for values within an axis: `light`,
+  `dark`, `large`, `highContrast`.
+- **`scnx-` marks a shipped theme.** Only `@scnx/system` names a theme `scnx-*`. A
+  product or client theme takes its own name, so it can never collide with a shipped
+  theme, and a file such as `tokens/css/scnx-saas.css` or a Figma mode reads as
+  first-party where no attribute gives the context. The attribute reads
+  `data-scnx-theme="scnx-saas"`; the repetition is the price of the namespace.
+- **A theme is not a product.** A product picks a theme. A new theme is made only when a
+  product needs a different look, which keeps the count of themes, and of brand books,
+  at the count of looks.
+- **Mode is an axis, not a name.** Spectrum keeps `color` and `scale` apart from the
+  system [15]; Atlassian keeps `colorMode` apart from the theme ids it sets for
+  spacing, typography and shape [18]; the DTCG Resolver Module expresses each such axis
+  as a modifier, and the resolutions are the product of their contexts [13]. Structure
+  and colour are not split into separate axes now: no product needs to mix them yet,
+  and the Resolver can add that modifier later without renaming a theme.
+
+**Brand books.** A brand book documents a theme's look. Products on one theme read the
+same brand book. A product may keep thin notes in its own repository (its terms, its
+domain patterns, the hooks it sets); they add to the theme's brand book and never
+change its rules. What every theme shares is on one brand page, `brand/Brand.html`: the
+name and the mark, whose check stays Scnx Blue in every theme because it is artwork,
+not a token; the voice and the copy rules; the icon grammar.
 
 ## The docs
 
@@ -161,12 +228,25 @@ own mono (`--sq-mono`) and product code keeps the system mono.
 
 ## What changes, and where
 
+Revision 2, checked against each repository's `main` on 2026-10-26:
+
+| Repository | Change | State |
+| :-- | :-- | :-- |
+| `scnehaux-architecture` | ADR-UIP-VIS-001 revision 3 (guarded floors; a theme maps any Tier-2 key; industrial square as values, not a rule). STD-UIP-TKN-001 2.7.0 (guarded floors; Tier-3 hooks under `--scnx-`, referenced with a fallback, never declared, never registered; the review rule kept). | Done (#132) |
+| `ui-platform` | Hooks and floors in component CSS (`hook()`, `target-floor()`); the hook gate; hooks with review records in each `*.spec.json`; control sizes in Tier 2; the industrial values; `default` → `industrial`; full class names; Panda recipes on hooks. | Done for 12 styled components (#127 to #133). CodeSelect, CodeShowcase, Navigation, Sidebar, EdgeLayout and FloatingLayout are on the branch `feat/hooks-entries`, not yet in a pull request |
+| `ui-platform` | A system variant for a meaningful shape (`data-shape="circular"`). | Not started |
+| `ui-platform` | TableOfContents takes a controlled `activeId`, so a page can make it agree with its own "here". | Not started |
+| `ui-platform-docs` | Component pages list hooks, fallbacks and floors; the Theme × Mode switch may change shape. | Not started; the pin is `9938a60`, before the hooks |
+| `scnehaux-design` | Pages read the package's tokens (`scripts/sync-tokens.mjs`); the bridge is deleted. | Done (#26). The cards still use the earlier snapshot |
+
+Revision 3:
+
 | Repository | Change |
 | :-- | :-- |
-| `scnehaux-architecture` | ADR-UIP-VIS-001 revision 3: item 6 (structural invariants) becomes the guarded floors; item 7 (a theme supplies colour only) becomes "a theme maps any Tier-2 key"; item 2 keeps industrial square as the default theme's values, not a rule; Alternatives Considered gains revision 2's theme-invariant structure, with the reason. STD-UIP-TKN-001 2.7.0: "Theme-invariant structure" becomes "Guarded floors"; "Cascading Overrides" lets a brand theme override any Tier-2 key; Tier-3 Alias Governance moves to the prefix `--scnx-` (referenced with a fallback, never declared, never registered); its review rule stays. |
-| `ui-platform` | Component CSS reads `var(--scnx-{component}-{property}, var(--ds-…))` for every presentational property, with no literal design values; floors in component CSS (`max()`, reduced motion); the theme gate checks contrast and floors, not identical structure; industrial values (radius 0, ring materials); `default` → `industrial`; hooks listed in each `*.spec.json`; control sizes moved to Tier 2; class names on the full component name (`.scnx-btn` → `.scnx-button`), before v1. |
-| `ui-platform-docs` | Until the package ships the industrial values, the bridge in `square.css` sets them as a theme would (Tier 2 at the root). Component pages list hooks, fallbacks and floors; the Theme × Mode switch may change shape. |
-| `scnehaux-design` | After the package ships: regenerate the token snapshot (ADR-UIP-VIS-002), rename `themes/default/` to `themes/industrial/`, re-render the cards, rewrite signatures 1 and 2 of the brand book, and delete the bridge. |
+| `scnehaux-architecture` | STD-UIP-TKN-001: theme naming (an id names the owner of the look; `scnx-` reserved for shipped themes; mode never in the id), and the ids `scnx-platform` and `scnx-saas`. ADR-UIP-VIS-001 item 7: the shipped themes by their new ids. ADR-UIP-VIS-002: the repository's layout (`brand/`, `scnx-platform/`, `scnx-saas/`, `others/`, and the redirects in `concepts/`), a brand book per theme and the shared brand page, and tokens synced from the package's emitter at a pinned commit (`design-system/vendor/scnx-system/`) in place of a hand-made snapshot. |
+| `ui-platform` | Rename `industrial` → `scnx-platform` and `achromatic` → `scnx-saas` (folders, ids, emitted files, Figma modes, tests). `scnx-saas` maps the concentric ladder and the material shadows above; correct the comment in its token file, which still says a theme supplies colour only (STD-UIP-TKN-001 2.6.0). The theme gate rejects a theme id that takes the `scnx-` prefix without shipping in the package. |
+| `ui-platform-docs` | Pin the renamed package; the Theme × Mode switch lists `scnx-platform` and `scnx-saas`. |
+| `scnehaux-design` | Bump the sync pin and sync both themes; draw `scnx-saas/Brand-Book.html` from `design-system/README.md` and its boards; re-render the cards from the package. Signatures 1 and 2 of `design-system/README.md` (the concentric ladder, materials) stay: they are `scnx-saas`'s look. |
 
 ## References
 
@@ -205,3 +285,18 @@ Retrieved 2026-10-25.
 14. Smashing Magazine, "Beyond border-radius: What the CSS corner-shape property
     unlocks for everyday UI" (March 2026):
     <https://www.smashingmagazine.com/2026/03/beyond-border-radius-css-corner-shape-property-ui/>.
+
+Retrieved 2026-10-26 (revision 3).
+
+15. Spectrum Web Components, Theme: <https://opensource.adobe.com/spectrum-web-components/tools/theme>.
+    Systems `spectrum`, `express`, `spectrum-two`; color `light`, `dark`; scale
+    `medium`, `large`.
+16. Fluent UI, `@fluentui/tokens` exports:
+    <https://cdn.jsdelivr.net/npm/@fluentui/tokens/dist/index.d.ts> (`webLightTheme`,
+    `webDarkTheme`, `teamsLightTheme`, `teamsDarkTheme`, `teamsHighContrastTheme`,
+    `createLightTheme`).
+17. Salesforce Trailhead, Plan your transition from SLDS 1 to SLDS 2:
+    <https://trailhead.salesforce.com/content/learn/modules/salesforce-lightning-design-system-2-for-admins/plan-your-transition-from-slds-1-to-slds-2>
+    (Salesforce Cosmos, the default SLDS 2 theme).
+18. Atlassian Design, Tokens in code: <https://atlassian.design/components/tokens/code>
+    (`setGlobalTheme`: `colorMode`, `light`, `dark`, `spacing`, `typography`, `shape`).
