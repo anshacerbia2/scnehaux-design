@@ -44,7 +44,6 @@
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
   const TAU_MODE = 170, TAU_WHEEL = 120, TAU_DRAG = 80; // a drag glides too, closer behind the pointer
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
-  const STAND = 140; // the line's travel over which a title stands up from the stack, or lies back into it
   const DIM = 0.68; // a title not current: text at 68% still reads 4.5:1 or more in both modes
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
@@ -267,24 +266,24 @@
         L.sBig = clamp(room / L.W, 0.8, 1);
         L.curY = 66 + L.i * pitch + big * L.sBig;
         if (L.i === 0) continue;
-        // a standing title rides up until its top is 8px under its current place, the edge of
-        // the titles at the top, and lies down from there until its line reaches the nav; it
-        // never starts until 24px after the previous section's line has reached the nav, so
-        // the previous title stands whole, checked, at that moment. A short section makes
-        // the next title lie down faster.
+        // a title lies down from a little below its current place until its line reaches
+        // the nav; it never starts until 24px after the previous section's line has reached
+        // the nav, so the previous title stands whole, checked, at that moment. A short
+        // section makes the next title lie down faster.
         const P = labels[L.i - 1];
         const before = P.i === 0 ? Infinity : P.end + (L.top - P.top) - L.end - 24;
-        L.span = Math.max(12, Math.min(L.curY + (big * L.sBig) / 2 - L.end, before));
-        // standing, the title hangs from its line, and its foot stays 8px above the next
-        // title waiting in the stack: it stands up only once its line has risen to where it
-        // hangs clear of the stack (hang), over the next STAND px, and lies back down over the
-        // same stretch, so it never crosses the stack in either direction. It is whole
-        // before it starts to lie down at the top; where the viewport leaves no room for
-        // that, it goes from the stack to the current place directly.
-        const below = L.i < last ? vh - 37 - (last - L.i - 1) * pitch - (big * SMALL) / 2 : vh - BOTTOM;
-        L.hang = below - 8 - L.W * UPRIGHT - 8;
-        const clear = L.hang - (L.end + L.span); // between clearing the stack and lying down at the top
-        L.stand = clear < 12 ? 0 : Math.min(STAND, clear);
+        L.span = Math.max(12, Math.min(L.curY + big * L.sBig + 140 - NAV, before));
+        // standing, the title hangs from its line, but its foot stays at least 8px above the
+        // next title waiting in the stack (limit). Scrolling up, it rides down until its foot
+        // meets that limit, waits there, and lies into its place while its line runs on down
+        // its own length to the limit; scrolling down, the same in reverse: it stands up there
+        // and starts to ride once its line has risen clear (hang). So the move happens right
+        // at the stack and never crosses it. It is whole before it starts to lie down at the
+        // top; where the viewport leaves no room for that, it goes from the stack to the
+        // current place directly.
+        L.limit = (L.i < last ? vh - 37 - (last - L.i - 1) * pitch - (big * SMALL) / 2 : vh - BOTTOM) - 8;
+        L.hang = L.limit - L.W * UPRIGHT - 8;
+        L.stand = L.hang >= L.end + L.span ? L.limit - L.hang : 0;
       }
       scaleState = "";
     };
@@ -365,13 +364,13 @@
         const pastY = 66 + pitch * 0.45 + L.i * pitch;
         const half = (L.W * UPRIGHT) / 2;
         const line = L.top - y;
-        // standing, the title hangs from its section's line (see measureLayout: L.hang, L.stand),
-        // and its top stays 8px under its current place, so it lies down without crossing the
-        // titles already read
-        const standY = Math.max(line + 8, curY + (big * sBig) / 2 + 8) + half;
-        // how far along each move the title is (0–1): up once the line has risen clear of the
-        // stack, down as it nears the top
-        const U = L.stand ? clamp((L.hang - line) / L.stand, 0, 1) : 0;
+        // standing, the title hangs from its section's line (see measureLayout: L.limit, L.hang),
+        // its top stays 8px under its current place, so it lies down without crossing the
+        // titles already read, and its foot stays above the stack
+        const standY = clamp(line + 8, curY + (big * sBig) / 2 + 8, L.limit - 2 * half) + half;
+        // how far along each move the title is (0–1): up from the stack's edge, done once the
+        // line has risen clear of it; down as it nears the top
+        const U = L.stand ? clamp((L.limit - line) / L.stand, 0, 1) : 0;
         // the current title leaves for the read stack while the next one lies down, but has
         // left the current place before the next title's first letter lands there (its last
         // letter lands at 1 − SPREAD of the move)
