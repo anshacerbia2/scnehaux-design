@@ -1,7 +1,7 @@
 {
   "repository": "anshacerbia2/ui-platform",
-  "commit": "31c2ca0e4162f16dc3ff6d7166a716e3272b91e8",
+  "commit": "2c28842a075bf17b7ffa1fb5614b29057ffea919",
   "package": "packages/design-system",
-  "themes": ["industrial"],
+  "themes": ["scnx-platform", "scnx-saas"],
   "out": "design-system/vendor/scnx-system"
 }

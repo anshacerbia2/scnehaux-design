@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+<html lang="en" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scnehaux UI · Instrument · Square · Get started</title>
 <meta name="description" content="Instrument · Square expression of the Scnehaux UI docs home: get started, no sign-in.">
 <link rel="icon" href="../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/industrial.css">
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/scnx-platform.css">
 <link rel="stylesheet" href="../design-system/components/bundle.css">
 <link rel="stylesheet" href="instrument.css">
 <link rel="stylesheet" href="square.css">
@@ -252,7 +252,7 @@
           <ul class="clist"><li><a href="#">Color: OKLCH palette and roles<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Contrast pairs, verified<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Type, dimension, motion<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li><li><a href="#">Themes and component hooks<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
           <p class="for">For designers and theme authors</p>
         </article>
-        <article class="mat ccard ink" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+        <article class="mat ccard ink" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
           <div class="ccard-top"><h3 class="ix-h3">Releases</h3><code>evidence</code></div>
           <p class="ix-body">Lifecycle, support matrix, migrations and the proof behind every claim.</p>
           <div class="readout"><strong data-count="7">7</strong><span>gates per component</span></div>
@@ -279,14 +279,14 @@
           <label class="opt"><input type="radio" name="pkg" value="system" checked><span><strong>I want the Scnehaux look <span class="scnx-badge" data-scheme="neutral" data-emphasis="subtle" data-size="small">Most teams</span></strong><p>Styled components, themes, tokens and fonts. Installs core-ui as a peer.</p><code>@scnx/system + @scnx/core-ui</code></span></label>
           <div class="deps" aria-label="core-ui is a peer of system, which your app installs"><span>core-ui</span><span class="ix-dim" data-draw>peer</span><span>system</span><span class="ix-dim" data-draw>install</span><span>your app</span></div>
         </fieldset>
-        <div class="ix-term moves" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+        <div class="ix-term moves" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
           <div class="moves-bar"><h2>Up in three moves</h2><p>CSS once at the composition root</p></div>
           <div class="steps" role="tablist" aria-label="Moves" id="moves">
             <button role="tab" aria-selected="true" data-step="1"><span>1</span>Load CSS once</button>
             <button role="tab" aria-selected="false" data-step="2" tabindex="-1"><span>2</span>Scope a theme root</button>
             <button role="tab" aria-selected="false" data-step="3" tabindex="-1"><span>3</span>Import by entry</button>
           </div>
-<pre id="moves-code" role="tabpanel"><span class="row" data-step="1"><span class="ln">1</span><span class="c">// 1 · app/layout.tsx: load CSS once</span></span><span class="row" data-step="1"><span class="ln">2</span><span class="k">import</span> <span class="s">"@scnx/system/styles/components.css"</span>;</span><span class="row" data-step="1"><span class="ln">3</span><span class="k">import</span> <span class="s">"@scnx/system/tokens/css/industrial.css"</span>;</span><span class="row" data-step="0"><span class="ln">4</span></span><span class="row" data-step="2"><span class="ln">5</span><span class="c">// 2 · scope a theme root; portals inherit it</span></span><span class="row" data-step="2"><span class="ln">6</span>&lt;<span class="k">div</span> <span class="p">data-scnx-theme</span>=<span class="s">"industrial"</span> <span class="p">data-scnx-resolved-mode</span>=<span class="s">"light"</span>&gt;</span><span class="row" data-step="2"><span class="ln">7</span>  {children}</span><span class="row" data-step="2"><span class="ln">8</span>&lt;/<span class="k">div</span>&gt;</span><span class="row" data-step="0"><span class="ln">9</span></span><span class="row" data-step="3"><span class="ln">10</span><span class="c">// 3 · import by explicit entry: no barrels, no wildcards</span></span><span class="row" data-step="3"><span class="ln">11</span><span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;</span></pre>
+<pre id="moves-code" role="tabpanel"><span class="row" data-step="1"><span class="ln">1</span><span class="c">// 1 · app/layout.tsx: load CSS once</span></span><span class="row" data-step="1"><span class="ln">2</span><span class="k">import</span> <span class="s">"@scnx/system/styles/components.css"</span>;</span><span class="row" data-step="1"><span class="ln">3</span><span class="k">import</span> <span class="s">"@scnx/system/tokens/css/scnx-platform.css"</span>;</span><span class="row" data-step="0"><span class="ln">4</span></span><span class="row" data-step="2"><span class="ln">5</span><span class="c">// 2 · scope a theme root; portals inherit it</span></span><span class="row" data-step="2"><span class="ln">6</span>&lt;<span class="k">div</span> <span class="p">data-scnx-theme</span>=<span class="s">"scnx-platform"</span> <span class="p">data-scnx-resolved-mode</span>=<span class="s">"light"</span>&gt;</span><span class="row" data-step="2"><span class="ln">7</span>  {children}</span><span class="row" data-step="2"><span class="ln">8</span>&lt;/<span class="k">div</span>&gt;</span><span class="row" data-step="0"><span class="ln">9</span></span><span class="row" data-step="3"><span class="ln">10</span><span class="c">// 3 · import by explicit entry: no barrels, no wildcards</span></span><span class="row" data-step="3"><span class="ln">11</span><span class="k">import</span> { Button } <span class="k">from</span> <span class="s">"@scnx/system/components/button"</span>;</span></pre>
         </div>
       </div>
     </section>
@@ -351,7 +351,7 @@
             <p class="ix-body ix-mono" style="font-size:11.5px; margin-top:8px">color.blue.light.9 → color.primary.surface.solid.default</p>
           </div>
         </div>
-        <div class="ix-term agents" data-scnx-theme="industrial" data-scnx-resolved-mode="dark">
+        <div class="ix-term agents" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
           <p class="ix-eyebrow">For humans and agents</p>
           <h2 class="ix-h3" style="font-size:1.25rem; letter-spacing:-0.02em; font-family:var(--font-sans)">Your coding agents read the same contracts you do.</h2>
           <p class="ix-body" style="font-family:var(--font-sans)">Generated from the packed API reports, token JSON and release evidence. Never from prose that can drift.</p>
