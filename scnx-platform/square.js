@@ -265,6 +265,11 @@
         // never below 80%; where the margin is narrower it overlaps the page over the glass
         L.sBig = clamp(room / L.W, 0.8, 1);
         L.curY = 66 + L.i * pitch + big * L.sBig;
+        // the first title is current from the start and never stands, but every title needs
+        // a finite limit: a NaN in any one place leaves its letters undrawn
+        L.limit = (L.i < last ? vh - 37 - (last - L.i - 1) * pitch - (big * SMALL) / 2 : vh - BOTTOM) - 8;
+        L.hang = L.limit - L.W * UPRIGHT - 8;
+        L.stand = 0;
         if (L.i === 0) continue;
         // a title lies down from a little below its current place until its line reaches
         // the nav; it never starts until 24px after the previous section's line has reached
@@ -281,8 +286,6 @@
         // at the stack and never crosses it. It is whole before it starts to lie down at the
         // top; where the viewport leaves no room for that, it goes from the stack to the
         // current place directly.
-        L.limit = (L.i < last ? vh - 37 - (last - L.i - 1) * pitch - (big * SMALL) / 2 : vh - BOTTOM) - 8;
-        L.hang = L.limit - L.W * UPRIGHT - 8;
         L.stand = L.hang >= L.end + L.span ? L.limit - L.hang : 0;
       }
       scaleState = "";
