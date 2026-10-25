@@ -43,6 +43,7 @@
   const SMALL = 16 / 34, UPRIGHT = SMALL * 1.12;
   const TAU_MODE = 170, TAU_WHEEL = 120, TAU_DRAG = 80; // a drag glides too, closer behind the pointer
   const SPREAD = 0.55; // share of a title's move spent staggering its letters
+  const DIM = 0.68; // a title not current: text at 68% still reads 4.5:1 or more in both modes
   const DECODE_LEAD = 120, DECODE_STEP = 45; // a hovered title: hash for 120ms, then a letter resolves every 45ms
   const HEX = "0123456789ABCDEF";
   const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
@@ -148,7 +149,7 @@
        left to right. Only their text nodes change (an icon stays put), every face here is
        mono so nothing shifts, and the accessible name stays the real label. Component
        specimens are left alone. */
-    document.querySelectorAll(".ix-nav-links a, .ix-nav .scnx-btn, .sq-btn .scnx-btn").forEach((node) => {
+    document.querySelectorAll(".ix-nav-links a, .sq-cta").forEach((node) => {
       const texts = [];
       const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
       for (let n = walk.nextNode(); n; n = walk.nextNode()) if (n.nodeValue.trim()) texts.push({ n, real: n.nodeValue });
@@ -364,10 +365,10 @@
         for (let k = 0; k < n; k++) {
           const l = L.letters[k];
           const u = stagger(U, k, n), c = stagger(C, k, n), q = stagger(Q, k, n);
-          let at = across(L, k, stackY, SMALL, 0.42);
-          at = blend(at, upright(L, k, standY, 0.42), u);
+          let at = across(L, k, stackY, SMALL, DIM);
+          at = blend(at, upright(L, k, standY, DIM), u);
           at = blend(at, across(L, k, curY, sBig, 1), c);
-          at = blend(at, across(L, k, pastY, SMALL, 0.42), q);
+          at = blend(at, across(L, k, pastY, SMALL, DIM), q);
           // folded: every title lies at the point its section begins
           const mk = ease(clamp(mode * 1.4 - (0.4 * k) / Math.max(1, n - 1), 0, 1));
           if (mk > 0) at = blend(at, across(L, k, hoverY(L.v), SMALL, L.i === cur ? 1 : 0.86), mk);

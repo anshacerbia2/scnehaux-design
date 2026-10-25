@@ -82,10 +82,10 @@ spent staggering the letters, eased in and out (cubic).
 
 | # | Place | Position and look |
 | :-- | :-- | :-- |
-| 6.1 | Stack (ahead) | Small (16px), right-aligned at the ruler, bottom-aligned: `y = viewport − 37 − (last − i) × 20`. Tone 42%. |
-| 6.2 | Standing | Upright on the ruler (rotated −90°, 18px). It hangs from its section line (top at line + 8px), kept on screen while the line is still entering. Tone 42%. |
+| 6.1 | Stack (ahead) | Small (16px), right-aligned at the ruler, bottom-aligned: `y = viewport − 37 − (last − i) × 20`. Tone 68% (4.5:1 or more in both modes). |
+| 6.2 | Standing | Upright on the ruler (rotated −90°, 18px). It hangs from its section line (top at line + 8px), kept on screen while the line is still entering. Tone 68% (4.5:1 or more in both modes). |
 | 6.3 | Current | Large: `clamp(1.77% of viewport width, 22, 34)px`, shrunk toward the free margin (never below 80%). `y = 66 + i × 20 + size`. Full tone, with a blue check beside it once whole. |
-| 6.4 | Read stack | Small, top-aligned under the nav: `y = 75 + i × 20`. Tone 42%. |
+| 6.4 | Read stack | Small, top-aligned under the nav: `y = 75 + i × 20`. Tone 68% (4.5:1 or more in both modes). |
 
 | # | Move | Trigger (section line on screen) |
 | :-- | :-- | :-- |

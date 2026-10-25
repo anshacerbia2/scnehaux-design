@@ -9,9 +9,6 @@
 <link rel="stylesheet" href="../../design-system/themes/default/tokens.css">
 <link rel="stylesheet" href="../../design-system/components/bundle.css">
 <link rel="stylesheet" href="../docs-instrument/instrument.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="square.css">
 <script src="../docs-instrument/instrument.js"></script>
 <script src="square.js"></script>
@@ -73,7 +70,7 @@
   }
   .asm-assembled { position: absolute; left: calc(36% - var(--s) * 0.7071); top: 8px; font: 500 11px/1.5 var(--mono); color: var(--ix-muted); }
   .asm-assembled b { font-weight: 500; color: var(--ix-text); }
-  .asm-meter { display: inline-block; inline-size: 120px; block-size: 3px; margin-inline-start: 8px; vertical-align: middle; background: var(--ix-line); position: relative; overflow: hidden; border-radius: 2px; }
+  .asm-meter { display: inline-block; inline-size: 120px; block-size: 3px; margin-inline-start: 8px; vertical-align: middle; background: var(--ix-line); position: relative; overflow: hidden; border-radius: 0; }
   .asm-meter::after { content: ""; position: absolute; inset: 0; scale: var(--p) 1; transform-origin: left; background: var(--ix-signal); }
 
   @media (max-width: 1080px) {
@@ -100,7 +97,7 @@
   }
   .split-handle::before { content: ""; position: absolute; inset-block: 0; left: -0.5px; inline-size: 1px; background: var(--ix-signal); }
   .split-handle button {
-    position: absolute; top: 50%; left: 0; translate: -50% -50%; inline-size: 36px; block-size: 36px; padding: 0; border: 0; border-radius: var(--ds-dimension-radius-pill);
+    position: absolute; top: 50%; left: 0; translate: -50% -50%; inline-size: 36px; block-size: 36px; padding: 0; border: 0; border-radius: 0;
     display: grid; place-items: center; cursor: ew-resize; background: var(--ix-signal); color: var(--ds-color-primary-text-contrast-default);
     box-shadow: 0 0 0 4px color-mix(in oklch, var(--ix-signal) 25%, transparent);
   }
@@ -138,16 +135,16 @@
   .hue-row label { font-size: 13.5px; font-weight: 600; }
   .hue-row output { font: 500 13px/1 var(--mono); }
   .hue-range { -webkit-appearance: none; appearance: none; inline-size: 100%; block-size: 28px; background: transparent; margin: 0; cursor: pointer; }
-  .hue-range::-webkit-slider-runnable-track { block-size: 8px; border-radius: 99px; background: linear-gradient(90deg in oklch longer hue, oklch(0.62 0.17 0), oklch(0.62 0.17 359)); }
-  .hue-range::-moz-range-track { block-size: 8px; border-radius: 99px; background: linear-gradient(90deg in oklch longer hue, oklch(0.62 0.17 0), oklch(0.62 0.17 359)); }
-  .hue-range::-webkit-slider-thumb { -webkit-appearance: none; inline-size: 20px; block-size: 20px; margin-top: -6px; border-radius: 50%; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ix-line-strong), 0 2px 6px oklch(0 0 0 / 0.3); }
-  .hue-range::-moz-range-thumb { inline-size: 20px; block-size: 20px; border: 0; border-radius: 50%; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ix-line-strong), 0 2px 6px oklch(0 0 0 / 0.3); }
+  .hue-range::-webkit-slider-runnable-track { block-size: 8px; border-radius: 0; background: linear-gradient(90deg in oklch longer hue, oklch(0.62 0.17 0), oklch(0.62 0.17 359)); }
+  .hue-range::-moz-range-track { block-size: 8px; border-radius: 0; background: linear-gradient(90deg in oklch longer hue, oklch(0.62 0.17 0), oklch(0.62 0.17 359)); }
+  .hue-range::-webkit-slider-thumb { -webkit-appearance: none; inline-size: 20px; block-size: 20px; margin-top: -6px; border-radius: 0; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ix-line-strong), 0 2px 6px oklch(0 0 0 / 0.3); }
+  .hue-range::-moz-range-thumb { inline-size: 20px; block-size: 20px; border: 0; border-radius: 0; background: var(--ds-color-neutral-surface-raised-default); box-shadow: 0 0 0 1px var(--ix-line-strong), 0 2px 6px oklch(0 0 0 / 0.3); }
   .presets { display: flex; gap: 6px; }
-  .presets button { inline-size: 24px; block-size: 24px; border-radius: 50%; border: 0; padding: 0; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.15); }
+  .presets button { inline-size: 24px; block-size: 24px; border-radius: 0; border: 0; padding: 0; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.15); }
   .presets button[aria-pressed="true"] { outline: 2px solid var(--ix-text); outline-offset: 2px; }
   .ramp { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; padding: 14px; }
   .ramp div { display: grid; gap: 6px; }
-  .ramp i { block-size: 44px; border-radius: var(--ds-dimension-radius-mark); background: var(--c); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06); }
+  .ramp i { block-size: 44px; border-radius: 0; background: var(--c); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06); }
   .ramp span { font: 500 9.5px/1 var(--mono); color: var(--ix-muted); text-align: center; }
   .ramp div.is-solid span { color: var(--ix-text); }
   .ramp-foot { display: flex; justify-content: space-between; padding: 0 14px 12px; font: 500 10.5px/1.4 var(--mono); color: var(--ix-muted); }
@@ -167,17 +164,17 @@
   .invite .lnk { color: var(--b11); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in oklch, var(--b11) 40%, transparent); }
   .invite-actions { display: flex; justify-content: flex-end; gap: 8px; }
   .pairs { margin: 0; padding: 0; list-style: none; display: grid; gap: 1px; }
-  .pairs li { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 12px var(--sq-pad); font-size: 13px; box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .pairs li { display: grid; grid-template-columns: 1fr auto 56px; gap: 12px; align-items: center; padding: 12px var(--sq-pad); font-size: 13px; box-shadow: inset 0 -1px 0 var(--sq-line); }
   .pairs li:last-child { box-shadow: none; }
   .pairs .r { font: 500 12.5px/1 var(--mono); font-variant-numeric: tabular-nums; }
-  .pairs .scnx-badge { min-inline-size: 40px; justify-content: center; }
+  .pairs li > :last-child { justify-self: end; }
   .brand-note { font: 500 11px/1.5 var(--mono); color: var(--ix-muted); padding: 14px var(--sq-pad) 16px; }
 
   /* ---------------- Sheet 04 · Guarantees: a schedule, not a card grid ---------------- */
   .g-lead h2 { max-inline-size: 18ch; }
   .schedule { margin: 0; padding: 0; list-style: none; }
   .schedule-head, .schedule li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 0.85fr); gap: 32px; align-items: center; padding-inline: var(--sq-pad); }
-  .schedule-head { padding-block: 12px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--sq-faint); box-shadow: inset 0 -1px 0 var(--sq-line); }
+  .schedule-head { padding-block: 12px; font: 500 10px/1.4 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); box-shadow: inset 0 -1px 0 var(--sq-line); }
   .schedule li { padding-block: 32px; box-shadow: inset 0 -1px 0 var(--sq-line); }
   .schedule li:last-child { box-shadow: none; }
   .schedule h3 { margin: 0 0 6px; }
@@ -189,8 +186,8 @@
   .lum { display: grid; gap: 6px; }
   .lum div { display: flex; gap: 3px; align-items: center; }
   .lum div b { inline-size: 40px; font: 500 10px/1 var(--mono); color: var(--ix-muted); }
-  .lum i { inline-size: 22px; block-size: 14px; border-radius: 3px; }
-  .rtl { display: inline-flex; gap: 16px; padding: 6px 12px; border-radius: var(--ds-dimension-radius-element); box-shadow: inset 0 0 0 1px var(--ix-line); font-size: 13px; }
+  .lum i { inline-size: 22px; block-size: 14px; border-radius: 0; }
+  .rtl { display: inline-flex; gap: 16px; padding: 6px 12px; border-radius: 0; box-shadow: inset 0 0 0 1px var(--ix-line); font-size: 13px; }
   .rtl .on { box-shadow: inset 0 -2px 0 var(--ix-signal); padding-block-end: 2px; }
   .csp { font: 500 11.5px/1.6 var(--mono); color: var(--ix-muted); }
   .csp b { color: var(--ix-text); font-weight: 500; }
@@ -209,9 +206,9 @@
   [data-theme="dark"] .gram-seg[data-k="state"] > code { color: var(--ds-color-primary-text-subtle-default); }
   .gram-sep { color: var(--ix-muted); }
   .states { display: flex; flex-wrap: wrap; gap: 6px; }
-  .states button { block-size: 28px; padding-inline: 10px; border-radius: var(--ds-dimension-radius-element); border: 0; background: var(--ds-color-neutral-surface-default-default); font: 500 12px/1 var(--mono); color: var(--ix-muted); cursor: pointer; }
+  .states button { block-size: 28px; padding-inline: 10px; border-radius: 0; border: 0; background: var(--ds-color-neutral-surface-default-default); font: 500 12px/1 var(--mono); color: var(--ix-muted); cursor: pointer; }
   .states button:hover { color: var(--ix-text); }
-  .states button[aria-pressed="true"] { background: var(--ds-color-neutral-surface-raised-default); color: var(--ix-text); box-shadow: var(--ds-effect-material-raised); }
+  .states button[aria-pressed="true"] { background: var(--ds-color-neutral-surface-raised-default); color: var(--ix-text); box-shadow: var(--sq-ring); }
   .states button[data-invalid] { text-decoration: line-through; text-decoration-color: var(--ds-color-danger-text-subtle-default); }
   .compile { grid-template-columns: minmax(0, 1fr) 240px; }
   .compile .ix-term pre { min-block-size: 132px; }
@@ -244,7 +241,7 @@
   .c-lead h2 { max-inline-size: 16ch; }
   .contract { padding: 36px var(--sq-pad) 40px; display: grid; gap: 12px; align-content: start; box-shadow: inset -1px 0 0 var(--sq-line); position: relative; }
   .contract:last-child { box-shadow: none; }
-  .contract .no { font: 500 11px/1 var(--mono); color: var(--sq-faint); letter-spacing: 0.15em; justify-self: end; }
+  .contract .no { font: 500 11px/1 var(--mono); color: var(--ix-muted); letter-spacing: 0.15em; justify-self: end; }
   .contract .pk { display: inline-flex; font: 500 11.5px/1 var(--mono); color: var(--ix-text); padding: 6px 8px; box-shadow: inset 0 0 0 1px var(--sq-line); justify-self: start; }
   .contracts-line { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: 24px 0; }
   .contracts-line .ix-dim { padding-inline: var(--sq-pad); }
@@ -295,9 +292,9 @@
       <span class="ix-nav-spacer"></span>
       <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/07</span>
       <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
-      <a class="scnx-btn" data-variant="ghost" data-size="small" href="#" data-nav-optional>GitHub</a>
-      <a class="scnx-btn" data-variant="secondary" data-size="small" href="Docs-Home.html" data-nav-optional>Team sign in</a>
-      <a class="scnx-btn" data-variant="primary" data-size="small" href="Docs-Button.html">Get started</a>
+      <a class="sq-cta" data-variant="ghost" href="#" data-nav-optional>GitHub</a>
+      <a class="sq-cta" data-variant="secondary" href="Docs-Home.html" data-nav-optional>Team sign in</a>
+      <a class="sq-cta" data-variant="primary" href="Docs-Button.html">Get started</a>
     </header>
   </div>
 
@@ -314,8 +311,8 @@
           <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">2.0 beta</span>Open source, Apache-2.0</span>
           <h1 class="ix-display" id="hero-title">Build interfaces you can prove<svg class="proof-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="."><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></h1>
           <p class="ix-lede">An accessible React design system with perceptual color, isolated multi-brand theming and zero runtime CSS. Every release ships with the evidence that it works.</p>
-          <div class="hero-actions sq-btn">
-            <a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <div class="hero-actions">
+            <a class="sq-cta" data-variant="primary" href="Docs-Button.html">Get started<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <span class="ix-install"><code><span class="d">$</span> npm i @scnx/system @scnx/core-ui</code><button class="ix-copy" type="button" aria-label="Copy install command" data-copy="npm i @scnx/system @scnx/core-ui"><svg aria-hidden="true"><use href="#i-copy"/></svg></button></span>
           </div>
           <ul class="ix-meta" aria-label="Supported">
@@ -333,7 +330,7 @@
           <div class="asm-labels">
             <div class="asm-label" data-i="3" style="--i:3"><span><b>04 Release</b><em>Proven by 7 gates</em><small>source, packed, a11y ×3</small></span></div>
             <div class="asm-label" data-i="2" style="--i:2"><span><b>03 Tokens</b><em>Bound to roles</em><small>scheme · role · emphasis · state</small></span></div>
-            <div class="asm-label" data-i="1" style="--i:1"><span><b>02 Component</b><em>Styled in static CSS</em><small>R0 panel holds R0 well</small></span></div>
+            <div class="asm-label" data-i="1" style="--i:1"><span><b>02 Component</b><em>Styled in static CSS</em><small>R24 panel holds R16 well</small></span></div>
             <div class="asm-label" data-i="0" style="--i:0"><span><b>01 Primitive</b><em>Native behavior</em><small>keyboard, focus, ARIA</small></span></div>
           </div>
           <p class="asm-assembled" aria-hidden="true">Assembly <b class="tnum" id="asm-pct">00%</b><span class="asm-meter"></span></p>
@@ -592,7 +589,7 @@
       <div class="mat-panel cta" data-frame data-radius="0">
         <h2 class="ix-display">Ship the interface. Keep the receipts.</h2>
         <p class="ix-lede">Free and open source. Bring your brand, keep your stack, and verify every release you install.</p>
-        <div class="hero-actions sq-btn"><a class="scnx-btn" data-variant="primary" data-size="large" href="Docs-Button.html">Get started</a><a class="scnx-btn" data-variant="secondary" data-size="large" href="#">Star on GitHub</a></div>
+        <div class="hero-actions"><a class="sq-cta" data-variant="primary" href="Docs-Button.html">Get started</a><a class="sq-cta" data-variant="secondary" href="#">Star on GitHub</a></div>
       </div>
     </section>
   </main>
@@ -600,7 +597,7 @@
   <footer class="ix-wrap ix-foot" data-draw>
     <div class="ix-ruler" aria-hidden="true"></div>
     <div class="ix-foot-grid">
-      <div><a class="ix-brand" href="#top" style="padding-inline:0"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a><p class="ix-body" style="margin-top:10px; max-inline-size: 34ch">The design system you can verify. Built in public, released with evidence.</p><p style="margin-top:14px"><a class="scnx-btn" data-variant="secondary" data-size="small" href="Docs-Home.html">Team workspace</a></p></div>
+      <div><a class="ix-brand" href="#top" style="padding-inline:0"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a><p class="ix-body" style="margin-top:10px; max-inline-size: 34ch">The design system you can verify. Built in public, released with evidence.</p><p style="margin-top:14px"><a class="sq-cta" data-variant="secondary" href="Docs-Home.html">Team workspace</a></p></div>
       <nav aria-label="Docs"><h3>Docs</h3><ul><li><a href="#">Get started</a></li><li><a href="#">Primitives</a></li><li><a href="Docs-Button.html">Components</a></li><li><a href="#">Tokens</a></li></ul></nav>
       <nav aria-label="Releases"><h3>Releases</h3><ul><li><a href="#">Status matrix</a></li><li><a href="#">Changelog</a></li><li><a href="#">Support matrix</a></li><li><a href="#">Security</a></li></ul></nav>
       <nav aria-label="Project"><h3>Project</h3><ul><li><a href="#">GitHub</a></li><li><a href="#">Contributing</a></li><li><a href="#">Code of conduct</a></li><li><a href="#">License</a></li></ul></nav>
