@@ -28,9 +28,13 @@
       const label = () => btn.setAttribute("aria-label", doc.dataset.scnxResolvedMode === "dark" ? "Switch to light mode" : "Switch to dark mode");
       label();
       btn.addEventListener("click", () => {
+        // every transition is off while the mode changes, so nothing glides between the
+        // two palettes; back on two frames later, once the new mode has painted
+        doc.dataset.sqSwitching = "";
         doc.dataset.scnxResolvedMode = doc.dataset.scnxResolvedMode === "dark" ? "light" : "dark";
         store.set("scnx-ix-mode", doc.dataset.scnxResolvedMode);
         label();
+        requestAnimationFrame(() => requestAnimationFrame(() => delete doc.dataset.sqSwitching));
       });
     });
 
