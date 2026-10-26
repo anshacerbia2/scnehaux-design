@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en" data-scnx-theme="scnx-saas" data-scnx-resolved-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux UI · scnx-saas · Brand book</title>
+<meta name="description" content="Brand book of the scnx-saas look: materials, the concentric ladder, ink, the stage, type, space, states, motion and components, drawn from @scnx/system's scnx-saas tokens.">
+<link rel="icon" href="../design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
+<script>
+  // the mode before first paint: ?mode=light|dark, else the system's preference
+  (() => {
+    const q = new URLSearchParams(location.search).get("mode");
+    const mode = q === "light" || q === "dark" ? q : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.dataset.scnxResolvedMode = mode;
+  })();
+</script>
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/scnx-saas.css">
+<link rel="stylesheet" href="../design-system/components/bundle.css">
+<style>
+  /* bundle.css reads the two families; the package declares the faces, not these names */
+  :root { --font-sans: Inter, -apple-system, Arial, sans-serif; --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { min-block-size: 100vh; }
+
+  /* The book is drawn in its own look: materials on the stage, corners that nest. */
+  .bb { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 24px; max-inline-size: 1328px; margin-inline: auto; padding: 0 24px 64px; }
+  .bb-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-inline-size: 0; }
+  .bb-aside { position: sticky; top: 96px; align-self: start; }
+  .bb-aside .scnx-surface { padding: 16px; }
+
+  /* the nav: a raised material, radius 16 padded 8, so its items take 8 */
+  .bb-nav-shell { position: sticky; top: 0; z-index: 10; padding: 16px 24px; max-inline-size: 1328px; margin-inline: auto; }
+  .bb-nav { display: flex; align-items: center; gap: 8px; padding: 8px; }
+  .bb-brand { display: inline-flex; align-items: center; gap: 10px; padding: 0 8px; font-weight: 600; font-size: 15px; color: inherit; text-decoration: none; letter-spacing: -0.01em; }
+  .bb-links { display: flex; gap: 2px; margin: 0 0 0 8px; padding: 4px; list-style: none; border-radius: var(--ds-dimension-radius-control); background: var(--ds-color-neutral-surface-default-default); }
+  .bb-links a { display: block; padding: 6px 12px; border-radius: var(--ds-dimension-radius-element); color: var(--ds-color-neutral-text-subtle-default); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+  .bb-links a:hover { color: var(--ds-color-neutral-text-default-default); }
+  .bb-links a[aria-current="page"] { background: var(--scnx-thumb); color: var(--ds-color-neutral-text-default-default); box-shadow: var(--ds-effect-material-raised); }
+  .bb-spacer { flex: 1; }
+
+  /* a sheet: a panel (24) padded 8 holds cards (16) */
+  .bb-sheet { padding: 8px; scroll-margin-top: 96px; }
+  .bb-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; padding: 24px 24px 20px; }
+  .bb-head .scnx-eyebrow { flex: 1 0 100%; }
+  .bb-head h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); line-height: 1.02; letter-spacing: -0.04em; font-weight: 600; max-inline-size: 26ch; }
+  .bb-head p { flex: 1 0 100%; max-inline-size: 70ch; color: var(--ds-color-neutral-text-subtle-default); font-size: 15px; line-height: 1.6; }
+  .bb-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .bb-cards.c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bb-cards.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bb-cards.c4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bb-card { padding: 20px; display: grid; gap: 10px; align-content: start; min-inline-size: 0; }
+  .bb-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .bb-card p, .bb-p { color: var(--ds-color-neutral-text-subtle-default); font-size: 14px; line-height: 1.6; }
+  .bb-card .no { font: 400 12px/1 var(--font-mono); color: var(--ds-color-neutral-text-subtle-default); }
+  code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ds-color-neutral-text-default-default); }
+  .bb-k { font: 400 11px/1.4 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .bb-note { padding: 16px 20px; font-size: 13.5px; line-height: 1.6; color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-note b { color: var(--ds-color-neutral-text-default-default); font-weight: 600; }
+
+  /* the hero */
+  .bb-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 8px; }
+  .bb-hero-copy { padding: 40px 32px 36px; display: grid; gap: 20px; align-content: start; }
+  .bb-display { font-size: clamp(2.75rem, 6vw, 4.75rem); font-weight: 600; letter-spacing: -0.055em; line-height: 0.95; }
+  .bb-lede { font-size: 17px; line-height: 1.6; color: var(--ds-color-neutral-text-subtle-default); max-inline-size: 56ch; }
+  .bb-chip { display: inline-flex; align-items: center; gap: 8px; justify-self: start; padding: 4px 10px 4px 4px; border-radius: var(--ds-dimension-radius-pill); background: var(--ds-color-neutral-surface-raised-default); box-shadow: var(--ds-effect-material-flat); font: 400 12px/1.4 var(--font-mono); color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-facts { display: grid; gap: 0; margin: 0; }
+  .bb-facts div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; box-shadow: inset 0 -1px 0 var(--ds-color-neutral-border-subtle-default); font-size: 14px; }
+  .bb-facts div:last-child { box-shadow: none; }
+  .bb-facts dt { font: 400 11px/1.9 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-facts dd { margin: 0; text-align: end; font-weight: 500; }
+
+  /* tables inside a flat card */
+  .bb-table-frame { overflow-x: auto; }
+  .bb-table-frame .scnx-table td { block-size: auto; padding-block: 12px; vertical-align: top; line-height: 1.5; color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-table-frame .scnx-table td:first-child { color: var(--ds-color-neutral-text-default-default); font-weight: 500; white-space: nowrap; }
+  .bb-table-frame .scnx-table td b { color: var(--ds-color-neutral-text-default-default); font-weight: 600; }
+
+  /* materials: each specimen sits on the stage, one shadow per stack */
+  .bb-mat-stage { border-radius: var(--ds-dimension-radius-container); padding: 28px 20px; display: grid; place-items: center; min-block-size: 150px; }
+  .bb-mat { inline-size: 100%; max-inline-size: 180px; block-size: 84px; display: grid; place-items: center; font: 400 11px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-mat.scnx-floating[data-material="tooltip"] { color: var(--ds-color-neutral-text-contrast-default); block-size: 36px; max-inline-size: 120px; }
+
+  /* the ladder: 24 padded 8 holds 16 padded 8 holds 8 */
+  .bb-ladder { padding: 8px; display: grid; gap: 8px; }
+  .bb-ladder > .scnx-surface { padding: 8px; display: grid; gap: 8px; }
+  .bb-ladder .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 12px; block-size: 36px; border-radius: var(--ds-dimension-radius-element); background: var(--ds-color-neutral-surface-default-default); font-size: 13.5px; }
+  .bb-ladder .row code { color: var(--ds-color-neutral-text-subtle-default); }
+  .bb-ladder .tag { padding: 6px 12px 2px; }
+  .bb-radii { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+  .bb-radii div { display: grid; gap: 10px; justify-items: start; font-size: 13px; }
+  .bb-radii i { inline-size: 56px; block-size: 56px; background: var(--ds-color-neutral-surface-raised-default); box-shadow: inset 0 0 0 1px var(--ds-color-neutral-border-strong-default); border-start-start-radius: var(--r); }
+  .bb-radii code { color: var(--ds-color-neutral-text-subtle-default); }
+
+  /* colour */
+  .bb-swatch { padding: 16px; display: grid; gap: 8px; align-content: start; }
+  .bb-swatch .chip { block-size: 56px; border-radius: var(--ds-dimension-radius-element); box-shadow: inset 0 0 0 1px var(--ds-color-neutral-border-subtle-default); }
+  .bb-swatch strong { font-size: 14px; font-weight: 600; }
+  .bb-swatch code { font-size: 11.5px; line-height: 1.45; color: var(--ds-color-neutral-text-subtle-default); overflow-wrap: anywhere; }
+
+  /* type */
+  .bb-type { padding: 24px; display: grid; gap: 8px; }
+  .bb-type .meta { font: 400 12px/1.5 var(--font-mono); color: var(--ds-color-neutral-text-subtle-default); }
+
+  /* do / don't */
+  .bb-dd { display: grid; gap: 12px; align-content: start; }
+  .bb-dd .demo { border-radius: var(--ds-dimension-radius-element); min-block-size: 132px; display: grid; place-items: center; padding: 16px; }
+  .bb-dd .verdict { display: flex; gap: 6px; align-items: center; font-size: 13.5px; font-weight: 600; }
+  .bb-dd .verdict svg { inline-size: 16px; block-size: 16px; }
+  .bb-dd .verdict.do { color: var(--ds-color-success-text-default-default); }
+  .bb-dd .verdict.dont { color: var(--ds-color-danger-text-default-default); }
+  .bb-nest { inline-size: 70%; padding: 8px; border-radius: 24px; background: var(--ds-color-neutral-surface-raised-default); box-shadow: var(--ds-effect-material-panel); }
+  .bb-nest > i { display: block; block-size: 64px; background: var(--ds-color-neutral-surface-default-default); box-shadow: inset 0 0 0 1px var(--ds-color-neutral-border-subtle-default); }
+
+  .bb-foot { max-inline-size: 1328px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: 400 12px/1.6 var(--font-mono); color: var(--ds-color-neutral-text-subtle-default); }
+
+  @media (max-width: 1100px) { .bb { grid-template-columns: minmax(0, 1fr); } .bb-aside { display: none; } }
+  @media (max-width: 980px) { .bb-hero, .bb-cards.c3, .bb-cards.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bb-hero { grid-template-columns: minmax(0, 1fr); } .bb-radii { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bb-links { display: none; } }
+  @media (max-width: 640px) {
+    .bb, .bb-nav-shell, .bb-foot { padding-inline: 16px; }
+    .bb-cards.c2, .bb-cards.c3, .bb-cards.c4 { grid-template-columns: minmax(0, 1fr); }
+    .bb-hero-copy { padding: 28px 20px; }
+    .bb-head { padding: 20px 16px 16px; }
+    .bb-brand span { display: none; }
+  }
+</style>
+</head>
+<body class="scnx-stage">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 28 28"><rect x="2" y="2" width="24" height="24" rx="8" style="fill:var(--ds-color-neutral-surface-solid-default)"/><rect x="7.5" y="7.5" width="6" height="6" rx="1.5" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><rect x="14.5" y="7.5" width="6" height="6" rx="1.5" style="fill:var(--ds-color-neutral-text-contrast-default)"/><circle cx="10.5" cy="17.5" r="3" fill="none" style="stroke:var(--ds-color-neutral-text-contrast-default)" stroke-width="1.4"/><path d="M15 17.5l2 2 3.5-4" fill="none" stroke="#0a6cf2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="bb-nav-shell">
+  <header class="bb-nav scnx-surface" data-material="raised">
+    <a class="bb-brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#i-mark"/></svg><span>Scnehaux UI</span></a>
+    <span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">scnx-saas</span>
+    <ul class="bb-links">
+      <li><a href="Docs-Landing.html">Landing</a></li>
+      <li><a href="Docs-Home.html">Workspace</a></li>
+      <li><a href="Docs-Button.html">Component page</a></li>
+      <li><a href="#top" aria-current="page">Brand book</a></li>
+    </ul>
+    <span class="bb-spacer"></span>
+    <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Mode" data-mode>
+      <button data-part="item" role="radio" aria-checked="true" value="light" aria-label="Light"><svg aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <button data-part="item" role="radio" aria-checked="false" value="dark" aria-label="Dark" tabindex="-1"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+    </div>
+    <a class="scnx-btn" data-variant="secondary" data-size="small" href="../brand/Brand.html">Brand page</a>
+  </header>
+</div>
+
+<div class="bb" id="top">
+  <main class="bb-main">
+    <!-- 01 · Overview -->
+    <section class="bb-hero" id="overview" data-sheet="Overview" aria-labelledby="bb-title">
+      <div class="scnx-surface bb-hero-copy" data-material="panel">
+        <span class="bb-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Brand book</span>The scnx-saas look</span>
+        <h1 class="bb-display" id="bb-title">Materials on a stage. Ink that acts.</h1>
+        <p class="bb-lede">How the Scnehaux SaaS products look: layered materials on a dotted stage, corners that nest, and ink for every action and every mark of place. Every colour, radius and shadow on this page is read from <code>@scnx/system</code>'s <code>scnx-saas</code> tokens; switch the mode in the nav.</p>
+        <div class="bb-row">
+          <a class="scnx-btn" data-variant="primary" href="Docs-Landing.html">See the boards<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="scnx-btn" data-variant="secondary" href="#status">What is still open</a>
+        </div>
+      </div>
+      <div class="scnx-surface bb-card" data-material="panel" style="padding:24px">
+        <span class="bb-k">This book covers</span>
+        <p class="bb-p">The <b>look</b> of the SaaS products: materials, the radius ladder, colour roles, the stage, type, space, states, motion, and how the shipped components read under this theme.</p>
+        <span class="bb-k">It does not cover</span>
+        <p class="bb-p">The name, the mark, the voice and the icons: those are the brand every theme shares, on <a class="scnx-link" href="../brand/Brand.html">the Scnehaux brand page</a>. Token values and component contracts belong to <code>ui-platform</code>.</p>
+        <dl class="bb-facts" aria-label="Book">
+          <div><dt>Theme</dt><dd><code>scnx-saas</code> (was achromatic)</dd></div>
+          <div><dt>Used by</dt><dd>The SaaS products</dd></div>
+          <div><dt>Tokens from</dt><dd>@scnx/system <code data-source>2c28842</code></dd></div>
+          <div><dt>Authority</dt><dd>ADR-UIP-VIS-001, -002</dd></div>
+          <div><dt>Status</dt><dd>guidance</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 02 · Signatures -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="signatures" data-sheet="Signatures" aria-labelledby="h-signatures">
+      <div class="bb-head"><span class="scnx-eyebrow">02 · Signatures</span><h2 id="h-signatures">Six things that make a screen read as Scnehaux.</h2><p>Never drop one to match another library's look. Signatures 1 and 2 are why this theme exists (the industrial structure, item 8).</p></div>
+      <div class="bb-cards c3">
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">01</span><h3>Materials, not boxes</h3><p>Every container is one of eight materials. A material binds fill, radius, a 1px ring and a shadow as one unit; never hand-mix them.</p></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">02</span><h3>Corners that nest</h3><p>The ladder 4 · 8 · 12 · 16 · 24. A child's radius is its parent's radius minus the parent's padding, so corners never collide.</p></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">03</span><h3>Ink acts, and marks the place</h3><p>The primary action is ink. In this theme the primary scheme is ink too, so focus, links, checks and "here" are ink, told apart by their shape: a ring, an underline, a rail, a fill.</p></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">04</span><h3>The stage</h3><p>Marketing, docs, empty states and previews sit on a tinted ground with a 1px dot every 22px. Product data sits on the plain canvas.</p></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">05</span><h3>The eyebrow and the tight display</h3><p>Kickers, table heads and metadata are mono, upper case, +0.12em. Headlines are Inter semibold, tracked tight.</p></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="no">06</span><h3>The rise</h3><p>Floating materials rise 4px and fade in; pressed controls sink 1px. All of it stops under reduced motion. Guidance until an ADR records it.</p></div>
+      </div>
+    </section>
+
+    <!-- 03 · Materials -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="materials" data-sheet="Materials" aria-labelledby="h-materials">
+      <div class="bb-head"><span class="scnx-eyebrow">03 · Materials</span><h2 id="h-materials">Eight materials, each one unit.</h2><p>Four on the page, four above it. Each specimen below is the shipped <code>ds-effect-material-*</code> token on the stage.</p></div>
+      <div class="bb-cards c4">
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-surface bb-mat" data-material="flat">flat</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-surface bb-mat" data-material="raised">raised</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-surface bb-mat" data-material="panel">panel</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-surface bb-mat" data-material="well">well</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-floating bb-mat" data-material="tooltip">tooltip</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-floating bb-mat" data-material="menu">menu</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-floating bb-mat" data-material="modal">modal</div></div>
+        <div class="scnx-stage bb-mat-stage"><div class="scnx-floating bb-mat" data-material="sheet">sheet</div></div>
+      </div>
+      <div class="bb-table-frame scnx-table-frame" style="margin-top:8px">
+        <table class="scnx-table">
+          <thead><tr><th scope="col">Material</th><th scope="col">Fill</th><th scope="col">Radius</th><th scope="col">Use</th></tr></thead>
+          <tbody>
+            <tr><td>flat</td><td>raised</td><td>container 16</td><td>A ring only: a table frame, a card inside a panel, a card in FloatingLayout content.</td></tr>
+            <tr><td>raised</td><td>raised</td><td>container 16</td><td>A card on the stage; the nav of this page.</td></tr>
+            <tr><td>panel</td><td>raised</td><td>panel 24</td><td>A section, a sidebar or content in FloatingLayout; the sheets of this page.</td></tr>
+            <tr><td>well</td><td>sunken</td><td>container 16</td><td>A recess: a code area, a drop zone. No shadow.</td></tr>
+            <tr><td>tooltip</td><td>solid (ink)</td><td>element 8</td><td>A short label, contrast text.</td></tr>
+            <tr><td>menu</td><td>floating</td><td>container 16</td><td>Menu, select list, popover.</td></tr>
+            <tr><td>modal, sheet</td><td>floating</td><td>panel 24</td><td>Dialog and sheet, the deepest shadows.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-note"><b>Rings, not borders.</b> A container draws its 1px edge inside its shadow, so nesting never shifts layout. <b>One shadow per stack:</b> a raised card inside a panel becomes flat. <b>In dark mode</b> the floating materials (menu, modal, sheet) add a lit top edge, an inset 1px line in <code>neutral.border.default</code>, because shadows read weakly on dark grounds. Controls keep a real 1px border (<code>neutral.border.strong</code>, at least 3:1). Hairlines between rows are inset 1px shadows in <code>neutral.border.subtle</code>. The older <code>ds-effect-shadow-*</code> tokens remain for existing components; new work uses <code>ds-effect-material-*</code>.</div>
+    </section>
+
+    <!-- 04 · Radius -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="radius" data-sheet="Radius" aria-labelledby="h-radius">
+      <div class="bb-head"><span class="scnx-eyebrow">04 · Radius</span><h2 id="h-radius">The concentric ladder: 4 · 8 · 12 · 16 · 24.</h2><p>A child's radius is its parent's radius minus the parent's padding. This sheet is the rule at work: a 24 panel padded 8 holds 16 cards; the nav, 16 padded 8, holds 8 items.</p></div>
+      <div class="bb-cards c2">
+        <div class="scnx-surface bb-card" data-material="flat">
+          <span class="bb-k">The scale, read from the tokens</span>
+          <div class="bb-radii" data-radii></div>
+        </div>
+        <div class="scnx-stage bb-ladder" style="border-radius:var(--ds-dimension-radius-container)">
+          <div class="scnx-surface" data-material="panel">
+            <span class="bb-k tag">panel 24 · pad 8</span>
+            <div class="scnx-surface" data-material="flat" style="padding:8px; display:grid; gap:4px">
+              <span class="bb-k tag" style="padding-inline:8px">container 16 · pad 8</span>
+              <div class="row">Row <code>element 8</code></div>
+              <div class="row">Row <code>element 8</code></div>
+            </div>
+            <div class="scnx-segmented" role="radiogroup" aria-label="Segmented"><button data-part="item" role="radio" aria-checked="true">control 12 · pad 4</button><button data-part="item" role="radio" aria-checked="false" tabindex="-1">thumb 8</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="bb-cards c2" style="margin-top:8px">
+        <div class="scnx-surface bb-card bb-dd" data-material="flat"><div class="scnx-stage demo"><div class="bb-nest"><i style="border-radius:16px"></i></div></div><span class="verdict do"><svg aria-hidden="true"><use href="#i-check"/></svg>Do · 24 padded 8 holds 16</span><p>The inner corner follows the outer one, so the gap between them is even all the way round.</p></div>
+        <div class="scnx-surface bb-card bb-dd" data-material="flat"><div class="scnx-stage demo"><div class="bb-nest"><i style="border-radius:24px"></i></div></div><span class="verdict dont"><svg aria-hidden="true"><use href="#i-x"/></svg>Don't · the same radius inside</span><p>An inner corner as round as its parent pinches the gap at the corners and reads as a collision.</p></div>
+      </div>
+      <div class="bb-note"><b>Shapes that mean something</b> stay round in every theme and under every hook: the radio indicator, the switch thumb, the status dot, the spinner (<code>pill</code>). They are anatomy, not hooks.</div>
+    </section>
+
+    <!-- 05 · Colour -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="colour" data-sheet="Colour" aria-labelledby="h-colour">
+      <div class="bb-head"><span class="scnx-eyebrow">05 · Colour</span><h2 id="h-colour">An ink palette. Roles, never hues.</h2><p>Components bind roles (<code>ds-color-{scheme}-{role}-{emphasis}-{state}</code>), never palette steps or literals. In <code>scnx-saas</code> the primary scheme is ink, so every component works unchanged and reads monochrome. The swatches are live.</p></div>
+      <div class="bb-cards c4">
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--scnx-stage-ground)"></span><strong>Stage ground</strong><code>neutral.surface.default (light)<br>neutral.surface.sunken (dark)</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-surface-canvas-default)"></span><strong>Canvas</strong><code>neutral.surface.canvas: product data</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-surface-raised-default)"></span><strong>Raised fill</strong><code>neutral.surface.raised</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-surface-floating-default)"></span><strong>Floating fill</strong><code>neutral.surface.floating</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-text-default-default)"></span><strong>Text</strong><code>neutral.text.default</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-text-subtle-default)"></span><strong>Subtle text</strong><code>neutral.text.subtle</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-neutral-surface-solid-default)"></span><strong>Ink</strong><code>neutral.surface.solid = primary.surface.solid</code></div>
+        <div class="scnx-surface bb-swatch" data-material="flat"><span class="chip" style="background:var(--ds-color-primary-border-default-focus)"></span><strong>Focus</strong><code>primary.border.default.focus</code></div>
+      </div>
+      <div class="bb-table-frame scnx-table-frame" style="margin-top:8px">
+        <table class="scnx-table">
+          <thead><tr><th scope="col">Meaning</th><th scope="col">Treatment in scnx-saas</th><th scope="col">Examples</th></tr></thead>
+          <tbody>
+            <tr><td>The main action</td><td>Ink fill, contrast label</td><td>Primary Button</td></tr>
+            <tr><td>You are here</td><td>An ink indicator (underline, rail) and the primary subtle fill</td><td>Navigation active item, selected Tab, TOC rail</td></tr>
+            <tr><td>Checked or on</td><td>Ink fill</td><td>Checkbox, Radio, Switch, Progress</td></tr>
+            <tr><td>Selected among peers</td><td>Raised material, no fill</td><td>SegmentedControl thumb, current Pagination page</td></tr>
+            <tr><td>Focus</td><td>2px focus ring, 2px offset</td><td>Every focusable element</td></tr>
+            <tr><td>A link</td><td>Ink, underlined</td><td>Inline links</td></tr>
+            <tr><td>Status</td><td>Scheme fill plus a word or an icon</td><td>Badge, Alert, Toast</td></tr>
+            <tr><td>Destruction</td><td>Danger solid, only on the confirming action</td><td>Dialog confirm</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-note"><b>The grammar.</b> Schemes: <code>neutral</code>, <code>primary</code>, <code>info</code>, <code>success</code>, <code>warning</code>, <code>danger</code>. Roles: <code>surface</code>, <code>text</code>, <code>icon</code>, <code>border</code>, <code>shadow</code>. States: <code>default</code>, <code>hover</code>, <code>pressed</code>, <code>disabled</code>, <code>selected</code>, <code>focus</code>. <b>Every scale</b> is a 12-step ramp from the palette engine (Display P3, gated at WCAG 2.2), and the role-to-step mapping is the same in both modes, so a component never chooses a token per mode. <b>A solid fill</b> always takes its scheme's contrast label: ink with <code>neutral.text.contrast</code>, danger with <code>danger.text.contrast</code>.</div>
+      <div class="bb-cards c2">
+        <div class="scnx-surface bb-card" data-material="flat">
+          <span class="bb-k">Status keeps its colour</span>
+          <div class="bb-row"><span class="scnx-badge" data-scheme="success" data-emphasis="subtle" data-size="small"><span data-part="dot"></span>Live</span><span class="scnx-badge" data-scheme="warning" data-emphasis="subtle" data-size="small"><span data-part="dot"></span>Degraded</span><span class="scnx-badge" data-scheme="danger" data-emphasis="subtle" data-size="small"><span data-part="dot"></span>Down</span><span class="scnx-badge" data-scheme="info" data-emphasis="subtle" data-size="small"><span data-part="dot"></span>Scheduled</span></div>
+          <p>Ink replaces the primary scheme only. Info, success, warning and danger keep their hues, and each still needs a word or an icon: success and danger are never told apart by green and red alone.</p>
+        </div>
+        <div class="scnx-surface bb-card" data-material="flat">
+          <span class="bb-k">The mark keeps its check</span>
+          <div class="bb-row"><svg width="40" height="40" aria-hidden="true"><use href="#i-mark"/></svg><span class="bb-p">The mark is artwork, not a token. Its tile follows the ink; its check is Scnx Blue <code>#0a6cf2</code> in every theme, this one included (<a class="scnx-link" href="../brand/Brand.html">brand page</a>, sheet 02).</span></div>
+        </div>
+      </div>
+      <div class="bb-table-frame scnx-table-frame" style="margin-top:8px">
+        <table class="scnx-table" id="contrast" aria-describedby="contrast-note">
+          <thead><tr><th scope="col">Pair</th><th scope="col">On</th><th scope="col">Needs</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="bb-note" id="contrast-note"><b>Measured live</b>, in this browser, from the tokens this page loads: each colour is painted over its ground in a light and a dark island and read back. <b>Needs</b> is WCAG 2.2: 4.5:1 for text (1.4.3), 3:1 for a control's boundary, a focus ring and a graphic that carries meaning (1.4.11).</div>
+    </section>
+
+    <!-- 06 · Type -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="type" data-sheet="Type" aria-labelledby="h-type">
+      <div class="bb-head"><span class="scnx-eyebrow">06 · Type</span><h2 id="h-type">One family, and a mono for the eyebrow.</h2><p>Inter (variable, <code>wght</code> 100–900 and <code>opsz</code>), served by the package, with the single-storey a (<code>"cv11" 1</code>) and optical sizing. Code and eyebrows use the system mono stack.</p></div>
+      <div class="bb-cards c2">
+        <div class="scnx-surface bb-type" data-material="flat"><p class="bb-display" style="font-size:clamp(2.5rem,4.6vw,3.75rem)">Ship the interface.</p><span class="meta">display · Inter 600 · −0.055em · leading 0.95 · fluid with clamp()</span></div>
+        <div class="scnx-surface bb-type" data-material="flat"><p style="font:var(--ds-typography-heading-large-font-weight) var(--ds-typography-heading-large-font-size)/var(--ds-typography-heading-large-line-height) var(--font-sans); letter-spacing:var(--ds-typography-heading-large-letter-spacing)">Heading large</p><span class="meta">heading-large · 2rem · 700 · −0.02em (from heading-large up)</span></div>
+        <div class="scnx-surface bb-type" data-material="flat"><p style="font-size:var(--ds-typography-body-default-font-size); line-height:var(--ds-typography-body-default-line-height)">Body default for forms and reading. Body small (14px) for dense UI: alerts, menus, tables, descriptions.</p><span class="meta">body-default 1rem/1.5 · body-small 0.875rem/1.5 · article-readable 1.75 leading</span></div>
+        <div class="scnx-surface bb-type" data-material="flat"><p class="scnx-eyebrow">Tokens · colour</p><span class="meta">eyebrow · code-small mono · 0.75rem · +0.12em · upper case · subtle text</span><p class="bb-p">Section kickers, table heads, group labels, metadata.</p></div>
+      </div>
+      <div class="bb-note"><b>Labels</b> on buttons and tabs are <code>label-default</code> at semibold or medium; never upper-case a label except through the eyebrow or <code>label-small</code>. <b>Weights</b> stay on the token scale (400, 500, 600, 700). <b>Dashboard numbers</b> use <code>metric-display</code>; tables use <code>data-compact</code>.</div>
+    </section>
+
+    <!-- 07 · Space and layout -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="space" data-sheet="Space" aria-labelledby="h-space">
+      <div class="bb-head"><span class="scnx-eyebrow">07 · Space, size and layout</span><h2 id="h-space">Semantic space. Controls that step by eight.</h2></div>
+      <div class="bb-table-frame scnx-table-frame">
+        <table class="scnx-table">
+          <thead><tr><th scope="col">Part</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead>
+          <tbody>
+            <tr><td>Inline</td><td><code>spacing-inline-*</code>: 4, 8, 16</td><td>Between siblings on a line.</td></tr>
+            <tr><td>Stack</td><td><code>spacing-stack-*</code>: 4, 8, 16</td><td>Between blocks.</td></tr>
+            <tr><td>Inset</td><td><code>spacing-inset-*</code>: 8, 16, 24</td><td>Inside containers.</td></tr>
+            <tr><td>Page, section</td><td><code>spacing-page</code> 24, <code>spacing-section</code> 32</td><td>Around and between regions.</td></tr>
+            <tr><td>Controls</td><td>28, 36, 44px tall; inline pad 8, 12, 16</td><td>Half the height minus 6. Component geometry in each spec, not tokens.</td></tr>
+            <tr><td>Rows</td><td>32px (menu, listbox, navigation, pagination); 44px (table body)</td><td>No pointer target under 24px.</td></tr>
+            <tr><td>EdgeLayout</td><td>Navbar 64px, Sidebar 280px, on the canvas, hairline-separated</td><td>Dense internal tools.</td></tr>
+            <tr><td>FloatingLayout</td><td>Sidebar and content as panels, 8px apart, on the stage</td><td>The client-facing product; this page.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-cards c3" style="margin-top:8px">
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">small · 28</span><div class="bb-row"><span class="scnx-btn" data-variant="primary" data-size="small">Save</span><span class="scnx-btn" data-variant="secondary" data-size="small">Cancel</span></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">medium · 36</span><div class="bb-row"><span class="scnx-btn" data-variant="primary">Save</span><span class="scnx-btn" data-variant="secondary">Cancel</span></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">large · 44</span><div class="bb-row"><span class="scnx-btn" data-variant="primary" data-size="large">Save</span><span class="scnx-btn" data-variant="secondary" data-size="large">Cancel</span></div></div>
+      </div>
+    </section>
+
+    <!-- 08 · States and motion -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="motion" data-sheet="Motion" aria-labelledby="h-motion">
+      <div class="bb-head"><span class="scnx-eyebrow">08 · States and motion</span><h2 id="h-motion">One step per state. Four pixels of movement.</h2></div>
+      <div class="bb-cards c2">
+        <div class="bb-table-frame scnx-table-frame">
+          <table class="scnx-table">
+            <thead><tr><th scope="col">State</th><th scope="col">Treatment</th></tr></thead>
+            <tbody>
+              <tr><td>Hover</td><td>The fill one step (<code>*-hover</code>), never a filter or opacity.</td></tr>
+              <tr><td>Pressed</td><td><code>*-pressed</code>, and the control sinks 1px.</td></tr>
+              <tr><td>Disabled</td><td>The <code>*-disabled</code> pair at full opacity, the not-allowed cursor; it does not react.</td></tr>
+              <tr><td>Focus</td><td>Always visible: 2px ring, 2px offset, following the radius. Inputs draw it flush and take the ring colour on their border.</td></tr>
+              <tr><td>Selected row</td><td><code>primary.surface.subtle</code>; a highlighted menu row takes <code>neutral.surface.default.hover</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bb-table-frame scnx-table-frame">
+          <table class="scnx-table">
+            <thead><tr><th scope="col">Motion</th><th scope="col">Token</th><th scope="col">Live</th></tr></thead>
+            <tbody data-motion>
+              <tr><td>Feedback</td><td>hover, press, floating</td><td data-t="feedback"></td></tr>
+              <tr><td>Disclosure</td><td>accordion, sidebar, chevron</td><td data-t="disclosure"></td></tr>
+              <tr><td>Enter</td><td>dialog, sheet</td><td data-t="enter"></td></tr>
+              <tr><td>Exit</td><td>always shorter than enter</td><td data-t="exit"></td></tr>
+              <tr><td>Attention</td><td>a rare nudge</td><td data-t="attention"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bb-note"><b>Move 4px or less</b>; never bounce, never scale content. <b>Under reduced motion</b> nothing moves and fades stay; components drop movement whatever the motion tokens say (a guarded floor).</div>
+    </section>
+
+    <!-- 09 · Components -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="components" data-sheet="Components" aria-labelledby="h-components">
+      <div class="bb-head"><span class="scnx-eyebrow">09 · Components</span><h2 id="h-components">The same components, read through this theme.</h2><p>A component carries no design of its own: each presentational value reads its hook (<code>--scnx-*</code>), which falls back to a token the theme maps. Nothing here restyles a component; these are the reference classes in <code>components/bundle.css</code> on the <code>scnx-saas</code> tokens.</p></div>
+      <div class="bb-cards c3">
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Actions</span><div class="bb-row"><button class="scnx-btn" data-variant="primary" type="button">Deploy<svg aria-hidden="true"><use href="#i-arrow"/></svg></button><button class="scnx-btn" data-variant="secondary" type="button">Cancel</button><button class="scnx-btn" data-variant="ghost" type="button">Ghost</button></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Choice</span><div class="bb-row"><label class="scnx-checkbox"><input type="checkbox" checked><span data-part="indicator"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Checked</label><label class="scnx-radio"><input type="radio" name="bb-r" checked><span data-part="indicator"></span>Radio</label><label class="scnx-switch"><input type="checkbox" role="switch" checked><span data-part="track"></span>On</label></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Field</span><div class="scnx-text-field"><label data-part="label" for="bb-email">Work email</label><input data-part="input" id="bb-email" type="email" value="ayu@northwind.co"></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Tabs · here</span><div class="scnx-tabs"><div data-part="list" role="tablist" aria-label="Members"><button data-part="tab" role="tab" aria-selected="true" type="button">Members</button><button data-part="tab" role="tab" aria-selected="false" tabindex="-1" type="button">Roles</button><button data-part="tab" role="tab" aria-selected="false" tabindex="-1" type="button">Audit</button></div></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Progress · on</span><div class="scnx-progress"><div data-part="header"><span data-part="label">Reference slice</span><span data-part="value">64%</span></div><div data-part="track" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="Reference slice"><div data-part="indicator" style="inline-size:64%"></div></div></div></div>
+        <div class="scnx-surface bb-card" data-material="flat"><span class="bb-k">Inline</span><div class="bb-row"><kbd class="scnx-kbd">⌘K</kbd><code class="scnx-code">pnpm add @scnx/system</code><a class="scnx-link" href="#components">A link</a></div></div>
+      </div>
+      <div class="scnx-alert" data-scheme="info" role="status" style="margin-top:8px"><span data-part="icon"><svg aria-hidden="true"><use href="#i-info"/></svg></span><span data-part="content"><span data-part="title">Status keeps its scheme</span><span>An Alert, a Badge or a Toast carries its scheme's colour and its icon, in this theme as in every other.</span></span></div>
+    </section>
+
+    <!-- 10 · Status -->
+    <section class="scnx-surface bb-sheet" data-material="panel" id="status" data-sheet="Status" aria-labelledby="h-status">
+      <div class="bb-head"><span class="scnx-eyebrow">10 · Status</span><h2 id="h-status">Where the boards and the package differ.</h2><p>This book draws what <code>@scnx/system</code> ships. The boards in this folder were drawn before the theme existed, as canvas exports with literal colours, so they differ in places. Each difference is listed with the side this book takes.</p></div>
+      <div class="bb-table-frame scnx-table-frame">
+        <table class="scnx-table">
+          <thead><tr><th scope="col">Where</th><th scope="col">The boards</th><th scope="col">The package (this book)</th><th scope="col">Open</th></tr></thead>
+          <tbody>
+            <tr><td>Accent</td><td>Scnx Blue <code>#0a6cf2</code> on the headline word, the progress bar, the chosen package card, links, focus</td><td>Ink: <code>scnx-saas</code> maps the primary scheme to ink (revision 3, item 8)</td><td><b>Owner's call.</b> Keep ink and redraw the boards, or give <code>scnx-saas</code> a blue primary in ui-platform.</td></tr>
+            <tr><td>Card shadow</td><td>A deep drop: <code>0 1px 2px</code> at 6% and <code>0 16px 40px -24px</code> at 28%; darkens the ground up to 38px below the card</td><td><code>material.panel</code> reaches 23px, <code>material.raised</code> 9px; both lighter (see the measurement below)</td><td><b>Owner's call.</b> The board card sits between panel and menu.</td></tr>
+            <tr><td>Raised and panel shadow</td><td>–</td><td>Raised and panel use <code>shadow.subtle</code> (7% in light) where the earlier snapshot had 4%</td><td>No. Panel draws the same; raised is at most 5 levels darker, within 4px of its edge.</td></tr>
+            <tr><td>Card ring</td><td>A 6% ink line, or no ring on the stage</td><td>An opaque <code>neutral.border.subtle</code> ring on every material</td><td>No: the ring is signature 1.</td></tr>
+            <tr><td>Mono</td><td>JetBrains Mono</td><td>The system mono stack</td><td>No: no font beyond Inter ships.</td></tr>
+            <tr><td>Component page</td><td><code>Docs-Button</code> shows a sample product (<code>acme/ui</code>), Instrument Sans</td><td>Inter, Scnehaux components</td><td>No: a sample, not the look.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-table-frame scnx-table-frame" style="margin-top:8px">
+        <table class="scnx-table">
+          <thead><tr><th scope="col">Shadow, light mode</th><th scope="col">Darkening 2 · 4 · 8 · 16 · 24px below</th><th scope="col">Reach</th></tr></thead>
+          <tbody>
+            <tr><td>Board card (Docs-Home)</td><td><code>24 · 19 · 15 · 9 · 4</code></td><td>38px</td></tr>
+            <tr><td>material.raised</td><td><code>12 · 6 · 1 · 0 · 0</code></td><td>9px</td></tr>
+            <tr><td>material.panel</td><td><code>13 · 8 · 7 · 3 · 0</code></td><td>23px</td></tr>
+            <tr><td>material.menu</td><td><code>23 · 18 · 11 · 6 · 2</code></td><td>30px</td></tr>
+            <tr><td>Snapshot raised, panel</td><td><code>7 · 3 · 1 · 0 · 0</code> and <code>11 · 8 · 7 · 3 · 0</code></td><td>8px, 23px</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bb-note"><b>How it was measured.</b> A white 300 × 200 card, radius 24, painted in Chromium on the board ground (<code>#E9ECF1</code>) with each shadow, then read back under the card's centre. Darkening is the drop in channel value (0–255) from the bare ground; reach is the last pixel darkened by at least 0.5. <b>Authority:</b> this book is guidance (ADR-UIP-VIS-002); the binding rules are ADR-UIP-VIS-001 and STD-UIP-TKN-001, and a component's contract is its specification in <code>ui-platform</code>. The rise stays guidance until an ADR records it.</div>
+    </section>
+  </main>
+
+  <aside class="bb-aside" aria-label="On this page">
+    <div class="scnx-surface" data-material="raised">
+      <nav class="scnx-toc">
+        <span class="scnx-toc__label scnx-eyebrow">On this page</span>
+        <ul class="scnx-toc__list" data-toc></ul>
+      </nav>
+    </div>
+  </aside>
+</div>
+
+<footer class="bb-foot">
+  <span>scnx-saas · brand book · guidance</span>
+  <span>tokens: <a class="scnx-link" data-variant="neutral" href="../design-system/vendor/scnx-system/SOURCE.json">@scnx/system <span data-source>2c28842</span></a> · <a class="scnx-link" data-variant="neutral" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/design-system/proposals/industrial-structure.md">the industrial structure</a></span>
+</footer>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+
+    // the mode switch: a segmented control, arrow keys move within it
+    const group = document.querySelector("[data-mode]");
+    const items = [...group.querySelectorAll("[data-part=item]")];
+    const show = (mode) => {
+      root.dataset.scnxResolvedMode = mode;
+      for (const b of items) { const on = b.value === mode; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; }
+      measure();
+    };
+    items.forEach((b, i) => {
+      b.addEventListener("click", () => show(b.value));
+      b.addEventListener("keydown", (e) => {
+        if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
+        const next = items[(i + (e.key === "ArrowRight" ? 1 : items.length - 1)) % items.length];
+        next.focus(); show(next.value);
+      });
+    });
+
+    // the pinned commit, from the sync's own record
+    fetch("../design-system/vendor/scnx-system/SOURCE.json").then((r) => r.json()).then((s) => {
+      for (const el of document.querySelectorAll("[data-source]")) el.textContent = s.commit.slice(0, 7);
+    }).catch(() => {});
+
+    // the radius scale, as the tokens resolve
+    const probe = document.createElement("i"); probe.style.cssText = "position:absolute;visibility:hidden"; document.body.append(probe);
+    const px = (v) => { probe.style.inlineSize = v; return Math.round(probe.getBoundingClientRect().width); };
+    document.querySelector("[data-radii]").innerHTML = ["mark", "element", "control", "container", "panel", "pill"].map((n) => {
+      const v = `var(--ds-dimension-radius-${n})`;
+      return `<div><i style="--r:${v}"></i><span>${n}</span><code>${n === "pill" ? "9999" : px(v)}px</code></div>`;
+    }).join("");
+
+    // the TOC: one "here", the last sheet whose top has passed under the nav
+    const sheets = [...document.querySelectorAll("[data-sheet]")];
+    const toc = document.querySelector("[data-toc]");
+    toc.innerHTML = sheets.map((s) => `<li class="scnx-toc__item"><a class="scnx-toc__link" href="#${s.id}">${s.dataset.sheet}</a></li>`).join("");
+    const links = [...toc.querySelectorAll("a")];
+    const here = () => {
+      const line = 100;
+      let i = 0;
+      sheets.forEach((s, k) => { if (s.getBoundingClientRect().top <= line) i = k; });
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) i = sheets.length - 1;
+      links.forEach((a, k) => { a.dataset.active = k === i; if (k === i) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current"); });
+    };
+    addEventListener("scroll", here, { passive: true }); addEventListener("resize", here); here();
+
+    // live values: motion durations and the contrast pairs, in a light and a dark island
+    const TEXT = 4.5, UI = 3;
+    // [pair, on, needs, foreground, background]
+    const PAIRS = [
+      ["Text", "canvas", TEXT, "var(--ds-color-neutral-text-default-default)", "var(--ds-color-neutral-surface-canvas-default)"],
+      ["Text", "stage ground", TEXT, "var(--ds-color-neutral-text-default-default)", "var(--scnx-stage-ground)"],
+      ["Subtle text", "raised", TEXT, "var(--ds-color-neutral-text-subtle-default)", "var(--ds-color-neutral-surface-raised-default)"],
+      ["Subtle text", "stage ground", TEXT, "var(--ds-color-neutral-text-subtle-default)", "var(--scnx-stage-ground)"],
+      ["Ink label", "ink", TEXT, "var(--ds-color-neutral-text-contrast-default)", "var(--ds-color-neutral-surface-solid-default)"],
+      ["Link (ink)", "raised", TEXT, "var(--ds-color-primary-text-default-default)", "var(--ds-color-neutral-surface-raised-default)"],
+      ["Focus ring", "raised", UI, "var(--ds-color-primary-border-default-focus)", "var(--ds-color-neutral-surface-raised-default)"],
+      ["Control border", "raised", UI, "var(--ds-color-neutral-border-strong-default)", "var(--ds-color-neutral-surface-raised-default)"],
+      ["Checked fill", "raised", UI, "var(--ds-color-primary-surface-solid-default)", "var(--ds-color-neutral-surface-raised-default)"],
+    ];
+    const canvas = document.createElement("canvas"); canvas.width = canvas.height = 1;
+    const g = canvas.getContext("2d", { willReadFrequently: true });
+    const paint = (colours) => { g.clearRect(0, 0, 1, 1); for (const c of colours) { g.fillStyle = c; g.fillRect(0, 0, 1, 1); } return [...g.getImageData(0, 0, 1, 1).data].slice(0, 3); };
+    const lum = (rgb) => rgb.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+    const island = (mode) => {
+      const el = document.createElement("div"); el.dataset.scnxTheme = "scnx-saas"; el.dataset.scnxResolvedMode = mode; el.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
+      const p = document.createElement("i"); el.append(p); document.body.append(el);
+      const resolve = (v) => { p.style.color = v; return getComputedStyle(p).color; };
+      const out = PAIRS.map(([, , , fg, bg]) => { const B = lum(paint([resolve(bg)])), F = lum(paint([resolve(bg), resolve(fg)])); return (Math.max(B, F) + 0.05) / (Math.min(B, F) + 0.05); });
+      el.remove();
+      return out;
+    };
+    const cell = (r, need) => `<td><code>${r.toFixed(2)} : 1</code> ${r >= need ? "pass" : "<b>fails</b>"}</td>`;
+    const light = island("light"), dark = island("dark");
+    document.querySelector("#contrast tbody").innerHTML = PAIRS.map(([pair, on, need], i) => `<tr><td>${pair}</td><td>${on}</td><td>${need} : 1</td>${cell(light[i], need)}${cell(dark[i], need)}</tr>`).join("");
+
+    function measure() {
+      const cs = getComputedStyle(root);
+      for (const td of document.querySelectorAll("[data-motion] [data-t]")) {
+        const t = td.dataset.t;
+        td.innerHTML = `<code>${cs.getPropertyValue(`--ds-motion-${t}-duration`).trim()}</code>`;
+      }
+    }
+    measure();
+  })();
+</script>
+</body>
+</html>

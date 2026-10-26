@@ -160,7 +160,7 @@ a component that stays square under `scnx-saas` still holds a literal.
 | Theme id | Was | Used by | What it maps | Brand book |
 | :-- | :-- | :-- | :-- | :-- |
 | `scnx-platform` | `industrial` (until 2026-10-25 `default`) | The Scnehaux platform: IAM, AI runtime, organization, the docs | The Scnx Blue palette; square (radius 0, `pill` for meaningful shapes); ring materials | `scnx-platform/Brand-Book.html` |
-| `scnx-saas` | `achromatic` | The SaaS products | An ink palette; the concentric ladder (`mark` 4, `element` 8, `control` 12, `container` 16, `panel` 24, plus `pill`); materials with their soft shadows and, in dark mode, a lit top edge | `scnx-saas/Brand-Book.html`; until it is drawn, `design-system/README.md` |
+| `scnx-saas` | `achromatic` | The SaaS products | An ink palette; the concentric ladder (`mark` 4, `element` 8, `control` 12, `container` 16, `panel` 24, plus `pill`); materials with their soft shadows and, in dark mode, a lit top edge | `scnx-saas/Brand-Book.html` |
 
 The shape values for `scnx-saas` are the ones its boards were drawn with, in the
 earlier snapshot `design-system/themes/default/tokens.css`. ui-platform is before v1, so
