@@ -22,7 +22,7 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 > **The docs boards and their chrome are history since 2026-10-27.** The
 > documentation site, [`anshacerbia2/ui-platform-docs`](https://github.com/anshacerbia2/ui-platform-docs),
 > is now the source of its own pages, chrome and behaviour, and its
-> [`docs/designs/SCROLL.md`](https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md)
+> [TDD-ui-platform-docs-001, annex A](https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/TDD-ui-platform-docs-001-documentation-site.md#annex-a-scroll-behaviour)
 > holds the scroll behaviour. The three `Docs-*.html` boards, `square.css`, `square.js`
 > and `SCROLL.md` here stay as they were, as history, and no longer follow the site:
 > since then the site has put its section bars back on glass and drawn the landing's
