@@ -1,5 +1,12 @@
 # Scroll behaviour · Instrument · Square
 
+> **Superseded on 2026-10-27.** The documentation site is now the source of this
+> behaviour: [`docs/designs/SCROLL.md`](https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md)
+> in `anshacerbia2/ui-platform-docs`, beside its TDD. This file is kept as history: it
+> describes `square.js` and `square.css` in this folder as they were then, and it no
+> longer follows the site (the site has since put its section bars back on glass and
+> drawn the landing's assembly in WebGL, for example).
+
 Everything that moves, appears or changes as the page scrolls, in the order a reader
 meets it. Values are taken from the code: `square.js` and `square.css` in this folder,
 and `instrument.js`, this folder's copy of Instrument's script.

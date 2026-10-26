@@ -110,7 +110,7 @@
       <span class="ix-nav-spacer"></span>
       <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/11</span>
       <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
-      <a class="sq-cta" data-variant="primary" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md" data-nav-optional>Scroll behaviour</a>
+      <a class="sq-cta" data-variant="primary" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md" data-nav-optional>Scroll behaviour</a>
     </header>
   </div>
 
@@ -129,7 +129,7 @@
           <p class="ix-lede">How the Scnehaux UI documentation looks and moves. The docs are drawn as one continuous technical line, and every part of the reading is verified: the section you are in, the sections you have read, the labels you point at.</p>
           <div class="hero-actions" style="display:flex; flex-wrap:wrap; gap:10px">
             <a class="sq-cta" data-variant="primary" href="Docs-Landing.html">See it live<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="sq-cta" data-variant="secondary" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md">Scroll behaviour</a>
+            <a class="sq-cta" data-variant="secondary" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md">Scroll behaviour</a>
           </div>
         </div>
         <div>
@@ -215,7 +215,7 @@
             <tr><td>Column</td><td><code>min(1280px, 100vw − 2 × clamp(16px, 8vw, 320px))</code></td><td>The same on every page: 1280 at 1920, 1210 at 1440, 1075 at 1280.</td></tr>
             <tr><td>Inner pad</td><td><code>--sq-pad</code>: 40px, 20px at 760px and below</td><td>The left and right pad of every cell, row and bar.</td></tr>
             <tr><td>Nav</td><td><code>--sq-nav</code>: 48px, full width, sticky</td><td>A strip of cells, one line between any two. The sheet readout leaves at 1240px and below.</td></tr>
-            <tr><td>Section bar</td><td>Sticky at 48px, <code>NN / Name ··· facts</code></td><td>Its line lands on the next rule when pushed out (−1px bottom margin).</td></tr>
+            <tr><td>Section bar</td><td>Sticky at 48px, <code>NN / Name ··· facts</code></td><td>Held on glass, the ground at 72% blurred 12px, so the page reads through it (the site; these pages still draw it solid). Its line lands on the next rule when pushed out (−1px bottom margin).</td></tr>
             <tr><td>Lead</td><td>56–72px top, a line below</td><td>The section's large heading and lede.</td></tr>
             <tr><td>Cells</td><td><code>.sq-cells</code>: grid, 1px gap, line-coloured</td><td>A cell is never framed on its own and never fades on its own.</td></tr>
             <tr><td>Facts row</td><td><code>.sq-facts</code>: a row of label / value cells</td><td>The section's title block, set as a row.</td></tr>
@@ -315,7 +315,7 @@
             <tr><td>On this page</td><td>ui-platform <code>TableOfContents</code>, controlled: its <code>activeId</code> is the page's one "here" (the section whose line has reached the nav)</td><td>Ships today; the controlled <code>activeId</code> is added by ui-platform-docs</td></tr>
             <tr><td>Kbd, Segmented control</td><td>ui-platform components (wave 1)</td><td>Wave 1 ships before the pages migrate, so no fallback is drawn</td></tr>
             <tr><td>Switch</td><td>ui-platform component (wave 2)</td><td>The boards draw the target, a Switch. Until it ships: a Segmented control "on · off" in a component's props, a static label ("on") in a guarantee specimen</td></tr>
-            <tr><td>Call to action, nav strip, bars, cells, ruler</td><td>Docs chrome</td><td>Built in ui-platform-docs (reference: <code>square.css</code>, <code>square.js</code>)</td></tr>
+            <tr><td>Call to action, nav strip, bars, cells, ruler</td><td>Docs chrome</td><td>Built in ui-platform-docs, its source (first drawn in <code>square.css</code>, <code>square.js</code> here)</td></tr>
           </tbody>
         </table>
       </div>
@@ -327,9 +327,9 @@
       <div class="ix-sheet-head">
         <span class="ix-sheet-no"><b>08</b></span>
         <span class="ix-sheet-name">Motion</span>
-        <dl class="ix-tb"><div><dt>Detail</dt><dd>SCROLL.md</dd></div><div><dt>Reduced</dt><dd>respected</dd></div></dl>
+        <dl class="ix-tb"><div><dt>Detail</dt><dd>ui-platform-docs SCROLL.md</dd></div><div><dt>Reduced</dt><dd>respected</dd></div></dl>
       </div>
-      <div class="bb-lead"><h2 class="ix-h2" id="h-motion">Motion that proves where you are.</h2><p class="ix-lede">The full list, with every trigger and value, is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md">SCROLL.md</a>. These are the movements and their numbers.</p></div>
+      <div class="bb-lead"><h2 class="ix-h2" id="h-motion">Motion that proves where you are.</h2><p class="ix-lede">The full list, with every trigger and value, is in the site's <a class="ix-link" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md">SCROLL.md</a>, in ui-platform-docs. These are the movements and their numbers.</p></div>
       <div class="bb-table-wrap">
         <table class="bb-table">
           <thead><tr><th scope="col">Movement</th><th scope="col">Values</th><th scope="col">Trigger</th></tr></thead>
@@ -405,10 +405,10 @@
       <div class="bb-lead"><h2 class="ix-h2" id="h-adopt">Take the values from ui-platform. Build the chrome in the docs.</h2></div>
       <div class="sq-cells bb-grid-3">
         <div class="bb-cell"><span class="no">From ui-platform</span><h3 class="ix-h3">Tokens and components</h3><p class="ix-body">Colour roles in both modes, type families, spacing, motion tokens, and every component the pages show (Button, Badge, Segmented, Switch, Kbd, Code). Nothing is copied: the docs depend on <code>@scnx/system</code>.</p></div>
-        <div class="bb-cell"><span class="no">In ui-platform-docs</span><h3 class="ix-h3">The chrome</h3><p class="ix-body">The line system, nav strip, section bars, cells, facts, lead, calls to action, the ruler and its titles, reveal, glide and verify. The reference implementation is <code>square.css</code> and <code>square.js</code> in this folder.</p></div>
+        <div class="bb-cell"><span class="no">In ui-platform-docs</span><h3 class="ix-h3">The chrome</h3><p class="ix-body">The line system, nav strip, section bars, cells, facts, lead, calls to action, the ruler and its titles, reveal, glide and verify. Since 2026-10-27 the site is its source, and its behaviour is written in the site's <code>docs/designs/SCROLL.md</code>. <code>square.css</code> and <code>square.js</code> in this folder were its first drawing; they still draw these brand pages, and no longer follow the site.</p></div>
         <div class="bb-cell"><span class="no">Here, in scnehaux-design</span><h3 class="ix-h3">This book</h3><p class="ix-body">Rules, values and examples. A change to the look lands here first, by pull request, and the docs follow. The docs do not write their own brand rules.</p></div>
       </div>
-      <div class="bb-note"><b>Order.</b> The scnx-platform tokens have shipped (the theme <code>scnx-platform</code>, was <code>industrial</code> and before that <code>default</code>, is square), and these pages read them with no bridge. First, ui-platform finishes the structure (components read <code>--scnx-*</code> hooks that fall back to <code>--ds-*</code>), wave 1 (Kbd, Segmented control), and the docs serve IBM Plex Mono from their own origin (<code>font-src 'self'</code>; the files and licence are in <code>design-system/fonts/</code>). Then port <code>square.css</code> and <code>square.js</code> on top of <code>@scnx/system</code>'s tokens and give TableOfContents its controlled <code>activeId</code>. Last, migrate the pages to the sheet structure (bars, cells, facts). The behaviour to match is in <a class="ix-link" href="https://github.com/anshacerbia2/scnehaux-design/blob/main/scnx-platform/SCROLL.md">SCROLL.md</a>.</div>
+      <div class="bb-note"><b>Order.</b> The scnx-platform tokens have shipped (the theme <code>scnx-platform</code>, was <code>industrial</code> and before that <code>default</code>, is square), and these pages read them with no bridge. First, ui-platform finishes the structure (components read <code>--scnx-*</code> hooks that fall back to <code>--ds-*</code>), wave 1 (Kbd, Segmented control), and the docs serve IBM Plex Mono from their own origin (<code>font-src 'self'</code>; the files and licence are in <code>design-system/fonts/</code>). Then port <code>square.css</code> and <code>square.js</code> on top of <code>@scnx/system</code>'s tokens and give TableOfContents its controlled <code>activeId</code>. Last, migrate the pages to the sheet structure (bars, cells, facts). That port is done: since 2026-10-27 the site is the source of its chrome, and its <a class="ix-link" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md">SCROLL.md</a> holds the behaviour.</div>
     </section>
   </main>
 
