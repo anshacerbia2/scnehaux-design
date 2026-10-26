@@ -12,8 +12,9 @@ scnx-platform/                The platform's design (IAM, AI runtime, organizati
   Brand-Book.html             its brand book
   Docs-Landing.html, Docs-Home.html, Docs-Button.html
 scnx-saas/                    The SaaS products' design: public landing, signed-in workspace, component page
+  Brand-Book.html             its brand book (live)
 design-system/                Scnehaux UI, the design system
-  README.md                   rules (the brand book of the scnx-saas look, until its HTML page)
+  README.md                   where the rules are, and the status of the reference
   components/                 one card per component, shared by every theme
   index.html                  live viewer (theme and mode switch)
   vendor/scnx-system/         @scnx/system's tokens and fonts, synced byte for byte
@@ -78,7 +79,7 @@ The design system, in three layers:
 
 | Layer | Where | Changes per theme? |
 | :-- | :-- | :-- |
-| Rules — materials, the concentric ladder, ink acts and blue signals, the stage, type voice | [`README.md`](design-system/README.md) (the scnx-saas look, until `scnx-saas/Brand-Book.html`) | Yes |
+| Rules — materials, the concentric ladder, ink, the stage, type voice | Each theme's brand book: [`scnx-saas/Brand-Book.html`](scnx-saas/Brand-Book.html), [`scnx-platform/Brand-Book.html`](scnx-platform/Brand-Book.html) | Yes |
 | Components — anatomy, geometry, states, token bindings | `components/<Name>/` (`preview.html`, `README.md`), `components/bundle.css` | No |
 | Values — color, radius steps, type, shadows | `vendor/scnx-system/` (from `@scnx/system`); the cards: `themes/default/` (`tokens.json`, `tokens.css`, `rendered/`) | Yes |
 
@@ -104,13 +105,15 @@ after it merges (ui-platform PLAN, "Spatial identity adoption").
 | `scnx-platform` | Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](scnx-platform/Docs-Landing.png) |
 | `scnx-platform` | Docs home (get started) | `Docs-Home.html` | [`Docs-Home.png`](scnx-platform/Docs-Home.png) |
 | `scnx-platform` | Components / Button | `Docs-Button.html` | [`Docs-Button.png`](scnx-platform/Docs-Button.png) |
+| `scnx-saas` | Brand book | `Brand-Book.html` | [`Brand-Book.png`](scnx-saas/Brand-Book.png) |
 | `scnx-saas` | Public · Landing (global) | `Docs-Landing.dc.html` | [`Docs-Landing.png`](scnx-saas/Docs-Landing.png) |
 | `scnx-saas` | Signed in · Workspace home | `Docs-Home.dc.html` | [`Docs-Home.png`](scnx-saas/Docs-Home.png) |
 | `scnx-saas` | Docs · Components / Button | `Docs-Button.dc.html` | [`Docs-Button.png`](scnx-saas/Docs-Button.png) |
 
-`scnx-saas/Brand-Book.html` follows once `@scnx/system` gives its theme the
-shape of these boards (the radius ladder and soft shadows); until then the
-rules of this look are `design-system/README.md`.
+`scnx-saas/Brand-Book.html` is drawn from `@scnx/system`'s `scnx-saas` tokens.
+The boards were drawn before the theme shipped, as canvas exports with literal
+colours; where they differ from the package (the blue accent, the card shadow),
+sheet 10 of the brand book lists the difference and the side it takes.
 
 ## `others/` — earlier concepts
 
