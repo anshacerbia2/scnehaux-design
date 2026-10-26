@@ -1,5 +1,5 @@
-/* Scnehaux UI reference stylesheet. Binds only --ds-* tokens from the theme's tokens.json (tokens.css) and the local --scnx-* geometry below.
-   Typography members stay here: tokens.css declares font families as --font-sans and --font-mono. */
+/* Scnehaux UI reference stylesheet. Binds only --ds-* tokens from @scnx/system's theme CSS (vendor/scnx-system/tokens/css/<theme>.css) and the local --scnx-* geometry below.
+   Typography members stay here and read --font-sans and --font-mono, which the page declares. */
 :root {
   --ds-typography-article-readable-font-family: var(--font-sans);
   --ds-typography-article-readable-font-size: 1rem;
@@ -135,12 +135,13 @@
 
 /* The stage: a tinted ground with the 22px dot grid. Marketing, docs,
    empty states and previews; never behind dense data. */
-:root, [data-theme="light"], [data-theme="achromatic-light"], [data-scnx-resolved-mode="light"] {
+/* data-theme is the earlier snapshot's mode attribute, still used by others/docs-instrument */
+:root, [data-scnx-resolved-mode="light"], [data-theme="light"] {
   --scnx-stage-ground: var(--ds-color-neutral-surface-default-default);
   --scnx-stage-dot: var(--ds-color-neutral-border-subtle-default);
   --scnx-thumb: var(--ds-color-neutral-surface-raised-default);
 }
-[data-theme="dark"], [data-theme="achromatic-dark"], [data-scnx-resolved-mode="dark"] {
+[data-scnx-resolved-mode="dark"], [data-theme="dark"] {
   --scnx-stage-ground: var(--ds-color-neutral-surface-sunken-default);
   --scnx-stage-dot: var(--ds-color-neutral-surface-strong-default);
   --scnx-thumb: var(--ds-color-neutral-surface-strong-default);

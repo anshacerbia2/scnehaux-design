@@ -5,7 +5,8 @@
    the reticle (the stage held still), the read head (blue = "you are here"),
    sheets with title blocks, dimension lines, radius callouts and the receipt tape.
 
-   Binds only --ds-* tokens (themes/default/tokens.css) and the --scnx-* geometry of
+   Binds only --ds-* tokens (tokens.css, the earlier hand-made snapshot kept for these
+   boards) and the --scnx-* geometry of
    components/bundle.css. The --ix-* properties below are expression-local and are
    guidance until an ADR-UIP-VIS-001 revision records them (see README.md). */
 

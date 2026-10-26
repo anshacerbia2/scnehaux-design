@@ -18,7 +18,7 @@ design-system/                Scnehaux UI, the design system
   components/                 one card per component, shared by every theme
   index.html                  live viewer (theme and mode switch)
   vendor/scnx-system/         @scnx/system's tokens and fonts, synced byte for byte
-  themes/default/             the earlier hand-made snapshot the cards are drawn with
+  rendered/<theme>/           every card drawn from those tokens, light and dark
 others/
   concept-a-command-surface/  Konsep A — platform console and SaaS home
   concept-b-spatial-canvas/   Konsep B — client dev console and SaaS home
@@ -63,8 +63,8 @@ which browsers block from a `file://` page.
    `SOURCE.json` recording the commit and a hash per file. Pages link those
    files and never restate a value; `npm run check:tokens` fails when they are
    out of date. Once the package is published, a page moves to it by changing
-   only the path prefix. The cards still use the earlier hand-made snapshot,
-   `themes/default/`, until they are re-rendered from the package.
+   only the path prefix. The cards are rendered from the same files
+   (`npm run render:cards`).
 4. **The binding rules live in the architecture repository**: ADR-UIP-VIS-001
    (spatial identity), STD-UIP-TKN-001 (token grammar), and each component's
    specification in `ui-platform`. A card shows the target; it does not
@@ -81,20 +81,22 @@ The design system, in three layers:
 | :-- | :-- | :-- |
 | Rules — materials, the concentric ladder, ink, the stage, type voice | Each theme's brand book: [`scnx-saas/Brand-Book.html`](scnx-saas/Brand-Book.html), [`scnx-platform/Brand-Book.html`](scnx-platform/Brand-Book.html) | Yes |
 | Components — anatomy, geometry, states, token bindings | `components/<Name>/` (`preview.html`, `README.md`), `components/bundle.css` | No |
-| Values — color, radius steps, type, shadows | `vendor/scnx-system/` (from `@scnx/system`); the cards: `themes/default/` (`tokens.json`, `tokens.css`, `rendered/`) | Yes |
+| Values — color, radius steps, type, shadows | `vendor/scnx-system/` (from `@scnx/system`); the cards drawn with them: `rendered/<theme>/` | Yes |
 
 - `components/<Name>/README.md` gives usage and the delta from the current build
   (or "Planned").
-- `themes/default/rendered/<Name>.light.png` and `.dark.png`: every card in the
-  default theme.
+- `rendered/<theme>/<Name>.light.png` and `.dark.png`: every card in
+  `scnx-platform` and in `scnx-saas`, rendered by `scripts/render-cards.mjs` from
+  the synced tokens. `npm run check:cards` compares a fresh render with them;
+  font rasterization differs between machines, so render and check on one.
 - `index.html`: every card live, with a filter and a theme and mode switch.
 - Shared files: `design-system.json`, `assets/` (icons, logo), and `fonts/`
   (Inter, SIL Open Font License 1.1, `OFL.txt`).
 
 Status: 21 cards are components the package does not have yet (ui-platform
-PLAN, "Component backlog"). The material shadow values on the cards predate the
-token implementation (ui-platform #110) and are regenerated from the package
-after it merges (ui-platform PLAN, "Spatial identity adoption").
+PLAN, "Component backlog"). The cards draw `components/bundle.css` on the
+package's tokens: they show each theme's rules, not the shipped components,
+which ui-platform checks in its own visual tests.
 
 ## The two designs
 
@@ -166,5 +168,7 @@ the ruler. `others/docs-instrument` keeps the earlier snapshot.
 Exported on 2026-10-24 from the Claude design canvases "Scnehaux UI" (Design
 System) and "Platform Dashboard Concepts" (Design). Concept PNGs were rendered
 at 1440 px wide with the canvas runtime and the boards' fonts from Fontsource;
-component PNGs at 880 px (Cover 960 px) with `themes/default/tokens.css` and
-`components/bundle.css`.
+component PNGs at 880 px (Cover 960 px) with the hand-made snapshot
+`themes/default/tokens.css` (now `others/docs-instrument/tokens.css`) and
+`components/bundle.css`. Since 2026-10-26 the cards are rendered from
+`@scnx/system`'s tokens instead.

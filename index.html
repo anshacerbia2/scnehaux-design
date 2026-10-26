@@ -1,23 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-scnx-theme="scnx-saas" data-scnx-resolved-mode="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scnehaux design</title>
 <meta name="description" content="Design references for the Scnehaux platform: the Scnehaux UI design system and the product concepts.">
 <link rel="icon" href="design-system/assets/Logos/scnehaux-mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="design-system/themes/default/tokens.css">
+<link rel="stylesheet" href="design-system/vendor/scnx-system/tokens/css/scnx-saas.css">
 <script>
-  // The tokens select a mode with data-theme; follow the system preference.
+  // The hub is drawn in scnx-saas; its mode follows the system preference.
   (() => {
     const query = matchMedia("(prefers-color-scheme: dark)");
-    const apply = () => { document.documentElement.dataset.theme = query.matches ? "dark" : "light"; };
+    const apply = () => { document.documentElement.dataset.scnxResolvedMode = query.matches ? "dark" : "light"; };
     apply();
     query.addEventListener("change", apply);
   })();
 </script>
 <style>
-  @font-face { font-family: "Inter"; src: url(design-system/fonts/Inter-Variable.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
   :root { color-scheme: light dark; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -29,7 +28,7 @@
     background-image: radial-gradient(var(--ds-color-neutral-border-subtle-default) 1px, transparent 1px);
     background-size: 22px 22px;
   }
-  [data-theme="dark"] body { background-color: var(--ds-color-neutral-surface-sunken-default); background-image: radial-gradient(var(--ds-color-neutral-surface-strong-default) 1px, transparent 1px); }
+  [data-scnx-resolved-mode="dark"] body { background-color: var(--ds-color-neutral-surface-sunken-default); background-image: radial-gradient(var(--ds-color-neutral-surface-strong-default) 1px, transparent 1px); }
   a { color: inherit; }
   a:focus-visible { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; border-radius: 4px; }
   .wrap { max-inline-size: 1200px; margin-inline: auto; padding: 40px 16px 64px; }
@@ -78,19 +77,19 @@
   <section aria-labelledby="ds-title">
     <p class="eyebrow">Design system</p>
     <h2 id="ds-title">Scnehaux UI</h2>
-    <p class="section-note">43 component cards with their usage and their delta from the current build, in the default theme.</p>
+    <p class="section-note">43 component cards with their usage and their delta from the current build, in both themes and both modes.</p>
     <div class="panel ds">
       <div class="ds-main">
-        <p>Materials instead of boxes, corners that nest on the ladder 4 · 8 · 12 · 16 · 24, ink for the main action and one blue that means "here".</p>
+        <p>Components that carry no design of their own: each reads a hook that falls back to a token the theme maps. Ink is the main action in every theme; scnx-platform draws square with Scnx Blue for "here", scnx-saas draws materials on the ladder 4 · 8 · 12 · 16 · 24 in ink.</p>
         <div class="actions">
           <a class="btn btn-primary" href="design-system/">Open the components</a>
           <a class="btn btn-secondary" href="scnx-saas/Brand-Book.html">Read the brand book</a>
         </div>
       </div>
       <div class="layers">
-        <div class="layer"><strong>Rules</strong><span>The brand book. The same in every theme.</span></div>
+        <div class="layer"><strong>Rules</strong><span>The brand page, shared by every theme, and one brand book per theme.</span></div>
         <div class="layer"><strong>Components</strong><span>Anatomy, geometry, states, token bindings. The same in every theme.</span></div>
-        <div class="layer"><strong>Values</strong><span>Synced from <code>@scnx/system</code> into <code>design-system/vendor/</code>. The cards still use the earlier snapshot, <code>themes/default</code>, until they are re-rendered.</span></div>
+        <div class="layer"><strong>Values</strong><span>Synced from <code>@scnx/system</code> into <code>design-system/vendor/</code>. The cards are rendered from them, per theme, into <code>design-system/rendered/</code>.</span></div>
       </div>
     </div>
   </section>

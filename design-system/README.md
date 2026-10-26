@@ -26,5 +26,5 @@ This file held the `scnx-saas` rules until its brand book was drawn. They are no
   - Intentional additions (planned; each card says what it becomes): Surface (the material primitive), Link, Kbd, Textarea, Select, Checkbox, Radio, Switch, SegmentedControl, Toast, Progress, Spinner, Skeleton, Tooltip, Popover, Menu, Sheet, Breadcrumb, Pagination, Table and Avatar. They are the P1 inventory a client dashboard needs.
 - `components/bundle.css`: the reference stylesheet. It holds the `.scnx-*` classes and the `data-*` options of every card, bound only to tokens. Three mode roles live there because they choose a different token per mode: `--scnx-stage-ground`, `--scnx-stage-dot` and `--scnx-thumb`.
 - `vendor/scnx-system/`: `@scnx/system`'s tokens and fonts for both themes, synced byte for byte (`npm run sync:tokens`; `SOURCE.json` records the commit).
-- `themes/default/`: the earlier hand-made snapshot. The cards are still drawn with it until they are re-rendered from the package.
+- `rendered/<theme>/`: every card in each theme and mode, rendered from `vendor/scnx-system/` (`npm run render:cards`). The earlier hand-made snapshot they were drawn with is kept only for the old Instrument boards, as `others/docs-instrument/tokens.css`.
 - `proposals/`: the industrial structure.
