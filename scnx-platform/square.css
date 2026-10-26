@@ -1,4 +1,9 @@
 /* Scnehaux UI · Instrument · Square
+
+   Since 2026-10-27 the documentation site (anshacerbia2/ui-platform-docs) is the source
+   of this chrome and docs/designs/SCROLL.md there holds its behaviour. This file was
+   its first drawing; it still draws the brand pages and the boards here, as history,
+   and no longer follows the site.
    The Instrument boards drawn as one continuous line drawing: a framed centre column,
    a 1px rule that crosses the whole sheet at the top of every section, a bold cross
    where that rule meets the column, sticky section bars, and content laid out as

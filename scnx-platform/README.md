@@ -19,6 +19,18 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 >
 > The reveal moves content 28px, past Instrument's 4px rise; that too is guidance.
 
+> **The docs boards and their chrome are history since 2026-10-27.** The
+> documentation site, [`anshacerbia2/ui-platform-docs`](https://github.com/anshacerbia2/ui-platform-docs),
+> is now the source of its own pages, chrome and behaviour, and its
+> [`docs/designs/SCROLL.md`](https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/SCROLL.md)
+> holds the scroll behaviour. The three `Docs-*.html` boards, `square.css`, `square.js`
+> and `SCROLL.md` here stay as they were, as history, and no longer follow the site:
+> since then the site has put its section bars back on glass and drawn the landing's
+> assembly in WebGL, among other changes. `square.css` and `square.js` still draw the
+> brand pages. **The brand book stays here and stays current**: a brand book belongs
+> to a theme (ADR-UIP-VIS-002), and the site is one of the products on `scnx-platform`.
+> (The owner, 2026-10-27: "gw ikut rekomen lo".)
+
 | Board | Page | Image |
 | :-- | :-- | :-- |
 | Public · Landing (global) | [`Docs-Landing.html`](Docs-Landing.html) | [`Docs-Landing.png`](Docs-Landing.png) |

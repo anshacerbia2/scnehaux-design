@@ -1,5 +1,10 @@
 /* Scnehaux UI · Instrument · Square — smooth scroll, reveal and the ruler scrollbar.
 
+   Since 2026-10-27 the documentation site (anshacerbia2/ui-platform-docs) is the source
+   of this behaviour and docs/designs/SCROLL.md there describes it. This file was its
+   first implementation; it still runs the brand pages and the boards here, as history,
+   and no longer follows the site.
+
    Smooth scroll: every wheel input, mouse or trackpad, is eased toward its target
    (Lenis-style, no library). Anything that scrolls itself, a pinch or ctrl zoom, a
    horizontal swipe and reduced motion keep the native behaviour; keys, anchors and find

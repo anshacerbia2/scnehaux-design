@@ -161,7 +161,11 @@ plus its still frame (`.png`, `.thumb.webp`, rendered with `?render&mode=dark`).
 section bars, cells that share their lines) and `square.js` (a ruler scrollbar
 with section titles), and binds `@scnx/system`'s scnx-platform tokens from
 `design-system/vendor/`; its thumbnails are the live first screen, so they show
-the ruler. `others/docs-instrument` keeps the earlier snapshot.
+the ruler. `others/docs-instrument` keeps the earlier snapshot. Since 2026-10-27
+the documentation site (`anshacerbia2/ui-platform-docs`) is the source of its
+own pages and chrome: the `Docs-*.html` boards, `square.css`, `square.js` and
+`SCROLL.md` stay as history (see `scnx-platform/README.md`), and the brand book
+stays current here.
 
 ## Provenance
 
