@@ -122,7 +122,7 @@
     .bb-cards.c2, .bb-cards.c3, .bb-cards.c4 { grid-template-columns: minmax(0, 1fr); }
     .bb-hero-copy { padding: 28px 20px; }
     .bb-head { padding: 20px 16px 16px; }
-    .bb-brand span { display: none; }
+    .bb-brand span, .bb-nav > .scnx-badge { display: none; }
   }
 </style>
 </head>
@@ -149,8 +149,8 @@
     </ul>
     <span class="bb-spacer"></span>
     <div class="scnx-segmented" data-size="small" role="radiogroup" aria-label="Mode" data-mode>
-      <button data-part="item" role="radio" aria-checked="true" value="light" aria-label="Light"><svg aria-hidden="true"><use href="#i-sun"/></svg></button>
-      <button data-part="item" role="radio" aria-checked="false" value="dark" aria-label="Dark" tabindex="-1"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button data-part="item" role="radio" aria-checked="true" value="light"><svg aria-hidden="true"><use href="#i-sun"/></svg>Light</button>
+      <button data-part="item" role="radio" aria-checked="false" value="dark" tabindex="-1"><svg aria-hidden="true"><use href="#i-moon"/></svg>Dark</button>
     </div>
     <a class="scnx-btn" data-variant="secondary" data-size="small" href="../brand/Brand.html">Brand page</a>
   </header>
@@ -166,7 +166,7 @@
         <p class="bb-lede">How the Scnehaux SaaS products look: layered materials on a dotted stage, corners that nest, and ink for every action and every mark of place. Every colour, radius and shadow on this page is read from <code>@scnx/system</code>'s <code>scnx-saas</code> tokens; switch the mode in the nav.</p>
         <div class="bb-row">
           <a class="scnx-btn" data-variant="primary" href="Docs-Landing.html">See the boards<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="scnx-btn" data-variant="secondary" href="#status">What is still open</a>
+          <a class="scnx-btn" data-variant="secondary" href="#status">Boards and package</a>
         </div>
       </div>
       <div class="scnx-surface bb-card" data-material="panel" style="padding:24px">
@@ -388,13 +388,13 @@
 
     <!-- 10 · Status -->
     <section class="scnx-surface bb-sheet" data-material="panel" id="status" data-sheet="Status" aria-labelledby="h-status">
-      <div class="bb-head"><span class="scnx-eyebrow">10 · Status</span><h2 id="h-status">Where the boards and the package differ.</h2><p>This book draws what <code>@scnx/system</code> ships. The boards in this folder were drawn before the theme existed, as canvas exports with literal colours, so they differ in places. Each difference is listed with the side this book takes.</p></div>
+      <div class="bb-head"><span class="scnx-eyebrow">10 · Status</span><h2 id="h-status">Where the boards and the package differ.</h2><p>This book draws what <code>@scnx/system</code> ships. The boards in this folder were drawn before the theme existed, as canvas exports with literal colours, so they differ in places. Each difference is listed with the side this book takes. Where they differ, this book holds.</p></div>
       <div class="bb-table-frame scnx-table-frame">
         <table class="scnx-table">
-          <thead><tr><th scope="col">Where</th><th scope="col">The boards</th><th scope="col">The package (this book)</th><th scope="col">Open</th></tr></thead>
+          <thead><tr><th scope="col">Where</th><th scope="col">The boards</th><th scope="col">The package (this book)</th><th scope="col">Decision</th></tr></thead>
           <tbody>
-            <tr><td>Accent</td><td>Scnx Blue <code>#0a6cf2</code> on the headline word, the progress bar, the chosen package card, links, focus</td><td>Ink: <code>scnx-saas</code> maps the primary scheme to ink (revision 3, item 8)</td><td><b>Owner's call.</b> Keep ink and redraw the boards, or give <code>scnx-saas</code> a blue primary in ui-platform.</td></tr>
-            <tr><td>Card shadow</td><td>A deep drop: <code>0 1px 2px</code> at 6% and <code>0 16px 40px -24px</code> at 28%; darkens the ground up to 38px below the card</td><td><code>material.panel</code> reaches 23px, <code>material.raised</code> 9px; both lighter (see the measurement below)</td><td><b>Owner's call.</b> The board card sits between panel and menu.</td></tr>
+            <tr><td>Accent</td><td>Scnx Blue <code>#0a6cf2</code> on the headline word, the progress bar, the chosen package card, links, focus</td><td>Ink: <code>scnx-saas</code> maps the primary scheme to ink (revision 3, item 8)</td><td><b>Ink</b> (the owner, 2026-10-26). Where a board shows blue, this book holds.</td></tr>
+            <tr><td>Card shadow</td><td>A deep drop: <code>0 1px 2px</code> at 6% and <code>0 16px 40px -24px</code> at 28%; darkens the ground up to 38px below the card</td><td><code>material.panel</code> reaches 23px, <code>material.raised</code> 9px; both lighter (see the measurement below)</td><td><b>The package's materials</b> (the owner, 2026-10-26). The board card, between panel and menu, is not a material.</td></tr>
             <tr><td>Raised and panel shadow</td><td>–</td><td>Raised and panel use <code>shadow.subtle</code> (7% in light) where the earlier snapshot had 4%</td><td>No. Panel draws the same; raised is at most 5 levels darker, within 4px of its edge.</td></tr>
             <tr><td>Card ring</td><td>A 6% ink line, or no ring on the stage</td><td>An opaque <code>neutral.border.subtle</code> ring on every material</td><td>No: the ring is signature 1.</td></tr>
             <tr><td>Mono</td><td>JetBrains Mono</td><td>The system mono stack</td><td>No: no font beyond Inter ships.</td></tr>
@@ -445,6 +445,8 @@
       for (const b of items) { const on = b.value === mode; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; }
       measure();
     };
+    // the mode was chosen before first paint (?mode, else the system); the switch starts on it
+    for (const b of items) { const on = b.value === root.dataset.scnxResolvedMode; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; }
     items.forEach((b, i) => {
       b.addEventListener("click", () => show(b.value));
       b.addEventListener("keydown", (e) => {
