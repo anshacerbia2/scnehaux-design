@@ -49,7 +49,9 @@ tokens.
    The crossing rule sits above the bar, so it is the bar's top line until the bar
    meets the nav; by then the rule has scrolled under the nav and the nav's line
    takes over. When the next section pushes a held bar up, the bar's -1px bottom
-   margin lands its line on the next rule. The lines never double.
+   margin lands its line on the next rule, and a jump lands a section's rule on the
+   nav's own line (47px). The lines never double. A held bar sits on the solid
+   ground: no glass, nothing behind it shows through.
 4. **No radius, anywhere.** Square corners and ring materials are the default
    theme's values, proposed in
    [`design-system/proposals/industrial-structure.md`](../design-system/proposals/industrial-structure.md):
@@ -72,7 +74,9 @@ tokens.
    a ruler title: hash characters for 120ms, then it resolves left to right, one
    character every 45ms. Only the text changes; the icon stays put, the mono face
    keeps the width, and the accessible name stays the real label. Component specimens
-   (the Button page's stage, the guarantees' Save and Cancel) are left alone.
+   (the Button page's stage, the guarantees' Save and Cancel) are left alone. The mode
+   switch holds every transition off until the new mode has painted, so nothing glides
+   from one palette to the other.
 7. **Contrast.** Text is text or muted (4.5:1 or more in both modes), blue text is
    `primary.text.*`, a control's boundary is `--sq-edge` (3:1 or more). The faint
    mix is decoration only. The brand book's Colour sheet measures every role live.
@@ -94,7 +98,8 @@ In short:
 - **Section titles.** They follow their section's line, letter by letter, last
   letter first. A title stands up on the ruler as the line enters the viewport, and
   lies down into the current place as the line nears the nav. A hover verifies a
-  title at rest again (hash characters, then left to right).
+  title at rest again (hash characters, then left to right). A click on a title
+  glides to its section. Nothing is drawn behind the titles.
 - **Fold.** On hover, focus or drag, the ruler folds the page into 0–100. Click
   jumps, drag scrubs, and keys step.
 - **Off where it should be.** The ruler is off below 1024px; reveal and glide are off
@@ -104,7 +109,7 @@ In short:
 
 - `square.css`: the line system, the nav, the section bars, the cells and the ruler
   styles, loaded after `instrument.css`. The `--sq-*` properties
-  (mono, line, cross, edge, faint, glass, column, padding) are expression-local
+  (mono, line, cross, edge, faint, column, padding) are expression-local
   guidance. It serves IBM Plex Mono 400, 500 and 600 from
   `../design-system/fonts/` (SIL OFL 1.1, `OFL-IBMPlexMono.txt`), so no page
   loads a font from another origin.

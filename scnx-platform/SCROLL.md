@@ -60,7 +60,7 @@ Terms used below:
 | 4.1 | Wheel glides | Every wheel input, mouse or trackpad, moves a target. The page eases toward it with a 120ms time constant (the reference uses Lenis `lerp: 0.12`) and lands within 0.5px. Inputs add up while gliding. |
 | 4.2 | Trackpad | It glides like the mouse, as Lenis does. Its many small deltas add up to one eased movement. |
 | 4.3 | Left to the browser | Ctrl or pinch zoom, a mostly horizontal swipe, an element under the pointer that can still scroll that way (the Button sidebar, code blocks), an event another handler has already taken, and reduced motion. |
-| 4.4 | Others take over | Keys, anchor links, find-in-page and the native scrollbar on narrow screens move the page directly. A glide in progress yields to them. |
+| 4.4 | Others take over | Keys, anchor links, find-in-page and the native scrollbar on narrow screens move the page directly. A glide in progress yields to them. The ruler's own title links are the exception: they glide (6.12). |
 | 4.5 | Line units | `deltaMode` 1 counts 16px per line; `deltaMode` 2 counts one viewport per page. |
 | 4.6 | Same frame | The ruler and titles are redrawn in the frame the glide moves the page, never a frame behind. |
 
@@ -72,7 +72,7 @@ Terms used below:
 | 5.2 | Now line | A blue line at `nowY = 60 + p × (viewport − 74) / 100`, sliding down the viewport as the page scrolls. |
 | 5.3 | Readout | Under the now line, like a receipt: `05 · 042%` (the current section, then *p*). |
 | 5.4 | The ledger | A 20×2px mark at each section's place in the document (`top / pageHeight`). Marks are faint ahead, ink for the current section, and blue with a drawn check once read (an earlier section, or every section once *p* ≥ 99.5). |
-| 5.5 | Glass | The ruler strip has a 9px backdrop blur, fading to the left. Two corner glasses (top 260px, bottom 220px, up to 380px wide) always sit behind the title stacks. |
+| 5.5 | Nothing behind | No glass, plate or halo behind the ruler or its titles, and the section bars sit on the solid ground: nothing scrolling under them shows through (the owner, 2026-10-26; the blurred glass and the plates tried after it read badly). |
 
 ## 6. Section titles
 
@@ -94,16 +94,16 @@ spent staggering the letters, eased in and out (cubic).
 | 6.7 | Standing → current | Starts when the line is 140px below the current title's place, and is complete when the line reaches the nav (within half a pixel); the standing title stops 8px under that place (6.2) and lies down from there. Where the page ends first, it completes at the highest point the line can reach. It never starts until the previous section's line is 24px past the nav, so a short section makes the next title lie down over a shorter stretch, never early. |
 | 6.8 | Current → read stack | Driven by the next section's line over the same stretch as 6.7, but done within its first 45% (1 − the 55% letter stagger): the current place is empty before the next title's first letter lands there. |
 | 6.9 | Current section | The last one whose line has reached the nav. Where the page ends first, the highest point its line can reach counts instead. This is the moment its section bar is held. It is the page's one "here": the ruler (titles, readout, ledger, check), the bar's blue number, the nav's readout and the Button page's contents all switch on it. `square.js` sets `<html data-ix-here="48">`, which tells `instrument.js` to use the same line. |
-| 6.10 | Check | Drawn beside the current title once it is whole: not moving in or out, and not being verified. Because of 6.7, that is always true at the moment the line reaches the nav (or the end of the page), so the title is level and checked at that moment, never after. The check draws in over 420ms. Hidden while the ruler is folded. |
+| 6.10 | Check | Drawn beside the current title, centred on its capitals (not on the line box, which also holds the room below the baseline), once it is whole: not moving in or out, and not being verified. Because of 6.7, that is always true at the moment the line reaches the nav (or the end of the page), so the title is level and checked at that moment, never after. The check draws in over 420ms. Hidden while the ruler is folded. |
 | 6.11 | Verified on demand | Hovering or focusing a title at rest shows its letters as hash characters (`0–9 A–F`, changing every 50ms) for 120ms, then resolves them left to right, one every 45ms. The check is drawn again after, when the title is the current one. "At rest" covers the current title, both stacks, and every title while the ruler is open or opening. A title in a scroll move, or with the ruler closing, is not at rest. Standing titles sit on the ruler, so pointing at one opens the ruler first. Once per entry; not under reduced motion. Nav links and calls to action use the same shuffle (see the README, "Nav and calls to action"). |
-| 6.12 | Links | Each title is a link to its section, covering the title where it mostly is. A jump lands the section's line under the nav (`scroll-margin-top: 48px` on every section). Section 01 lands at the top of the page, exactly where it loads. |
+| 6.12 | Links | Each title is a link to its section, covering the title where it mostly is; in a stack the link is one row tall, so two links never overlap and a click reaches the title under the pointer. A click glides like a wheel (a modified click is left to the browser). A jump, from a title, a contents link or a `#hash`, lands the section's line on the nav's own line, its last row (`scroll-margin-top: 47px`): one line, never a double border. Section 01 has no rule (2.3a), takes 48px and lands at the top of the page, exactly where it loads. `square.js` reads each section's scroll-margin, so every jump lands alike. |
 
 **The same at every width.** Wherever the ruler shows (1024px and up), the titles keep
 one layout and one behaviour:
 - Read stack, large current title with its check, standing next title, and the waiting stack.
 - Only the size follows the viewport: 1.77% of its width, between 22 and 34px.
 - The large title shrinks toward the free margin between the column and the ruler, but never below 80%.
-- Where the margin is narrower, the titles overlap the page's top-right corner over the corner glass, as the reference does.
+- Where the margin is narrower, the titles overlap the page's top-right corner, with nothing behind them (5.5).
 
 ## 7. The ruler folded
 

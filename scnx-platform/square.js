@@ -23,8 +23,9 @@
    becoming current is checked once whole. Hovering or focusing a title at rest
    verifies it again: its letters read as hash characters, then resolve left to right.
    The layout is the same at every width the ruler shows (1024px up): the large title
-   shrinks toward the free margin, to 80% at most, and overlaps the page over the
-   corner glass where the margin is narrower.
+   shrinks toward the free margin, to 80% at most, and overlaps the page where the
+   margin is narrower. Nothing is drawn behind the titles. A title is a link: a click
+   glides its section's line onto the nav's own line.
    Click or drag to move; with focus, arrows step 1% (shift 5%), Page Up and Page Down
    move by section, Home and End go to the ends.
 
@@ -182,7 +183,6 @@
 
     /* ---------- DOM ---------- */
     const rail = el("div", "sq-ruler", { role: "scrollbar", tabindex: "0", "aria-controls": document.querySelector("main")?.id || "", "aria-orientation": "vertical", "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": "0", "aria-label": "Page position" });
-    rail.append(el("div", "sq-ruler-glass", { "aria-hidden": "true" }));
     const scale = el("div", "sq-scale", { "aria-hidden": "true" });
     const items = [];
     for (let v = 0; v <= 100; v++) {
@@ -196,8 +196,6 @@
     now.append(pct);
     rail.append(scale, win, now);
     const cursor = el("div", "sq-ruler-cursor", { "aria-hidden": "true" });
-    const glassTop = el("div", "sq-glass", { "data-at": "top", "aria-hidden": "true" });
-    const glassBottom = el("div", "sq-glass", { "data-at": "bottom", "aria-hidden": "true" });
     const layer = el("div", "sq-labels", { "aria-hidden": "true" });
     const verified = el("div", "sq-verified", { "aria-hidden": "true" });
     verified.innerHTML = CHECK;
@@ -217,7 +215,15 @@
       const mark = el("span", "sq-mark", { "data-state": "ahead" });
       mark.innerHTML = `<i></i>${CHECK}`;
       scale.append(mark);
-      const L = { sheet: s, i, name, letters, link: a, mark, W: 0, v: 0, top: 0, box: "", decode: 0, settled: false };
+      const L = { sheet: s, i, name, letters, link: a, mark, W: 0, v: 0, top: 0, jump: 0, box: "", decode: 0, settled: false };
+      // a click glides to the section, like a wheel, and lands where its own anchor would
+      // (L.jump); a modified click is left to the browser
+      a.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        history.replaceState(history.state, "", `#${s.id}`);
+        smooth.to(L.jump);
+      });
       // hovering or focusing a title at rest verifies it again, the ruler folded or not:
       // once per entry, never while it moves
       const verify = () => {
@@ -231,14 +237,30 @@
       return L;
     });
     const last = labels.length - 1;
-    document.body.append(glassTop, glassBottom, layer, verified, jumps, rail, cursor);
+    document.body.append(layer, verified, jumps, rail, cursor);
 
     /* ---------- measure: on resize only, never while scrolling ---------- */
-    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, pitch = 20, room = 0, scaleState = "";
+    let vw = 0, vh = 0, docH = 1, maxScroll = 1, H = 1, big = 34, pitch = 20, room = 0, capShift = 0, scaleState = "";
+    // where the capitals' centre sits from the centre of a letter's line box (line-height 1,
+    // which also holds the room below the baseline), at `size`: a mark centred on the box sits low
+    const capCentre = (sample, size) => {
+      const g = sample && document.createElement("canvas").getContext("2d");
+      if (!g) return 0;
+      const cs = getComputedStyle(sample);
+      g.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
+      const m = g.measureText("H");
+      const ascent = m.fontBoundingBoxAscent, descent = m.fontBoundingBoxDescent;
+      if (!Number.isFinite(ascent) || !Number.isFinite(descent)) return 0;
+      const baseline = (size - (ascent + descent)) / 2 + ascent;
+      return baseline - m.actualBoundingBoxAscent / 2 - size / 2;
+    };
     const column = document.querySelector(".sq-col") || document.querySelector(".ix-page > main > section[data-sheet]");
     const measureLetters = () => {
       big = clamp(Math.round(vw * 0.0177), 22, 34);
+      // a row of either stack: the small size plus a quarter (SCROLL.md 6.1)
+      pitch = big * SMALL * 1.25;
       doc.style.setProperty("--sq-label-size", `${big}px`);
+      capShift = capCentre(labels[0]?.letters[0]?.span, big);
       for (const L of labels) {
         let c = 0;
         // offsetWidth is the laid-out width at the base size, before scale and rotation
@@ -253,6 +275,9 @@
       H = Math.max(1, vh - TOP - BOTTOM);
       for (const L of labels) {
         L.top = L.sheet.getBoundingClientRect().top + scrollY;
+        // where a jump lands: the section's own scroll-margin (square.css), so a title, a
+        // contents link and a #hash land alike, its line on the nav's own line
+        L.jump = Math.max(0, L.top - (parseFloat(getComputedStyle(L.sheet).scrollMarginTop) || 0));
         // its place on the scale: where its line sits in the document
         L.v = L.i === 0 ? 0 : clamp((L.top / docH) * 100, 0, 100);
         // the highest its line gets on screen: under the nav, or where the page ends
@@ -262,7 +287,7 @@
       room = vw - RAIL - (column ? column.getBoundingClientRect().right : vw - RAIL) - 16;
       for (const L of labels) {
         // the same layout at every width: the large title shrinks toward the free margin,
-        // never below 80%; where the margin is narrower it overlaps the page over the glass
+        // never below 80%; where the margin is narrower it overlaps the page
         L.sBig = clamp(room / L.W, 0.8, 1);
         L.curY = 66 + L.i * pitch + big * L.sBig;
         // the first title is current from the start and never stands, but every title needs
@@ -401,7 +426,7 @@
           if (ch !== l.shown) l.span.textContent = l.shown = ch;
           if (c < 1 || q > 0 || L.decode) whole = false;
           put(l.span, "transform", `translate3d(${at[0].toFixed(1)}px, ${at[1].toFixed(1)}px, 0) translate(-50%, -50%) rotate(${at[2].toFixed(1)}deg) scale(${at[3].toFixed(3)})`);
-          put(l.span, "color", `color-mix(in oklch, var(--ix-text) ${(at[4] * 100).toFixed(0)}%, var(--ix-ground))`);
+          put(l.span, "color", `color-mix(in oklab, var(--ix-text) ${(at[4] * 100).toFixed(0)}%, var(--ix-ground))`);
         }
         L.settled = settled;
         if (whole && mode < 0.05) check = { L, y: curY, s: sBig };
@@ -410,7 +435,9 @@
         const box = place === "hover" ? [vw - RAIL - L.W * SMALL, hoverY(L.v) - (big * SMALL) / 2, L.W * SMALL, big * SMALL]
           : place === "upright" ? [vw - 32 - (big * UPRIGHT) / 2, standY - half, big * UPRIGHT, half * 2]
           : place === "current" ? [vw - RAIL - L.W * sBig, curY - (big * sBig) / 2, L.W * sBig, big * sBig]
-          : [vw - RAIL - L.W * SMALL, (place === "past" ? pastY : stackY) - (big * SMALL) / 2, L.W * SMALL, big * SMALL];
+          // in a stack the link is one row tall, so neighbouring links never overlap and a
+          // click always reaches the title under the pointer
+          : [vw - RAIL - L.W * SMALL, (place === "past" ? pastY : stackY) - pitch / 2, L.W * SMALL, pitch];
         const key = box.map((v) => v.toFixed(0)).join(",");
         if (key !== L.box) {
           L.box = key;
@@ -421,7 +448,8 @@
       if (check) {
         const size = big * check.s * 0.62;
         const x = vw - RAIL - check.L.W * check.s - size * 1.25;
-        put(verified, "transform", `translate3d(${x.toFixed(1)}px, ${(check.y - size / 2).toFixed(1)}px, 0)`);
+        // centred on the capitals, not on the line box, which holds the descender's room too
+        put(verified, "transform", `translate3d(${x.toFixed(1)}px, ${(check.y + capShift * check.s - size / 2).toFixed(1)}px, 0)`);
         put(verified, "width", `${size.toFixed(1)}px`); put(verified, "height", `${size.toFixed(1)}px`);
       }
       if (check && !verified.hasAttribute("data-on")) verified.setAttribute("data-on", "");
@@ -457,7 +485,7 @@
     rail.addEventListener("blur", () => { focused = false; leave(); });
     rail.addEventListener("keydown", (e) => {
       const p = progress(), cur = currentIndex();
-      const at = (L) => L.top - NAV;
+      const at = (L) => L.jump;
       let top = null;
       if (e.key === "ArrowDown" || e.key === "ArrowRight") top = ((p + (e.shiftKey ? 5 : 1)) / 100) * maxScroll;
       else if (e.key === "ArrowUp" || e.key === "ArrowLeft") top = ((p - (e.shiftKey ? 5 : 1)) / 100) * maxScroll;
@@ -474,7 +502,7 @@
     const on = () => {
       const active = wide.matches;
       doc.dataset.ruler = active ? "on" : "off";
-      for (const n of [rail, cursor, layer, verified, jumps, glassTop, glassBottom]) n.hidden = !active;
+      for (const n of [rail, cursor, layer, verified, jumps]) n.hidden = !active;
       if (!active) return;
       measure();
       invalidate();

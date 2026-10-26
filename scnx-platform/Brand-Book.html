@@ -219,7 +219,7 @@
             <tr><td>Lead</td><td>56–72px top, a line below</td><td>The section's large heading and lede.</td></tr>
             <tr><td>Cells</td><td><code>.sq-cells</code>: grid, 1px gap, line-coloured</td><td>A cell is never framed on its own and never fades on its own.</td></tr>
             <tr><td>Facts row</td><td><code>.sq-facts</code>: a row of label / value cells</td><td>The section's title block, set as a row.</td></tr>
-            <tr><td>Jumps</td><td><code>scroll-margin-top: 48px</code> on every section</td><td>A section lands with its line under the nav. Section 01 lands at the top.</td></tr>
+            <tr><td>Jumps</td><td><code>scroll-margin-top: 47px</code> on every section, 48px on section 01</td><td>A section lands with its line on the nav's own line: one line, never a double border. Section 01 lands at the top.</td></tr>
           </tbody>
         </table>
       </div>
@@ -245,9 +245,8 @@
         <div class="bb-swatch"><span class="chip" style="background:var(--sq-cross)"></span><strong>Cross</strong><code>text at 72% (derived)</code></div>
         <div class="bb-swatch"><span class="chip" style="background:var(--sq-line)"></span><strong>Line</strong><code>text at 16% (derived)</code></div>
         <div class="bb-swatch"><span class="chip" style="background:var(--sq-faint)"></span><strong>Faint · decoration only</strong><code>text 42% / ground (derived): never text</code></div>
-        <div class="bb-swatch"><span class="chip" style="background:var(--sq-glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px)"></span><strong>Glass</strong><code>ground at 72%, blurred (derived): held bars</code></div>
-      </div>
-      <div class="bb-note"><b>Blue has two roles.</b> Blue <b>text</b> (a link, the current section number, the readout) is <code>primary.text.*</code>, never the fill. Blue <b>lines and fills</b> (the now line, the here mark, a check) are <code>primary.surface.solid</code>. <b>Derived values</b> (edge, cross, line, faint, glass) are mixes of tokens, declared on every theme root so a dark island on a light page resolves its own. They are expression-local (<code>--sq-*</code>), never new tokens. <b>Status colours</b> (success, warning, danger) come only through ui-platform components such as Badge.</div>
+        <div class="bb-swatch"><span class="chip" style="background:color-mix(in oklab, var(--ix-text) 6%, var(--ix-ground))"></span><strong>Hover</strong><code>text at 6% (derived): a nav cell or call to action under the pointer</code></div>      </div>
+      <div class="bb-note"><b>Blue has two roles.</b> Blue <b>text</b> (a link, the current section number, the readout) is <code>primary.text.*</code>, never the fill. Blue <b>lines and fills</b> (the now line, the here mark, a check) are <code>primary.surface.solid</code>. <b>Derived values</b> (edge, cross, line, faint, hover) are mixes of tokens, made in OKLab (in OKLCH a near-grey mix loses its hue and turns warm), declared on every theme root so a dark island on a light page resolves its own. They are expression-local (<code>--sq-*</code>), never new tokens. <b>Status colours</b> (success, warning, danger) come only through ui-platform components such as Badge.</div>
       <div class="bb-table-wrap">
         <table class="bb-table" id="contrast" aria-describedby="contrast-note">
           <thead><tr><th scope="col">Role</th><th scope="col">Where</th><th scope="col">Needs</th><th scope="col">Dark</th><th scope="col">Light</th></tr></thead>

@@ -152,7 +152,7 @@ button { font: inherit; color: inherit; }
 .ix-nav {
   display: flex; align-items: center; gap: 4px; padding: 8px; white-space: nowrap;
   border-radius: var(--ds-dimension-radius-container);
-  background: color-mix(in oklch, var(--ds-color-neutral-surface-raised-default) 86%, transparent);
+  background: color-mix(in oklab, var(--ds-color-neutral-surface-raised-default) 86%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
   box-shadow: var(--ds-effect-material-raised);
 }
@@ -368,7 +368,7 @@ button { font: inherit; color: inherit; }
 .ix-meta li { display: inline-flex; align-items: center; gap: 6px; }
 .ix-meta li::before { content: ""; inline-size: 5px; block-size: 5px; box-shadow: inset 0 0 0 1px var(--ix-line-strong); }
 
-.ix-link { color: var(--ix-signal-text); text-decoration: underline; text-decoration-color: color-mix(in oklch, currentColor 35%, transparent); text-underline-offset: 3px; font-weight: 500; }
+.ix-link { color: var(--ix-signal-text); text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 35%, transparent); text-underline-offset: 3px; font-weight: 500; }
 [data-scnx-resolved-mode="dark"] .ix-link { color: var(--ds-color-primary-text-subtle-default); }
 .ix-link:hover { text-decoration-color: currentColor; }
 

@@ -34,7 +34,7 @@
   .chain::before { content: ""; position: absolute; left: 31px; top: 28px; bottom: 28px; inline-size: 1px; background: var(--ix-line-strong); }
   .chain::after {
     content: ""; position: absolute; left: 28px; top: calc(28px + (100% - 56px) * var(--sig)); inline-size: 7px; block-size: 7px; border-radius: 0;
-    background: var(--ix-signal); box-shadow: 0 0 0 4px color-mix(in oklch, var(--ix-signal) 22%, transparent); translate: 0 -50%;
+    background: var(--ix-signal); box-shadow: 0 0 0 4px color-mix(in oklab, var(--ix-signal) 22%, transparent); translate: 0 -50%;
     opacity: var(--sig-on, 0);
   }
   .node { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 0; padding: 14px 16px 14px 0; border-radius: var(--ds-dimension-radius-container); background: var(--ds-color-neutral-surface-canvas-default); box-shadow: var(--ds-effect-material-flat); transition: box-shadow var(--ds-motion-feedback-duration) var(--ds-motion-feedback-easing); }
@@ -70,7 +70,7 @@
   .choose { padding: 56px var(--sq-pad); display: grid; gap: 14px; align-content: start; }
   .opt { display: grid; grid-template-columns: 20px 1fr; gap: 12px; padding: 14px; border-radius: var(--ds-dimension-radius-container); box-shadow: var(--ds-effect-material-flat); cursor: pointer; background: var(--ds-color-neutral-surface-canvas-default); }
   .opt input { margin: 2px 0 0; accent-color: var(--ix-signal); inline-size: 16px; block-size: 16px; }
-  .opt:has(input:checked) { box-shadow: 0 0 0 1px var(--ix-signal); background: color-mix(in oklch, var(--ds-color-primary-surface-subtle-default) 55%, var(--ds-color-neutral-surface-canvas-default)); }
+  .opt:has(input:checked) { box-shadow: 0 0 0 1px var(--ix-signal); background: color-mix(in oklab, var(--ds-color-primary-surface-subtle-default) 55%, var(--ds-color-neutral-surface-canvas-default)); }
   .opt:has(input:focus-visible) { outline: 2px solid var(--ds-color-primary-border-default-focus); outline-offset: 2px; }
   .opt strong { display: flex; align-items: center; gap: 8px; font-size: 14px; }
   .opt p { margin: 4px 0 8px; font-size: 12.5px; color: var(--ix-muted); }
@@ -91,7 +91,7 @@
   .moves pre { margin: 0; padding: 24px var(--sq-pad) 40px; font: 400 12.5px/1.85 var(--mono); overflow-x: auto; }
   .moves pre .row { display: block; border-radius: 0; transition: background-color var(--ds-motion-feedback-duration), opacity var(--ds-motion-feedback-duration); }
   .moves pre .row.dim { opacity: 0.38; }
-  .moves pre .row.on { background: color-mix(in oklch, var(--ix-signal) 14%, transparent); }
+  .moves pre .row.on { background: color-mix(in oklab, var(--ix-signal) 14%, transparent); }
 
   /* Sheet 04 · Releases */
   .r-lead { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
