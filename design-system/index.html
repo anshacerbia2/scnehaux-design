@@ -1,18 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-scnx-theme="scnx-saas" data-scnx-resolved-mode="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scnehaux UI reference</title>
 <!-- Viewer for the component reference. Serve this folder over HTTP (for example
      `npx serve .` at the repository root); browsers block fetch() from file:// pages. Each card's
-     preview.html is loaded with the chosen theme's themes/<theme>/tokens.css and
-     components/bundle.css, as the design tool frames it, under the chosen mode
-     (data-theme). Components and rules are shared; a theme only supplies values. -->
-<link id="tokens" rel="stylesheet" href="themes/default/tokens.css">
+     preview.html is loaded as a theme root (data-scnx-theme, data-scnx-resolved-mode) with
+     @scnx/system's tokens/css/<theme>.css, synced into vendor/scnx-system/, and
+     components/bundle.css. Components and rules are shared; a theme only supplies values. -->
+<link id="tokens" rel="stylesheet" href="vendor/scnx-system/tokens/css/scnx-saas.css">
 <style>
-  @font-face { font-family: "Inter"; src: url(fonts/Inter-Variable.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
-  :root { color-scheme: light dark; }
+  :root { color-scheme: light dark; --font-sans: Inter, -apple-system, Arial, sans-serif; --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   html, body { margin: 0; }
   body {
     font-family: Inter, system-ui, sans-serif; font-feature-settings: "cv11" 1;
@@ -38,8 +37,10 @@
   <h1>Scnehaux UI reference</h1>
   <input id="filter" type="search" placeholder="Filter components" aria-label="Filter components">
   <select id="theme" aria-label="Theme and mode">
-    <option value="default/light">Default · Light</option>
-    <option value="default/dark">Default · Dark</option>
+    <option value="scnx-saas/light">scnx-saas · Light</option>
+    <option value="scnx-saas/dark">scnx-saas · Dark</option>
+    <option value="scnx-platform/light">scnx-platform · Light</option>
+    <option value="scnx-platform/dark">scnx-platform · Dark</option>
   </select>
 </header>
 <main id="cards"></main>
@@ -49,8 +50,9 @@
   const theme = document.getElementById("theme");
   const filter = document.getElementById("filter");
   const params = new URLSearchParams(location.search);
-  theme.value = params.get("theme") ?? "default/light";
-  if (!theme.value) theme.value = "default/light";
+  // links made before the themes were renamed say default/<mode>; that look is now scnx-saas
+  theme.value = (params.get("theme") ?? "scnx-saas/light").replace(/^default\//, "scnx-saas/");
+  if (!theme.value) theme.value = "scnx-saas/light";
   const base = new URL(".", location.href).href;
   const sources = new Map();
   try {
@@ -60,14 +62,15 @@
       sources.set(name, await res.text());
     }));
   } catch (error) {
-    main.innerHTML = `<section><p class="note">The previews could not be loaded (${String(error.message)}). Serve this folder over HTTP, for example <code>npx serve .</code> at the repository root, or open the PNGs in <code>rendered/</code>.</p></section>`;
+    main.innerHTML = `<section><p class="note">The previews could not be loaded (${String(error.message)}). Serve this folder over HTTP, for example <code>npx serve .</code> at the repository root, or open the PNGs in <code>rendered/&lt;theme&gt;/</code>.</p></section>`;
     throw error;
   }
-  const head = (folder) => `<base href="${base}components/x/"><link rel="stylesheet" href="${base}themes/${folder}/tokens.css"><link rel="stylesheet" href="${base}components/bundle.css"><style>@font-face{font-family:"Inter";src:url(${base}fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900}</style>`;
+  const tokens = (id) => `vendor/scnx-system/tokens/css/${id}.css`;
+  const head = (id) => `<base href="${base}components/x/"><link rel="stylesheet" href="${base}${tokens(id)}"><link rel="stylesheet" href="${base}components/bundle.css"><style>:root{--font-sans:Inter,-apple-system,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}</style>`;
   function render() {
-    const [folder, mode] = theme.value.split("/");
-    document.getElementById("tokens").href = `themes/${folder}/tokens.css`;
-    document.documentElement.dataset.theme = mode;
+    const [id, mode] = theme.value.split("/");
+    document.getElementById("tokens").href = tokens(id);
+    Object.assign(document.documentElement.dataset, { scnxTheme: id, scnxResolvedMode: mode });
     const q = filter.value.trim().toLowerCase();
     main.replaceChildren();
     for (const name of NAMES) {
@@ -79,7 +82,7 @@
       const frame = document.createElement("iframe");
       frame.title = `${name} preview`;
       frame.style.blockSize = `${height}px`;
-      frame.srcdoc = html.replace("<html", `<html data-theme="${mode}"`).replace("<head>", `<head>${head(folder)}`);
+      frame.srcdoc = html.replace("<html", `<html data-scnx-theme="${id}" data-scnx-resolved-mode="${mode}"`).replace("<head>", `<head>${head(id)}`);
       section.append(frame);
       main.append(section);
     }

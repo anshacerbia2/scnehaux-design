@@ -1,11 +1,12 @@
 // Renders every component card of the design system in each theme and mode
-// (ADR-UIP-VIS-002 item 4): design-system/themes/<theme>/rendered/<Name>.<mode>.png.
+// (ADR-UIP-VIS-002 item 4): design-system/rendered/<theme>/<Name>.<mode>.png.
 //
 //   npm ci && npx playwright install chromium
-//   node scripts/render-cards.mjs [--theme default] [--check]
+//   node scripts/render-cards.mjs [--theme scnx-saas] [--check]
 //
-// A card is framed as the design tool frames it: <html data-theme="<mode>"> with the
-// theme's tokens.css and the shared components/bundle.css. The viewport is 880 px wide
+// The themes are the ones scripts/sync-tokens.json syncs from @scnx/system. A card is
+// framed as a theme root: <html data-scnx-theme="<theme>" data-scnx-resolved-mode="<mode>">
+// with the package's tokens/css/<theme>.css and the shared components/bundle.css. The viewport is 880 px wide
 // (Cover 960) and as tall as the card's "@dsCard ... height=N" comment. With --check
 // nothing is written; the run fails if a render differs from the committed PNG in size
 // or in more than 0.1% of its pixels. Font rasterization differs between machines, so
@@ -22,7 +23,14 @@ const DS = path.join(ROOT, "design-system");
 const MODES = ["light", "dark"];
 const arg = (flag) => (process.argv.includes(flag) ? process.argv[process.argv.indexOf(flag) + 1] : undefined);
 const check = process.argv.includes("--check");
-const themes = arg("--theme") ? [arg("--theme")] : fs.readdirSync(path.join(DS, "themes"));
+const sync = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts", "sync-tokens.json"), "utf8"));
+const TOKENS = path.join(ROOT, sync.out, "tokens", "css");
+const themes = arg("--theme") ? [arg("--theme")] : sync.themes;
+for (const theme of themes) {
+  if (!fs.existsSync(path.join(TOKENS, `${theme}.css`))) throw new Error(`${theme}: no tokens in ${path.relative(ROOT, TOKENS)}; run npm run sync:tokens`);
+}
+// the package declares the Inter faces; bundle.css reads the two family names
+const FAMILIES = `<style>:root{--font-sans:Inter,-apple-system,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}</style>`;
 const cards = fs.readdirSync(path.join(DS, "components"), { withFileTypes: true })
   .filter((d) => d.isDirectory() && fs.existsSync(path.join(DS, "components", d.name, "preview.html")))
   .map((d) => d.name)
@@ -48,15 +56,15 @@ const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePa
 const failures = [];
 let count = 0;
 for (const theme of themes) {
-  const out = path.join(DS, "themes", theme, "rendered");
+  const out = path.join(DS, "rendered", theme);
   fs.mkdirSync(out, { recursive: true });
   for (const mode of MODES) {
     for (const name of cards) {
       const source = fs.readFileSync(path.join(DS, "components", name, "preview.html"), "utf8");
       const height = Number(/height=(\d+)/.exec(source)?.[1] ?? 120);
       const html = source
-        .replace("<html", `<html data-theme="${mode}"`)
-        .replace("<head>", `<head><link rel="stylesheet" href="/design-system/themes/${theme}/tokens.css"><link rel="stylesheet" href="/design-system/components/bundle.css">`);
+        .replace("<html", `<html data-scnx-theme="${theme}" data-scnx-resolved-mode="${mode}"`)
+        .replace("<head>", `<head><link rel="stylesheet" href="/${path.relative(ROOT, TOKENS).replaceAll("\\", "/")}/${theme}.css"><link rel="stylesheet" href="/design-system/components/bundle.css">${FAMILIES}`);
       const page = await browser.newPage({ viewport: { width: name === "Cover" ? 960 : 880, height } });
       const errors = [];
       page.on("pageerror", (e) => errors.push(String(e)));

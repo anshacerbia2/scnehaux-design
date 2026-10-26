@@ -163,7 +163,8 @@ a component that stays square under `scnx-saas` still holds a literal.
 | `scnx-saas` | `achromatic` | The SaaS products | An ink palette; the concentric ladder (`mark` 4, `element` 8, `control` 12, `container` 16, `panel` 24, plus `pill`); materials with their soft shadows and, in dark mode, a lit top edge | `scnx-saas/Brand-Book.html` |
 
 The shape values for `scnx-saas` are the ones its boards were drawn with, in the
-earlier snapshot `design-system/themes/default/tokens.css`. ui-platform is before v1, so
+earlier snapshot `design-system/themes/default/tokens.css` (since moved to
+`others/docs-instrument/tokens.css`). ui-platform is before v1, so
 both ids change without a compatibility alias (TDD tokens-003, "Rollout and
 Compatibility").
 

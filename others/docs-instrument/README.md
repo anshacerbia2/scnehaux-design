@@ -96,7 +96,8 @@ own tokens. That is the product's own theme-root mechanism, shown working.
 
 - `instrument.css`, `instrument.js`: the expression, shared by the three pages and
   copied into `scnx-platform/`. They bind
-  `design-system/themes/default/tokens.css` and reuse the real component classes
+  `tokens.css` (the earlier hand-made snapshot, kept here for these boards; it was
+  `design-system/themes/default/tokens.css`) and reuse the real component classes
   from `design-system/components/bundle.css`. "Here" (the current sheet, which
   drives the sheet number, the nav readout, the rail and any `[data-spy]`
   contents) is the sheet under the read head. A page without a read head can set
