@@ -534,7 +534,7 @@
 .scnx-spinner[data-size="large"] { inline-size: var(--scnx-size-control-medium); block-size: var(--scnx-size-control-medium); border-width: 3px; }
 @media (prefers-reduced-motion: reduce) { .scnx-spinner { animation-duration: 2.4s; } }
 
-.scnx-skeleton { display: block; background: var(--ds-color-neutral-surface-default-default); border-radius: var(--ds-dimension-radius-mark); animation: scnx-pulse 1.6s var(--ds-motion-attention-easing) infinite; }
+.scnx-skeleton { display: block; background: var(--ds-color-neutral-surface-strong-default); border-radius: var(--ds-dimension-radius-mark); animation: scnx-pulse 1.6s var(--ds-motion-attention-easing) infinite; }
 .scnx-skeleton[data-shape="text"] { block-size: 0.75rem; }
 .scnx-skeleton[data-shape="block"] { border-radius: var(--ds-dimension-radius-control); }
 .scnx-skeleton[data-shape="circle"] { flex: none; align-self: flex-start; border-radius: var(--ds-dimension-radius-pill); aspect-ratio: 1; }
