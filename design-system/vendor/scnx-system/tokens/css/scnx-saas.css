@@ -160,6 +160,7 @@
   --ds-color-neutral-border-default-disabled: oklch(0.9557 0.0039 259);
   --ds-color-neutral-border-default-focus: oklch(0.5021 0.0119 259);
   --ds-color-neutral-border-default-selected: oklch(0.632 0.0136 259);
+  --ds-color-neutral-border-stage-default: oklch(0.8876 0.0079 259);
   --ds-color-neutral-border-strong-default: oklch(0.632 0.0136 259);
   --ds-color-neutral-border-strong-disabled: oklch(0.9557 0.0039 259);
   --ds-color-neutral-border-strong-focus: oklch(0.2413 0.0084 259);
@@ -205,6 +206,7 @@
   --ds-color-neutral-surface-solid-hover: oklch(0.3292 0.0084 259);
   --ds-color-neutral-surface-solid-pressed: oklch(0.3991 0.0084 259);
   --ds-color-neutral-surface-solid-selected: oklch(0.3292 0.0084 259);
+  --ds-color-neutral-surface-stage-default: oklch(0.9557 0.0039 259);
   --ds-color-neutral-surface-strong-default: oklch(0.9314 0.0052 259);
   --ds-color-neutral-surface-strong-disabled: oklch(0.9557 0.0039 259);
   --ds-color-neutral-surface-strong-hover: oklch(0.9101 0.0065 259);
@@ -714,6 +716,7 @@
   --ds-color-neutral-border-default-disabled: oklch(0.2548 0.0047 259);
   --ds-color-neutral-border-default-focus: oklch(0.7698 0.0118 259);
   --ds-color-neutral-border-default-selected: oklch(0.5348 0.0134 259);
+  --ds-color-neutral-border-stage-default: oklch(0.2844 0.0064 259);
   --ds-color-neutral-border-strong-default: oklch(0.5348 0.0134 259);
   --ds-color-neutral-border-strong-disabled: oklch(0.2548 0.0047 259);
   --ds-color-neutral-border-strong-focus: oklch(0.9494 0.0022 259);
@@ -759,6 +762,7 @@
   --ds-color-neutral-surface-solid-hover: oklch(0.9208 0.002 259);
   --ds-color-neutral-surface-solid-pressed: oklch(0.8914 0.0019 259);
   --ds-color-neutral-surface-solid-selected: oklch(0.9208 0.002 259);
+  --ds-color-neutral-surface-stage-default: oklch(0.1776 0.0036 259);
   --ds-color-neutral-surface-strong-default: oklch(0.2844 0.0064 259);
   --ds-color-neutral-surface-strong-disabled: oklch(0.2548 0.0047 259);
   --ds-color-neutral-surface-strong-hover: oklch(0.3138 0.0075 259);
