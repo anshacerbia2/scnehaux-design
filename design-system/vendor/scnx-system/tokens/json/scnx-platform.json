@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "standard": {
     "id": "STD-UIP-TKN-001",
-    "version": "2.8.0",
-    "commit": "7aae124"
+    "version": "2.9.0",
+    "commit": "0e04e17"
   },
   "theme": "scnx-platform",
   "modes": [
@@ -2812,6 +2812,26 @@
       }
     },
     {
+      "name": "color.neutral.border.stage.default",
+      "cssName": "--ds-color-neutral-border-stage-default",
+      "canonical": true,
+      "tier": 2,
+      "type": "color",
+      "lifecycle": "candidate",
+      "themes": {
+        "scnx-platform": {
+          "light": "oklch(0.8876 0.0079 259)",
+          "dark": "oklch(0.2844 0.0064 259)"
+        }
+      },
+      "resolved": {
+        "scnx-platform": {
+          "light": "oklch(0.8876 0.0079 259)",
+          "dark": "oklch(0.2844 0.0064 259)"
+        }
+      }
+    },
+    {
       "name": "color.neutral.border.strong.default",
       "cssName": "--ds-color-neutral-border-strong-default",
       "canonical": true,
@@ -3708,6 +3728,26 @@
         "scnx-platform": {
           "light": "oklch(0.3292 0.0084 259)",
           "dark": "oklch(0.9208 0.002 259)"
+        }
+      }
+    },
+    {
+      "name": "color.neutral.surface.stage.default",
+      "cssName": "--ds-color-neutral-surface-stage-default",
+      "canonical": true,
+      "tier": 2,
+      "type": "color",
+      "lifecycle": "candidate",
+      "themes": {
+        "scnx-platform": {
+          "light": "oklch(0.9557 0.0039 259)",
+          "dark": "oklch(0.1776 0.0036 259)"
+        }
+      },
+      "resolved": {
+        "scnx-platform": {
+          "light": "oklch(0.9557 0.0039 259)",
+          "dark": "oklch(0.1776 0.0036 259)"
         }
       }
     },
