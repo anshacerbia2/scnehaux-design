@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scnehaux · Control · IAM Admin Portal</title>
-<meta name="description" content="The Control expression of scnx-platform, drawn on the IAM Admin Portal: the console as an industrial control panel. Annunciator, mimic, interlocks, lockout tags and a sequence-of-events recorder.">
+<meta name="description" content="The Control expression of scnx-platform, drawn on the IAM Admin Portal: a quiet instrument panel. Grey when normal, one accent for what needs a person.">
 <link rel="icon" href="../design-system/assets/Logos/scnehaux-mark-tile.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/scnx-platform.css">
 <style>
 /* ===========================================================================
    Control · an expression of scnx-platform for the platform's consoles.
+   A quiet instrument: monochrome at rest, one accent for what needs a person.
    Every colour is a @scnx/system token or an OKLab mix of one; the --cp-*
    properties are expression-local guidance (ADR-UIP-VIS-002), never tokens.
    =========================================================================== */
 @font-face { font-family: "IBM Plex Mono"; src: url("../design-system/fonts/IBMPlexMono-Regular.woff2") format("woff2"); font-weight: 400; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../design-system/fonts/IBMPlexMono-Medium.woff2") format("woff2"); font-weight: 500; }
-@font-face { font-family: "IBM Plex Mono"; src: url("../design-system/fonts/IBMPlexMono-SemiBold.woff2") format("woff2"); font-weight: 600; }
 @font-face { font-family: "Inter"; src: url("../design-system/fonts/Inter-Variable.woff2") format("woff2"); font-weight: 100 900; }
 
 :where([data-scnx-theme]) {
@@ -23,579 +23,488 @@
   --cp-strong: var(--ds-color-neutral-text-strong-default);
   --cp-muted: var(--ds-color-neutral-text-subtle-default);
   --cp-ground: var(--ds-color-neutral-surface-canvas-default);
-  /* the panel face: a hair lighter than the ground, so a panel reads as a plate */
-  --cp-face: color-mix(in oklab, var(--cp-text) 3.5%, var(--cp-ground));
-  /* a recess: the bay the annunciator and the plates sit in, a step below the ground */
-  --cp-recess: color-mix(in oklab, black 18%, var(--cp-ground));
-  --cp-line: color-mix(in oklab, var(--cp-text) 14%, transparent);
-  --cp-line-strong: color-mix(in oklab, var(--cp-text) 30%, transparent);
-  /* decoration only (an unlit lamp's ring, a pipe at rest), never text */
-  --cp-dim: color-mix(in oklab, var(--cp-text) 24%, var(--cp-ground));
-  /* a normal lamp: lit, but grey. Colour is kept for what is not normal. */
-  --cp-lamp: color-mix(in oklab, var(--cp-text) 62%, var(--cp-ground));
+  --cp-line: color-mix(in oklab, var(--cp-text) 11%, transparent);
+  --cp-line-strong: color-mix(in oklab, var(--cp-text) 22%, transparent);
+  /* decoration only: an unlit lamp's ring, a pipe at rest; never text */
+  --cp-faint: color-mix(in oklab, var(--cp-text) 26%, var(--cp-ground));
+  /* a lamp lit and normal: grey */
+  --cp-lamp: color-mix(in oklab, var(--cp-text) 55%, var(--cp-ground));
+  /* the one accent: attention, and alarm beside it. Each is only ever a 6px lamp or a hairline,
+     softened a little toward the ground and still well above 3:1 in both modes (WCAG 1.4.11). */
+  --cp-attention: color-mix(in oklab, var(--ds-color-warning-text-subtle-default) 82%, var(--cp-ground));
+  --cp-alarm: color-mix(in oklab, var(--ds-color-danger-text-subtle-default) 82%, var(--cp-ground));
   --cp-here: var(--ds-color-primary-surface-solid-default);
-  --cp-here-text: var(--ds-color-primary-text-default-default);
-  --cp-warn: var(--ds-color-warning-surface-solid-default);
-  --cp-warn-face: var(--ds-color-warning-surface-subtle-default);
-  --cp-warn-edge: var(--ds-color-warning-border-strong-default);
-  --cp-warn-text: var(--ds-color-warning-text-strong-default);
-  --cp-alarm: var(--ds-color-danger-surface-solid-default);
-  --cp-alarm-face: var(--ds-color-danger-surface-subtle-default);
-  --cp-alarm-edge: var(--ds-color-danger-border-strong-default);
-  --cp-alarm-text: var(--ds-color-danger-text-strong-default);
   --cp-ink: var(--ds-color-neutral-surface-solid-default);
   --cp-on-ink: var(--ds-color-neutral-text-contrast-default);
   --cp-mono: "IBM Plex Mono", var(--ds-typography-code-default-font-family);
   --cp-sans: "Inter", var(--ds-typography-body-default-font-family);
 }
 
-/* in the light mode a step below the ground is a shade of the text, not of black */
-:where([data-scnx-theme][data-scnx-resolved-mode="light"]) {
-  --cp-recess: color-mix(in oklab, var(--cp-text) 6%, var(--cp-ground));
-  /* a lamp and a dashed pipe carry meaning, so they keep 3:1 on a light face (WCAG 1.4.11):
-     the warning's text colour, not its fill or its edge, which are a pale yellow there */
-  --cp-warn: var(--ds-color-warning-text-default-default);
-}
-
 *, *::before, *::after { box-sizing: border-box; }
 html { background: var(--cp-ground); color-scheme: dark; }
 html[data-scnx-resolved-mode="light"] { color-scheme: light; }
-body { margin: 0; font: 400 14px/1.5 var(--cp-sans); color: var(--cp-text); background: var(--cp-ground); -webkit-font-smoothing: antialiased; }
+body { margin: 0; font: 400 14px/1.55 var(--cp-sans); color: var(--cp-text); background: var(--cp-ground); -webkit-font-smoothing: antialiased; }
 h1, h2, h3, p, dl, dd, ol, ul { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
-/* the HUD voice: a label engraved on a plate */
-.hud { font: 500 10.5px/1.3 var(--cp-mono); letter-spacing: 0.14em; text-transform: uppercase; }
-.num { font-family: var(--cp-mono); font-variant-numeric: tabular-nums; }
+/* the label voice: small, mono, tracked, quiet */
+.label { font: 500 10px/1.4 var(--cp-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--cp-muted); }
+.mono { font-family: var(--cp-mono); font-variant-numeric: tabular-nums; }
 .muted { color: var(--cp-muted); }
+.strong { color: var(--cp-strong); }
 
-/* a lamp: a square pilot light. Off is a ring; normal is grey; colour is abnormal. */
-.lamp { display: inline-block; flex: none; inline-size: 9px; block-size: 9px; border: 1px solid var(--cp-dim); }
-.lamp.on { background: var(--cp-lamp); border-color: var(--cp-lamp); }
-.lamp.warn { background: var(--cp-warn); border-color: var(--cp-warn); box-shadow: 0 0 0 3px color-mix(in oklab, var(--cp-warn) 22%, transparent); }
-.lamp.alarm { background: var(--cp-alarm); border-color: var(--cp-alarm); box-shadow: 0 0 0 3px color-mix(in oklab, var(--cp-alarm) 26%, transparent); }
-.lamp.here { background: var(--cp-here); border-color: var(--cp-here); }
+/* a lamp: a 6px square. A ring when off, grey when normal, the accent only when a person is needed. */
+.lamp { display: inline-block; flex: none; inline-size: 6px; block-size: 6px; box-shadow: inset 0 0 0 1px var(--cp-faint); }
+.lamp.on { background: var(--cp-lamp); box-shadow: none; }
+.lamp.attention { background: var(--cp-attention); box-shadow: none; }
+.lamp.alarm { background: var(--cp-alarm); box-shadow: none; }
+.lamp.here { background: var(--cp-here); box-shadow: none; }
 
-/* a plate: an engraved label in its own frame, the panel's one boxed element */
-.plate { display: inline-flex; align-items: center; gap: 8px; padding: 4px 8px; border: 1px solid var(--cp-line-strong); background: var(--cp-recess); }
-
-/* ---------------------------------------------------------------- board ---- */
 .board { inline-size: 1440px; margin-inline: auto; }
 
-/* ---- control strip: the scope line and the operator, always in view ---- */
-.strip { display: flex; align-items: stretch; block-size: 44px; border-block-end: 1px solid var(--cp-line); background: var(--cp-ground); }
-.strip > * { display: flex; align-items: center; gap: 10px; padding-inline: 16px; border-inline-end: 1px solid var(--cp-line); }
-.strip .brand { gap: 10px; padding-inline: 18px 20px; font-weight: 600; font-size: 13px; color: var(--cp-strong); }
-.strip .brand svg { inline-size: 30px; block-size: 13px; fill: var(--cp-ink); }
-.strip .brand .station { font: 500 10.5px/1 var(--cp-mono); letter-spacing: 0.14em; color: var(--cp-muted); }
-.strip .scope { flex: 1; color: var(--cp-strong); }
-.strip .scope .lamp { inline-size: 6px; block-size: 6px; }
-.strip .clock { font: 500 12px/1 var(--cp-mono); color: var(--cp-strong); letter-spacing: 0.04em; }
-.strip .cell-btn { color: var(--cp-muted); }
-.strip .cell-btn:hover { color: var(--cp-strong); background: color-mix(in oklab, var(--cp-text) 6%, transparent); }
-.strip > :last-child { border-inline-end: 0; }
-.env { color: var(--cp-warn-text); }
+/* ---- the strip: the scope, then the operator ---- */
+.strip { display: flex; align-items: center; gap: 28px; block-size: 52px; padding-inline: 28px; border-block-end: 1px solid var(--cp-line); }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 13px; color: var(--cp-strong); }
+.brand svg { inline-size: 28px; block-size: 12px; fill: var(--cp-ink); }
+.brand span { font-weight: 400; color: var(--cp-muted); }
+.scope { display: flex; align-items: center; gap: 10px; }
+.strip .end { margin-inline-start: auto; display: flex; align-items: center; gap: 28px; }
+.strip .end .mono { font-size: 12px; color: var(--cp-text); }
+.strip button { color: var(--cp-muted); }
+.strip button:hover { color: var(--cp-strong); }
 
-/* ---- the mimic bus: the path every request takes, on every page ---- */
-.bus { display: grid; grid-template-columns: auto 1fr auto 1fr auto 1fr auto; align-items: center; gap: 0; padding: 14px 24px 12px; border-block-end: 1px solid var(--cp-line); background: var(--cp-face); }
-.node { display: grid; gap: 4px; }
-.node .plate { color: var(--cp-strong); }
-.node .read { font: 400 11px/1.3 var(--cp-mono); color: var(--cp-muted); padding-inline-start: 2px; }
-.node .read b { font-weight: 500; color: var(--cp-text); }
-.node.warn .plate { border-color: var(--cp-warn-edge); }
-.node.warn .read b { color: var(--cp-warn-text); }
-.pipe { position: relative; block-size: 2px; margin-inline: 10px; margin-block-start: -18px; background: var(--cp-lamp); }
-.pipe::after { content: ""; position: absolute; inset-inline-end: -1px; inset-block-start: -4px; border: 5px solid transparent; border-inline-start: 7px solid var(--cp-lamp); border-inline-end: 0; }
-.pipe span { position: absolute; inset-inline: 0; inset-block-start: -18px; text-align: center; }
-.pipe span i { font-style: normal; padding-inline: 8px; background: var(--cp-face); }
-.pipe.warn { background: repeating-linear-gradient(90deg, var(--cp-warn) 0 8px, transparent 8px 12px); }
-.pipe.warn::after { border-inline-start-color: var(--cp-warn); }
+/* ---- the path: the hops a request takes, one hairline, on every page ---- */
+.path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0 28px; border-block-end: 1px solid var(--cp-line); }
+.hop { position: relative; display: grid; gap: 4px; padding: 16px 0 15px; }
+.hop + .hop { padding-inline-start: 24px; }
+.hop .name { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--cp-strong); }
+.hop .meta { font: 400 11.5px/1.4 var(--cp-mono); color: var(--cp-muted); }
+.hop .meta b { font-weight: 400; color: var(--cp-text); }
+.hop .meta b.attention { color: var(--cp-attention); }
+/* the line to the next hop, with what carries the request on */
+.hop:not(:last-child)::after { content: ""; position: absolute; inset-block-start: 26px; inset-inline: calc(50% + 40px) 24px; block-size: 1px; background: var(--cp-line-strong); }
+.hop .via { position: absolute; inset-block-start: 14px; inset-inline-end: 24px; font: 400 10px/1 var(--cp-mono); letter-spacing: 0.1em; color: var(--cp-muted); }
+.hop.degraded::after { background: var(--cp-attention); }
 
-/* ---- the console: stations, the page, the recorder ---- */
-.console { display: grid; grid-template-columns: 252px minmax(0, 1fr) 372px; border-block-end: 1px solid var(--cp-line); }
-
-/* station selector: every page with its own lamp, so the nav annunciates too */
-.stations { border-inline-end: 1px solid var(--cp-line); padding: 18px 12px 24px; display: grid; gap: 18px; align-content: start; }
+/* ---- the console ---- */
+.console { display: grid; grid-template-columns: 236px minmax(0, 1fr) 360px; border-block-end: 1px solid var(--cp-line); }
+.stations { padding: 28px 16px; border-inline-end: 1px solid var(--cp-line); display: grid; gap: 26px; align-content: start; }
 .zone { display: grid; gap: 2px; }
-.zone > .hud { display: flex; justify-content: space-between; padding: 0 10px 6px; color: var(--cp-muted); }
-.station { position: relative; display: grid; grid-template-columns: 9px 1fr auto; align-items: center; gap: 10px; min-block-size: 32px; padding-inline: 10px; font-size: 13.5px; color: var(--cp-muted); }
-.station b { font: 500 11px/1 var(--cp-mono); color: var(--cp-muted); }
-.station:hover { color: var(--cp-text); background: color-mix(in oklab, var(--cp-text) 5%, transparent); }
-.station[aria-current] { color: var(--cp-strong); font-weight: 500; background: color-mix(in oklab, var(--cp-text) 7%, transparent); }
-.station[aria-current]::before { content: ""; position: absolute; inset-block: 7px; inset-inline-start: 0; inline-size: 2px; background: var(--cp-here); }
-.station.warn b { color: var(--cp-warn-text); }
-.station.alarm b { color: var(--cp-alarm-text); }
+.zone > .label { padding: 0 12px 8px; }
+.station { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; min-block-size: 32px; padding-inline: 12px; font-size: 13.5px; color: var(--cp-muted); }
+.station:hover { color: var(--cp-strong); }
+.station[aria-current] { color: var(--cp-strong); background: color-mix(in oklab, var(--cp-text) 6%, transparent); box-shadow: inset 2px 0 0 var(--cp-here); }
+.station .count { display: flex; align-items: center; gap: 8px; font: 400 11.5px/1 var(--cp-mono); color: var(--cp-muted); }
+.station .count.attention { color: var(--cp-attention); }
+.station .count.alarm { color: var(--cp-alarm); }
 
 .page { min-inline-size: 0; }
-.recorder { border-inline-start: 1px solid var(--cp-line); background: var(--cp-face); display: flex; flex-direction: column; min-inline-size: 0; }
+.recorder { border-inline-start: 1px solid var(--cp-line); min-inline-size: 0; display: flex; flex-direction: column; }
 
-/* a panel heading: an engraved plate, then readouts to the right */
-.panel-head { display: flex; align-items: center; gap: 14px; padding: 14px 28px; border-block-end: 1px solid var(--cp-line); }
-.panel-head .plate { color: var(--cp-strong); }
-.panel-head .readouts { margin-inline-start: auto; display: flex; gap: 18px; color: var(--cp-muted); }
-.panel-head .readouts b { color: var(--cp-text); font-weight: 500; }
+/* a section's head: a label and its readouts, on one hairline */
+.head { display: flex; align-items: baseline; gap: 16px; padding: 22px 36px 14px; }
+.head .readout { margin-inline-start: auto; font: 400 11.5px/1 var(--cp-mono); color: var(--cp-muted); }
+.head .readout b { font-weight: 400; color: var(--cp-text); }
 
 /* ---- the statement: the answer first ---- */
-.statement { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; padding: 34px 28px 30px; border-block-end: 1px solid var(--cp-line); }
-.statement h1 { font: 500 40px/1.04 var(--cp-sans); letter-spacing: -0.035em; color: var(--cp-strong); max-inline-size: 24ch; }
-.statement h1 em { font-style: normal; color: var(--cp-muted); }
-.statement p { margin-block-start: 14px; color: var(--cp-muted); max-inline-size: 62ch; font-size: 15px; }
-.tally { display: grid; grid-template-columns: repeat(3, auto); border: 1px solid var(--cp-line); }
-.tally > div { padding: 12px 18px 14px; border-inline-start: 1px solid var(--cp-line); display: grid; gap: 6px; min-inline-size: 104px; }
-.tally > div:first-child { border-inline-start: 0; }
-.tally .v { font: 500 30px/1 var(--cp-mono); color: var(--cp-strong); }
-.tally .alarm .v { color: var(--cp-alarm-text); }
-.tally .warn .v { color: var(--cp-warn-text); }
+.statement { padding: 48px 36px 40px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: end; border-block-end: 1px solid var(--cp-line); }
+.statement h1 { font: 500 36px/1.1 var(--cp-sans); letter-spacing: -0.03em; color: var(--cp-strong); max-inline-size: 22ch; }
+.statement h1 span { color: var(--cp-muted); }
+.statement p { margin-block-start: 14px; max-inline-size: 56ch; color: var(--cp-muted); }
+.tally { display: flex; gap: 36px; }
+.tally > div { display: grid; gap: 6px; }
+.tally .v { font: 400 34px/1 var(--cp-mono); letter-spacing: -0.02em; color: var(--cp-strong); }
+.tally .label { display: flex; align-items: center; gap: 8px; }
 
-/* ---- the annunciator: twelve windows, dark when clear ---- */
-.annunciator { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 22px 28px 26px; background: var(--cp-recess); border-block-end: 1px solid var(--cp-line); }
-.win { position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 10px; min-block-size: 112px; padding: 11px 14px 12px; border: 1px solid var(--cp-line); background: var(--cp-face); color: var(--cp-muted); text-decoration: none; box-shadow: inset 0 1px 0 color-mix(in oklab, black 30%, transparent); }
-.win .code { display: flex; justify-content: space-between; font: 500 10px/1 var(--cp-mono); letter-spacing: 0.1em; color: var(--cp-muted); }
-.win .label { font: 500 11px/1.35 var(--cp-mono); letter-spacing: 0.1em; text-transform: uppercase; align-self: start; }
-.win .count { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.win .count .v { font: 500 26px/1 var(--cp-mono); color: var(--cp-dim); }
-.win .count .s { font: 400 10.5px/1.2 var(--cp-mono); color: var(--cp-muted); text-align: end; }
-/* a lit window is backlit: brightest under its top edge, where the lamp sits */
-.win.warn { border-color: var(--cp-warn-edge); background: radial-gradient(130% 90% at 50% 0%, color-mix(in oklab, var(--cp-warn) 22%, transparent), transparent 72%), var(--cp-warn-face); color: var(--cp-warn-text); box-shadow: 0 0 22px -6px color-mix(in oklab, var(--cp-warn) 40%, transparent); }
-.win.warn::before, .win.alarm::before { content: ""; position: absolute; inset: -1px -1px auto; block-size: 3px; background: var(--cp-warn); }
-.win.alarm { border-color: var(--cp-alarm-edge); background: radial-gradient(130% 90% at 50% 0%, color-mix(in oklab, var(--cp-alarm) 26%, transparent), transparent 72%), var(--cp-alarm-face); color: var(--cp-alarm-text); box-shadow: 0 0 26px -6px color-mix(in oklab, var(--cp-alarm) 48%, transparent); }
-.win.alarm::before { background: var(--cp-alarm); }
-.win.warn .count .v, .win.warn .code { color: var(--cp-warn-text); }
-.win.alarm .count .v, .win.alarm .code { color: var(--cp-alarm-text); }
-.win.warn .count .s, .win.alarm .count .s { color: inherit; }
-.first-out { position: absolute; inset-block-start: -9px; inset-inline-end: 8px; padding: 2px 6px; font: 600 9.5px/1.2 var(--cp-mono); letter-spacing: 0.12em; color: var(--ds-color-danger-text-contrast-default); background: var(--cp-alarm); }
 
-/* ---- the process mimic: the identity plane as a schematic ---- */
-.mimic { padding: 8px 28px 22px; border-block-end: 1px solid var(--cp-line); }
-.mimic svg { display: block; inline-size: 100%; block-size: auto; }
-.mimic .box { fill: var(--cp-face); stroke: var(--cp-line-strong); stroke-width: 1; }
-.mimic .box.warn { stroke: var(--cp-warn-edge); }
-.mimic .pipe-s { fill: none; stroke: var(--cp-lamp); stroke-width: 2; }
-.mimic .pipe-s.idle { stroke: var(--cp-dim); stroke-dasharray: 2 4; }
-.mimic .pipe-s.warn { stroke: var(--cp-warn); stroke-dasharray: 8 4; }
-.mimic .arrow { fill: var(--cp-lamp); }
-.mimic .arrow.warn { fill: var(--cp-warn); }
-.mimic text { font-family: var(--cp-mono); fill: var(--cp-muted); font-size: 10.5px; letter-spacing: 0.08em; }
-.mimic .t-name { fill: var(--cp-strong); font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; }
-.mimic .t-val { fill: var(--cp-text); font-size: 11px; letter-spacing: 0.02em; }
-.mimic .t-warn { fill: var(--cp-warn-text); }
-.mimic .t-pipe { font-size: 9.5px; letter-spacing: 0.14em; }
-.mimic .l-on { fill: var(--cp-lamp); }
-.mimic .l-warn { fill: var(--cp-warn); }
-.mimic .l-alarm { fill: var(--cp-alarm); }
-.mimic .l-off { fill: none; stroke: var(--cp-dim); }
+/* ---- the annunciator: twelve windows that share their lines; dark when clear ---- */
+.annunciator { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 36px 40px; border-block-start: 1px solid var(--cp-line); border-inline-start: 1px solid var(--cp-line); }
+.window { position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 18px; min-block-size: 132px; padding: 16px 18px 16px; border-inline-end: 1px solid var(--cp-line); border-block-end: 1px solid var(--cp-line); color: var(--cp-muted); }
+.window:hover { background: color-mix(in oklab, var(--cp-text) 3%, transparent); }
+.window .top { display: flex; align-items: center; justify-content: space-between; }
+.window .code { font: 400 10px/1 var(--cp-mono); letter-spacing: 0.1em; color: var(--cp-faint); }
+.window .name { font-size: 13px; line-height: 1.35; color: var(--cp-muted); }
+.window .foot { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.window .v { font: 400 28px/1 var(--cp-mono); color: var(--cp-faint); }
+.window .what { font: 400 11px/1.35 var(--cp-mono); color: var(--cp-muted); text-align: end; }
+/* lit: the lamp, the figure and a hairline at the top take the accent; nothing else does */
+.window.lit .name { color: var(--cp-strong); }
+.window.lit .code { color: var(--cp-muted); }
+.window.lit::before { content: ""; position: absolute; inset: -1px -1px auto 0; block-size: 2px; background: var(--cp-attention); }
+.window.lit .v { color: var(--cp-strong); }
+.window.lit.alarm::before { background: var(--cp-alarm); }
+.window.lit .code::before { content: ""; display: inline-block; inline-size: 6px; block-size: 6px; margin-inline-end: 8px; vertical-align: 1px; background: var(--cp-attention); }
+.window .first { font: 400 10px/1 var(--cp-mono); letter-spacing: 0.1em; color: var(--cp-alarm); }
 
-/* ---- the sequence-of-events recorder ---- */
-.soe { flex: 1; display: grid; align-content: start; font: 400 11.5px/1.45 var(--cp-mono); }
-.soe li { display: grid; grid-template-columns: 92px 40px 1fr; gap: 10px; padding: 9px 20px; border-block-end: 1px solid var(--cp-line); }
-.soe time { color: var(--cp-muted); font-variant-numeric: tabular-nums; }
-.soe .k { color: var(--cp-muted); letter-spacing: 0.08em; }
-.soe .m { color: var(--cp-text); min-inline-size: 0; overflow-wrap: anywhere; }
-.soe .m b { font-weight: 500; color: var(--cp-strong); }
-.soe li.alm { background: color-mix(in oklab, var(--cp-alarm) 9%, transparent); }
-.soe li.alm .k { color: var(--cp-alarm-text); }
-.soe li.wrn .k { color: var(--cp-warn-text); }
-.soe li.opr .k { color: var(--cp-here-text); }
-.soe .fo { margin-inline-start: 6px; padding: 0 4px; font-size: 9.5px; color: var(--ds-color-danger-text-contrast-default); background: var(--cp-alarm); letter-spacing: 0.1em; }
-.recorder .foot { padding: 12px 20px; border-block-start: 1px solid var(--cp-line); display: flex; justify-content: space-between; color: var(--cp-muted); }
+/* ---- the process: the identity plane, drawn in hairlines ---- */
+.process { padding: 0 36px 40px; }
+.process svg { display: block; inline-size: 100%; block-size: auto; }
+.process .box { fill: none; stroke: var(--cp-line-strong); }
+.process .pipe { fill: none; stroke: var(--cp-line-strong); stroke-width: 1; }
+.process .pipe.attention { stroke: var(--cp-attention); }
+.process .pipe.rest { stroke-dasharray: 2 4; }
+.process .tip { fill: var(--cp-line-strong); }
+.process .tip.attention { fill: var(--cp-attention); }
+.process text { font-family: var(--cp-mono); font-size: 11px; fill: var(--cp-muted); }
+.process .n { font-family: var(--cp-sans); font-size: 13px; font-weight: 500; fill: var(--cp-strong); }
+.process .v { fill: var(--cp-text); }
+.process .v.attention { fill: var(--cp-attention); }
+.process .via { font-size: 9.5px; letter-spacing: 0.12em; }
+.process .l-on { fill: var(--cp-lamp); }
+.process .l-attention { fill: var(--cp-attention); }
 
-/* ======================================================= station: alice ===== */
-.divider { display: flex; align-items: center; gap: 16px; padding: 40px 28px 16px; color: var(--cp-muted); }
-.divider::after { content: ""; flex: 1; block-size: 1px; background: var(--cp-line); }
-.divider strong { color: var(--cp-strong); font-weight: 500; }
+/* ---- the recorder: every command, alarm and broken seal, to the millisecond ---- */
+.soe { flex: 1; font: 400 11.5px/1.5 var(--cp-mono); }
+.soe li { display: grid; grid-template-columns: 6px 88px 1fr; align-items: baseline; gap: 12px; padding: 11px 24px; border-block-start: 1px solid var(--cp-line); }
+.soe li .lamp { transform: translateY(-1px); }
+.soe time { color: var(--cp-muted); }
+.soe .m { color: var(--cp-text); min-inline-size: 0; }
+.soe .m b { font-weight: 400; color: var(--cp-strong); }
+.soe .m i { font-style: normal; color: var(--cp-muted); }
+.recorder .head { padding-inline: 24px; }
+.recorder .foot { padding: 14px 24px; border-block-start: 1px solid var(--cp-line); display: flex; justify-content: space-between; }
 
-.principal-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; padding: 30px 28px 26px; border-block-end: 1px solid var(--cp-line); }
-.principal-head h1 { font: 500 52px/1 var(--cp-sans); letter-spacing: -0.04em; color: var(--cp-strong); }
-.principal-head .id { margin-block-start: 12px; display: flex; gap: 16px; flex-wrap: wrap; color: var(--cp-muted); font: 400 12px/1.4 var(--cp-mono); }
-.principal-head .id b { color: var(--cp-text); font-weight: 500; }
-.state-plate { display: grid; gap: 8px; justify-items: end; }
-.state-plate .plate { padding: 8px 12px; font: 600 12px/1 var(--cp-mono); letter-spacing: 0.16em; color: var(--cp-alarm-text); border-color: var(--cp-alarm-edge); background: var(--cp-alarm-face); }
+/* ========================================================= a principal ===== */
+.divider { padding: 64px 36px 18px; display: flex; gap: 14px; align-items: baseline; }
+.divider h2 { font: 500 13px/1 var(--cp-sans); color: var(--cp-strong); }
 
-/* the lockout tag: who locked it out, why, since when, and what lifts it */
-.loto { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; margin: 22px 28px 0; border: 1px solid var(--cp-warn-edge); background: var(--cp-warn-face); }
-.loto .hazard { background: repeating-linear-gradient(-45deg, var(--cp-warn) 0 9px, color-mix(in oklab, var(--cp-warn) 18%, var(--cp-ground)) 9px 18px); }
-.loto .body { padding: 16px 20px; display: grid; gap: 10px; }
-.loto .title { font: 600 13px/1 var(--cp-mono); letter-spacing: 0.18em; color: var(--cp-warn-text); }
-.loto dl { display: grid; grid-template-columns: repeat(4, auto); gap: 6px 28px; justify-content: start; }
-.loto dt { color: var(--cp-warn-text); opacity: 0.8; }
-.loto dd { font: 500 12.5px/1.35 var(--cp-mono); color: var(--cp-strong); }
-.loto .hole { display: grid; place-items: center; padding: 0 22px; border-inline-start: 1px dashed var(--cp-warn-edge); }
-.loto .hole span { inline-size: 18px; block-size: 18px; border-radius: 50%; border: 2px solid var(--cp-warn-edge); }
+.who { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; padding: 44px 36px 36px; border-block-end: 1px solid var(--cp-line); }
+.who h1 { font: 500 48px/1 var(--cp-sans); letter-spacing: -0.04em; color: var(--cp-strong); }
+.who .ids { margin-block-start: 14px; display: flex; flex-wrap: wrap; gap: 8px 28px; font: 400 12px/1.4 var(--cp-mono); color: var(--cp-muted); }
+.who .ids b { font-weight: 400; color: var(--cp-text); }
+.state { display: grid; justify-items: end; gap: 8px; }
+.state .value { display: flex; align-items: center; gap: 10px; font: 500 15px/1 var(--cp-sans); color: var(--cp-strong); }
 
-.station-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0; margin-block-start: 22px; border-block: 1px solid var(--cp-line); }
-.station-grid > section { min-inline-size: 0; }
-.station-grid > section + section { border-inline-start: 1px solid var(--cp-line); }
+/* the lockout tag: a card hung on the record, its hole punched at the top */
+.tag { position: relative; display: grid; grid-template-columns: repeat(4, auto) 1fr; gap: 6px 44px; align-items: end; margin: 28px 36px 0; padding: 22px 26px 20px 26px; border: 1px solid var(--cp-line-strong); }
+.tag::before { content: ""; position: absolute; inset-block-start: -1px; inset-inline-start: 26px; inline-size: 44px; block-size: 2px; background: var(--cp-attention); }
+.tag .title { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; margin-block-end: 12px; font: 500 13px/1 var(--cp-sans); color: var(--cp-strong); }
+.tag dd { font: 400 12.5px/1.4 var(--cp-mono); color: var(--cp-strong); }
+.tag .hole { justify-self: end; align-self: center; grid-row: 1 / span 3; grid-column: 5; inline-size: 14px; block-size: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--cp-line-strong); }
 
-/* guarded commands: each behind a cover; one armed, with its interlock chain */
-.commands { display: grid; gap: 10px; padding: 20px 28px 26px; }
-.cmd { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 16px; border: 1px solid var(--cp-line); background: var(--cp-face); }
-.cmd .name { font: 500 12.5px/1.3 var(--cp-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cp-strong); }
-.cmd .what { margin-block-start: 4px; font-size: 13px; color: var(--cp-muted); }
-.cover { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px dashed var(--cp-line-strong); color: var(--cp-muted); background: repeating-linear-gradient(-45deg, transparent 0 6px, color-mix(in oklab, var(--cp-text) 4%, transparent) 6px 12px); }
-.cmd.armed { border-color: var(--cp-here); grid-template-columns: 1fr; background: color-mix(in oklab, var(--cp-here) 7%, var(--cp-face)); }
-.cmd.armed .top { display: flex; justify-content: space-between; align-items: center; }
-.armed-tag { color: var(--cp-here-text); }
-.interlocks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--cp-line); }
-.interlocks > div { display: grid; gap: 6px; padding: 10px 12px; border-inline-start: 1px solid var(--cp-line); }
-.interlocks > div:first-child { border-inline-start: 0; }
-.interlocks .row { display: flex; align-items: center; gap: 8px; }
-.interlocks .v { font: 400 12px/1.35 var(--cp-mono); color: var(--cp-text); }
-.interlocks .na .v { color: var(--cp-muted); }
-.reason { display: grid; gap: 6px; }
-.reason .field { padding: 10px 12px; border: 1px solid var(--cp-line-strong); background: var(--cp-recess); font: 400 13px/1.4 var(--cp-sans); color: var(--cp-strong); }
-.exec-row { display: flex; gap: 10px; align-items: center; }
-.btn { display: inline-flex; align-items: center; gap: 8px; min-block-size: 38px; padding-inline: 16px; font: 500 11.5px/1 var(--cp-mono); letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--cp-line-strong); color: var(--cp-strong); }
-.btn.ink { background: var(--cp-ink); color: var(--cp-on-ink); border-color: var(--cp-ink); }
-.exec-row .note { margin-inline-start: auto; color: var(--cp-muted); font: 400 11px/1.3 var(--cp-mono); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-block-start: 28px; border-block-start: 1px solid var(--cp-line); }
+.two > section + section { border-inline-start: 1px solid var(--cp-line); }
 
-/* sealed compartments: a privileged read, opened on purpose and recorded */
-.seals { display: grid; gap: 10px; padding: 20px 28px 26px; }
-.seal { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 13px 16px; border: 1px solid var(--cp-line); background: var(--cp-face); }
-.seal .name { font: 500 12.5px/1.3 var(--cp-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cp-strong); }
-.seal .what { margin-block-start: 4px; font-size: 13px; color: var(--cp-muted); }
-.seal-strip { display: flex; align-items: center; gap: 10px; }
-.seal-strip .tape { font: 500 9.5px/1 var(--cp-mono); letter-spacing: 0.16em; padding: 6px 8px; color: var(--cp-muted); border: 1px solid var(--cp-line-strong); background: repeating-linear-gradient(90deg, transparent 0 10px, color-mix(in oklab, var(--cp-text) 5%, transparent) 10px 11px); }
-.seal.open { grid-template-columns: 1fr; border-color: var(--cp-line-strong); }
-.seal.open .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.broken { color: var(--cp-here-text); font: 400 11px/1.3 var(--cp-mono); }
-.table { inline-size: 100%; border-collapse: collapse; font: 400 12.5px/1.4 var(--cp-sans); }
-.table th { text-align: start; padding: 8px 10px; font: 500 10px/1.3 var(--cp-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--cp-muted); border-block-end: 1px solid var(--cp-line); }
-.table td { padding: 9px 10px; border-block-end: 1px solid var(--cp-line); color: var(--cp-text); }
-.table td.mono { font-family: var(--cp-mono); font-size: 12px; }
-.table tr:last-child td { border-block-end: 0; }
+/* commands: each closed until armed; the armed one shows what holds it */
+.cmds { padding: 0 36px 36px; }
+.cmd { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 16px 0; border-block-start: 1px solid var(--cp-line); }
+.cmd .n { font-size: 14px; color: var(--cp-strong); }
+.cmd .d { font-size: 13px; color: var(--cp-muted); }
+.arm { font: 500 10px/1 var(--cp-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--cp-muted); padding: 9px 12px; box-shadow: inset 0 0 0 1px var(--cp-line-strong); }
+.arm:hover { color: var(--cp-strong); }
+.cmd.armed { grid-template-columns: 1fr; gap: 16px; padding-block: 20px 22px; }
+.cmd.armed .row { display: flex; justify-content: space-between; align-items: baseline; }
+.cmd.armed .row .label { color: var(--cp-strong); display: flex; align-items: center; gap: 8px; }
+.checks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.checks > div { display: grid; gap: 4px; }
+.checks .label { display: flex; align-items: center; gap: 8px; }
+.checks .v { font: 400 12px/1.4 var(--cp-mono); color: var(--cp-text); }
+.checks .na .v { color: var(--cp-muted); }
+.field { padding: 11px 14px; box-shadow: inset 0 0 0 1px var(--cp-line-strong); font-size: 13.5px; color: var(--cp-strong); }
+.actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; min-block-size: 36px; padding-inline: 16px; font: 500 12px/1 var(--cp-mono); letter-spacing: 0.02em; color: var(--cp-strong); box-shadow: inset 0 0 0 1px var(--cp-line-strong); }
+.btn.ink { background: var(--cp-ink); color: var(--cp-on-ink); box-shadow: none; }
+.actions .note { margin-inline-start: auto; font: 400 11px/1.3 var(--cp-mono); color: var(--cp-muted); }
 
-/* ================================================== the family and rules ==== */
-.family { display: grid; grid-template-columns: 220px repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--cp-line); margin-block-start: 0; }
-.family > div { padding: 14px 18px; border-block-end: 1px solid var(--cp-line); border-inline-start: 1px solid var(--cp-line); font-size: 13px; color: var(--cp-text); }
-.family > div:nth-child(4n + 1) { border-inline-start: 0; padding-inline-start: 28px; color: var(--cp-muted); }
-.family .h { background: var(--cp-face); color: var(--cp-strong); }
-.family .h .hud { display: block; color: var(--cp-muted); margin-block-end: 6px; }
-.family .h strong { font: 500 20px/1.1 var(--cp-sans); letter-spacing: -0.02em; }
-.family .this { background: color-mix(in oklab, var(--cp-here) 8%, var(--cp-face)); box-shadow: inset 0 2px 0 var(--cp-here); }
-.family > div:nth-last-child(-n + 4) { border-block-end: 0; }
+/* privileged reads: sealed until an operator breaks the seal, on purpose and on the record */
+.reads { padding: 0 36px 36px; }
+.read { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 16px 0; border-block-start: 1px solid var(--cp-line); }
+.read .n { font-size: 14px; color: var(--cp-strong); }
+.read .d { font-size: 13px; color: var(--cp-muted); }
+.read.open { grid-template-columns: 1fr; gap: 12px; }
+.read.open .row { display: flex; justify-content: space-between; align-items: baseline; }
+.table { inline-size: 100%; border-collapse: collapse; font-size: 13px; }
+.table th { text-align: start; padding: 0 0 8px; font: 500 10px/1.4 var(--cp-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--cp-muted); }
+.table td { padding: 9px 0; border-block-start: 1px solid var(--cp-line); font: 400 12px/1.4 var(--cp-mono); color: var(--cp-text); }
 
-.rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-block-end: 1px solid var(--cp-line); }
-.rules > div { padding: 22px 28px 26px; border-inline-start: 1px solid var(--cp-line); border-block-start: 1px solid var(--cp-line); display: grid; gap: 8px; align-content: start; }
-.rules > div:nth-child(3n + 1) { border-inline-start: 0; }
-.rules > div:nth-child(-n + 3) { border-block-start: 0; }
-.rules .no { color: var(--cp-muted); }
-.rules h3 { font: 600 16px/1.25 var(--cp-sans); letter-spacing: -0.012em; color: var(--cp-strong); }
-.rules p { color: var(--cp-muted); font-size: 13.5px; }
+/* ========================================================== the family ===== */
+.sec { padding: 72px 36px 22px; display: grid; gap: 12px; }
+.sec h2 { font: 500 28px/1.1 var(--cp-sans); letter-spacing: -0.03em; color: var(--cp-strong); }
+.sec p { max-inline-size: 68ch; color: var(--cp-muted); }
+.family { display: grid; grid-template-columns: 180px repeat(3, minmax(0, 1fr)); margin: 0 36px; border-block-start: 1px solid var(--cp-line); }
+.family > div { padding: 14px 20px 14px 0; border-block-end: 1px solid var(--cp-line); font-size: 13.5px; color: var(--cp-text); }
+.family > div:nth-child(4n + 1) { color: var(--cp-muted); font-size: 13px; }
+.family .h { padding-block: 20px 16px; }
+.family .h strong { display: block; margin-block-start: 6px; font: 500 20px/1.1 var(--cp-sans); letter-spacing: -0.02em; color: var(--cp-strong); }
+.family .this strong::after { content: ""; display: inline-block; inline-size: 6px; block-size: 6px; margin-inline-start: 10px; vertical-align: middle; background: var(--cp-here); }
 
-.titleblock { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.titleblock > div { padding: 14px 18px 18px; border-inline-start: 1px solid var(--cp-line); display: grid; gap: 6px; }
-.titleblock > div:first-child { border-inline-start: 0; padding-inline-start: 28px; }
-.titleblock .hud { color: var(--cp-muted); }
-.titleblock b { font: 500 12px/1.35 var(--cp-mono); color: var(--cp-strong); }
+.rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; margin: 0 36px; }
+.rules > div { padding: 22px 0 26px; border-block-start: 1px solid var(--cp-line); display: grid; gap: 8px; align-content: start; }
+.rules h3 { font: 500 15px/1.3 var(--cp-sans); color: var(--cp-strong); }
+.rules p { font-size: 13.5px; color: var(--cp-muted); }
 
-.sec-head { display: flex; align-items: baseline; gap: 16px; padding: 40px 28px 18px; }
-.sec-head h2 { font: 500 30px/1.05 var(--cp-sans); letter-spacing: -0.03em; color: var(--cp-strong); }
-.sec-head p { color: var(--cp-muted); max-inline-size: 70ch; }
+.colophon { display: flex; gap: 48px; margin-block-start: 56px; padding: 18px 36px 22px; border-block-start: 1px solid var(--cp-line); }
+.colophon div { display: grid; gap: 4px; }
+.colophon b { font: 400 12px/1.4 var(--cp-mono); color: var(--cp-text); }
 </style>
 </head>
 <body>
 <div class="board">
 
-  <!-- ================================================ control strip ===== -->
+  <!-- ================================================ the strip ========== -->
   <header class="strip">
     <div class="brand">
       <svg viewBox="2 8 21 9" aria-hidden="true"><path d="M23 8L20 12L9 12L12 8ZM16 13L13 17L2 17L5 13Z"/></svg>
-      Scnehaux Identity <span class="station">· ADMIN</span>
+      Scnehaux Identity <span>Admin</span>
     </div>
-    <div class="scope hud"><span class="lamp here"></span>Provider scope · every identity</div>
-    <div class="hud env"><span class="lamp warn"></span>Development</div>
-    <div class="hud muted">Operator <span class="clock">ada.lovelace</span></div>
-    <div class="hud muted">AAL2 · idle <span class="clock">28:12</span></div>
-    <div class="clock">03:41:07 <span class="hud muted">UTC+7</span></div>
-    <button class="hud cell-btn" type="button">EN · ID</button>
-    <button class="hud cell-btn" type="button" id="mode" aria-label="Switch mode">◐</button>
-    <button class="hud cell-btn" type="button">Sign out</button>
+    <div class="scope label"><span class="lamp here"></span>Provider scope · every identity</div>
+    <div class="end">
+      <span class="label">Development</span>
+      <span class="mono">ada.lovelace</span>
+      <span class="mono muted">idle 28:12</span>
+      <span class="mono">03:41:07</span>
+      <button class="label" type="button">EN · ID</button>
+      <button class="label" type="button" id="mode" aria-label="Switch mode">◐</button>
+      <button class="label" type="button">Sign out</button>
+    </div>
   </header>
 
-  <!-- ================================================== mimic bus ======== -->
-  <div class="bus" aria-label="The path a request takes">
-    <div class="node"><span class="plate hud"><span class="lamp on"></span>Browser</span><span class="read">cookie <b>opaque</b> · token <b>none</b></span></div>
-    <div class="pipe"><span class="hud muted"><i>Session cookie</i></span></div>
-    <div class="node"><span class="plate hud"><span class="lamp on"></span>Experience BFF</span><span class="read">session <b>held</b> · refresh in <b>3:44</b></span></div>
-    <div class="pipe"><span class="hud muted"><i>Access token</i></span></div>
-    <div class="node"><span class="plate hud"><span class="lamp on"></span>Identity Control API</span><span class="read">reauthorizes <b>every command</b></span></div>
-    <div class="pipe warn"><span class="hud muted"><i>Admin API</i></span></div>
-    <div class="node warn"><span class="plate hud"><span class="lamp warn"></span>Kernel · scnehaux</span><span class="read">drift <b>2 open</b> · last sweep <b>03:33:51</b></span></div>
+  <!-- ================================================ the path =========== -->
+  <div class="path" aria-label="The path a request takes">
+    <div class="hop"><span class="name"><span class="lamp on"></span>Browser</span><span class="meta">cookie <b>opaque</b> · token <b>none</b></span><span class="via">COOKIE</span></div>
+    <div class="hop"><span class="name"><span class="lamp on"></span>Experience BFF</span><span class="meta">session <b>held</b> · refresh <b>3:44</b></span><span class="via">TOKEN</span></div>
+    <div class="hop degraded"><span class="name"><span class="lamp on"></span>Identity Control API</span><span class="meta">every command <b>reauthorized</b></span><span class="via">ADMIN API</span></div>
+    <div class="hop"><span class="name"><span class="lamp attention"></span>Kernel · scnehaux</span><span class="meta">drift <b class="attention">2 open</b> · sweep <b>03:33:51</b></span></div>
   </div>
 
-  <!-- ==================================================== console ======== -->
+  <!-- ================================================ the console ======== -->
   <div class="console">
-
     <nav class="stations" aria-label="Stations">
       <div class="zone">
-        <a class="station" aria-current="page"><span class="lamp alarm"></span>Overview<b>8</b></a>
+        <a class="station" aria-current="page">Overview<span class="count alarm"><span class="lamp alarm"></span>8</span></a>
       </div>
       <div class="zone">
-        <span class="hud">Z1 · Identities</span>
-        <a class="station warn"><span class="lamp warn"></span>Principals<b>1</b></a>
-        <a class="station"><span class="lamp on"></span>Workloads<b>0</b></a>
+        <span class="label">Identities</span>
+        <a class="station">Principals<span class="count attention"><span class="lamp attention"></span>1</span></a>
+        <a class="station">Workloads<span class="count"><span class="lamp on"></span>0</span></a>
       </div>
       <div class="zone">
-        <span class="hud">Z2 · Applications</span>
-        <a class="station alarm"><span class="lamp alarm"></span>Registrations<b>4</b></a>
+        <span class="label">Applications</span>
+        <a class="station">Registrations<span class="count alarm"><span class="lamp alarm"></span>4</span></a>
       </div>
       <div class="zone">
-        <span class="hud">Z3 · Governance</span>
-        <a class="station warn"><span class="lamp warn"></span>Approvals<b>3</b></a>
-        <a class="station alarm"><span class="lamp alarm"></span>Emergency access<b>1</b></a>
-        <a class="station warn"><span class="lamp warn"></span>Bootstrap ceremony<b>1</b></a>
+        <span class="label">Governance</span>
+        <a class="station">Approvals<span class="count attention"><span class="lamp attention"></span>3</span></a>
+        <a class="station">Emergency access<span class="count alarm"><span class="lamp alarm"></span>1</span></a>
+        <a class="station">Bootstrap ceremony<span class="count attention"><span class="lamp attention"></span>1</span></a>
       </div>
       <div class="zone">
-        <span class="hud">Z4 · Monitoring</span>
-        <a class="station warn"><span class="lamp warn"></span>Tenant context<b>1</b></a>
+        <span class="label">Monitoring</span>
+        <a class="station">Tenant context<span class="count attention"><span class="lamp attention"></span>1</span></a>
       </div>
     </nav>
 
     <main class="page">
       <section class="statement" aria-labelledby="statement">
         <div>
-          <h1 id="statement">8 conditions need an operator. <em>Everything else is normal.</em></h1>
-          <p>A grey panel is a quiet one. A window lights only when a condition needs a person; the first to trip is marked first out, and every window opens the station that clears it.</p>
+          <h1 id="statement">8 conditions need an operator. <span>Everything else is normal.</span></h1>
+          <p>The panel is grey while nothing needs you. A window lights when a condition does, and opens the station that clears it.</p>
         </div>
         <div class="tally">
-          <div class="alarm"><span class="hud muted">Alarm</span><span class="v">2</span></div>
-          <div class="warn"><span class="hud muted">Attention</span><span class="v">6</span></div>
-          <div><span class="hud muted">Clear</span><span class="v">4</span></div>
+          <div class="alarm"><span class="label"><span class="lamp alarm"></span>Alarm</span><span class="v">2</span></div>
+          <div class="attention"><span class="label"><span class="lamp attention"></span>Attention</span><span class="v">6</span></div>
+          <div><span class="label"><span class="lamp on"></span>Clear</span><span class="v">4</span></div>
         </div>
       </section>
 
-      <div class="panel-head">
-        <span class="plate hud">Annunciator</span>
-        <span class="hud muted">12 points · 4 zones</span>
-        <span class="readouts hud">First out <b>A-02 · 03:12:09.881</b></span>
-      </div>
+      <div class="head"><span class="label strong">Annunciator</span><span class="readout">first out <b>A-02 · 03:12:09.881</b></span></div>
       <div class="annunciator">
-        <a class="win warn"><span class="code">A-01<span>Z2</span></span><span class="label">Registration drift</span><span class="count"><span class="v">2</span><span class="s">open<br>billing-portal</span></span></a>
-        <a class="win alarm"><span class="first-out">FIRST OUT</span><span class="code">A-02<span>Z2</span></span><span class="label">Unmanaged client</span><span class="count"><span class="v">1</span><span class="s">legacy-reports<br>enabled</span></span></a>
-        <a class="win warn"><span class="code">A-03<span>Z2</span></span><span class="label">Key expiring</span><span class="count"><span class="v">1</span><span class="s">3 d left<br>no successor</span></span></a>
-        <a class="win"><span class="code">A-04<span>Z2</span></span><span class="label">No key accepted</span><span class="count"><span class="v">—</span><span class="s">clear</span></span></a>
-        <a class="win"><span class="code">A-05<span>Z1</span></span><span class="label">Mapping lost</span><span class="count"><span class="v">—</span><span class="s">clear</span></span></a>
-        <a class="win warn"><span class="code">A-06<span>Z1</span></span><span class="label">Kernel user unaccounted</span><span class="count"><span class="v">1</span><span class="s">restored.after<br>.backup</span></span></a>
-        <a class="win"><span class="code">A-07<span>Z1</span></span><span class="label">Quarantined</span><span class="count"><span class="v">—</span><span class="s">clear</span></span></a>
-        <a class="win"><span class="code">A-08<span>Z1</span></span><span class="label">Operation parked</span><span class="count"><span class="v">—</span><span class="s">clear</span></span></a>
-        <a class="win warn"><span class="code">A-09<span>Z3</span></span><span class="label">Awaiting second operator</span><span class="count"><span class="v">3</span><span class="s">oldest<br>41 min</span></span></a>
-        <a class="win alarm"><span class="code">A-10<span>Z3</span></span><span class="label">Emergency grant active</span><span class="count"><span class="v">1</span><span class="s">INC-0412<br>ends 06:58</span></span></a>
-        <a class="win warn"><span class="code">A-11<span>Z4</span></span><span class="label">Tenant not converged</span><span class="count"><span class="v">1</span><span class="s">parked<br>8 attempts</span></span></a>
-        <a class="win warn"><span class="code">A-12<span>Z3</span></span><span class="label">Ceremony unreviewed</span><span class="count"><span class="v">1</span><span class="s">since<br>Oct 1</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-01</span></span><span class="name">Registration drift</span><span class="foot"><span class="v">2</span><span class="what">billing-portal</span></span></a>
+        <a class="window lit alarm"><span class="top"><span class="code">A-02</span><span class="first">FIRST OUT</span></span><span class="name">Unmanaged client</span><span class="foot"><span class="v">1</span><span class="what">legacy-reports</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-03</span></span><span class="name">Key expiring</span><span class="foot"><span class="v">1</span><span class="what">3 days left</span></span></a>
+        <a class="window"><span class="top"><span class="code">A-04</span></span><span class="name">No key accepted</span><span class="foot"><span class="v">0</span><span class="what">clear</span></span></a>
+        <a class="window"><span class="top"><span class="code">A-05</span></span><span class="name">Mapping lost</span><span class="foot"><span class="v">0</span><span class="what">clear</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-06</span></span><span class="name">Kernel user unaccounted</span><span class="foot"><span class="v">1</span><span class="what">restored.after.backup</span></span></a>
+        <a class="window"><span class="top"><span class="code">A-07</span></span><span class="name">Quarantined</span><span class="foot"><span class="v">0</span><span class="what">clear</span></span></a>
+        <a class="window"><span class="top"><span class="code">A-08</span></span><span class="name">Operation parked</span><span class="foot"><span class="v">0</span><span class="what">clear</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-09</span></span><span class="name">Awaiting a second operator</span><span class="foot"><span class="v">3</span><span class="what">oldest 41 min</span></span></a>
+        <a class="window lit alarm"><span class="top"><span class="code">A-10</span></span><span class="name">Emergency grant active</span><span class="foot"><span class="v">1</span><span class="what">ends 06:58</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-11</span></span><span class="name">Tenant not converged</span><span class="foot"><span class="v">1</span><span class="what">8 attempts</span></span></a>
+        <a class="window lit"><span class="top"><span class="code">A-12</span></span><span class="name">Ceremony unreviewed</span><span class="foot"><span class="v">1</span><span class="what">since Oct 1</span></span></a>
       </div>
 
-      <div class="panel-head">
-        <span class="plate hud">Process</span>
-        <span class="hud muted">The identity plane, as it runs now</span>
-        <span class="readouts hud">Mark <b>1182</b> · Queue <b>0</b> · Sweep <b>every 5 min</b></span>
-      </div>
-      <div class="mimic">
-        <svg viewBox="0 0 780 286" role="img" aria-label="Schematic of the identity plane">
-          <!-- desired state store -->
-          <rect class="box" x="8" y="34" width="168" height="62"/>
-          <rect class="l-on" x="20" y="46" width="8" height="8"/>
-          <text class="t-name" x="36" y="54">DESIRED STATE</text>
-          <text x="20" y="74">registrations</text><text class="t-val" x="132" y="74">41</text>
-          <text x="20" y="88">principals</text><text class="t-val" x="132" y="88">1,284</text>
+      <div class="head"><span class="label strong">Process</span><span class="readout">mark <b>1182</b> · queue <b>0</b> · sweep <b>every 5 min</b></span></div>
+      <div class="process">
+        <svg viewBox="0 0 780 250" role="img" aria-label="The identity plane">
+          <!-- nodes -->
+          <rect class="box" x="0.5" y="20.5" width="170" height="64"/>
+          <rect class="l-on" x="14" y="36" width="6" height="6"/>
+          <text class="n" x="28" y="43">Desired state</text>
+          <text x="14" y="66">registrations</text><text class="v" x="126" y="66">41</text>
+          <text x="14" y="78">principals</text><text class="v" x="126" y="78">1,284</text>
 
-          <!-- executor -->
-          <rect class="box" x="306" y="34" width="168" height="62"/>
-          <rect class="l-on" x="318" y="46" width="8" height="8"/>
-          <text class="t-name" x="334" y="54">EXECUTOR</text>
-          <text x="318" y="74">queue</text><text class="t-val" x="430" y="74">0</text>
-          <text x="318" y="88">parked</text><text class="t-val" x="430" y="88">0</text>
+          <rect class="box" x="304.5" y="20.5" width="170" height="64"/>
+          <rect class="l-on" x="318" y="36" width="6" height="6"/>
+          <text class="n" x="332" y="43">Executor</text>
+          <text x="318" y="66">queue</text><text class="v" x="430" y="66">0</text>
+          <text x="318" y="78">parked</text><text class="v" x="430" y="78">0</text>
 
-          <!-- kernel -->
-          <rect class="box warn" x="604" y="34" width="168" height="62"/>
-          <rect class="l-warn" x="616" y="46" width="8" height="8"/>
-          <text class="t-name" x="632" y="54">KERNEL</text>
-          <text x="616" y="74">realm</text><text class="t-val" x="702" y="74">scnehaux</text>
-          <text x="616" y="88">clients</text><text class="t-val t-warn" x="702" y="88">42 · 1 ext</text>
+          <rect class="box" x="608.5" y="20.5" width="170" height="64"/>
+          <rect class="l-attention" x="622" y="36" width="6" height="6"/>
+          <text class="n" x="636" y="43">Kernel</text>
+          <text x="622" y="66">realm</text><text class="v" x="700" y="66">scnehaux</text>
+          <text x="622" y="78">unmanaged</text><text class="v attention" x="700" y="78">1</text>
 
-          <!-- reconciler -->
-          <rect class="box warn" x="455" y="190" width="168" height="62"/>
-          <rect class="l-warn" x="467" y="202" width="8" height="8"/>
-          <text class="t-name" x="483" y="210">RECONCILER</text>
-          <text x="467" y="230">last sweep</text><text class="t-val" x="560" y="230">03:33:51</text>
-          <text x="467" y="244">findings</text><text class="t-val t-warn" x="560" y="244">2 open</text>
+          <rect class="box" x="152.5" y="164.5" width="170" height="64"/>
+          <rect class="l-attention" x="166" y="180" width="6" height="6"/>
+          <text class="n" x="180" y="187">Projection</text>
+          <text x="166" y="210">mark</text><text class="v" x="270" y="210">1182</text>
+          <text x="166" y="222">parked</text><text class="v attention" x="270" y="222">1</text>
 
-          <!-- projection -->
-          <rect class="box warn" x="157" y="190" width="168" height="62"/>
-          <rect class="l-warn" x="169" y="202" width="8" height="8"/>
-          <text class="t-name" x="185" y="210">PROJECTION</text>
-          <text x="169" y="230">mark</text><text class="t-val" x="262" y="230">1182</text>
-          <text x="169" y="244">tenants parked</text><text class="t-val t-warn" x="292" y="244">1</text>
+          <rect class="box" x="456.5" y="164.5" width="170" height="64"/>
+          <rect class="l-attention" x="470" y="180" width="6" height="6"/>
+          <text class="n" x="484" y="187">Reconciler</text>
+          <text x="470" y="210">sweep</text><text class="v" x="560" y="210">03:33:51</text>
+          <text x="470" y="222">open</text><text class="v attention" x="560" y="222">2</text>
 
-          <!-- desired → executor -->
-          <path class="pipe-s" d="M176 65 H298"/><path class="arrow" d="M298 60 L306 65 L298 70 Z"/>
-          <text class="t-pipe" x="200" y="56">COMMAND</text>
-          <!-- executor → kernel -->
-          <path class="pipe-s" d="M474 65 H596"/><path class="arrow" d="M596 60 L604 65 L596 70 Z"/>
-          <text class="t-pipe" x="502" y="56">ADMIN API</text>
-          <text class="t-pipe" x="502" y="84">ACK 584 MS</text>
-          <!-- kernel → reconciler (observed) -->
-          <path class="pipe-s warn" d="M688 96 V221 H631"/><path class="arrow warn" d="M631 216 L623 221 L631 226 Z"/>
-          <text class="t-pipe" x="696" y="160">OBSERVED</text>
-          <!-- desired → reconciler (compare) -->
-          <path class="pipe-s" d="M92 96 V140 H539 V182"/><path class="arrow" d="M534 182 L539 190 L544 182 Z"/>
-          <text class="t-pipe" x="360" y="132">DESIRED · COMPARED</text>
-          <!-- desired → projection -->
-          <path class="pipe-s" d="M60 96 V221 H149"/><path class="arrow" d="M149 216 L157 221 L149 226 Z"/>
-          <text class="t-pipe" x="68" y="180">MEMBERSHIPS</text>
-          <!-- projection → organization control -->
-          <path class="pipe-s idle" d="M241 252 V276"/>
-          <text class="t-pipe" x="252" y="276">→ ORGANIZATION CONTROL · RECONCILE ROUTE</text>
-          <!-- reconciler → annunciator -->
-          <path class="pipe-s idle" d="M539 252 V276"/>
-          <text class="t-pipe" x="550" y="276">→ ANNUNCIATOR A-01, A-02</text>
+          <!-- pipes -->
+          <path class="pipe" d="M171 52 H300"/><path class="tip" d="M300 49 L305 52 L300 55 Z"/>
+          <text class="via" x="196" y="44">COMMAND</text>
+          <path class="pipe" d="M475 52 H604"/><path class="tip" d="M604 49 L609 52 L604 55 Z"/>
+          <text class="via" x="500" y="44">ADMIN API</text>
+          <path class="pipe attention" d="M693 85 V196 H631"/><path class="tip attention" d="M631 193 L626 196 L631 199 Z"/>
+          <text class="via" x="702" y="146">OBSERVED</text>
+          <path class="pipe" d="M100 85 V124 H541 V160"/><path class="tip" d="M538 160 L541 165 L544 160 Z"/>
+          <text class="via" x="300" y="118">DESIRED, COMPARED</text>
+          <path class="pipe" d="M48 85 V196 H148"/><path class="tip" d="M148 193 L153 196 L148 199 Z"/>
+          <text class="via" x="58" y="160">MEMBERSHIPS</text>
+          <path class="pipe rest" d="M237 229 V246"/>
+          <text class="via" x="246" y="246">TO ORGANIZATION CONTROL</text>
         </svg>
       </div>
     </main>
 
     <aside class="recorder" aria-label="Sequence of events">
-      <div class="panel-head" style="padding-inline: 20px">
-        <span class="plate hud">SOE recorder</span>
-        <span class="readouts hud">Today <b>9</b></span>
-      </div>
+      <div class="head"><span class="label strong">Events</span><span class="readout">today <b>10</b></span></div>
       <ol class="soe">
-        <li><time>02:00:00.000</time><span class="k">SYS</span><span class="m">backup mark taken · kernel</span></li>
-        <li class="opr"><time>02:58:44.120</time><span class="k">OPR</span><span class="m"><b>ada.lovelace</b> grant emergency access · <b>oscar</b> · INC-0412</span></li>
-        <li class="alm"><time>02:58:44.402</time><span class="k">ALM</span><span class="m">A-10 emergency grant active</span></li>
-        <li class="alm"><time>03:12:09.881</time><span class="k">ALM</span><span class="m">A-02 unmanaged client <b>legacy-reports</b><span class="fo">FIRST OUT</span></span></li>
-        <li class="wrn"><time>03:12:10.004</time><span class="k">WRN</span><span class="m">A-01 drift · <b>billing-portal</b> redirect_uris</span></li>
-        <li class="opr"><time>03:20:31.552</time><span class="k">OPR</span><span class="m"><b>wendy.witness</b> propose audience · partner-travel-portal</span></li>
-        <li><time>03:33:51.204</time><span class="k">SYS</span><span class="m">reconciler sweep · 41 converged · 2 open</span></li>
-        <li class="opr"><time>03:40:12.318</time><span class="k">OPR</span><span class="m"><b>ada.lovelace</b> suspend <b>alice</b> · "credential exposure, INC-0412"</span></li>
-        <li><time>03:40:12.902</time><span class="k">SYS</span><span class="m">executor applied suspend · kernel ack 584 ms</span></li>
-        <li class="opr"><time>03:41:02.077</time><span class="k">OPR</span><span class="m"><b>ada.lovelace</b> broke seal · sessions of <b>alice</b> (read recorded)</span></li>
+        <li><span class="lamp"></span><time>02:00:00.000</time><span class="m">backup mark taken <i>· kernel</i></span></li>
+        <li><span class="lamp on"></span><time>02:58:44.120</time><span class="m"><b>ada.lovelace</b> granted emergency access <i>· oscar · INC-0412</i></span></li>
+        <li><span class="lamp alarm"></span><time>02:58:44.402</time><span class="m">A-10 emergency grant active</span></li>
+        <li><span class="lamp alarm"></span><time>03:12:09.881</time><span class="m">A-02 unmanaged client <i>· legacy-reports · first out</i></span></li>
+        <li><span class="lamp attention"></span><time>03:12:10.004</time><span class="m">A-01 drift <i>· billing-portal redirect_uris</i></span></li>
+        <li><span class="lamp on"></span><time>03:20:31.552</time><span class="m"><b>wendy.witness</b> proposed an audience <i>· partner-travel-portal</i></span></li>
+        <li><span class="lamp"></span><time>03:33:51.204</time><span class="m">sweep <i>· 41 converged · 2 open</i></span></li>
+        <li><span class="lamp on"></span><time>03:40:12.318</time><span class="m"><b>ada.lovelace</b> suspended <b>alice</b> <i>· credential exposure</i></span></li>
+        <li><span class="lamp"></span><time>03:40:12.902</time><span class="m">executor applied it <i>· kernel ack 584 ms</i></span></li>
+        <li><span class="lamp on"></span><time>03:41:02.077</time><span class="m"><b>ada.lovelace</b> broke the seal on <b>alice</b>'s sessions</span></li>
       </ol>
-      <div class="foot hud"><span>Recorded by identity-control</span><span>Audit API →</span></div>
+      <div class="foot"><span class="label">Recorded by identity-control</span><span class="label">Audit →</span></div>
     </aside>
   </div>
 
-  <!-- ======================================== station: one principal ==== -->
-  <div class="divider hud"><strong>Station</strong> · Z1 · Principals / alice · the same panel, one principal</div>
+  <!-- ================================================ one principal ====== -->
+  <div class="divider"><h2>The same panel, one principal</h2><span class="label">Identities / Principals / alice</span></div>
   <div class="console">
     <nav class="stations" aria-label="Stations">
-      <div class="zone"><a class="station"><span class="lamp alarm"></span>Overview<b>8</b></a></div>
+      <div class="zone"><a class="station">Overview<span class="count alarm"><span class="lamp alarm"></span>8</span></a></div>
       <div class="zone">
-        <span class="hud">Z1 · Identities</span>
-        <a class="station warn" aria-current="page"><span class="lamp warn"></span>Principals<b>1</b></a>
-        <a class="station"><span class="lamp on"></span>Workloads<b>0</b></a>
+        <span class="label">Identities</span>
+        <a class="station" aria-current="page">Principals<span class="count attention"><span class="lamp attention"></span>1</span></a>
+        <a class="station">Workloads<span class="count"><span class="lamp on"></span>0</span></a>
       </div>
-      <div class="zone"><span class="hud">Z2 · Applications</span><a class="station alarm"><span class="lamp alarm"></span>Registrations<b>4</b></a></div>
+      <div class="zone"><span class="label">Applications</span><a class="station">Registrations<span class="count alarm"><span class="lamp alarm"></span>4</span></a></div>
       <div class="zone">
-        <span class="hud">Z3 · Governance</span>
-        <a class="station warn"><span class="lamp warn"></span>Approvals<b>3</b></a>
-        <a class="station alarm"><span class="lamp alarm"></span>Emergency access<b>1</b></a>
-        <a class="station warn"><span class="lamp warn"></span>Bootstrap ceremony<b>1</b></a>
+        <span class="label">Governance</span>
+        <a class="station">Approvals<span class="count attention"><span class="lamp attention"></span>3</span></a>
+        <a class="station">Emergency access<span class="count alarm"><span class="lamp alarm"></span>1</span></a>
+        <a class="station">Bootstrap ceremony<span class="count attention"><span class="lamp attention"></span>1</span></a>
       </div>
-      <div class="zone"><span class="hud">Z4 · Monitoring</span><a class="station warn"><span class="lamp warn"></span>Tenant context<b>1</b></a></div>
+      <div class="zone"><span class="label">Monitoring</span><a class="station">Tenant context<span class="count attention"><span class="lamp attention"></span>1</span></a></div>
     </nav>
 
     <main class="page" style="grid-column: span 2">
-      <section class="principal-head" aria-labelledby="alice">
+      <section class="who" aria-labelledby="alice">
         <div>
-          <span class="hud muted">Z1 · Principal · person</span>
-          <h1 id="alice">alice</h1>
-          <div class="id"><span>principal_id <b>0192f0e0-3333-7000-8000-000000000007</b></span><span>email <b>alice@example.com</b></span><span>created <b>Sep 21, 2026</b></span></div>
+          <span class="label">Principal · person</span>
+          <h1 id="alice" style="margin-block-start: 10px">alice</h1>
+          <div class="ids"><span>principal_id <b>0192f0e0-3333-7000-8000-000000000007</b></span><span>email <b>alice@example.com</b></span><span>created <b>Sep 21, 2026</b></span></div>
         </div>
-        <div class="state-plate"><span class="hud muted">State</span><span class="plate">LOCKED OUT</span></div>
+        <div class="state"><span class="label">State</span><span class="value"><span class="lamp attention"></span>Locked out</span></div>
       </section>
 
-      <div class="loto" role="note" aria-label="Lockout tag">
-        <div class="hazard" aria-hidden="true"></div>
-        <div class="body">
-          <span class="title">DANGER · LOCKED OUT · DO NOT RESTORE WITHOUT A REASON</span>
-          <dl>
-            <div><dt class="hud">Locked by</dt><dd>ada.lovelace</dd></div>
-            <div><dt class="hud">Since</dt><dd>03:40:12.318 · 57 s ago</dd></div>
-            <div><dt class="hud">Reason</dt><dd>credential exposure, INC-0412</dd></div>
-            <div><dt class="hud">Lifts with</dt><dd>restore · reason · recent sign-in</dd></div>
-          </dl>
-        </div>
-        <div class="hole" aria-hidden="true"><span></span></div>
-      </div>
+      <dl class="tag" aria-label="Lockout tag">
+        <span class="title"><span class="lamp attention"></span>Locked out. Restore only with a reason.</span>
+        <div><dt class="label">Locked by</dt><dd>ada.lovelace</dd></div>
+        <div><dt class="label">Since</dt><dd>03:40:12.318</dd></div>
+        <div><dt class="label">Reason</dt><dd>credential exposure, INC-0412</dd></div>
+        <div><dt class="label">Lifts with</dt><dd>restore · reason · recent sign-in</dd></div>
+        <span class="hole" aria-hidden="true"></span>
+      </dl>
 
-      <div class="station-grid">
+      <div class="two">
         <section aria-labelledby="commands">
-          <div class="panel-head"><span class="plate hud" id="commands">Commands</span><span class="readouts hud">Behind a cover · armed one at a time</span></div>
-          <div class="commands">
+          <div class="head"><span class="label strong" id="commands">Commands</span><span class="readout">closed until armed</span></div>
+          <div class="cmds">
             <div class="cmd armed">
-              <div class="top">
-                <div><div class="name">Restore</div><div class="what">Lifts the lockout. alice signs in again with what she has.</div></div>
-                <span class="hud armed-tag">● Armed</span>
+              <div class="row"><div><div class="n">Restore</div><div class="d">Lifts the lockout. alice signs in again with what she has.</div></div><span class="label"><span class="lamp here"></span>Armed</span></div>
+              <div class="checks">
+                <div><span class="label"><span class="lamp on"></span>Reason</span><span class="v">recorded</span></div>
+                <div><span class="label"><span class="lamp on"></span>Recent sign-in</span><span class="v">4 min ago</span></div>
+                <div><span class="label"><span class="lamp on"></span>Not yourself</span><span class="v">ada ≠ alice</span></div>
+                <div class="na"><span class="label"><span class="lamp"></span>Second operator</span><span class="v">not required</span></div>
               </div>
-              <div class="interlocks" aria-label="Interlocks">
-                <div><span class="row hud muted"><span class="lamp on"></span>Reason</span><span class="v">recorded</span></div>
-                <div><span class="row hud muted"><span class="lamp on"></span>Recent sign-in</span><span class="v">4 min ago</span></div>
-                <div><span class="row hud muted"><span class="lamp on"></span>Not yourself</span><span class="v">ada ≠ alice</span></div>
-                <div class="na"><span class="row hud muted"><span class="lamp"></span>Second operator</span><span class="v">not required</span></div>
-              </div>
-              <div class="reason"><span class="hud muted">Reason · recorded with the command</span><div class="field">Credential rotated and confirmed with alice on a call, INC-0412</div></div>
-              <div class="exec-row"><span class="btn ink">Execute restore</span><span class="btn">Disarm</span><span class="note">re-checked by identity-control</span></div>
+              <div class="field">Credential rotated and confirmed with alice on a call, INC-0412</div>
+              <div class="actions"><span class="btn ink">Restore alice</span><span class="btn">Disarm</span><span class="note">checked again by identity-control</span></div>
             </div>
-            <div class="cmd"><div><div class="name">End every session</div><div class="what">Signs alice out of every application at once.</div></div><span class="cover hud">▧ Lift cover</span></div>
-            <div class="cmd"><div><div class="name">Revoke an authenticator</div><div class="what">alice enrolls it again; this one cannot be undone.</div></div><span class="cover hud">▧ Lift cover</span></div>
-            <div class="cmd"><div><div class="name">Issue a temporary password</div><div class="what">Shown once, lapses in 24 h.</div></div><span class="cover hud">▧ Lift cover</span></div>
+            <div class="cmd"><div><div class="n">End every session</div><div class="d">Signs alice out of every application at once.</div></div><span class="arm">Arm</span></div>
+            <div class="cmd"><div><div class="n">Revoke an authenticator</div><div class="d">alice enrols it again; this cannot be undone.</div></div><span class="arm">Arm</span></div>
+            <div class="cmd"><div><div class="n">Issue a temporary password</div><div class="d">Shown once, lapses in 24 hours.</div></div><span class="arm">Arm</span></div>
           </div>
         </section>
 
         <section aria-labelledby="reads">
-          <div class="panel-head"><span class="plate hud" id="reads">Privileged reads</span><span class="readouts hud">Sealed · opening is recorded</span></div>
-          <div class="seals">
-            <div class="seal open">
-              <div class="top"><span class="name">Sessions</span><span class="broken">seal broken 03:41:02 · ada.lovelace</span></div>
+          <div class="head"><span class="label strong" id="reads">Privileged reads</span><span class="readout">sealed · breaking one is recorded</span></div>
+          <div class="reads">
+            <div class="read open">
+              <div class="row"><span class="n">Sessions</span><span class="label">seal broken 03:41:02 · ada.lovelace</span></div>
               <table class="table">
-                <thead><tr><th>Started</th><th>Last used</th><th>Applications</th></tr></thead>
+                <thead><tr><th>Started</th><th>Last used</th><th>Application</th></tr></thead>
                 <tbody>
-                  <tr><td class="mono">Oct 31 · 01:12</td><td class="mono">03:39</td><td class="mono">billing-portal</td></tr>
-                  <tr><td class="mono">Oct 30 · 22:48</td><td class="mono">Oct 31 · 00:15</td><td class="mono">identity-experience</td></tr>
+                  <tr><td>Oct 31 01:12</td><td>03:39</td><td>billing-portal</td></tr>
+                  <tr><td>Oct 30 22:48</td><td>Oct 31 00:15</td><td>identity-experience</td></tr>
                 </tbody>
               </table>
             </div>
-            <div class="seal"><div><div class="name">Authenticators</div><div class="what">How alice signs in.</div></div><span class="seal-strip"><span class="tape">SEALED</span><span class="btn">Break seal</span></span></div>
-            <div class="seal"><div><div class="name">Federation links</div><div class="what">Identity providers alice signs in through.</div></div><span class="seal-strip"><span class="tape">SEALED</span><span class="btn">Break seal</span></span></div>
-            <div class="seal"><div><div class="name">Events</div><div class="what">What happened to alice, and who did it.</div></div><span class="seal-strip"><span class="tape">SEALED</span><span class="btn">Break seal</span></span></div>
+            <div class="read"><div><div class="n">Authenticators</div><div class="d">How alice signs in.</div></div><span class="arm">Break seal</span></div>
+            <div class="read"><div><div class="n">Federation links</div><div class="d">The identity providers alice signs in through.</div></div><span class="arm">Break seal</span></div>
+            <div class="read"><div><div class="n">Events</div><div class="d">What happened to alice, and who did it.</div></div><span class="arm">Break seal</span></div>
           </div>
         </section>
       </div>
     </main>
   </div>
 
-  <!-- ================================================ the expression ===== -->
-  <div class="sec-head"><h2>One theme, three expressions.</h2><p>scnx-platform keeps its tokens, its square and its two voices. What changes is the metaphor each kind of product is drawn in, so a console never reads as a document, and a document never reads as a console.</p></div>
+  <!-- ================================================ the family ========= -->
+  <div class="sec"><h2>One theme, three expressions.</h2><p>scnx-platform keeps its tokens, its square and its two voices. Each kind of product is drawn in its own metaphor, so a console never reads as a document, and a document never reads as a console.</p></div>
   <div class="family">
-    <div class="hud">Expression</div>
-    <div class="h"><span class="hud">ui-platform-docs</span><strong>Drawing</strong></div>
-    <div class="h this"><span class="hud">IAM · Organization · AI runtime consoles</span><strong>Control</strong></div>
-    <div class="h"><span class="hud">Platform documentation</span><strong>Manual</strong></div>
-
-    <div>Metaphor</div><div>A technical drawing set: sheets, rules, crosses, a ruler</div><div>An industrial control panel: annunciator, mimic, interlocks, tags, a recorder</div><div>An operations manual: chapters, numbered procedures, margins, callouts, revision marks</div>
-    <div>What it is for</div><div>Reading and proving a design</div><div>Acting on a live system, safely</div><div>Following a procedure to the end</div>
-    <div>Colour</div><div>Blue means here; status only through components</div><div>Grey when normal (ISA-101); amber attention, red alarm; blue only for here and armed</div><div>Blue means here; red only in a warning callout</div>
-    <div>Its signature part</div><div>The sheet bar, NN / Title ··· facts</div><div>The annunciator window and the lockout tag</div><div>The numbered step and its check</div>
-    <div>Motion</div><div>Follows the scroll: rules draw in, titles stand up</div><div>Follows the plant: a window lights, a pipe dashes; nothing moves when all is normal</div><div>Almost none: a step checks off</div>
+    <div></div>
+    <div class="h"><span class="label">ui-platform-docs</span><strong>Drawing</strong></div>
+    <div class="h this"><span class="label">Consoles · IAM first</span><strong>Control</strong></div>
+    <div class="h"><span class="label">Platform documentation</span><strong>Manual</strong></div>
+    <div>Metaphor</div><div>A technical drawing set</div><div>A quiet instrument panel</div><div>An operations manual</div>
+    <div>For</div><div>Reading and proving a design</div><div>Acting on a live system, safely</div><div>Following a procedure to its end</div>
+    <div>Colour</div><div>Blue for here; status through components</div><div>Grey at rest; amber and red only as a lamp or a hairline</div><div>Blue for here; red only in a warning</div>
+    <div>Signature</div><div>The sheet bar, NN / Title ··· facts</div><div>The annunciator and the lockout tag</div><div>The numbered step and its check</div>
   </div>
 
-  <div class="sec-head"><h2>Control, in six rules.</h2></div>
+  <div class="sec"><h2>Control, in six rules.</h2></div>
   <div class="rules">
-    <div><span class="hud no">01</span><h3>Grey when normal</h3><p>A panel with nothing wrong is grey: lamps lit grey, pipes grey. Colour is spent only on what needs a person, so it is seen at once. Blue keeps one meaning: here, and armed.</p></div>
-    <div><span class="hud no">02</span><h3>Annunciate, don't chart</h3><p>A condition is a window that lights, with a count and what tripped it. The first to trip is first out. Every window opens the station that clears it. No figure is shown that nobody measured.</p></div>
-    <div><span class="hud no">03</span><h3>Mimic the path</h3><p>The bus under the strip draws the path a request takes, browser to kernel, on every page. A degraded hop dashes in amber, so a failure says where before it says what.</p></div>
-    <div><span class="hud no">04</span><h3>Interlock, then execute</h3><p>A command that changes a person sits behind a cover. Lifting it arms it and shows its interlocks: reason, recent sign-in, not yourself, a second operator where one is required. Execute is ink, never red.</p></div>
-    <div><span class="hud no">05</span><h3>Tag what you lock</h3><p>Containment carries a lockout tag: who, since when, why, and what lifts it. A drift exception carries a bypass tag with its expiry. The state is never only a word in a badge.</p></div>
-    <div><span class="hud no">06</span><h3>Seal privileged reads, record to the millisecond</h3><p>A read that is itself recorded is sealed until an operator breaks the seal on purpose. Every command, alarm and broken seal lands in the sequence-of-events recorder, in order, to the millisecond.</p></div>
+    <div><span class="label">01</span><h3>Grey at rest</h3><p>A panel with nothing wrong is monochrome. The accent is spent only on what needs a person, as a 6px lamp or a hairline, never as a fill or a figure.</p></div>
+    <div><span class="label">02</span><h3>Annunciate, don't chart</h3><p>A condition is a window that lights, with a count and what tripped it. The first to trip is first out. Every window opens the station that clears it.</p></div>
+    <div><span class="label">03</span><h3>Show the path</h3><p>The hops a request takes, browser to kernel, sit under the strip on every page, so a failure says where before it says what.</p></div>
+    <div><span class="label">04</span><h3>Arm, then act</h3><p>A command that changes a person is closed until armed. Armed, it shows what holds it: a reason, a recent sign-in, not yourself, a second operator.</p></div>
+    <div><span class="label">05</span><h3>Tag what you lock</h3><p>Containment carries a tag: who, since when, why, and what lifts it. A state is never only a word in a badge.</p></div>
+    <div><span class="label">06</span><h3>Seal the reads that are recorded</h3><p>A read that is itself on the record is sealed until broken on purpose. Commands, alarms and broken seals are kept in order, to the millisecond.</p></div>
   </div>
 
-  <div class="titleblock">
-    <div><span class="hud">Expression</span><b>Control</b></div>
-    <div><span class="hud">Theme</span><b>scnx-platform</b></div>
-    <div><span class="hud">Board</span><b>IAM · Admin Portal</b></div>
-    <div><span class="hud">Applies to</span><b>identity-experience</b></div>
-    <div><span class="hud">Status</span><b>proposal · guidance</b></div>
-    <div><span class="hud">Authority</span><b>ADR-UIP-VIS-002</b></div>
+  <div class="colophon">
+    <div><span class="label">Expression</span><b>Control</b></div>
+    <div><span class="label">Theme</span><b>scnx-platform</b></div>
+    <div><span class="label">Board</span><b>IAM · Admin Portal</b></div>
+    <div><span class="label">Status</span><b>proposal · guidance</b></div>
+    <div><span class="label">Authority</span><b>ADR-UIP-VIS-002</b></div>
   </div>
 </div>
 <script>
