@@ -10,6 +10,7 @@ brand/
   Brand.html                  The brand every theme shares: name, mark, voice, icons (live)
 scnx-platform/                The platform's design (IAM, AI runtime, organization, the docs), live
   Brand-Book.html             its brand book
+  Docs-Front-Door.html        the docs' front door, adopted from the site (current)
   Docs-Landing.html, Docs-Home.html, Docs-Button.html
 scnx-saas/                    The SaaS products' design: public landing, signed-in workspace, component page
   Brand-Book.html             its brand book (live)
@@ -104,6 +105,7 @@ which ui-platform checks in its own visual tests.
 | :-- | :-- | :-- | :-- |
 | `brand` | Brand (shared by both) | `Brand.html` | [`Brand.png`](brand/Brand.png) |
 | `scnx-platform` | Brand book | `Brand-Book.html` | [`Brand-Book.png`](scnx-platform/Brand-Book.png) |
+| `scnx-platform` | Docs · Front door | `Docs-Front-Door.html` | [`Docs-Front-Door.png`](scnx-platform/Docs-Front-Door.png) |
 | `scnx-platform` | Landing (global) | `Docs-Landing.html` | [`Docs-Landing.png`](scnx-platform/Docs-Landing.png) |
 | `scnx-platform` | Docs home (get started) | `Docs-Home.html` | [`Docs-Home.png`](scnx-platform/Docs-Home.png) |
 | `scnx-platform` | Components / Button | `Docs-Button.html` | [`Docs-Button.png`](scnx-platform/Docs-Button.png) |
