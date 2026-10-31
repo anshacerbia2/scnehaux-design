@@ -31,8 +31,18 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 > to a theme (ADR-UIP-VIS-002), and the site is one of the products on `scnx-platform`.
 > (The owner, 2026-10-27: "gw ikut rekomen lo".)
 
+> **The front door is current.** The site's root (TDD D23) was designed in the site,
+> not drawn here first as D13 asks; [`Docs-Front-Door.html`](Docs-Front-Door.html)
+> adopts its look as built (ui-platform-docs `1c72bf3`), which closes the TDD's Open
+> Question 4. Its pictures (`front-door/`) are the site itself, a production build in
+> Chromium: stills under reduced motion, the edge held by a drag, the mode wipe drawn,
+> since a view transition cannot be caught in a still. The behaviour stays in the
+> site's [annex C](https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/TDD-ui-platform-docs-001-documentation-site.md#annex-c-the-front-door);
+> a change to the look starts on this board, and its frames are retaken with it.
+
 | Board | Page | Image |
 | :-- | :-- | :-- |
+| **Docs · Front door** (current) | [`Docs-Front-Door.html`](Docs-Front-Door.html) | [`Docs-Front-Door.png`](Docs-Front-Door.png) |
 | Public · Landing (global) | [`Docs-Landing.html`](Docs-Landing.html) | [`Docs-Landing.png`](Docs-Landing.png) |
 | Docs · Home (get started, no sign-in) | [`Docs-Home.html`](Docs-Home.html) | [`Docs-Home.png`](Docs-Home.png) |
 | Docs · Components / Button | [`Docs-Button.html`](Docs-Button.html) | [`Docs-Button.png`](Docs-Button.png) |
