@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en" data-scnx-theme="scnx-platform" data-scnx-resolved-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scnehaux UI · Docs · Front door</title>
+<meta name="description" content="The documentation site's front door: three worlds behind one door, one edge between them, drawn from the site's own build and adopted into scnx-platform.">
+<link rel="icon" href="../design-system/assets/Logos/scnehaux-mark-tile.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../design-system/vendor/scnx-system/tokens/css/scnx-platform.css">
+<link rel="stylesheet" href="../design-system/components/bundle.css">
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="square.css">
+<script src="instrument.js"></script>
+<script src="square.js"></script>
+<style>
+  /* The board's own layout: frames of the site in cells of the line system. */
+  .fd-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); }
+  .fd-hero > div { padding: 64px var(--sq-pad) 56px; display: grid; gap: 22px; align-content: start; }
+  .fd-hero .ix-display { font-size: clamp(2.5rem, 5vw, 4.25rem); }
+  .fd-lead { padding: 52px var(--sq-pad) 44px; border-block-end: 1px solid var(--sq-line); display: grid; gap: 14px; }
+  .fd-lead .ix-h2 { max-inline-size: 24ch; }
+  .fd-lead .ix-lede { max-inline-size: 72ch; }
+  .fd-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fd-cell { padding: 28px var(--sq-pad) 32px; display: grid; gap: 12px; align-content: start; }
+  .fd-cell .no { font: 500 10px/1 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); }
+  .fd-cell .no b { color: var(--ix-signal-text); font-weight: 500; }
+  .fd-cell code, .fd-lead code, .fd-table code, .fd-note code { font: 500 12px/1.5 var(--mono); color: var(--ix-text); }
+
+  /* A frame of the site: the picture and its hairline, nothing round it. */
+  .fd-frame { margin: 0; display: grid; gap: 10px; align-content: start; }
+  .fd-frame img { display: block; inline-size: 100%; block-size: auto; border: 1px solid var(--sq-line); }
+  .fd-frame figcaption { font: 500 10px/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ix-muted); }
+  .fd-frame figcaption b { color: var(--ix-text); font-weight: 500; }
+  .fd-phones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fd-phones .fd-frame { justify-items: center; }
+  .fd-phones .fd-frame img { inline-size: min(100%, 300px); }
+
+  /* tables in rows of lines */
+  .fd-table-wrap { overflow-x: auto; }
+  .fd-table { inline-size: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .fd-table th { text-align: left; padding: 12px 16px; font: 500 10px/1.3 var(--mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--ix-muted); border-block-end: 1px solid var(--sq-line); white-space: nowrap; }
+  .fd-table td { padding: 13px 16px; vertical-align: top; border-block-end: 1px solid var(--sq-line); line-height: 1.55; color: var(--ix-muted); }
+  .fd-table tr:last-child td { border-block-end: 0; }
+  .fd-table :is(th, td):first-child { padding-inline-start: var(--sq-pad); }
+  .fd-table :is(th, td):last-child { padding-inline-end: var(--sq-pad); }
+  .fd-table td:first-child { color: var(--ix-text); font-weight: 500; white-space: nowrap; }
+
+  /* line drawings: the moves and the mode wipe */
+  .fd-draw { display: block; inline-size: 100%; block-size: auto; color: var(--ix-muted); }
+  .fd-draw .ln { stroke: var(--sq-line); fill: none; }
+  .fd-draw .edge { stroke: var(--ix-signal); stroke-width: 1.5; }
+  .fd-draw .arrow { stroke: currentColor; fill: none; stroke-width: 1.25; }
+  .fd-draw .head { fill: currentColor; }
+  .fd-draw text { font: 500 10px var(--mono); letter-spacing: 0.12em; fill: currentColor; text-transform: uppercase; }
+  .fd-draw text.on { fill: var(--ix-text); }
+  .fd-draw text.here { fill: var(--ix-signal-text); }
+
+  .fd-note { padding: 18px var(--sq-pad) 22px; font: 500 11.5px/1.6 var(--mono); color: var(--ix-muted); border-block-start: 1px solid var(--sq-line); }
+  .fd-note b { color: var(--ix-text); font-weight: 500; }
+
+  @media (max-width: 1023px) {
+    .fd-hero, .fd-grid-2, .fd-grid-3 { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .fd-phones { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-mark" viewBox="2 8 21 9"><path d="M23 8L20 12L9 12L12 8ZM16 13L13 17L2 17L5 13Z" style="fill:var(--ds-color-neutral-surface-solid-default)"/></symbol>
+</svg>
+
+<div class="ix-reticle" aria-hidden="true"></div>
+
+<div class="ix-page">
+  <div class="ix-wrap ix-nav-shell">
+    <header class="ix-nav">
+      <a class="ix-brand" href="#top"><svg width="35" height="15" aria-hidden="true"><use href="#i-mark"/></svg>Scnehaux UI</a>
+      <span class="sq-nav-tag" data-nav-optional><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Front door</span></span>
+      <ul class="ix-nav-links">
+        <li><a href="#top" aria-current="page">Front door</a></li>
+        <li><a href="Docs-Landing.html">Landing</a></li>
+        <li><a href="Docs-Home.html">Get started</a></li>
+        <li><a href="Brand-Book.html">Brand book</a></li>
+      </ul>
+      <span class="ix-nav-spacer"></span>
+      <span class="ix-sheet-readout" data-sheet-readout aria-hidden="true"><i></i>Sheet <b>01</b>/09</span>
+      <button class="ix-mode" type="button" data-mode-toggle><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="sq-cta" data-variant="primary" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/TDD-ui-platform-docs-001-documentation-site.md#annex-c-the-front-door" data-nav-optional>Annex C</a>
+    </header>
+  </div>
+
+  <main id="top">
+    <!-- 01 · Overview -->
+    <section class="ix-wrap" id="overview" data-sheet="Overview" aria-labelledby="fd-title">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>01</b></span>
+        <span class="ix-sheet-name">Docs · Front door</span>
+        <dl class="ix-tb"><div><dt>For</dt><dd>ui-platform-docs /</dd></div><div><dt>Status</dt><dd>adopted</dd></div></dl>
+      </div>
+      <div class="fd-hero sq-cells">
+        <div>
+          <span class="ix-chip"><span class="scnx-badge" data-scheme="neutral" data-emphasis="solid" data-size="small">Board</span>The site's root, TDD D23</span>
+          <h1 class="ix-display" id="fd-title">Three worlds behind one door.</h1>
+          <p class="ix-lede">Scnehaux UI is three packages, so its door is three worlds on one screen, in the order a part is made: behaviour, then paint, then movement. One edge runs between two worlds at a time, and the same panel is drawn in each world's material, so a wipe cuts one part in two.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px">
+            <a class="sq-cta" data-variant="primary" href="https://github.com/anshacerbia2/ui-platform-docs/blob/main/docs/designs/TDD-ui-platform-docs-001-documentation-site.md#annex-c-the-front-door">Behaviour, annex C<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="sq-cta" data-variant="secondary" href="#adopt">What this board holds</a>
+          </div>
+        </div>
+        <figure class="fd-frame" style="padding: 40px var(--sq-pad)">
+          <img src="front-door/world-2-wide-dark.png" width="1440" height="900" alt="The front door on the Design system world, dark: the claim Finished parts on the left, the release card painted on a dot grid with its bill of materials on the right, the rail of three worlds below.">
+          <figcaption><b>02 / 03 Design system</b> · 1440 · dark</figcaption>
+        </figure>
+      </div>
+      <dl class="sq-facts" aria-label="Board">
+        <div><dt>Page</dt><dd>/ (the docs' root)</dd></div>
+        <div><dt>Drawn from</dt><dd>ui-platform-docs 1c72bf3</dd></div>
+        <div><dt>Behaviour</dt><dd>TDD annex C</dd></div>
+        <div><dt>Theme</dt><dd>scnx-platform</dd></div>
+        <div><dt>Authority</dt><dd>ADR-UIP-VIS-002</dd></div>
+      </dl>
+    </section>
+
+    <!-- 02 · The worlds -->
+    <section class="ix-wrap ix-sheet" id="worlds" data-sheet="The worlds" aria-labelledby="h-worlds">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>02</b></span>
+        <span class="ix-sheet-name">The worlds</span>
+        <dl class="ix-tb"><div><dt>Count</dt><dd>three</dd></div><div><dt>Mode</dt><dd>dark</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-worlds">One panel, three materials.</h2><p class="ix-lede">Each world is a sheet: its number, a claim, the way in and three figures on the left; on the right a bench, the release card drawn as on an engineering drawing, with crop marks, a 380 dimension line, numbered balloons and a title block. Only the material changes, so the card's box is the same in every world at every width.</p></div>
+      <div class="sq-cells fd-grid-3">
+        <div class="fd-cell">
+          <span class="no"><b>01</b> · @scnx/core-ui</span>
+          <h3 class="ix-h3">Primitives: bare</h3>
+          <figure class="fd-frame"><img src="front-door/world-1-wide-dark.png" width="1440" height="900" alt="Primitives world: Behavior, unpainted. The card with no paint, its edge dashed, the behaviour's own parts outlined in blue, on graph paper."></figure>
+          <p class="ix-body">No fill, shadow or colour of its own. The card's edge is dashed, markup-only parts sit at 30%, and the behaviour's own elements (the segments, the buttons) are outlined dashed in the signal. A focus ring walks the tab order. Ground: graph paper, 88px over 22px, on the sunken surface.</p>
+        </div>
+        <div class="fd-cell">
+          <span class="no"><b>02</b> · @scnx/system</span>
+          <h3 class="ix-h3">Design system: painted</h3>
+          <figure class="fd-frame"><img src="front-door/world-2-wide-dark.png" width="1440" height="900" alt="Design system world: Finished parts. The card painted as published on a dot grid, with the bill of materials."></figure>
+          <p class="ix-body">The components as published, on the raised surface. The title block is the bill of materials: each part and its page. Ground: the 22px dot grid.</p>
+        </div>
+        <div class="fd-cell">
+          <span class="no"><b>03</b> · in fabrication</span>
+          <h3 class="ix-h3">Motion: moving</h3>
+          <figure class="fd-frame"><img src="front-door/world-3-wide-dark.png" width="1440" height="900" alt="Motion world: Movement, measured. The card's content cycles while a gauge draws the motion tokens as three curves."></figure>
+          <p class="ix-body">The card's frame holds still while its content cycles by the motion tokens: out on exit, in on enter, the checks counting 0 to 12. In place of the title block, a gauge draws the five motion roles as three curves, each with a rider. Ground: the 88px squares alone. Says "Coming soon" until the package ships.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · Light -->
+    <section class="ix-wrap ix-sheet" id="light" data-sheet="Light" aria-labelledby="h-light">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>03</b></span>
+        <span class="ix-sheet-name">The light mode</span>
+        <dl class="ix-tb"><div><dt>Mode</dt><dd>light</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-light">The same drawing on the light ground.</h2><p class="ix-lede">Every value is a token of <code>scnx-platform</code>, so the light mode is the theme's, not a second design: ink for the way in, blue only for here (the current tab's bar, the sheet number, the primitives' outlines).</p></div>
+      <div class="sq-cells fd-grid-3">
+        <figure class="fd-frame fd-cell"><img src="front-door/world-1-wide-light.png" width="1440" height="900" alt="Primitives world in the light mode."><figcaption><b>01</b> Primitives</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/world-2-wide-light.png" width="1440" height="900" alt="Design system world in the light mode."><figcaption><b>02</b> Design system</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/world-3-wide-light.png" width="1440" height="900" alt="Motion world in the light mode."><figcaption><b>03</b> Motion</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 04 · One edge -->
+    <section class="ix-wrap ix-sheet" id="edge" data-sheet="One edge" aria-labelledby="h-edge">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>04</b></span>
+        <span class="ix-sheet-name">One edge</span>
+        <dl class="ix-tb"><div><dt>Wipe</dt><dd>1050 ms</dd></div><div><dt>Scan lines</dt><dd>one</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-edge">Only the edge moves.</h2><p class="ix-lede">The world coming in is on top and clipped from its side; the world it replaces is laid under, whole and still. On the edge, a 1px signal line, a 160px fade behind it and the incoming world's name at its top, seen only while the edge moves. These frames hold the edge by a drag, from Primitives to the Design system.</p></div>
+      <div class="sq-cells fd-grid-3">
+        <figure class="fd-frame fd-cell"><img src="front-door/edge-430.png" width="1440" height="900" alt="The edge a quarter of the way across: the Design system's copy has come in on the left, the Primitives world is still on the right."><figcaption><b>Edge at 27%</b> · the copy cut</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/edge-790.png" width="1440" height="900" alt="The edge just past the middle: it cuts the release card in two, painted on its left and bare on its right."><figcaption><b>Edge at 52%</b> · the card cut in two</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/edge-1150.png" width="1440" height="900" alt="The edge three quarters across: only the Primitives title block is left on the right."><figcaption><b>Edge at 77%</b> · the title block last</figcaption></figure>
+      </div>
+      <div class="fd-table-wrap">
+        <table class="fd-table">
+          <thead><tr><th scope="col">Rule</th><th scope="col">What it holds</th></tr></thead>
+          <tbody>
+            <tr><td>One wipe</td><td>A registered <code>--reveal</code> on the top world transitions over 1050ms by the draw easing; nothing else on the stage moves.</td></tr>
+            <tr><td>One scan line</td><td>Any other wipe under way is cancelled on every change, so there is never more than one line on the screen.</td></tr>
+            <tr><td>Never starts over</td><td>Changed mid-wipe, the edge goes on or turns from where it is. It is never put back at an end.</td></tr>
+            <tr><td>The lock</td><td>Mid-wipe only the two worlds on the stage can be chosen; a third waits, its tab faint and <code>aria-disabled</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 05 · Moves -->
+    <section class="ix-wrap ix-sheet" id="moves" data-sheet="Moves" aria-labelledby="h-moves">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>05</b></span>
+        <span class="ix-sheet-name">Moves</span>
+        <dl class="ix-tb"><div><dt>Dwell</dt><dd>7 s</dd></div><div><dt>Drag</dt><dd>18%</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-moves">Forward runs left to right. Everything else comes back.</h2><p class="ix-lede">The next world comes in from the left, so the worlds turn 1, 2, 3 the way the page reads. Any other move, a world before or round from 3 to 1, comes in from the right. A drag is the one exception: its edge follows the hand, round the ring.</p></div>
+      <div class="sq-cells fd-grid-2">
+        <div class="fd-cell">
+          <span class="no">The ring</span>
+          <svg class="fd-draw" viewBox="0 0 520 220" role="img" aria-labelledby="ring-t">
+            <title id="ring-t">Worlds 01, 02 and 03 in a row. Arrows above go 01 to 02 and 02 to 03, edge running left to right. Arrows below go back, 03 to 02, 02 to 01, and 03 round to 01, edge running right to left.</title>
+            <rect class="ln" x="30" y="80" width="120" height="60"/><rect class="ln" x="200" y="80" width="120" height="60"/><rect class="ln" x="370" y="80" width="120" height="60"/>
+            <text class="on" x="44" y="115">01 Primitives</text><text class="on" x="214" y="115">02 System</text><text class="on" x="384" y="115">03 Motion</text>
+            <path class="arrow" d="M150 64 Q175 44 200 64"/><path class="head" d="M200 64l-8-2 4 7z"/>
+            <path class="arrow" d="M320 64 Q345 44 370 64"/><path class="head" d="M370 64l-8-2 4 7z"/>
+            <text class="here" x="150" y="30">next · in from the left →</text>
+            <path class="arrow" d="M200 156 Q175 176 150 156"/><path class="head" d="M150 156l8 2-4-7z"/>
+            <path class="arrow" d="M370 156 Q345 176 320 156"/><path class="head" d="M320 156l8 2-4-7z"/>
+            <path class="arrow" d="M430 148 Q260 214 90 148"/><path class="head" d="M90 148l8 3-3-8z"/>
+            <text x="150" y="212">← any other · in from the right</text>
+          </svg>
+        </div>
+        <div class="fd-table-wrap">
+          <table class="fd-table">
+            <thead><tr><th scope="col">Input</th><th scope="col">Does</th></tr></thead>
+            <tbody>
+              <tr><td>Rail</td><td>Tabs, manual activation: ← → move, Home and End go to the ends.</td></tr>
+              <tr><td>Keys</td><td>Outside a field: ← → step back and on, 1 to 3 go to a world.</td></tr>
+              <tr><td>Wheel</td><td>From lg, one step per gesture after 40px of travel.</td></tr>
+              <tr><td>Drag</td><td>After 8px, more across than down; the edge under the pointer. Let go past 18% of the width, or faster than 0.5px/ms, and it runs on; short of it, it runs back.</td></tr>
+              <tr><td>Autoplay</td><td>The current tab's bar fills over 7s, then the next world comes. It holds for keyboard focus, a drag, the lens or a mode wipe, and goes on from where it paused.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 · Lens -->
+    <section class="ix-wrap ix-sheet" id="lens" data-sheet="Lens" aria-labelledby="h-lens">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>06</b></span>
+        <span class="ix-sheet-name">The X-ray lens</span>
+        <dl class="ix-tb"><div><dt>Square</dt><dd>168 px</dd></div><div><dt>Input</dt><dd>mouse</dd></div></dl>
+      </div>
+      <div class="sq-cells fd-grid-2">
+        <figure class="fd-frame fd-cell"><img src="front-door/lens-2.png" width="1440" height="900" alt="The lens over the Design system's card: a framed square shows the bare primitives under the painted Deploy button, named 01 Primitives."><figcaption><b>Over 02</b> · looking through to 01</figcaption></figure>
+        <div class="fd-cell">
+          <span class="no">What lies under the paint</span>
+          <h3 class="ix-h3">A step back, at the same place.</h3>
+          <p class="ix-body">A mouse over the current world's bench opens a 168px square onto the world before it: the primitives under the design system, the design system under motion. Over the first world there is no world before, and the square scans empty ground, named "00 · Nothing before".</p>
+          <p class="ix-body">It is a frame with ticks at the middle of its sides and the world's name under it, written a frame at a time with no layout. Never for touch or under reduced motion, never during a wipe or a drag; while it is open the worlds do not turn.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 · Mode wipe -->
+    <section class="ix-wrap ix-sheet" id="mode" data-sheet="Mode wipe" aria-labelledby="h-mode">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>07</b></span>
+        <span class="ix-sheet-name">The mode wipe</span>
+        <dl class="ix-tb"><div><dt>Only on</dt><dd>/</dd></div><div><dt>At a time</dt><dd>one</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-mode">A change of light is a world of its own.</h2><p class="ix-lede">On the door, light, dark or system is drawn over the old page with the same edge and its own scan line, over 1050ms: into dark from the left, into light from the right. A view transition cannot be caught in a still, so it is drawn here.</p></div>
+      <div class="sq-cells fd-grid-2">
+        <div class="fd-cell">
+          <span class="no">Into dark · left to right</span>
+          <svg class="fd-draw" viewBox="0 0 480 200" role="img" aria-labelledby="dark-t">
+            <title id="dark-t">A page with the edge at 60%. The new dark page is on the left of the edge, the old light page on the right; the edge runs to the right.</title>
+            <rect class="ln" x="20" y="20" width="440" height="160"/>
+            <line class="edge" x1="284" y1="20" x2="284" y2="180"/>
+            <text class="on" x="40" y="104">new · dark</text><text x="320" y="104">old · light</text>
+            <path class="arrow" d="M300 40h40"/><path class="head" d="M346 40l-8-4v8z"/>
+          </svg>
+        </div>
+        <div class="fd-cell">
+          <span class="no">Into light · right to left</span>
+          <svg class="fd-draw" viewBox="0 0 480 200" role="img" aria-labelledby="light-t">
+            <title id="light-t">A page with the edge at 40%. The old dark page is on the left of the edge, the new light page on the right; the edge runs to the left.</title>
+            <rect class="ln" x="20" y="20" width="440" height="160"/>
+            <line class="edge" x1="196" y1="20" x2="196" y2="180"/>
+            <text x="40" y="104">old · dark</text><text class="on" x="230" y="104">new · light</text>
+            <path class="arrow" d="M180 40h-40"/><path class="head" d="M134 40l8-4v8z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="fd-table-wrap">
+        <table class="fd-table">
+          <thead><tr><th scope="col">Rule</th><th scope="col">What it holds</th></tr></thead>
+          <tbody>
+            <tr><td>After a world</td><td>A mode chosen while a world wipes waits for it to land, so the page never shows two edges.</td></tr>
+            <tr><td>One at a time</td><td>A choice made during a wipe is kept, the last only, and run after if it is not what shows by then.</td></tr>
+            <tr><td>No blend</td><td>The two pictures are laid one over the other, never cross-faded: dark over light must not vanish into it.</td></tr>
+            <tr><td>Elsewhere</td><td>Every other page switches its mode at once, as before.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 08 · Narrow -->
+    <section class="ix-wrap ix-sheet" id="narrow" data-sheet="Narrow" aria-labelledby="h-narrow">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>08</b></span>
+        <span class="ix-sheet-name">Narrow screens</span>
+        <dl class="ix-tb"><div><dt>Width</dt><dd>390</dd></div><div><dt>Scroll</dt><dd>none</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-narrow">Copy over bench, still one screen.</h2><p class="ix-lede">Below lg the copy stands over the bench. The worlds share the stage's rows, so the bench starts at one height in every world and a wipe still cuts the card in two. The figures leave, then the lede on a short screen; the rail drops its numbers. Only a phone on its side lets the page scroll.</p></div>
+      <div class="sq-cells fd-phones">
+        <figure class="fd-frame fd-cell"><img src="front-door/world-1-phone-dark.png" width="390" height="844" alt="Primitives world at 390px."><figcaption><b>01</b> Primitives</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/world-2-phone-dark.png" width="390" height="844" alt="Design system world at 390px."><figcaption><b>02</b> Design system</figcaption></figure>
+        <figure class="fd-frame fd-cell"><img src="front-door/world-3-phone-dark.png" width="390" height="844" alt="Motion world at 390px."><figcaption><b>03</b> Motion</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 09 · Adopt -->
+    <section class="ix-wrap ix-sheet" id="adopt" data-sheet="Adopt" aria-labelledby="h-adopt">
+      <div class="ix-sheet-head">
+        <span class="ix-sheet-no"><b>09</b></span>
+        <span class="ix-sheet-name">What this board holds</span>
+        <dl class="ix-tb"><div><dt>Closes</dt><dd>TDD OQ 4</dd></div></dl>
+      </div>
+      <div class="fd-lead"><h2 class="ix-h2" id="h-adopt">The look is held here. The behaviour stays in the site.</h2><p class="ix-lede">The front door was designed in the site, not drawn here first as D13 asks. This board adopts its look into scnx-platform as built, so the next change to it starts here.</p></div>
+      <div class="sq-cells fd-grid-3">
+        <div class="fd-cell"><span class="no">Here, in scnehaux-design</span><h3 class="ix-h3">The look</h3><p class="ix-body">Three worlds, one panel in three materials, one edge with one scan line, the grids, the rail, the lens frame. A change to any of them is drawn on this board first, by pull request, and the site follows.</p></div>
+        <div class="fd-cell"><span class="no">In ui-platform-docs</span><h3 class="ix-h3">The behaviour</h3><p class="ix-body">Timings, moves, locks, flags and where it is off: annex C of the site's TDD, written from its code. This board quotes it and never overrides it.</p></div>
+        <div class="fd-cell"><span class="no">From ui-platform</span><h3 class="ix-h3">The parts</h3><p class="ix-body">The card's Badge, Heading, Text, SegmentedControl, Progress, Kbd and Button, and the motion tokens the gauge draws, are <code>@scnx/system</code>'s and <code>@scnx/core-ui</code>'s, as published.</p></div>
+      </div>
+      <div class="fd-note"><b>Frames.</b> Every picture on this board is the site itself: a production build of <code>ui-platform-docs</code> at <code>1c72bf3</code> in Chromium, 31 October 2026. The stills are taken under reduced motion, which draws a world at once; the edge is held by a drag; the mode wipe is drawn, since a view transition cannot be caught in a still. Retake them when the door changes.</div>
+    </section>
+  </main>
+
+  <footer class="ix-wrap ix-foot" data-draw>
+    <div class="ix-setblock" aria-label="Drawing set">
+      <div><span class="k">Drawing set</span><span class="v">scnx-platform · Docs · Front door</span></div>
+      <div><span class="k">Sheets</span><span class="v">01–09</span></div>
+      <div><span class="k">Applies to</span><span class="v">ui-platform-docs /</span></div>
+      <div><span class="k">Status</span><span class="v">adopted</span></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
