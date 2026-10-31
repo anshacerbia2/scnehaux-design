@@ -37,45 +37,6 @@ drawing. Content, colour roles and Instrument's motion (drawing, typing, counter
 | Docs · Home (get started, no sign-in) | [`Docs-Home.html`](Docs-Home.html) | [`Docs-Home.png`](Docs-Home.png) |
 | Docs · Components / Button | [`Docs-Button.html`](Docs-Button.html) | [`Docs-Button.png`](Docs-Button.png) |
 | **Brand book** | [`Brand-Book.html`](Brand-Book.html) | [`Brand-Book.png`](Brand-Book.png) |
-| Control · IAM Admin Portal (proposal) | [`Control-IAM.html`](Control-IAM.html) | [`Control-IAM.png`](Control-IAM.png) |
-
-## Three expressions of one theme (proposal)
-
-scnx-platform keeps one set of tokens, the square and the two voices (Inter and IBM
-Plex Mono). What changes between products is the metaphor each is drawn in, so a
-console never reads as a document, and a document never reads as a console:
-
-| Expression | For | Metaphor | Signature part |
-| :-- | :-- | :-- | :-- |
-| **Drawing** | `ui-platform-docs` | A technical drawing set: sheets, rules, crosses, a ruler | The sheet bar, `NN / Title ··· facts` |
-| **Control** | The platform's consoles: IAM, Organization, AI runtime | A quiet instrument panel: annunciator, the request path, armed commands, tags, an event record | The annunciator window and the lockout tag |
-| **Manual** | Platform documentation | An operations manual: chapters, numbered procedures, margins, callouts | The numbered step and its check |
-
-Drawing is this folder's brand book and is live. **Control** is drawn on the IAM
-Admin Portal in [`Control-IAM.html`](Control-IAM.html): the overview as an annunciator
-over the process, and one Principal's station with a lockout tag, commands that are
-closed until armed, and sealed privileged reads. It is drawn quiet: monochrome,
-hairlines, and an accent only where a person is needed (the owner, 2026-10-31: the
-first draft was too loud). Its six rules:
-
-1. **Grey at rest** (ISA-101 high-performance HMI). A panel with nothing wrong is
-   monochrome. Amber (attention) and red (alarm) appear only as a 6px lamp or a
-   hairline, never as a fill or a figure; blue keeps one meaning, here and armed.
-2. **Annunciate, don't chart.** A condition is a window that lights, with a count and
-   what tripped it; the first to trip is first out; every window opens its station.
-3. **Show the path.** The hops a request takes (browser, BFF, Identity Control API,
-   kernel) sit under the strip on every page; a degraded hop's line takes the accent.
-4. **Arm, then act.** A command that changes a person is closed until armed; armed, it
-   shows what holds it (a reason, a recent sign-in, not yourself, a second operator).
-   The action is ink, never red.
-5. **Tag what you lock.** Containment carries a tag: who, since, why, and what lifts
-   it. A state is never only a word in a badge.
-6. **Seal the reads that are recorded.** A read that is itself on the record is sealed
-   until broken on purpose; commands, alarms and broken seals are kept in order, to
-   the millisecond.
-
-Every colour is a token or an OKLab mix of one; the `--cp-*` properties are
-expression-local guidance (ADR-UIP-VIS-002). Manual is named, not drawn yet.
 
 **The brand book** ([`Brand-Book.html`](Brand-Book.html)) is the reference for
 `ui-platform-docs`. It covers principles, lines, layout, colour roles, type,
